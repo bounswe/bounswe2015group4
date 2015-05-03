@@ -17,4 +17,11 @@ public class MathematicalOperationsTest {
         assertEquals(1,mathematicalOperations.binaryPlus(-4,5));
         assertEquals(0,mathematicalOperations.binaryPlus(64,-64));
     }
+    
+    @Test
+    public void testBinaryMinus() {
+        assertEquals(-5,mathematicalOperations.binaryMinus(0,5));
+        assertEquals(-9,mathematicalOperations.binaryPlus(-2,7));
+        assertEquals(0,mathematicalOperations.binaryPlus(53,53));
+    }
 }
