@@ -23,4 +23,8 @@ public class MathematicalOperations {
         if(x==y) return true;
         else return false;
     }
+
+    public int remainder(int x, int y) {
+        return x % y;
+    }
 }
