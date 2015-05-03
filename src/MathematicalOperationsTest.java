@@ -25,4 +25,12 @@ public class MathematicalOperationsTest {
         assertEquals(0,mathematicalOperations.binaryMinus(53,53));
         assertEquals(9,mathematicalOperations.binaryMinus(5,-4));
     }
+    
+        @org.junit.Test
+    public void testBinaryMultiplication() {
+        assertEquals(8,mathematicalOperations.binaryMultiplication(2,4));
+        assertEquals(-50,mathematicalOperations.binaryMultiplication(-25,2));
+        assertEquals(0,mathematicalOperations.binaryMultiplication(50,0));
+       
+    }
 }
