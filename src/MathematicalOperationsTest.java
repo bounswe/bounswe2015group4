@@ -21,7 +21,8 @@ public class MathematicalOperationsTest {
     @Test
     public void testBinaryMinus() {
         assertEquals(-5,mathematicalOperations.binaryMinus(0,5));
-        assertEquals(-9,mathematicalOperations.binaryPlus(-2,7));
-        assertEquals(0,mathematicalOperations.binaryPlus(53,53));
+        assertEquals(-9,mathematicalOperations.binaryMinus(-2,7));
+        assertEquals(0,mathematicalOperations.binaryMinus(53,53));
+        assertEquals(9,mathematicalOperations.binaryMinus(5,-4));
     }
 }
