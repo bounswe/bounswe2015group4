@@ -19,6 +19,11 @@ public class MathematicalOperations {
         else return false;
     }
     
+    public boolean isSmaller(int x, int y){
+        if(x<y) return true;
+        else return false;
+    }
+    
     public boolean isEqual(int x, int y) {
         if(x==y) return true;
         else return false;
