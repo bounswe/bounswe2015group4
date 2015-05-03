@@ -13,4 +13,9 @@ public class MathematicalOperations {
     public int binaryMultiplication(int x, int y){
         return x*y;
     }
+    
+    public boolean isGreater(int x, int y) {
+        if(x>y) return true;
+        else return false;
+    }
 }
