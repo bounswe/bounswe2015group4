@@ -21,24 +21,35 @@ public class MathematicalOperationsTest {
     @org.junit.Test
     public void testBinaryMinus() {
         assertEquals(-5,mathematicalOperations.binaryMinus(0,5));
-        assertEquals(-9,mathematicalOperations.binaryMinus(-2,7));
-        assertEquals(0,mathematicalOperations.binaryMinus(53,53));
-        assertEquals(9,mathematicalOperations.binaryMinus(5,-4));
+        assertEquals(-9,mathematicalOperations.binaryMinus(-2, 7));
+        assertEquals(0,mathematicalOperations.binaryMinus(53, 53));
+        assertEquals(9,mathematicalOperations.binaryMinus(5, -4));
     }
     
         @org.junit.Test
     public void testBinaryMultiplication() {
-        assertEquals(8,mathematicalOperations.binaryMultiplication(2,4));
-        assertEquals(-50,mathematicalOperations.binaryMultiplication(-25,2));
-        assertEquals(0,mathematicalOperations.binaryMultiplication(50,0));
+        assertEquals(8,mathematicalOperations.binaryMultiplication(2, 4));
+        assertEquals(-50,mathematicalOperations.binaryMultiplication(-25, 2));
+        assertEquals(0,mathematicalOperations.binaryMultiplication(50, 0));
        
     }
     
     @org.junit.Test
     public void testIsSmaller() {
-        assertEquals(true,mathematicalOperations.isSmaller(-7,5));
-        assertEquals(false,mathematicalOperations.isSmaller(12,3));
-        assertEquals(false,mathematicalOperations.isSmaller(4,4));
+        assertEquals(true,mathematicalOperations.isSmaller(-7, 5));
+        assertEquals(false,mathematicalOperations.isSmaller(12, 3));
+        assertEquals(false,mathematicalOperations.isSmaller(4, 4));
         
     }
+
+    @org.junit.Test
+    public void testRemainder() {
+        assertEquals(1,mathematicalOperations.remainder(10, 3));
+        assertEquals(0,mathematicalOperations.remainder(12,1));
+        assertEquals(3,mathematicalOperations.remainder(18, 5));
+
+    }
+
+
+
 }
