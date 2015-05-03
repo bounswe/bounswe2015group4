@@ -20,7 +20,7 @@ public class MathematicalOperations {
     }
     
     public boolean isEqual(int x, int y) {
-        if(x.equals(y)) return true;
+        if(x==y) return true;
         else return false;
     }
 }
