@@ -50,6 +50,12 @@ public class MathematicalOperationsTest {
 
     }
 
-
+    @org.junit.Test
+    public void testIsEqual() {
+        assertEquals(true,mathematicalOperations.remainder(8, 8));
+        assertEquals(false,mathematicalOperations.remainder(-1,1));
+        assertEquals(true,mathematicalOperations.remainder(0, 0));
+        assertEquals(false,mathematicalOperations.remainder(0, 8));
+    }
 
 }
