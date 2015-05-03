@@ -11,7 +11,7 @@ public class MathematicalOperationsTest {
         mathematicalOperations = new MathematicalOperations();
     }
 
-    @Test
+    @org.junit.Test
     public void testBinaryPlus() {
         assertEquals(8,mathematicalOperations.binaryPlus(3,5));
         assertEquals(1,mathematicalOperations.binaryPlus(-4,5));
