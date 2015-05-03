@@ -36,9 +36,9 @@ public class MathematicalOperationsTest {
     
     @org.junit.Test
     public void testBinaryisSmaller() {
-        assertEquals(true,mathematicalOperations.binaryMinus(-7,5));
-        assertEquals(false,mathematicalOperations.binaryMinus(12,3));
-        assertEquals(false,mathematicalOperations.binaryMinus(4,4));
+        assertEquals(true,mathematicalOperations.binaryisSmaller(-7,5));
+        assertEquals(false,mathematicalOperations.binaryisSmaller(12,3));
+        assertEquals(false,mathematicalOperations.binaryisSmaller(4,4));
         
     }
 }
