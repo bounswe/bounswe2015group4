@@ -1,7 +1,6 @@
 app.service('loginService', function ($q) {
-    var deferred = $q.defer();
-
     this.signup = function(username, password) {
+        var deferred = $q.defer();
         var user = new Parse.User();
         user.set("username", username);
         user.set("password", password);
@@ -9,14 +8,18 @@ app.service('loginService', function ($q) {
         user.signUp(null, {
             success: function (user) {
                 alert("User successfully signed up.");
+                deferred.resolve();
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
         });
+
+        return deferred.promise;
     }
 
     this.getUsers = function() {
+        var deferred = $q.defer();
         var userQuery = Parse.Object.extend("User");
         var query = new Parse.Query(userQuery);
         var users = [];
