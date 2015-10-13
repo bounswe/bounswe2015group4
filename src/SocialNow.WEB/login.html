@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body ng-app="socialNowApp" ng-controller="loginController">
+    <div class="col-lg-offset-4">
+        <div class="row">
+            <div class="col-md-4" style="margin: 50px auto;">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Username</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputEmail3" ng-model="currentUser.Username" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="inputPassword3" ng-model="currentUser.Password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button class="btn btn-default" ng-click="signup()">Sign Up</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-striped">
+                    <thead>
+                    <th class="col-md-3">Username</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="user in users">
+                        <td ng-bind="user.username"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="scripts/angular/lib/angular.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.6.5.min.js"></script>
+    <script src="scripts/parse/initialize.js"></script>
+    <script src="scripts/angular/app.js"></script>
+    <script src="scripts/angular/services/loginService.js"></script>
+    <script src="scripts/angular/controllers/loginController.js"></script>
+</body>
+</html>
