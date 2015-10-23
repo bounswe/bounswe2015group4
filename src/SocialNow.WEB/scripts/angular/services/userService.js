@@ -1,4 +1,8 @@
-app.service('loginService', function ($q) {
+app.service('userService', function ($q, roles, sessionService) {
+    this.logIn = function(username, password) {
+        // LogIn request
+    }
+
     this.signup = function(username, password) {
         var deferred = $q.defer();
         var user = new Parse.User();
@@ -12,6 +16,7 @@ app.service('loginService', function ($q) {
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
+                deferred.reject();
             }
         });
 
@@ -24,18 +29,19 @@ app.service('loginService', function ($q) {
         var query = new Parse.Query(userQuery);
         var users = [];
         query.find({
-             success: function(results) {
-                 results.forEach(function(userResult) {
-                     users.push({
-                         username: userResult.get("username")
-                     })
-                 })
+            success: function(results) {
+                results.forEach(function(userResult) {
+                    users.push({
+                        username: userResult.get("username")
+                    })
+                })
 
-                 deferred.resolve(users);
-             },
-             error: function(error) {
-                 console.log("Error: " + error.code + " " + error.message);
-             }
+                deferred.resolve(users);
+            },
+            error: function(error) {
+                console.log("Error: " + error.code + " " + error.message);
+                deferred.reject();
+            }
         });
 
         return deferred.promise;
