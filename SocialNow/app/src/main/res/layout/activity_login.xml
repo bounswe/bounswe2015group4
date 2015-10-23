@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".LoginActivity"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:id="@+id/homeIcon"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/snlogobr"
+        android:contentDescription="homeIcon"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginTop="@dimen/big_margin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/hometLogin"
+        android:text="@string/login_ac"
+        android:layout_below="@+id/homeIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/big_margin"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hometLogin"
+        android:background="@drawable/fetround"
+        android:paddingTop="@dimen/f_top_bottom_padding"
+        android:paddingBottom="@dimen/f_top_bottom_padding"
+        android:paddingRight="@dimen/et_left_right_padding"
+        android:paddingLeft="@dimen/et_left_right_padding"
+        android:id="@+id/rUsername"
+        android:layout_marginBottom="@dimen/small_margin">
+
+        <ImageView
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:src="@drawable/icusername"
+            android:id="@+id/usernameIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/small_margin" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_Username"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/usernameIcon"
+            android:singleLine="true"
+            android:hint="@string/username"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rUsername"
+        android:background="@drawable/fetround"
+        android:paddingTop="@dimen/f_top_bottom_padding"
+        android:paddingBottom="@dimen/f_top_bottom_padding"
+        android:paddingRight="@dimen/et_left_right_padding"
+        android:paddingLeft="@dimen/et_left_right_padding"
+        android:id="@+id/rPW"
+        android:layout_marginBottom="@dimen/small_margin">
+
+        <ImageView
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:src="@drawable/icpassword"
+            android:id="@+id/pwIcon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/small_margin" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_PW"
+            android:inputType="textPassword"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/pwIcon"
+            android:singleLine="true"
+            android:hint="@string/password"/>
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOGIN"
+        android:id="@+id/bLogin"
+        android:layout_below="@id/rPW"
+        android:background="@drawable/cyanbutton"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:textColor="@color/textDarkButton"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="New to SocialNow?"
+        android:id="@+id/tIfNew"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/bLogin"
+        android:layout_marginBottom="@dimen/small_margin"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP NOW"
+        android:id="@+id/bSignUp"
+        android:layout_below="@id/tIfNew"
+        android:background="@drawable/purplebutton"
+        android:layout_marginBottom="@dimen/micro_margin"
+        android:textColor="@color/textDarkButton"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="A valid BOUN e-mail address is required for registration."
+        android:id="@+id/tVdMail"
+        android:layout_below="@+id/bSignUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/big_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Forgot Password?"
+        android:id="@+id/textView"
+        android:layout_below="@id/tVdMail"
+        android:layout_alignParentRight="true"
+        android:clickable="true"/>
+
+</RelativeLayout>
