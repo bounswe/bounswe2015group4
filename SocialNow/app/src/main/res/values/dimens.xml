@@ -11,5 +11,6 @@
     <dimen name="rounded_radius">5dp</dimen>
     <dimen name="stroke">1dp</dimen>
     <dimen name="small_icon">20dp</dimen>
+    <dimen name="big_icon">110dp</dimen>
     <dimen name="b_padding">10dp</dimen>
 </resources>

@@ -7,7 +7,8 @@
     <string name="surname">Surname</string>
     <string name="b_email">BOUN E-mail Address</string>
     <string name="terms">Terms of Uses</string>
-    <string-array name="userType">
+    <string name="rt_login">Return to Login Page</string>
+    <string-array name="user_type">
         <item>Undergraduate</item>
         <item>Graduate</item>
         <item>Phd</item>
@@ -15,4 +16,5 @@
         <item>Assistant</item>
         <item>Alumni</item>
     </string-array>
+    <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>
 </resources>

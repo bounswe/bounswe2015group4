@@ -6,8 +6,8 @@
     android:padding="@dimen/activity_horizontal_margin">
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="@dimen/big_icon"
+        android:layout_height="@dimen/big_icon"
         android:id="@+id/homeIcon"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
