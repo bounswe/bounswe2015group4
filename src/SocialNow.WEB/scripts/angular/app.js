@@ -7,9 +7,10 @@ app.constant('roles', {
     All: 4
 });
 
-app.constant('loginUrl', '/login');
+app.constant('signUpUrl', '/signup');
+app.constant('loginUrl','/login');
 
-app.config(function ($routeProvider, loginUrl, roles) {
+app.config(function ($routeProvider, signUpUrl, loginUrl) {
     $routeProvider
         .when('/',
         {
@@ -17,17 +18,22 @@ app.config(function ($routeProvider, loginUrl, roles) {
             access: {
                 loginRequired: true
             }
-        })
-        .when(loginUrl,
-        {
+        }).
+        when(loginUrl,{
             templateUrl: 'pages/login.html',
+            controller: 'signInController'
+
+        })
+        .when('/signup',
+        {
+            templateUrl: 'pages/signUp.html',
             controller: 'loginController',
             access: {
                 redirectIfAuthenticated: '/'
             }
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/signUp'
         })
 })
 

@@ -3,8 +3,8 @@ app.controller('loginController', function($scope, userService, roles) {
 
     $scope.signup = function () {
         userService.signup($scope.currentUser.Username, $scope.currentUser.Password).then(function() {
-            $scope.getUsers();
             $scope.currentUser = {};
+
         });
     }
 

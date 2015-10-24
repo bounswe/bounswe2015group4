@@ -1,6 +1,24 @@
 app.service('userService', function ($q, roles, sessionService) {
     this.logIn = function(username, password) {
         // LogIn request
+        var deferred = $q.defer();
+        Parse.User.logIn(username, password, {
+            success: function(user) {
+                alert("User successfully signed in.");
+                deferred.resolve(user);
+            },
+            error: function(user, error) {
+                // The login failed. Check error to see why.
+                alert(error);
+                deferred.reject();
+            }
+        });
+
+        return deferred.promise;
+
+
+
+
     }
 
     this.signup = function(username, password) {
@@ -19,7 +37,6 @@ app.service('userService', function ($q, roles, sessionService) {
                 deferred.reject();
             }
         });
-
         return deferred.promise;
     }
 
@@ -46,4 +63,7 @@ app.service('userService', function ($q, roles, sessionService) {
 
         return deferred.promise;
     }
+
+
+
 })
