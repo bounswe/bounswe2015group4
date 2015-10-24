@@ -9,6 +9,7 @@
     <string name="terms">Terms of Uses</string>
     <string name="rt_login">Return to Login Page</string>
     <string-array name="user_type">
+        <item>Please select......</item>
         <item>Undergraduate</item>
         <item>Graduate</item>
         <item>Phd</item>

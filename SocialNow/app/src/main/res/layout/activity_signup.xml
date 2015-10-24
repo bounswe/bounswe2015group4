@@ -12,107 +12,58 @@
         android:text="Create your SocialNow Account"
         android:id="@+id/tCreatAc"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/big_margin"
-        android:layout_marginBottom="@dimen/big_margin"/>
+        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:inputType="textPersonName"
         android:hint="@string/name"
         android:layout_below="@id/tCreatAc"
         android:ems="10"
         android:id="@+id/etName"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/fetround"
-        android:singleLine="true"/>
+        style="@style/dEditText" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:inputType="textPersonName"
         android:hint="@string/surname"
         android:layout_below="@id/etName"
         android:ems="10"
         android:id="@+id/etSurname"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/fetround"
-        android:singleLine="true"/>
+        style="@style/dEditText"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:inputType="textEmailAddress"
         android:hint="@string/b_email"
         android:layout_below="@id/etSurname"
         android:id="@+id/etbMail"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/fetround"
-        android:singleLine="true"/>
+        style="@style/dEditText"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:hint="@string/username"
         android:layout_below="@id/etbMail"
         android:id="@+id/etUsername"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/fetround"
-        android:singleLine="true"/>
+        style="@style/dEditText"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:hint="@string/password"
         android:layout_below="@id/etUsername"
         android:id="@+id/etPW"
         android:inputType="textPassword"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/small_margin"
-        android:background="@drawable/fetround"
-        android:singleLine="true"/>
+        style="@style/dEditText"/>
 
     <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/sUserType"
         android:layout_below="@id/etPW"
-        android:background="@drawable/fetround"
-        android:paddingTop="@dimen/et_top_bottom_padding"
-        android:paddingBottom="@dimen/et_top_bottom_padding"
-        android:paddingRight="@dimen/et_left_right_padding"
-        android:paddingLeft="@dimen/et_left_right_padding"
         android:layout_marginBottom="@dimen/big_margin"
-        android:layout_centerHorizontal="true"/>
+        style="@style/dEditText"/>
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="I accept the term of uses."
         android:id="@+id/cbAccept"
         android:layout_below="@+id/sUserType"
@@ -120,15 +71,12 @@
         style="@style/dCheckBox" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="SEND TO APPROVAL"
         android:id="@+id/bSdApr"
         android:layout_below="@id/cbAccept"
-        android:background="@drawable/purplebutton"
         android:layout_marginBottom="@dimen/small_margin"
-        android:textColor="@color/textDarkButton"
-        android:layout_centerHorizontal="true"/>
+        android:background="@drawable/purplebutton"
+        style="@style/dBigButton"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -151,7 +99,7 @@
             android:text="@string/rt_login"
             android:id="@+id/tRtLogin"
             android:layout_toRightOf="@+id/ivArrow"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
         <TextView
             android:layout_width="wrap_content"

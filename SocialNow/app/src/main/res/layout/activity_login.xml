@@ -30,7 +30,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/hometLogin"
-        android:background="@drawable/fetround"
         android:paddingTop="@dimen/f_top_bottom_padding"
         android:paddingBottom="@dimen/f_top_bottom_padding"
         android:paddingRight="@dimen/et_left_right_padding"
@@ -47,20 +46,17 @@
             android:layout_marginRight="@dimen/small_margin" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/et_Username"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/usernameIcon"
-            android:singleLine="true"
-            android:hint="@string/username"/>
+            android:hint="@string/username"
+            style="@style/dEditText"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rUsername"
-        android:background="@drawable/fetround"
         android:paddingTop="@dimen/f_top_bottom_padding"
         android:paddingBottom="@dimen/f_top_bottom_padding"
         android:paddingRight="@dimen/et_left_right_padding"
@@ -77,26 +73,21 @@
             android:layout_marginRight="@dimen/small_margin" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/et_PW"
             android:inputType="textPassword"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/pwIcon"
-            android:singleLine="true"
-            android:hint="@string/password"/>
+            android:hint="@string/password"
+            style="@style/dEditText"/>
     </RelativeLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="LOGIN"
         android:id="@+id/bLogin"
         android:layout_below="@id/rPW"
-        android:background="@drawable/cyanbutton"
         android:layout_marginBottom="@dimen/big_margin"
-        android:textColor="@color/textDarkButton"
-        android:layout_centerHorizontal="true"/>
+        android:background="@drawable/cyanbutton"
+        style="@style/dBigButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -109,15 +100,12 @@
         android:layout_marginBottom="@dimen/small_margin"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="SIGN UP NOW"
         android:id="@+id/bSignUp"
         android:layout_below="@id/tIfNew"
-        android:background="@drawable/purplebutton"
         android:layout_marginBottom="@dimen/micro_margin"
-        android:textColor="@color/textDarkButton"
-        android:layout_centerHorizontal="true"/>
+        android:background="@drawable/purplebutton"
+        style="@style/dBigButton"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -127,14 +115,15 @@
         android:id="@+id/tVdMail"
         android:layout_below="@+id/bSignUp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/big_margin"/>
+        android:layout_marginBottom="@dimen/big_margin"
+        android:textAlignment="center"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Forgot Password?"
-        android:id="@+id/textView"
+        android:id="@+id/tFpw"
         android:layout_below="@id/tVdMail"
         android:layout_alignParentRight="true"
         android:clickable="true"/>
