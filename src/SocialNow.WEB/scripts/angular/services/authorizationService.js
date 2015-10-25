@@ -16,7 +16,7 @@ app.run(function ($rootScope, $location, authorizationService, loginUrl) {
     $rootScope.$on('$routeChangeStart', function (event, next) {
         if (next.access) {
             var accessControl = authorizationService.authorize(next.access.loginRequired, next.access.allowedRoles);
-            if (!accessControl.authenticated) {
+            if (next.access.loginRequired && !accessControl.authenticated) {
                 $location.path(loginUrl).replace();
             }
 
