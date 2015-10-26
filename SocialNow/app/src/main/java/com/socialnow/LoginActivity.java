@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // Hooray! The user is logged in.
                     //TODO create intent to home page
                     Log.d("Right credentials:", "Valid username and password");
+                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(i2);
                 } else {
                     // Signup failed. Look at the ParseException to see what happened.
                     Log.d("Wrong credentials:", "Not valid username and password");

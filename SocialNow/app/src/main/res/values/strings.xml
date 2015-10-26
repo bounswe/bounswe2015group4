@@ -18,4 +18,8 @@
         <item>Alumni</item>
     </string-array>
     <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>
+    <string name="title_activity_home_page">HomePage</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

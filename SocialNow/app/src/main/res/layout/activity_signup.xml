@@ -76,6 +76,7 @@
         android:layout_below="@id/cbAccept"
         android:layout_marginBottom="@dimen/small_margin"
         android:background="@drawable/purplebutton"
+        android:onClick="send_to_approval"
         style="@style/dBigButton"/>
 
     <RelativeLayout
@@ -86,7 +87,7 @@
         <ImageView
             android:layout_width="@dimen/small_icon"
             android:layout_height="@dimen/small_icon"
-            android:src="@drawable/leftarrow"
+            android:src="@drawable/ic_menu_back"
             android:id="@+id/ivArrow"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

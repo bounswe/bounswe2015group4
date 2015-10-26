@@ -4,27 +4,31 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class HomePage extends AppCompatActivity {
+    Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "nYZwu2d21NWTk7oIdS6N4IBcEDuNwoN48sRrl7Zd", "oRp46EvVPamz2XQtywDTImZI4YIPRLLlxVit8HcA");
+        setContentView(R.layout.activity_home_page);
+    }
 
+    public void log_out(View v){
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
-            Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-            startActivity(i2);
-        } else {
+            ParseUser.logOut();
             Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i2);
+        } else {
+            Log.d("error_logout", "logout failed");
         }
-        
     }
+
 }
