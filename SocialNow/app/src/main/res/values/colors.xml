@@ -11,4 +11,5 @@
     <color name="textColorHint">#c5c5c5</color>
     <color name="textColorLink">#141f72</color>
     <color name="textDarkButton">#ffffff</color>
+    <color name="black">#000</color>
 </resources>
