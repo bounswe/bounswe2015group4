@@ -43,7 +43,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
                         if (e == null) {
                             // An email was successfully sent with reset instructions.
                             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                            dlgAlert.setMessage("Reset password instructions sent to your email.");
+                            dlgAlert.setMessage("Password reset instructions sent to your email.");
                             dlgAlert.setTitle("Successful!");
                             dlgAlert.setPositiveButton("OK", null);
                             dlgAlert.setCancelable(true);
