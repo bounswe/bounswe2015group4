@@ -21,16 +21,16 @@ app.config(function ($routeProvider, signUpUrl, loginUrl) {
         }).
         when(loginUrl,{
             templateUrl: 'pages/login.html',
-            controller: 'LoginController'
+            controller: 'loginController',
+            access: {
+                redirectIfAuthenticated: '/'
+            }
 
         })
         .when(signUpUrl,
         {
             templateUrl: 'pages/signUp.html',
-            controller: 'SignUpController',
-            access: {
-                redirectIfAuthenticated: '/'
-            }
+            controller: 'signUpController'
         })
         .otherwise({
             redirectTo: '/signUp'

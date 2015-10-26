@@ -1,7 +1,7 @@
-app.controller('loginController', function($scope, userService, roles) {
+app.controller('signUpController', function($scope, userService, roles) {
     $scope.users = [];
 
-    $scope.signup = function () {
+    $scope.signUp = function () {
         userService.signup($scope.currentUser.Username, $scope.currentUser.Password).then(function() {
             $scope.currentUser = {};
 
