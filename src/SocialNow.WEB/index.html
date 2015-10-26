@@ -1,25 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SocialNow</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="content/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="content/css/master.min.css">
+    <link rel="stylesheet" href="content/css/skins/_all-skins.min.css">
 </head>
-<body ng-app="socialNowApp">
-    <div ng-view></div>
+<body ng-app="socialNowApp" class="hold-transition skin-yellow-light sidebar-mini">
+    <div class="wrapper">
+        <div ng-view></div>
+    </div>
 
-    <script src="scripts/lib/underscore.min.js"></script>
-    <script src="scripts/angular/lib/angular.min.js"></script>
-    <script src="scripts/angular/lib/angular-route.min.js"></script>
-    <script src="scripts/parse/parse.js"></script>
-    <script src="scripts/parse/initialize.js"></script>
-    <script src="scripts/angular/app.js"></script>
-    <script src="scripts/angular/directives/accessDirective.js"></script>
-    <script src="scripts/angular/services/sessionService.js"></script>
-    <script src="scripts/angular/services/authorizationService.js"></script>
-    <script src="scripts/angular/services/userService.js"></script>
-    <script src="scripts/angular/controllers/loginController.js"></script>
-    <script src="scripts/angular/controllers/signUpController.js"></script>
+    <script src="content/scripts/lib/jQuery-2.1.4.min.js"></script>
+    <script src="content/scripts/lib/jquery-ui.min.js"></script>
+    <script src="content/scripts/lib/bootstrap.min.js"></script>
+    <script src="content/scripts/app/app.min.js"></script>
+
+    <script src="content/scripts/lib/underscore.min.js"></script>
+    <script src="content/scripts/angular/lib/angular.min.js"></script>
+    <script src="content/scripts/angular/lib/angular-route.min.js"></script>
+    <script src="content/scripts/parse/parse.js"></script>
+    <script src="content/scripts/parse/initialize.js"></script>
+    <script src="content/scripts/angular/app.js"></script>
+    <script src="content/scripts/angular/directives/access.js"></script>
+    <script src="content/scripts/angular/directives/linkButton.js"></script>
+    <script src="content/scripts/angular/services/sessionService.js"></script>
+    <script src="content/scripts/angular/services/authorizationService.js"></script>
+    <script src="content/scripts/angular/services/userService.js"></script>
+    <script src="content/scripts/angular/services/roleService.js"></script>
+    <script src="content/scripts/angular/controllers/loginController.js"></script>
+    <script src="content/scripts/angular/controllers/signUpController.js"></script>
 </body>
 </html>

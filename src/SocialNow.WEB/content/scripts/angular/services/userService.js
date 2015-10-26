@@ -1,7 +1,7 @@
 app.service('userService', function ($q, roles, sessionService) {
-    this.logIn = function(username, password) {
+    this.logIn = function(email, password) {
         var deferred = $q.defer();
-        Parse.User.logIn(username, password, {
+        Parse.User.logIn(email, password, {
             success: function(user) {
                 alert("User successfully signed in.");
                 deferred.resolve(user);

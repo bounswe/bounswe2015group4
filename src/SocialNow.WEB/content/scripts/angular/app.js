@@ -18,8 +18,8 @@ app.config(function ($routeProvider, signUpUrl, loginUrl) {
             access: {
                 loginRequired: true
             }
-        }).
-        when(loginUrl,{
+        })
+        .when(loginUrl,{
             templateUrl: 'pages/login.html',
             controller: 'loginController',
             access: {
@@ -32,7 +32,7 @@ app.config(function ($routeProvider, signUpUrl, loginUrl) {
             controller: 'signUpController'
         })
         .otherwise({
-            redirectTo: '/signUp'
+            redirectTo: '/'
         })
 })
 

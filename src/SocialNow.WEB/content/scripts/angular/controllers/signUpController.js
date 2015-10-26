@@ -3,7 +3,6 @@ app.controller('signUpController', function($scope, userService, roleService, ro
 
     var getRoles = function() {
         roleService.getRoles().then(function(roles) {
-            console.log(roles);
             $scope.roles = roles;
             $scope.currentRole = roles[0];
         });
