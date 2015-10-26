@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // Signup failed. Look at the ParseException to see what happened.
                     Log.d("Wrong credentials:", "Not valid username and password");
                     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                    dlgAlert.setMessage("wrong password or username");
+                    dlgAlert.setMessage("Wrong password or username.");
                     dlgAlert.setTitle("Error Message");
                     dlgAlert.setPositiveButton("OK", null);
                     dlgAlert.setCancelable(true);

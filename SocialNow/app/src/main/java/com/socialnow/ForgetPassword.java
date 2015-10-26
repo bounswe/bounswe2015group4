@@ -60,7 +60,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
                             Log.d("Error", "Email is not exist");
                             // An email was successfully sent with reset instructions.
                             AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                            dlgAlert.setMessage("Email is not exist.");
+                            dlgAlert.setMessage("Email does not exist.");
                             dlgAlert.setTitle("Error");
                             dlgAlert.setPositiveButton("OK", null);
                             dlgAlert.setCancelable(true);
