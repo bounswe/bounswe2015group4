@@ -4,8 +4,8 @@
 
 app.controller('signInController', function($scope, userService, roles) {
     $scope.signin = function () {
-        userService.logIn($scope.currentUser.Username, $scope.currentUser.Password).then(function() {
-
+        userService.logIn($scope.currentUser.Username, $scope.currentUser.Password).then(function(user) {
+            console.log("user is : "+ user.username);
 
         });
     }
