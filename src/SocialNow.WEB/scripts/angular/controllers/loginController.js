@@ -1,16 +1,13 @@
+/**
+ * Created by erdem on 24.10.2015.
+ */
+
 app.controller('loginController', function($scope, userService, roles) {
-    $scope.users = [];
-
-    $scope.signup = function () {
-        userService.signup($scope.currentUser.Username, $scope.currentUser.Password).then(function() {
-            $scope.currentUser = {};
+    $scope.signin = function () {
+        userService.logIn($scope.currentUser.Username, $scope.currentUser.Password).then(function(user) {
+            console.log("user is : "+ user.username);
 
         });
     }
 
-    $scope.getUsers = function () {
-        userService.getUsers().then(function(users) {
-            $scope.users = users;
-        });
-    }
 });

@@ -13,12 +13,7 @@ app.service('userService', function ($q, roles, sessionService) {
                 deferred.reject();
             }
         });
-
         return deferred.promise;
-
-
-
-
     }
 
     this.signup = function(username, password) {
