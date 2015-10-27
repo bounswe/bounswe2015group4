@@ -2,7 +2,14 @@ app.controller('homeController', function ($scope, userService, sessionService, 
 
     var getInfo = function () {
 
-        $scope.user = sessionService.getUserInfo();
+        var user = sessionService.getUserInfo();
+        $scope.user = user;
+        $scope.role = user;
+
+    }
+
+    $scope.goToEvents = function () {
+        helperService.goToPage('/events');
 
     }
 

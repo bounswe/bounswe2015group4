@@ -14,6 +14,7 @@ app.service('userService', function ($q, roles, sessionService) {
 
     this.signup = function(email, password, role,name, surname) {
         var deferred = $q.defer();
+
         var user = new Parse.User();
 
         user.set("email", email);
@@ -25,14 +26,14 @@ app.service('userService', function ($q, roles, sessionService) {
         var relation = user.relation("role");
         relation.add(role);
 
-        user.signUp(null, {
+        user.signup(null, {
             success: function (user) {
                 alert("User successfully signed up.");
-                deferred.resolve();
+                deferred.resolve(user);
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
-                deferred.reject();
+                deferred.reject(error);
             }
         });
         return deferred.promise;
@@ -59,6 +60,41 @@ app.service('userService', function ($q, roles, sessionService) {
             }
         });
 
+        return deferred.promise;
+    }
+
+    this.addEvent= function(event, currentUserEmail){
+        var deferred = $q.defer();
+        var query = new Parse.Query(Parse.User);
+        query.equalTo('email',currentUserEmail);
+        query.first({
+            success: function(user) {
+
+              if(!user.get("events"))
+              {
+                  var events = [];
+                  events.push(event);
+                  user.set("events",events);
+              }else
+              {
+                  var events = user.get("events");
+                  events.push(event);
+                  user.set("events",events);
+              }
+                user.save(null, {
+                    success: function (user) {
+                        deferred.resolve(user);
+                    },
+                    error: function () {
+                        deferred.reject(error);
+                    }
+
+                });
+            },
+            error: function(user, error) {
+                deferred.reject(error);
+            }
+        });
         return deferred.promise;
     }
 
