@@ -35,6 +35,7 @@ app.service('userService', function ($q, roles, sessionService) {
                 deferred.reject();
             }
         });
+
         return deferred.promise;
     }
 
@@ -61,5 +62,4 @@ app.service('userService', function ($q, roles, sessionService) {
 
         return deferred.promise;
     }
-
 })

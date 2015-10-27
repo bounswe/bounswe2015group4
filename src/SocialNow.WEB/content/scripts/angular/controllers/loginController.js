@@ -1,10 +1,16 @@
-app.controller('loginController', function($scope, userService, roles, sessionService, helperService) {
-    $scope.login = function () {
-        userService.logIn($scope.currentUser.Email, $scope.currentUser.Password).then(function(user) {
-            sessionService.setUserCredentials($scope.currentUser.Email, user.relation('role'),$scope.currentUser.name,$scope.currentUser.surname);
+app.controller('loginController', function ($scope, userService, roles, sessionService, helperService) {
+    $scope.login = function (isValidForm) {
+        if(!isValidForm) {
+            $scope.submitted = true;
+            return;
+        }
+
+        userService.logIn($scope.currentUser.Email, $scope.currentUser.Password).then(function (user) {
+            sessionService.setUserCredentials($scope.currentUser.Email, user.relation('role'), $scope.currentUser.name, $scope.currentUser.surname);
             helperService.goToPage('/');
-        }, function(error) {
-            alert(error.message);
+        }, function (error) {
+            helperService.consoleError(error.message);
+            $scope.errorMessage = 'Invalid credentials';
         });
     }
 });
