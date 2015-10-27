@@ -9,7 +9,7 @@ app.controller('signUpController', function($scope, userService, roleService, he
     }
 
     $scope.signUp = function () {
-        userService.signup($scope.currentUser.Email, $scope.currentUser.Password, $scope.currentUser.currentRole).then(function() {
+        userService.signup($scope.currentUser.Email, $scope.currentUser.Password, $scope.currentUser.currentRole,$scope.currentUser.name,$scope.currentUser.surname).then(function() {
             sessionService.setUserCredentials($scope.currentUser.Email, $scope.currentRole);
             helperService.goToPage('/');
         });

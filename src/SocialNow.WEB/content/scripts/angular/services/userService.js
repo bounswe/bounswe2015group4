@@ -12,12 +12,15 @@ app.service('userService', function ($q, roles, sessionService) {
         return deferred.promise;
     }
 
-    this.signup = function(username, password, role) {
+    this.signup = function(email, password, role,name, surname) {
         var deferred = $q.defer();
         var user = new Parse.User();
 
-        user.set("username", username);
+        user.set("email", email);
         user.set("password", password);
+        user.set("Name",name);
+        user.set("Surname",surname)
+        user.set("username",email);
 
         var relation = user.relation("role");
         relation.add(role);
