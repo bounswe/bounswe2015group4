@@ -1,27 +1,21 @@
 app.service('authorizationService', function (sessionService) {
-    this.authorize = function (loginRequired, allowedRoles) {
-        var authenticated = sessionService.userInfo.isAuthenticated;
-        var authorizated = !allowedRoles || _.contains(allowedRoles, sessionService.userInfo.role);
+    this.authorize = function () {
+        var authenticated = sessionService.isUserAuthenticated();
 
         var result = {
-            authenticated: authenticated,
-            authorizated: authorizated
+            authenticated: authenticated
         }
 
         return result;
     };
 });
 
-/*app.run(function ($rootScope, $location, authorizationService, loginUrl) {
+app.run(function ($rootScope, $location, authorizationService, loginUrl) {
     $rootScope.$on('$routeChangeStart', function (event, next) {
         if (next.access) {
-            var accessControl = authorizationService.authorize(next.access.loginRequired, next.access.allowedRoles);
+            var accessControl = authorizationService.authorize();
             if (next.access.loginRequired && !accessControl.authenticated) {
                 $location.path(loginUrl).replace();
-            }
-
-            if(!accessControl.authorizated) {
-                event.preventDefault();
             }
 
             if (accessControl.authenticated && next.access.redirectIfAuthenticated) {
@@ -29,4 +23,4 @@ app.service('authorizationService', function (sessionService) {
             }
         }
     });
-});*/
+});

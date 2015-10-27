@@ -1,4 +1,4 @@
-var app = angular.module('socialNowApp', ['ngRoute']);
+var app = angular.module('socialNowApp', ['ngRoute', 'ngCookies']);
 
 app.constant('roles', {
     Student: 1,
@@ -15,6 +15,7 @@ app.config(function ($routeProvider, signUpUrl, loginUrl) {
         .when('/',
         {
             templateUrl: 'pages/home.html',
+            controller: 'homeController',
             access: {
                 loginRequired: true
             }

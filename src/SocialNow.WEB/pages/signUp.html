@@ -7,19 +7,22 @@
 
     <form>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
+        <input type="email" class="form-control" placeholder="Email" ng-model="currentUser.Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
+        <input type="password" class="form-control" placeholder="Password" ng-model="currentUser.Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <select class="form-control" ng-model="currentUser.currentRole" ng-options="role.get('rolename') for role in roles"></select>
       </div>
       <div class="row">
         <div class="col-md-4">
           <button class="btn btn-primary btn-block btn-flat" link-button="'/login'">Back</button>
         </div>
         <div class="col-md-4 col-md-offset-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+          <button type="submit" ng-click="signUp()" class="btn btn-primary btn-block btn-flat">Sign Up</button>
         </div>
       </div>
     </form>
