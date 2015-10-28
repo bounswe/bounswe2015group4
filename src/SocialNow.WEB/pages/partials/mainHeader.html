@@ -94,14 +94,14 @@
                 <li class="dropdown user user-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <img src="~/../content/img/user.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Oğuz Erdoğmuş</span>
+                        <span class="hidden-xs">{{user.name + " " + user.surname}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             <img src="~/../content/img/user.jpg" class="img-circle" alt="User Image">
                             <p>
-                                Oğuz Erdoğmuş - Student
+                               <span >{{user.name + " " + user.surname + "-"+ role.get('rolename')}}</span>
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
@@ -120,7 +120,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a class="btn btn-default btn-flat">Profile</a>
+                                <a class="btn btn-default btn-flat" ng-click="goToEvents()"> Events</a>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-default btn-flat" ng-click="logout()">Log out</a>

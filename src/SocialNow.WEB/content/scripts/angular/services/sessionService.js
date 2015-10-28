@@ -5,7 +5,8 @@ app.service('sessionService', function(roles, $cookies) {
             email: userEmail,
             role: userRole,
             isAuthenticated: true,
-            name : name
+            name : name,
+            surname: surname
         });
     }
 
@@ -15,7 +16,7 @@ app.service('sessionService', function(roles, $cookies) {
     }
 
     this.getUserInfo= function(){
-      return $cookies.get("userInfo");
+      return $cookies.getObject("userInfo");
     }
 
     this.remove = function(key) {

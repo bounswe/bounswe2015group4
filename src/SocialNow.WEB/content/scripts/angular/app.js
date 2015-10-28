@@ -9,8 +9,9 @@ app.constant('roles', {
 
 app.constant('signUpUrl', '/signup');
 app.constant('loginUrl','/login');
+app.constant('eventsUrl','/events');
 
-app.config(function ($routeProvider, signUpUrl, loginUrl) {
+app.config(function ($routeProvider, signUpUrl, loginUrl,eventsUrl) {
     $routeProvider
         .when('/',
         {
@@ -31,6 +32,11 @@ app.config(function ($routeProvider, signUpUrl, loginUrl) {
         {
             templateUrl: 'pages/signUp.html',
             controller: 'signUpController'
+        }).when(eventsUrl,
+        {
+            templateUrl: 'pages/events.html',
+            controller : 'eventsController'
+
         })
         .otherwise({
             redirectTo: '/'
