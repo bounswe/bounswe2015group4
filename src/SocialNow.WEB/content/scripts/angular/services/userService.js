@@ -1,4 +1,4 @@
-app.service('userService', function ($q, roles, sessionService) {
+app.service('userService', function ($q, roles) {
     this.logIn = function(email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {
@@ -9,30 +9,29 @@ app.service('userService', function ($q, roles, sessionService) {
                 deferred.reject(error);
             }
         });
+
         return deferred.promise;
     }
 
-    this.signup = function(email, password, role,name, surname) {
+    this.signup = function(currentUser) {
         var deferred = $q.defer();
 
         var user = new Parse.User();
 
-        user.set("email", email);
-        user.set("password", password);
-        user.set("Name",name);
-        user.set("Surname",surname)
-        user.set("username",email);
+        user.set("email", currentUser.Email);
+        user.set("username", currentUser.Email);
+        user.set("password", currentUser.Password);
+        user.set("Name", currentUser.name);
+        user.set("Surname", currentUser.surname)
 
         var relation = user.relation("role");
-        relation.add(role);
+        relation.add(currentUser.currentRole);
 
         user.signup(null, {
             success: function (user) {
-                alert("User successfully signed up.");
                 deferred.resolve(user);
             },
             error: function (user, error) {
-                alert("Error: " + error.code + " " + error.message);
                 deferred.reject(error);
             }
         });
@@ -63,8 +62,6 @@ app.service('userService', function ($q, roles, sessionService) {
 
         return deferred.promise;
     }
-<<<<<<< HEAD
-=======
 
     this.addEvent= function(event, currentUserEmail){
         var deferred = $q.defer();
@@ -100,6 +97,4 @@ app.service('userService', function ($q, roles, sessionService) {
         });
         return deferred.promise;
     }
-
->>>>>>> refs/remotes/origin/master
 })
