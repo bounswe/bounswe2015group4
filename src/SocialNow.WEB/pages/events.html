@@ -2,8 +2,6 @@
 <ng-include src="'~/../pages/partials/mainSidebar.html'"></ng-include>
 
 <div class="glyphicon-blackboard" style="min-height: 380px;">
-    <!-- content goes here -->
-
 
     <div class="login-box">
         <div class="login-logo">
@@ -12,7 +10,7 @@
         <div class="login-box-body">
             <p class="login-box-msg">You Can Create Your Event</p>
 
-            <form>
+            <form novalidate ng-submit="createEvent()">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" placeholder="Title" ng-model="eventTitle">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -21,22 +19,17 @@
                     <input type="text" class="form-control" placeholder="Description" ng-model="eventDescription">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
-                <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" ng-model="eventDate"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                <!-- Date and time range -->
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control pull-right" id="eventTime">
+                    <span class="glyphicon glyphicon-time form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-8">
-                        <button type="submit" ng-click="createEvent()" class="btn btn-primary btn-block btn-flat">Add
-                            Event
-                        </button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Add Event</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-
 </div>

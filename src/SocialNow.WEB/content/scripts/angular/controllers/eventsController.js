@@ -24,11 +24,15 @@ app.controller('eventsController', function ($scope, sessionService, userService
 
             alert(error.message);
         });
-
-
     }
 
-
     getInfo();
+
+    var datePickerElement = angular.element(document.getElementById('eventTime'));
+    datePickerElement.daterangepicker({
+        timePicker: true, timePickerIncrement: 15, locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
+    });
 
 });

@@ -36,7 +36,6 @@ app.config(function ($routeProvider, signUpUrl, loginUrl,eventsUrl) {
         {
             templateUrl: 'pages/events.html',
             controller : 'eventsController'
-
         })
         .otherwise({
             redirectTo: '/'
