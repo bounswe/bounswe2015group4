@@ -12,5 +12,13 @@
     <dimen name="stroke">1dp</dimen>
     <dimen name="small_icon">20dp</dimen>
     <dimen name="big_icon">110dp</dimen>
+    <dimen name="mid_icon">80dp</dimen>
     <dimen name="b_padding">10dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_height">15dp</dimen>
+    <dimen name="fab_width">15dp</dimen>
+    <dimen name="mfab_height">10dp</dimen>
+    <dimen name="mfab_width">10dp</dimen>
+    <dimen name="mfab_margin">8dp</dimen>
 </resources>

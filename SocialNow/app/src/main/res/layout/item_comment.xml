@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background="@drawable/item_box">
+
+    <ImageView
+        android:id="@+id/ivAuthor"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:maxHeight="30dp"
+        android:maxWidth="30dp"
+        android:src="@drawable/profilpic"
+        android:layout_marginRight="@dimen/small_margin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username"
+        android:id="@+id/tvParti"
+        android:layout_toRightOf="@id/ivAuthor"
+        android:layout_toEndOf="@id/ivAuthor"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Date and Time"
+        android:id="@+id/tvDnT"
+        android:layout_toRightOf="@+id/ivAuthor"
+        android:layout_toEndOf="@+id/ivAuthor"
+        android:layout_below="@id/tvParti"
+        android:layout_marginBottom="@dimen/big_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="This is a comment."
+        android:id="@+id/tvComment"
+        android:layout_below="@id/tvDnT"/>
+
+</RelativeLayout>

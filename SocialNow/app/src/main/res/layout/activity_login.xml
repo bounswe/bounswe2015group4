@@ -120,12 +120,13 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Forgot Password?"
         android:id="@+id/bFpw"
         android:layout_below="@id/tVdMail"
         android:layout_alignParentRight="true"
-        android:clickable="true"/>
+        android:background="@drawable/cyanbutton"
+        android:clickable="true"
+        style="@style/dBigButton" />
 
 </RelativeLayout>

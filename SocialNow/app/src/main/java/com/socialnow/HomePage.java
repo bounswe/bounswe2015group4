@@ -1,24 +1,152 @@
 package com.socialnow;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.parse.ParseUser;
 
-public class HomePage extends AppCompatActivity {
+import static com.socialnow.R.string.drawer_open;
+
+public class HomePage extends AppCompatActivity implements AdapterView.OnItemClickListener {
     Button logout;
+    private DrawerLayout drawerLayout;
+    private ListView listview;
+    private String[] panel;
+    private ActionBarDrawerToggle drawerListener;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        drawerLayout =(DrawerLayout)findViewById(R.id.drawerLayout);
+        panel=getResources().getStringArray(R.array.panel);
+        listview =(ListView)findViewById(R.id.drawerList);
+        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, panel));
+        listview.setOnItemClickListener(this);
+        drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
+        drawerListener = new ActionBarDrawerToggle(this,drawerLayout,
+                drawer_open, R.string.drawer_close){
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+
+        };
+        drawerLayout.setDrawerListener(drawerListener);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Set default fragment to homepage
+        fragment = new HomeFrag();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).commit();
+        setTitle(panel[0]);
+
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (drawerListener.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        drawerListener.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate (Bundle savedInstanceState){
+
+        super.onPostCreate(savedInstanceState);
+        drawerListener.syncState();
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position == 5) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null) {
+                ParseUser.logOut();
+                Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i2);
+            } else {
+                Log.d("error_logout", "logout failed");
+            }
+        }
+
+        else {
+            Fragment fragment;
+            switch (position){
+                case 0:
+                    fragment = new HomeFrag();
+                    break;
+
+                case 1:
+                    fragment = new ProfileFrag();
+                    break;
+
+                case 2:
+                    fragment = new EventFrag();
+                    break;
+
+                case 3:
+                    fragment = new GroupFrag();
+                    break;
+
+                case 4:
+                    fragment = new NotiFrag();
+
+                default:
+                    fragment = new HomeFrag();
+                    break;
+            }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).commit();
+            drawerLayout.closeDrawers();
+            selectItem(position);
+        }
+    }
+    public void selectItem(int position)
+    {
+        listview.setItemChecked(position, true);
+        setTitle(panel[position]);
+    }
+
+    public void setTitle(String title)
+    {
+        getSupportActionBar().setTitle(title);
+    }
+
+
 
     public void log_out(View v){
         ParseUser currentUser = ParseUser.getCurrentUser();

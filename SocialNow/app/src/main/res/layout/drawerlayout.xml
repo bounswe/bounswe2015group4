@@ -5,20 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".HomePage">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </RelativeLayout>
 
     <ListView
         android:id="@+id/drawerList"
-        android:divider="@null"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:entries="@array/panel"
-        android:layout_gravity="left"
-        android:background="@color/drawerBg"/>
+        android:layout_gravity="start"
+        android:background="#f1f2f7"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent" />
 
 </android.support.v4.widget.DrawerLayout>

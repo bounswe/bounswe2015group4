@@ -12,4 +12,5 @@
     <color name="textColorLink">#141f72</color>
     <color name="textDarkButton">#ffffff</color>
     <color name="black">#000</color>
+    <color name="drawerBg">#FFFFFF</color>
 </resources>

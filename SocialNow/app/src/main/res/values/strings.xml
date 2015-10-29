@@ -18,8 +18,26 @@
         <item>Alumni</item>
     </string-array>
     <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>
-    <string name="title_activity_home_page">HomePage</string>
+    <string name="title_activity_home_page">Home Page</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string-array name="panel">
+        <item>Home</item>
+        <item>Profile</item>
+        <item>Events</item>
+        <item>Groups</item>
+        <item>Notifications</item>
+        <item>LOG OUT</item>
+    </string-array>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    <string-array name="events">
+        <item>Event 1</item>
+        <item>Event 2</item>
+        <item>Event 3</item>
+        <item>Event 4</item>
+    </string-array>
+    <string name="title_activity_event">Event Title</string>
+    <string name="description">Our project is about creating a social network for people in Bogazici University CmpE department. It will be a closed system in which people can create their own profile pages and can share their interest topics. Users will also be able to create interest groups and events. There will be an android application and a website for this social network project.</string>
 </resources>

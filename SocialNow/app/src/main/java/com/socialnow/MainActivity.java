@@ -1,9 +1,8 @@
 package com.socialnow;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 
 import com.parse.Parse;
 import com.parse.ParseUser;

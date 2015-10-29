@@ -27,6 +27,14 @@
             android:label="@string/title_activity_home_page" >
         </activity>
         <activity android:name=".Event" />
+        <activity
+            android:name=".EventActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity android:name=".PartiActivity">
+        </activity>
     </application>
+
+
 
 </manifest>
