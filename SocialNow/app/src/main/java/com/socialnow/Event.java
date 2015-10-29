@@ -45,6 +45,7 @@ public class Event extends Activity {
             }
         });
     }
+    //push testing
 
     void getData() {
         ParseQuery query = new ParseQuery("Event");
