@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-app.service('userService', function ($q, roles) {
-=======
 app.service('userService', function ($q, roles, sessionService) {
->>>>>>> origin/master
     this.logIn = function (email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {
             success: function (user) {
-<<<<<<< HEAD
                 var userClass = Parse.Object.extend("User");
                 var query = new Parse.Query(userClass);
                 query.equalTo("objectId", user.id);
@@ -27,12 +22,10 @@ app.service('userService', function ($q, roles, sessionService) {
             },
             error: function (user, error) {
                 deferred.reject('Invalid credentials');
-=======
                 deferred.resolve(user);
             },
             error: function (user, error) {
                 deferred.reject(error);
->>>>>>> origin/master
             }
         });
 
@@ -66,7 +59,6 @@ app.service('userService', function ($q, roles, sessionService) {
         return deferred.promise;
     }
 
-<<<<<<< HEAD
     this.passwordReset = function (email) {
         var deferred = $q.defer();
         Parse.User.requestPasswordReset(email, {
@@ -81,8 +73,6 @@ app.service('userService', function ($q, roles, sessionService) {
         return deferred.promise;
     }
 
-=======
->>>>>>> origin/master
     this.getUsers = function () {
         var deferred = $q.defer();
         var userQuery = Parse.Object.extend("User");
@@ -134,8 +124,6 @@ app.service('userService', function ($q, roles, sessionService) {
                 });
             },
             error: function (user, error) {
-<<<<<<< HEAD
-=======
                 deferred.reject(error);
             }
         });
@@ -163,7 +151,6 @@ app.service('userService', function ($q, roles, sessionService) {
                 deferred.resolve(user);
             },
             error: function (user, error) {
->>>>>>> origin/master
                 deferred.reject(error);
             }
         });
