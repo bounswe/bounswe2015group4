@@ -1,4 +1,4 @@
-app.service('eventService', function ($q) {
+app.service('eventService', function ($q, userService) {
 
     this.createEvent = function(title, description, date) {
         var deferred = $q.defer();
@@ -14,7 +14,6 @@ app.service('eventService', function ($q) {
 
         event.save(null, {
             success: function (event) {
-                alert("event successfully saved");
                 deferred.resolve(event);
             },
             error: function (event, error) {
@@ -22,6 +21,26 @@ app.service('eventService', function ($q) {
                 deferred.reject(error);
             }
         });
+        return deferred.promise;
+    }
+
+// User service'ten currentuser object get and get the events
+    /**
+     * uses userservice to get currentUser object,
+     * returns the event without any query since userservice did it.
+     *
+     * @returns {bC.promise|Function|promise|d.promise|*}
+     */
+    this.getEventsOfCurrentUser = function(){
+        var deferred = $q.defer();
+            userService.getCurrentUser().then(function(user){
+                    var events = user.get("events");
+                    deferred.resolve(events);
+            },
+            function(error){
+                alert("Error: " + error.code + " " + error.message);
+                deferred.reject(error);
+            });
         return deferred.promise;
     }
 

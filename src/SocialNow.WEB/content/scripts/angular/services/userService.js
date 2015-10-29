@@ -1,11 +1,11 @@
-app.service('userService', function ($q, roles) {
-    this.logIn = function(email, password) {
+app.service('userService', function ($q, roles, sessionService) {
+    this.logIn = function (email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {
-            success: function(user) {
+            success: function (user) {
                 deferred.resolve(user);
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 deferred.reject(error);
             }
         });
@@ -13,7 +13,7 @@ app.service('userService', function ($q, roles) {
         return deferred.promise;
     }
 
-    this.signup = function(currentUser) {
+    this.signup = function (currentUser) {
         var deferred = $q.defer();
 
         var user = new Parse.User();
@@ -29,6 +29,7 @@ app.service('userService', function ($q, roles) {
 
         user.signup(null, {
             success: function (user) {
+
                 deferred.resolve(user);
             },
             error: function (user, error) {
@@ -39,14 +40,14 @@ app.service('userService', function ($q, roles) {
         return deferred.promise;
     }
 
-    this.getUsers = function() {
+    this.getUsers = function () {
         var deferred = $q.defer();
         var userQuery = Parse.Object.extend("User");
         var query = new Parse.Query(userQuery);
         var users = [];
         query.find({
-            success: function(results) {
-                results.forEach(function(userResult) {
+            success: function (results) {
+                results.forEach(function (userResult) {
                     users.push({
                         username: userResult.get("username")
                     })
@@ -54,7 +55,7 @@ app.service('userService', function ($q, roles) {
 
                 deferred.resolve(users);
             },
-            error: function(error) {
+            error: function (error) {
                 console.log("Error: " + error.code + " " + error.message);
                 deferred.reject();
             }
@@ -63,24 +64,22 @@ app.service('userService', function ($q, roles) {
         return deferred.promise;
     }
 
-    this.addEvent= function(event, currentUserEmail){
+    this.addEvent = function (event, currentUserEmail) {
         var deferred = $q.defer();
         var query = new Parse.Query(Parse.User);
-        query.equalTo('email',currentUserEmail);
+        query.equalTo('email', currentUserEmail);
         query.first({
-            success: function(user) {
+            success: function (user) {
 
-              if(!user.get("events"))
-              {
-                  var events = [];
-                  events.push(event);
-                  user.set("events",events);
-              }else
-              {
-                  var events = user.get("events");
-                  events.push(event);
-                  user.set("events",events);
-              }
+                if (!user.get("events")) {
+                    var events = [];
+                    events.push(event);
+                    user.set("events", events);
+                } else {
+                    var events = user.get("events");
+                    events.push(event);
+                    user.set("events", events);
+                }
                 user.save(null, {
                     success: function (user) {
                         deferred.resolve(user);
@@ -91,10 +90,38 @@ app.service('userService', function ($q, roles) {
 
                 });
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 deferred.reject(error);
             }
         });
         return deferred.promise;
     }
+
+    /**
+     * Returns the object of current user
+     *
+     *
+     *
+     * @returns {bC.promise|Function|promise|d.promise|*}
+     */
+    this.getCurrentUser = function () {
+        var deferred = $q.defer();
+        var currentUserEmail = sessionService.getUserInfo().email;
+        console.log(currentUserEmail);
+        var query = new Parse.Query(Parse.User);
+        query.include('events');               // events is pointer array to Event Table,
+                                             // this ensures us to get the real data of these to
+        query.equalTo('email', currentUserEmail);
+        query.first({
+            success: function (user) {
+             console.log(user);
+                deferred.resolve(user);
+            },
+            error: function (user, error) {
+                deferred.reject(error);
+            }
+        });
+        return deferred.promise;
+    }
+
 })
