@@ -1,4 +1,4 @@
-app.controller('signUpController', function($scope, userService, roleService, helperService, sessionService) {
+app.controller('signUpController', function($scope, userService, roleService, helperService, sessionService, $timeout) {
     $scope.currentUser = {};
 
     var getRoles = function() {
@@ -15,9 +15,14 @@ app.controller('signUpController', function($scope, userService, roleService, he
         }
 
         userService.signup($scope.currentUser).then(function() {
-            helperService.goToPage('/login');
-        }, function() {
-            $scope.message = 'An error occurred';
+            $scope.errorMessage = '';
+            $scope.successMessage = 'Activation email was sent';
+            $timeout(function() {
+                helperService.goToPage('/login');
+            }, 3000);
+
+        }, function(error) {
+            $scope.errorMessage = error.message;
         });
     }
 

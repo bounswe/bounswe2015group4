@@ -1,19 +1,34 @@
 app.service('userService', function ($q, roles) {
-    this.logIn = function(email, password) {
+    this.logIn = function (email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {
-            success: function(user) {
-                deferred.resolve(user);
+            success: function (user) {
+                var userClass = Parse.Object.extend("User");
+                var query = new Parse.Query(userClass);
+                query.equalTo("objectId", user.id);
+                query.equalTo("emailVerified", true);
+                query.find({
+                    success: function (results) {
+                        if (results.length > 0) {
+                            deferred.resolve(user);
+                        } else {
+                            deferred.reject('Email verification has not done yet');
+                        }
+                    },
+                    error: function () {
+                        deferred.reject('Email verification has not done yet');
+                    }
+                });
             },
-            error: function(user, error) {
-                deferred.reject(error);
+            error: function (user, error) {
+                deferred.reject('Invalid credentials');
             }
         });
 
         return deferred.promise;
     }
 
-    this.signup = function(currentUser) {
+    this.signup = function (currentUser) {
         var deferred = $q.defer();
 
         var user = new Parse.User();
@@ -27,7 +42,7 @@ app.service('userService', function ($q, roles) {
         var relation = user.relation("role");
         relation.add(currentUser.currentRole);
 
-        user.signup(null, {
+        user.signUp(null, {
             success: function (user) {
                 deferred.resolve(user);
             },
@@ -39,14 +54,28 @@ app.service('userService', function ($q, roles) {
         return deferred.promise;
     }
 
-    this.getUsers = function() {
+    this.passwordReset = function (email) {
+        var deferred = $q.defer();
+        Parse.User.requestPasswordReset(email, {
+            success: function () {
+                deferred.resolve('Password reset email sent');
+            },
+            error: function (error) {
+                deferred.reject('An error occurred');
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    this.getUsers = function () {
         var deferred = $q.defer();
         var userQuery = Parse.Object.extend("User");
         var query = new Parse.Query(userQuery);
         var users = [];
         query.find({
-            success: function(results) {
-                results.forEach(function(userResult) {
+            success: function (results) {
+                results.forEach(function (userResult) {
                     users.push({
                         username: userResult.get("username")
                     })
@@ -54,7 +83,7 @@ app.service('userService', function ($q, roles) {
 
                 deferred.resolve(users);
             },
-            error: function(error) {
+            error: function (error) {
                 console.log("Error: " + error.code + " " + error.message);
                 deferred.reject();
             }
@@ -63,24 +92,22 @@ app.service('userService', function ($q, roles) {
         return deferred.promise;
     }
 
-    this.addEvent= function(event, currentUserEmail){
+    this.addEvent = function (event, currentUserEmail) {
         var deferred = $q.defer();
         var query = new Parse.Query(Parse.User);
-        query.equalTo('email',currentUserEmail);
+        query.equalTo('email', currentUserEmail);
         query.first({
-            success: function(user) {
+            success: function (user) {
 
-              if(!user.get("events"))
-              {
-                  var events = [];
-                  events.push(event);
-                  user.set("events",events);
-              }else
-              {
-                  var events = user.get("events");
-                  events.push(event);
-                  user.set("events",events);
-              }
+                if (!user.get("events")) {
+                    var events = [];
+                    events.push(event);
+                    user.set("events", events);
+                } else {
+                    var events = user.get("events");
+                    events.push(event);
+                    user.set("events", events);
+                }
                 user.save(null, {
                     success: function (user) {
                         deferred.resolve(user);
@@ -91,7 +118,7 @@ app.service('userService', function ($q, roles) {
 
                 });
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 deferred.reject(error);
             }
         });

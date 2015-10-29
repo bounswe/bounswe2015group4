@@ -1,70 +1,81 @@
 <div class="login-box">
-  <div class="login-logo">
-    <a style="color:#0097bc;">SocialNow</a>
-  </div>
-  <div class="login-box-body">
-    <p class="login-box-msg">Sign Up</p>
+    <div class="login-logo">
+        <a style="color:#0097bc;">SocialNow</a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign Up</p>
 
-    <form novalidate name="signUpForm" ng-submit="signUp(signUpForm.$valid)">
-      <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.Email" required ng-pattern="/^[a-z0-9.\-_]+@boun\.edu\.tr$/">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        <div ng-show="signUpForm.email.$error.required && submitted">
-          <message type="error" display="'Email field is required'"></message>
-        </div>
-        <div ng-show="!signUpForm.email.$error.required && signUpForm.email.$error.pattern && submitted">
-          <message type="error" display="'Email must have boun.edu.tr extension'"></message>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="name" placeholder="Name" ng-model="currentUser.name" required>
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-        <div ng-show="signUpForm.name.$error.required && submitted">
-          <message type="error" display="'Name field is required'"></message>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="surname" placeholder="Surname" ng-model="currentUser.surname" required>
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-        <div ng-show="signUpForm.surname.$error.required && submitted">
-          <message type="error" display="'Surname field is required'"></message>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" placeholder="Password" ng-model="currentUser.Password" required ng-minlength="6">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        <div ng-show="signUpForm.password.$error.required && submitted">
-          <message type="error" display="'Password field is required'"></message>
-        </div>
-        <div ng-show="!signUpForm.password.$error.required && signUpForm.password.$error.minlength && submitted">
-          <message type="error" display="'Minimum password length is 6'"></message>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="repassword" placeholder="Confirm Password" compare-to="currentUser.Password" ng-model="currentUser.RePassword" required>
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        <div ng-show="signUpForm.repassword.$error.required && submitted">
-          <message type="error" display="'Re-Password field is required'"></message>
-        </div>
-        <div ng-show="!signUpForm.repassword.$error.required && signUpForm.repassword.$error.compareTo && submitted">
-          <message type="error" display="'Password do not match'"></message>
-        </div>
-      </div>
-      <div class="form-group has-feedback">
-        <select class="form-control" ng-model="currentUser.currentRole" ng-options="role.get('rolename') for role in roles"></select>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <button class="btn btn-primary btn-block btn-flat" link-button="'/login'">Back</button>
-        </div>
-        <div class="col-md-4 col-md-offset-4">
-          <button type="submit" ng-click="signUp()" class="btn btn-primary btn-block btn-flat">Sign Up</button>
-        </div>
-      </div>
-      <div class="row">
-        <message type="success" display="message"></message>
-        <message type="error" display="message"></message>
-      </div>
-    </form>
-  </div>
+        <form novalidate name="signUpForm" ng-submit="signUp(signUpForm.$valid)">
+            <div class="form-group has-feedback">
+                <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.Email"
+                       required ng-pattern="/^[a-z0-9.\-_]+@boun\.edu\.tr$/">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+
+                <div ng-show="signUpForm.email.$error.required && submitted">
+                    <message type="error" display="'Email field is required'"></message>
+                </div>
+                <div ng-show="!signUpForm.email.$error.required && signUpForm.email.$error.pattern && submitted">
+                    <message type="error" display="'Email must have boun.edu.tr extension'"></message>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="name" placeholder="Name" ng-model="currentUser.name"
+                       required>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                <div ng-show="signUpForm.name.$error.required && submitted">
+                    <message type="error" display="'Name field is required'"></message>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" name="surname" placeholder="Surname"
+                       ng-model="currentUser.surname" required>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                <div ng-show="signUpForm.surname.$error.required && submitted">
+                    <message type="error" display="'Surname field is required'"></message>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="password" placeholder="Password"
+                       ng-model="currentUser.Password" required ng-minlength="6">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                <div ng-show="signUpForm.password.$error.required && submitted">
+                    <message type="error" display="'Password field is required'"></message>
+                </div>
+                <div ng-show="!signUpForm.password.$error.required && signUpForm.password.$error.minlength && submitted">
+                    <message type="error" display="'Minimum password length is 6'"></message>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" name="repassword" placeholder="Confirm Password"
+                       compare-to="currentUser.Password" ng-model="currentUser.RePassword" required>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                <div ng-show="signUpForm.repassword.$error.required && submitted">
+                    <message type="error" display="'Re-Password field is required'"></message>
+                </div>
+                <div ng-show="!signUpForm.repassword.$error.required && signUpForm.repassword.$error.compareTo && submitted">
+                    <message type="error" display="'Password do not match'"></message>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <select class="form-control" ng-model="currentUser.currentRole"
+                        ng-options="role.get('rolename') for role in roles"></select>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-primary btn-block btn-flat" link-button="'/login'">Back</button>
+                </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+                </div>
+            </div>
+            <div class="row">
+                <message type="success" display="successMessage"></message>
+                <message type="error" display="errorMessage"></message>
+            </div>
+        </form>
+    </div>
 </div>

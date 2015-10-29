@@ -9,8 +9,7 @@ app.controller('loginController', function ($scope, userService, roles, sessionS
             sessionService.setUserCredentials($scope.currentUser.Email, user.relation('role'), user.get('name'), user.get("surname"));
             helperService.goToPage('/');
         }, function (error) {
-            helperService.consoleError(error.message);
-            $scope.errorMessage = 'Invalid credentials';
+            $scope.errorMessage = error;
         });
     }
 });

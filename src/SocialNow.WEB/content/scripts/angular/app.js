@@ -3,15 +3,14 @@ var app = angular.module('socialNowApp', ['ngRoute', 'ngCookies']);
 app.constant('roles', {
     Student: 1,
     Instructor: 2,
-    TA: 3,
-    All: 4
+    TA: 3
 });
 
 app.constant('signUpUrl', '/signup');
-app.constant('loginUrl','/login');
-app.constant('eventsUrl','/events');
+app.constant('loginUrl', '/login');
+app.constant('eventsUrl', '/events');
 
-app.config(function ($routeProvider, signUpUrl, loginUrl,eventsUrl) {
+app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
     $routeProvider
         .when('/',
         {
@@ -21,7 +20,7 @@ app.config(function ($routeProvider, signUpUrl, loginUrl,eventsUrl) {
                 loginRequired: true
             }
         })
-        .when(loginUrl,{
+        .when(loginUrl, {
             templateUrl: 'pages/login.html',
             controller: 'loginController',
             access: {
@@ -32,10 +31,15 @@ app.config(function ($routeProvider, signUpUrl, loginUrl,eventsUrl) {
         {
             templateUrl: 'pages/signUp.html',
             controller: 'signUpController'
-        }).when(eventsUrl,
+        })
+        .when('/forgot-password', {
+            templateUrl: 'pages/forgotPassword.html',
+            controller: 'forgotPasswordController'
+        })
+        .when(eventsUrl,
         {
             templateUrl: 'pages/events.html',
-            controller : 'eventsController'
+            controller: 'eventsController'
         })
         .otherwise({
             redirectTo: '/'
