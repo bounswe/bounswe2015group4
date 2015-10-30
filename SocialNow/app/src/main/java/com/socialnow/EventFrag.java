@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,14 +53,12 @@ public class EventFrag extends Fragment {
         getData();
 
 
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO go to detail of the event
                 Log.d("List check","Show me datil of the event");
-
             }
 
         });
@@ -89,6 +88,14 @@ public class EventFrag extends Fragment {
             eventlocation.setText("Lol");
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
             eventhost.setText("Lol");
+
+            FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fAdd);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO make it connected to the edit event page
+                }
+            });
 
             return v;
         }
