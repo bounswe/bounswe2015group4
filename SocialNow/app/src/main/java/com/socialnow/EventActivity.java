@@ -43,7 +43,7 @@ public class EventActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO make it to be a floating action menu for users to share event, make comments and so on.....
+                //TODO make it to be a floating action menu for users to share event, make comments and so on......
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
