@@ -58,9 +58,17 @@ public class EventFrag extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO go to detail of the event
-                Log.d("List check","Show me datil of the event");
+                Log.d("List check", "Show me datil of the event");
             }
 
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fAdd);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO make it connected to the edit event page
+            }
         });
 
         return v;
@@ -89,13 +97,6 @@ public class EventFrag extends Fragment {
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
             eventhost.setText("Lol");
 
-            FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fAdd);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO make it connected to the edit event page
-                }
-            });
 
             return v;
         }
