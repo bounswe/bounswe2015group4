@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +24,7 @@ import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,8 +39,9 @@ public class EventFrag extends Fragment {
     List<String> title;
     List<Date> date;
     List<Bitmap> photo;
+    List<String> location;
+    List<String> hostName;
     int maxCount = 0;
-
 
 
     @Nullable
@@ -50,6 +53,8 @@ public class EventFrag extends Fragment {
         title = new LinkedList<String>();
         date = new LinkedList<Date>();
         photo = new LinkedList<Bitmap>();
+        location = new LinkedList<String>();
+        hostName = new LinkedList<String>();
         getData();
 
 
@@ -81,7 +86,7 @@ public class EventFrag extends Fragment {
         public MyAdapter(Context context, int resource, List objects) {
             super(context, resource, objects);
         }
-// Push
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_event,null);
@@ -91,11 +96,10 @@ public class EventFrag extends Fragment {
             img.setImageBitmap(photo.get(position));
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
             eventdate.setText(date.get(position).toString());
-            //TODO add location and host name
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
-            eventlocation.setText("Lol");
+            eventlocation.setText(location.get(position));
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
-            eventhost.setText("Lol");
+            eventhost.setText(hostName.get(position));
 
 
             return v;
@@ -104,6 +108,7 @@ public class EventFrag extends Fragment {
 
     void getData() {
         ParseQuery query = new ParseQuery("Event");
+        query.include("event_host");
         query.findInBackground(new FindCallback() {
             @Override
             public void done(List objects, com.parse.ParseException e) {
@@ -120,6 +125,8 @@ public class EventFrag extends Fragment {
                     for (int i = 0; i < maxCount; i++) {
                         title.add(count, myObject.get(i).getString("title"));
                         date.add(count, myObject.get(i).getDate("event_date"));
+                        location.add(count, myObject.get(i).getString("event_location"));
+                        hostName.add(count, myObject.get(i).getParseObject("event_host").getString("Name") + " " + myObject.get(i).getParseObject("event_host").getString("Surname"));
                         fileObject = (ParseFile) myObject.get(i).getParseFile("event_photo");
                         if (fileObject != null) {
                             try {
