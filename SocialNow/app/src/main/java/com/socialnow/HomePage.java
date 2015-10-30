@@ -1,5 +1,6 @@
 package com.socialnow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -9,12 +10,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -25,6 +31,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     private DrawerLayout drawerLayout;
     private ListView listview;
     private String[] panel;
+    //Will be changed later depending the menu items we would like to include
+    int [] img ={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     private ActionBarDrawerToggle drawerListener;
     Fragment fragment;
 
@@ -36,7 +44,10 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         drawerLayout =(DrawerLayout)findViewById(R.id.drawerLayout);
         panel=getResources().getStringArray(R.array.panel);
         listview =(ListView)findViewById(R.id.drawerList);
-        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, panel));
+        //listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, panel));
+        ListAdapter mAdapter = new MyAdapter(this,R.layout.item_drawer,panel);
+        listview.setAdapter(mAdapter);
+
         listview.setOnItemClickListener(this);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
         drawerListener = new ActionBarDrawerToggle(this,drawerLayout,
@@ -63,6 +74,26 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.mainContent,fragment).commit();
         setTitle(panel[0]);
+
+    }
+    class MyAdapter extends ArrayAdapter<String> {
+        public MyAdapter(Context context, int resource, String[] panel) {
+            super(context, R.layout.item_drawer, panel);
+        }
+
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent){
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_drawer, parent, false);
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvDrawer);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivDrawer);
+            String item = getItem(position);
+            mText.setText(item);
+            mImg.setImageResource(img[position]);
+            return customView;
+
+        }
 
     }
 
