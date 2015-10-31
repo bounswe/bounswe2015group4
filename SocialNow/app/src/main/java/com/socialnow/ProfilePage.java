@@ -22,8 +22,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import android.widget.ImageView;
 
@@ -32,6 +35,7 @@ public class ProfilePage extends AppCompatActivity {
     ParseUser current_user = ParseUser.getCurrentUser();
     String user_id= current_user.getObjectId();
     ImageView pp_imageView;
+
     private static final int SELECTED_PICTURE = 1;
 
     @Override
@@ -66,8 +70,11 @@ public class ProfilePage extends AppCompatActivity {
         {
             if(reqCode == 1)
             {
+
                 Uri uri = data.getData();
-                pp_imageView.setImageURI(data.getData());
+                pp_imageView.setImageURI(uri);
+
+                //
                 String[] projection = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
@@ -76,11 +83,22 @@ public class ProfilePage extends AppCompatActivity {
                 int column_index = cursor.getColumnIndex(projection[0]);
                 String file_path = cursor.getString(column_index);
                 cursor.close();
+                //
 
-                Bitmap your_selected_image = BitmapFactory.decodeFile(file_path);
-                Drawable d = new BitmapDrawable(your_selected_image);
-                pp_imageView.setBackground(d);
-                current_user.put("profile_picture", data.getData().toString());
+                File photo = new File(file_path);
+
+                Bitmap selected_img = BitmapFactory.decodeFile(file_path);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                selected_img.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                ParseFile fileObject = new ParseFile("DocImage.jpg", stream.toByteArray());
+
+                    fileObject.saveInBackground();
+                    current_user.put("profile_picture", fileObject);
+                    current_user.saveInBackground();
+
+                /*Drawable d = new BitmapDrawable(your_selected_image);
+                pp_imageView.setBackground(d);*/
+                pp_imageView.setImageBitmap(selected_img);
 
 
             }
