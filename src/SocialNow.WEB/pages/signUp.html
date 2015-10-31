@@ -5,7 +5,7 @@
     <div class="login-box-body">
         <p class="login-box-msg">Sign Up</p>
 
-        <form novalidate name="signUpForm" ng-submit="signUp(signUpForm.$valid)">
+        <form novalidate name="signUpForm">
             <div class="form-group has-feedback">
                 <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.Email"
                        required ng-pattern="/^[a-z0-9.\-_]+@boun\.edu\.tr$/">
@@ -69,7 +69,7 @@
                     <button class="btn btn-primary btn-block btn-flat" link-button="'/login'">Back</button>
                 </div>
                 <div class="col-md-4 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+                    <button type="submit" ng-click="signUp(signUpForm.$valid)" class="btn btn-primary btn-block btn-flat">Sign Up</button>
                 </div>
             </div>
             <div class="row">
