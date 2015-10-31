@@ -2,6 +2,7 @@ package com.socialnow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -59,13 +60,13 @@ public class EventFrag extends Fragment {
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO go to detail of the event
-                Log.d("List check", "Show me datil of the event");
+                Object listItem = listView.getItemAtPosition(position);
+                Intent i2 = new Intent(getActivity(), EventActivity.class);
+                i2.putExtra("event_title", title.get(position));
+                startActivity(i2);
             }
-
         });
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fAdd);
