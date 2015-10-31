@@ -9,7 +9,7 @@ app.service('userService', function ($q, roles, sessionService) {
                 query.equalTo("emailVerified", true);
                 query.find({
                     success: function (results) {
-                        if (results.length > 0) {
+                        if (results.length) {
                             deferred.resolve(user);
                         } else {
                             deferred.reject('Email verification has not done yet');
@@ -22,10 +22,6 @@ app.service('userService', function ($q, roles, sessionService) {
             },
             error: function (user, error) {
                 deferred.reject('Invalid credentials');
-                deferred.resolve(user);
-            },
-            error: function (user, error) {
-                deferred.reject(error);
             }
         });
 
