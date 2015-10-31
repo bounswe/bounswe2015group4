@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ProfilePage"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:layout_width="@dimen/big_icon"
+        android:layout_height="@dimen/big_icon"
+        android:id="@+id/profilepicture"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/icusername"
+        android:contentDescription="homeIcon"
+        android:onClick="change_profile_picture"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginTop="@dimen/big_margin" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/tPersonalInfo"
+        android:layout_alignTop="@+id/profilepicture"
+        android:layout_alignBottom="@+id/profilepicture"
+        android:layout_alignRight="@+id/bSignUp"
+        android:layout_alignEnd="@+id/bSignUp"
+        android:layout_toRightOf="@+id/profilepicture"
+        android:layout_toEndOf="@+id/profilepicture" />
+
+</RelativeLayout>
+
