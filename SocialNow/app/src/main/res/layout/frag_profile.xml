@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:src="@drawable/icusername"
         android:contentDescription="homeIcon"
-        android:onClick="change_profile_picture"
+        android:clickable= "true"
         android:layout_marginBottom="@dimen/big_margin"
         android:layout_marginTop="@dimen/big_margin" />
 
