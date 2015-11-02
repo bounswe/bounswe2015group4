@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,7 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,11 +31,14 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * Created by lauamy on 2/11/15.
  */
+//TODO Event Image Adding option, Invite Guest Option, Privacy Option, Invite problems, End time
 public class EditEventActivity extends AppCompatActivity{
     TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca;
     private Button btDate, btSTime,btETime;
@@ -66,6 +76,13 @@ public class EditEventActivity extends AppCompatActivity{
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
 
+        etEventName.setText("first");
+        etEventDes.setText("desc");
+        etEventLoca.setText("loca");
+        tvDate.setText("2015-11-3");
+        tvSTime.setText("20:45");
+        tvETime.setText("21:45");
+
         btDate = (Button) findViewById(R.id.btDate);
         btSTime = (Button) findViewById(R.id.btSTime);
         btETime = (Button) findViewById(R.id.btETime);
@@ -98,6 +115,7 @@ public class EditEventActivity extends AppCompatActivity{
             public void onClick(View view) {
                 Intent viewGuest = new Intent(getApplicationContext(), PartiActivity.class);
                 startActivity(viewGuest);
+                //TODO activity should be started to get results as the guests to be invited.
             }
         });
 
@@ -109,10 +127,15 @@ public class EditEventActivity extends AppCompatActivity{
             event.put("title", etEventName.getText().toString());
             event.put("event_description", etEventDes.getText().toString());
             event.put("event_location", etEventLoca.getText().toString());
-            event.put("event_date", etEventLoca.getText().toString());
-            event.put("event_location", etEventLoca.getText().toString());
-            event.put("event_location", etEventLoca.getText().toString());
+            event.put("event_date", getEventDate());
+            event.put("event_photo", getEventPhoto());
+            event.put("event_host", ParseUser.getCurrentUser());
+            //TODO guest member adding should be handled
+            //event.put("event_members", )
+            //TODO comment part should also be handled
+            //event.put("event_comments", )
             event.saveInBackground();
+            Toast.makeText(getBaseContext(), "Doing", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(getBaseContext(), "Wrong Info", Toast.LENGTH_LONG).show();
         }
@@ -140,8 +163,8 @@ public class EditEventActivity extends AppCompatActivity{
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         // Show selected date in text field
-                        tvDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/"
-                                + year);
+                        tvDate.setText(year + "-" + (monthOfYear + 1) + "-"
+                                + dayOfMonth);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -227,4 +250,38 @@ public class EditEventActivity extends AppCompatActivity{
             return false;
     }
 
+    public Date getEventDate() {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        ft.setTimeZone(TimeZone.getDefault());
+
+        String input = tvDate.getText().toString() + "T" + tvSTime.getText().toString() + ":00";
+
+        System.out.println(input);
+
+        Date t = new Date();
+
+        try {
+            t = ft.parse(input);
+            System.out.println(t);
+        } catch (ParseException e) {
+            System.out.println("Unparseable using " + ft);
+        }
+        return t;
+    }
+
+    public ParseFile getEventPhoto() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                R.drawable.devent);
+        // Convert it to byte
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        // Compress image to lower quality scale 1 - 100
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] image = stream.toByteArray();
+
+
+        ParseFile file = new ParseFile("event.png", image);
+
+        file.saveInBackground();
+        return file;
+    }
 }
