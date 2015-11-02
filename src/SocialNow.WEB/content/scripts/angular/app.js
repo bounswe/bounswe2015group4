@@ -44,6 +44,14 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
                 loginRequired: true
             }
         })
+        .when('/profile',
+        {
+            templateUrl: 'pages/profile.html',
+            controller: 'profileController',
+            access: {
+                loginRequired: true
+            }
+        })
         .otherwise({
             redirectTo: '/'
         })

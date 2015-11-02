@@ -1,4 +1,4 @@
-app.directive('linkButton', function($location) {
+app.directive('linkButton', function(helperService) {
     return {
         restrict: 'A',
         scope: {
@@ -6,7 +6,7 @@ app.directive('linkButton', function($location) {
         },
         link: function (scope, element) {
             function goToPage() {
-                $location.path(scope.linkButton).replace();
+                helperService.goToPage(scope.linkButton);
                 scope.$apply();
             }
 

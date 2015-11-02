@@ -16,7 +16,7 @@ app.service('sessionService', function(roles, $cookies) {
         return userInfo && userInfo.isAuthenticated;
     }
 
-    this.getUserInfo= function(){
+    this.getUserInfo = function(){
       return $cookies.getObject("userInfo");
     }
 

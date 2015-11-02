@@ -1,17 +1,13 @@
 <header class="main-header">
-    <!-- Logo -->
-    <a class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>S</b>N</span>
-        <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Social</b>Now</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <a href="" link-button="'/'" class="navbar-brand"><b>Social</b>Now</a>
+        </div>
+
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
-                <li class="dropdown messages-menu">
+                <!--<li class="dropdown messages-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success">4</span>
@@ -19,9 +15,8 @@
                     <ul class="dropdown-menu">
                         <li class="header">You have 4 messages</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                                <li><!-- start message -->
+                                <li>
                                     <a>
                                         <div class="pull-left">
                                             <img src="~/../content/img/user.jpg" class="img-circle" alt="User Image">
@@ -32,13 +27,12 @@
                                         </h4>
                                         <p>Why not buy a new awesome theme?</p>
                                     </a>
-                                </li><!-- end message -->
+                                </li>
                             </ul>
                         </li>
                         <li class="footer"><a>See All Messages</a></li>
                     </ul>
                 </li>
-                <!-- Notifications: style can be found in dropdown.less -->
                 <li class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
@@ -47,7 +41,6 @@
                     <ul class="dropdown-menu">
                         <li class="header">You have 10 notifications</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li>
                                     <a>
@@ -59,7 +52,6 @@
                         <li class="footer"><a>View all</a></li>
                     </ul>
                 </li>
-                <!-- Tasks: style can be found in dropdown.less -->
                 <li class="dropdown tasks-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-o"></i>
@@ -68,9 +60,8 @@
                     <ul class="dropdown-menu">
                         <li class="header">You have 9 tasks</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
                             <ul class="menu">
-                                <li><!-- Task item -->
+                                <li>
                                     <a>
                                         <h3>
                                             Design some buttons
@@ -82,15 +73,14 @@
                                             </div>
                                         </div>
                                     </a>
-                                </li><!-- end task item -->
+                                </li>
                             </ul>
                         </li>
                         <li class="footer">
                             <a>View all tasks</a>
                         </li>
                     </ul>
-                </li>
-                <!-- User Account: style can be found in dropdown.less -->
+                </li>-->
                 <li class="dropdown user user-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
                         <img src="~/../content/img/user.jpg" class="user-image" alt="User Image">
@@ -101,29 +91,17 @@
                         <li class="user-header">
                             <img src="~/../content/img/user.jpg" class="img-circle" alt="User Image">
                             <p>
-                               <span >{{user.name + " " + user.surname + "-"+ role.get('rolename')}}</span>
-                                <small>Member since Nov. 2012</small>
+                               <span link-button="'/profile'">{{user.name + " " + user.surname}}</span>
+                                <small link-button="'/profile'">Go to Profile</small>
                             </p>
-                        </li>
-                        <!-- Menu Body -->
-                        <li class="user-body">
-                            <div class="col-xs-4 text-center">
-                                <a>Followers</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a>Sales</a>
-                            </div>
-                            <div class="col-xs-4 text-center">
-                                <a>Friends</a>
-                            </div>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a class="btn btn-default btn-flat" ng-click="goToEvents()">Events</a>
+                                <a class="btn btn-default btn-flat" link-button="'/events'">Events</a>
                             </div>
                             <div class="pull-right">
-                                <a class="btn btn-default btn-flat" ng-click="logout()">Log out</a>
+                                <a class="btn btn-default btn-flat" logout-button>Log out</a>
                             </div>
                         </li>
                     </ul>

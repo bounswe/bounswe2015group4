@@ -2,14 +2,14 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
     this.logIn = function (email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {
-            success: function (user) {
+            success: function (loggedInUser) {
                 var userClass = Parse.Object.extend("User");
                 var query = new Parse.Query(userClass);
-                query.equalTo("objectId", user.id);
+                query.equalTo("objectId", loggedInUser.id);
                 query.equalTo("emailVerified", true);
-                query.find({
-                    success: function (results) {
-                        if (results.length > 0) {
+                query.first({
+                    success: function (user) {
+                        if (user) {
                             deferred.resolve(user);
                         } else {
                             deferred.reject('Email verification has not done yet');
@@ -21,11 +21,8 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
                 });
             },
             error: function (user, error) {
+                console.log(error);
                 deferred.reject('Invalid credentials');
-                deferred.resolve(user);
-            },
-            error: function (user, error) {
-                deferred.reject(error);
             }
         });
 
