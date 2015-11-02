@@ -104,6 +104,29 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         return deferred.promise;
     }
 
+    this.editUser = function(currentUser) {
+        var deferred = $q.defer();
+        var currentParseUser = Parse.User.current();
+
+        currentParseUser.set('Name', currentUser.name);
+        currentParseUser.set('Surname', currentUser.surname);
+
+        if(currentUser.profilePicture) {
+            var parseFile = new Parse.File('profile_picture', currentUser.profilePicture);
+            currentParseUser.set('Profile_Picture', parseFile);
+        }
+
+        currentParseUser.save(null, {
+            success: function (currentParseUser) {
+                deferred.resolve(currentParseUser);
+            }, error: function (currentParseUser, error) {
+                deferred.reject(error);
+            }
+        });
+
+        return deferred.promise;
+    }
+
     this.addEvent = function (event, currentUserEmail) {
         var deferred = $q.defer();
         var query = new Parse.Query(Parse.User);
@@ -136,6 +159,8 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         });
         return deferred.promise;
     }
+
+
 
     /**
      * Returns the object of current user

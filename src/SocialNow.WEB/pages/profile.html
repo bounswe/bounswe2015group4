@@ -17,11 +17,11 @@
 
       <form name="profileForm" novalidate>
         <div class="form-group has-feedback">
-          <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.email" readonly>
+          <input type="email" class="form-control" name="email" placeholder="Email" ng-model="user.email" readonly>
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="name" placeholder="Name" ng-model="currentUser.name"
+          <input type="text" class="form-control" name="name" placeholder="Name" ng-model="user.name"
                  required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
@@ -31,21 +31,29 @@
         </div>
         <div class="form-group has-feedback">
           <input type="text" class="form-control" name="surname" placeholder="Surname"
-                 ng-model="currentUser.surname" required>
+                 ng-model="user.surname" required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
           <div ng-show="profileForm.surname.$error.required && submitted">
             <message type="error" display="'Surname field is required'"></message>
           </div>
         </div>
+        <div class="form-group has-feedback">
+          <input type="file" id="profilePicker" class="form-control" name="profilePicture">
+          <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+        </div>
         <div class="row">
-          <div class="col-md-4 col-md-offset-8">
+          <div class="col-md-8">
+            <message type="success" display="successMessage"></message>
+            <message type="error" display="errorMessage"></message>
+          </div>
+
+          <div class="col-md-4">
             <button type="submit" ng-click="editProfile(profileForm.$valid)" class="btn btn-primary btn-block btn-flat">Edit</button>
           </div>
         </div>
         <div class="row">
-          <message type="success" display="successMessage"></message>
-          <message type="error" display="errorMessage"></message>
+
         </div>
       </form>
     </div>
