@@ -17,11 +17,11 @@
 
       <form name="profileForm" novalidate>
         <div class="form-group has-feedback">
-          <input type="email" class="form-control" name="email" placeholder="Email" ng-model="user.email" readonly>
+          <input type="email" class="form-control" name="email" placeholder="Email" ng-bind="currentUser.email" readonly>
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="name" placeholder="Name" ng-model="user.name"
+          <input type="text" class="form-control" name="name" placeholder="Name" ng-model="currentUser.name"
                  required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
@@ -31,7 +31,7 @@
         </div>
         <div class="form-group has-feedback">
           <input type="text" class="form-control" name="surname" placeholder="Surname"
-                 ng-model="user.surname" required>
+                 ng-model="currentUser.surname" required>
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
 
           <div ng-show="profileForm.surname.$error.required && submitted">

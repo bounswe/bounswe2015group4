@@ -7,7 +7,7 @@ app.service('sessionService', function(roles, $cookies) {
             isAuthenticated: true,
             name : name,
             surname: surname,
-            profile_url: profile_url._url
+            profile_url: profile_url
         });
 
     }
