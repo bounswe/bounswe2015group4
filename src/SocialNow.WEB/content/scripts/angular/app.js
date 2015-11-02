@@ -39,7 +39,10 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
         .when(eventsUrl,
         {
             templateUrl: 'pages/events.html',
-            controller: 'eventsController'
+            controller: 'eventsController',
+            access: {
+                loginRequired: true
+            }
         })
         .otherwise({
             redirectTo: '/'
