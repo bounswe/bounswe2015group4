@@ -8,6 +8,7 @@ app.service('sessionService', function(roles, $cookies) {
             name : name,
             surname: surname
         });
+
     }
 
     this.isUserAuthenticated = function() {
@@ -22,4 +23,5 @@ app.service('sessionService', function(roles, $cookies) {
     this.remove = function(key) {
         $cookies.remove(key);
     }
+
 })

@@ -2,9 +2,22 @@ app.controller('homeController', function ($scope, userService, sessionService, 
 
     var getInfo = function () {
 
-        var user = sessionService.getUserInfo();
-        $scope.user = user;
-        $scope.role = user;
+        userService.getCurrentUser().then(
+            function (user) {
+            var userTemp = {
+                name : user.get('Name'),
+                surname: user.get('Surname')
+            };
+                $scope.user = userTemp;
+
+
+            },
+            function (error) {
+
+            }
+        );
+
+
 
     }
 

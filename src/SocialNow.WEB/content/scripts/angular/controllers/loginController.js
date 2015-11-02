@@ -6,7 +6,7 @@ app.controller('loginController', function ($scope, userService, roles, sessionS
         }
 
         userService.logIn($scope.currentUser.Email, $scope.currentUser.Password).then(function (user) {
-            sessionService.setUserCredentials($scope.currentUser.Email, user.relation('role'), user.get('name'), user.get("surname"));
+            sessionService.setUserCredentials($scope.currentUser.Email, user.relation('role'), user.get('name'), user.get('surname'));
             helperService.goToPage('/');
         }, function (error) {
             $scope.errorMessage = error;
