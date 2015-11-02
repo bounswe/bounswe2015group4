@@ -29,7 +29,7 @@ app.service('eventService', function ($q, userService) {
             event.set('event_photo', parseFile);
         }
 
-
+        event.set("event_host",Parse.User.current());
         event.set("title", title);
         event.set("event_description", description);
         event.set("event_date", givenDate);

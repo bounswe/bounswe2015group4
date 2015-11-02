@@ -55,6 +55,7 @@
         </div>
         <div ng-show="eventsShow" class="login-box">
             <div class="form-group has-feedback" ng-repeat="x in eventDetails">>
+                <span><img width="100" height="70" class="img-rounded" src="{{x.src}}"></span>
                 <span class="text-danger"> <b>{{x.title}}</b></span>
                 <span class="text-aqua">{{x.description}}</span>
                 <span class="text-aqua"> {{x.date}}</span>
@@ -64,9 +65,10 @@
 
     <div ng-show="allEventsShow" class="login-box">
         <div class="form-group has-feedback" ng-repeat="x in allEventDetails">>
-            <span> <b>{{x.title}}</b></span>
+            <span><img width="100" height="70" class="img-rounded " src="{{x.src}}"></span>
+            <span  class="text-danger" > <b>{{x.title}}</b></span>
             <span>{{x.description}}</span>
-            <span> {{x.date}}</span>
+            <span class="text-aqua"> {{x.date+"  " +x.location}}</span>
 
         </div>
     </div>
