@@ -44,7 +44,7 @@ public class EventActivity extends AppCompatActivity {
     TextView description;
     TextView eventdate;
     TextView participantNumber;
-
+    TextView event_host;
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView eventlocation;
@@ -55,7 +55,6 @@ public class EventActivity extends AppCompatActivity {
     String descrip;
     String location;
     String hostName;
-    String event_title;
     JSONArray parti;
     ArrayList<ParseObject> participants;
 
@@ -79,6 +78,8 @@ public class EventActivity extends AppCompatActivity {
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
        eventlocation = (TextView) findViewById(R.id.tEventlocation);
+        event_host = (TextView) findViewById(R.id.tEventHost);
+
       participantNumber = (TextView) findViewById(R.id.tParti);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -112,9 +113,13 @@ public class EventActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                event_title= null;
+                title= null;
             } else {
-                event_title= extras.getString("event_title");
+                title= extras.getString("event_title");
+                date = (Date)extras.get("event_date");
+                location = extras.getString("event_location");
+                hostName = extras.getString("host_name");
+
             }
 
         getData();
@@ -158,7 +163,7 @@ public class EventActivity extends AppCompatActivity {
     void getData() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("title", event_title);
+        query.whereEqualTo("title", title);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject object, com.parse.ParseException e) {
@@ -168,9 +173,9 @@ public class EventActivity extends AppCompatActivity {
                     ParseFile fileObject;
                     byte[] data;
                     Log.d("score", "Retrieved the object.");
-                    title = object.getString("title");
-                    date = object.getDate("event_date");
-                    location = object.getString("event_location");
+                    //title = object.getString("title");
+                    //date = object.getDate("event_date");
+                    //location = object.getString("event_location");
                     descrip = object.getString("event_description");
                     parti= object.getJSONArray("event_members");
 
@@ -250,6 +255,7 @@ public class EventActivity extends AppCompatActivity {
       eventdate.setText(date.toString());
         participantNumber.setText(parti.length()+" people are going");
       eventlocation.setText(location);
+      event_host.setText(hostName);
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
     //  eventhost.setText(hostName);
     }
