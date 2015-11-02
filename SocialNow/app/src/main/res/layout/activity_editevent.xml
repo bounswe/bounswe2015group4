@@ -158,7 +158,8 @@
         android:layout_below="@id/cGuest"
         android:layout_marginBottom="@dimen/small_margin"
         android:background="@drawable/purplebutton"
-        style="@style/dBigButton"/>
+        style="@style/dBigButton"
+        android:onClick="create_event"/>
 
 
 </RelativeLayout>

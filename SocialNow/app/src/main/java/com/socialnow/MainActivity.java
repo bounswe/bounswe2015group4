@@ -19,11 +19,14 @@ public class MainActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+            i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i2);
         } else {
             Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+            i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(i2);
         }
-        
+        this.finish();
+
     }
 }

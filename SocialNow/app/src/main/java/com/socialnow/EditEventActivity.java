@@ -24,11 +24,13 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
 /**
  * Created by lauamy on 2/11/15.
  */
 public class EditEventActivity extends AppCompatActivity{
-    TextView tvDate, tvSTime, tvETime;
+    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca;
     private Button btDate, btSTime,btETime;
     private int mYear, mMonth, mDay, mSHour, mSMinute, mEHour, mEMinute;
     String mTitle="Create Event";
@@ -40,19 +42,26 @@ public class EditEventActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editevent);
-
+        Intent i = getIntent();
 
         Boolean editFlag = false;
-        //TODO: Set logic to determine whether it is create or edit event
+        if(i != null && i.getStringExtra("type").equals("create")){
+            editFlag = false;
+        }else
+            editFlag = true;
+
 
         if (editFlag){
             mTitle = "Edit Event";
-
-
         }
 
 
         getSupportActionBar().setTitle(mTitle);
+
+        etEventName = (TextView) findViewById(R.id.etEventName);
+        etEventDes = (TextView) findViewById(R.id.etEventDes);
+        etEventLoca = (TextView) findViewById(R.id.etEventLoca);
+
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
@@ -94,6 +103,29 @@ public class EditEventActivity extends AppCompatActivity{
 
     }
 
+    public void create_event(View v){
+        if(inputs_correct()){
+            ParseObject event = new ParseObject("Event");
+            event.put("title", etEventName.getText().toString());
+            event.put("event_description", etEventDes.getText().toString());
+            event.put("event_location", etEventLoca.getText().toString());
+            event.put("event_date", etEventLoca.getText().toString());
+            event.put("event_location", etEventLoca.getText().toString());
+            event.put("event_location", etEventLoca.getText().toString());
+            event.saveInBackground();
+        }else{
+            Toast.makeText(getBaseContext(), "Wrong Info", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean inputs_correct() {
+        if(etEventName.getText().toString() != "" && etEventDes.getText().toString() != "" && etEventLoca.getText().toString() != "" &&
+        tvDate.getText().toString() != "" && etEventName.getText().toString() != "" && etEventName.getText().toString() != "")
+            return true;
+        else
+            return false;
+    }
+
 
     public void showDatePickerDialog() {
         //Initialize the default date
@@ -128,10 +160,10 @@ public class EditEventActivity extends AppCompatActivity{
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         // Show selected time in text field
-                        while (!validStartTime(hourOfDay, minute)){
+                        /*while (!validStartTime(hourOfDay, minute)){
                             // TODO: alert user if endtime < starttime
 
-                        }
+                        }*/
                         tvSTime.setText(addZero(hourOfDay) + ":" + addZero(minute));
 
                     }
@@ -157,10 +189,10 @@ public class EditEventActivity extends AppCompatActivity{
                         {
                             System.out.println("X");
                         }
-                        while (!validEndTime(hourOfDay,minute)){
+                        /*while (!validEndTime(hourOfDay,minute)){
                             // TODO: alert user if endtime < starttime
 
-                        }
+                        }*/
                         tvETime.setText(addZero(hourOfDay) + ":" + addZero(minute));
                     }
                 }, mEHour, mEMinute, false);

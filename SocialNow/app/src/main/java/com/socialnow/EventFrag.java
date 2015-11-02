@@ -76,7 +76,9 @@ public class EventFrag extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO make it connected to the edit event page
+                Intent i2 = new Intent(getActivity(), EditEventActivity.class);
+                i2.putExtra("type", "create");
+                startActivity(i2);
             }
         });
 
