@@ -31,9 +31,7 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
 
     this.signup = function (currentUser) {
         var deferred = $q.defer();
-
         var user = new Parse.User();
-
         user.set("email", currentUser.Email);
         user.set("username", currentUser.Email);
         user.set("password", currentUser.Password);
@@ -43,17 +41,16 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         roleService.getRoles().then(function (roles) {
 
                 roles.forEach(function (role) {
-                    if (role.get('rolename') == currentUser.currentRole) {
-                        user.set("role",role);
+
+                    if (role.get("rolename") == currentUser.currentRole.name) {
+                        user.set("role",role.toPointer());
                     }
                 });
-            }, function (errors) {
-
+            }, function (error) {
                 console.log(error);
             }
         );
-
-        user.signUp(null, {
+        user.signup(null, {
             success: function (user) {
 
                 deferred.resolve(user);
@@ -62,7 +59,6 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
                 deferred.reject(error);
             }
         });
-
         return deferred.promise;
     }
 

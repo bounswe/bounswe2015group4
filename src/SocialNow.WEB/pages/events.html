@@ -7,6 +7,7 @@
             <div class="btn-group ">
                 <button class="btn btn-danger" ng-click="showNewEvent()"> Create New Event</button>
                 <button class="btn  bg-blue" ng-click="ShowEvents()"> Show My Events</button>
+                <button class="btn bg-green" ng-click="showAllEvents()">Show All Events</button>
             </div>
         </div>
         <div ng-show="createEventShow" class="login-box">
@@ -26,6 +27,11 @@
                                required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Location" ng-model="eventLocation"
+                               required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
                     <!-- Date and time range -->
                     <div class="form-group has-feedback">
                         <input type="text" class="form-control " ng-model="eventTime" id="eventTime"
@@ -33,7 +39,11 @@
                         <span class="glyphicon glyphicon-time form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
+                        <input type="file" id="evenPhotoPicker" class="form-control" placeholder="Description"                                required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
 
+                    <div class="form-group has-feedback">
                         <div class="row">
                             <div class="col-md-4 col-md-offset-8">
                                 <button type="submit" class="btn btn-primary btn-block btn-flat">Add Event</button>
@@ -45,11 +55,21 @@
         </div>
         <div ng-show="eventsShow" class="login-box">
             <div class="form-group has-feedback" ng-repeat="x in eventDetails">>
-                <span> <b>{{x.title}}</b>  </span>
-                <span>{{x.description}}</span>
-                <span> {{x.date}}</span>
+                <span class="text-danger"> <b>{{x.title}}</b></span>
+                <span class="text-aqua">{{x.description}}</span>
+                <span class="text-aqua"> {{x.date}}</span>
+
             </div>
         </div>
+
+    <div ng-show="allEventsShow" class="login-box">
+        <div class="form-group has-feedback" ng-repeat="x in allEventDetails">>
+            <span> <b>{{x.title}}</b></span>
+            <span>{{x.description}}</span>
+            <span> {{x.date}}</span>
+
+        </div>
+    </div>
 </div>
 
 
