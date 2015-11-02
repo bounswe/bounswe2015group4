@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".EditEventActivity"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <EditText
+        android:hint="@string/eventname"
+        android:id="@+id/etEventName"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_alignParentTop="true"
+        style="@style/dEditText" />
+
+    <EditText
+        android:hint="@string/eventdes"
+        android:id="@+id/etEventDes"
+        android:layout_height="@dimen/etbox_height"
+        android:layout_below="@id/etEventName"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:singleLine="false"
+        style="@style/dEditText"
+        android:gravity="top" />
+
+    <EditText
+        android:hint="@string/location"
+        android:id="@+id/etEventLoca"
+        android:layout_below="@id/etEventDes"
+        android:layout_marginBottom="@dimen/small_margin"
+        style="@style/dEditText" />
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/ldate"
+        android:layout_below="@id/etEventLoca"
+        android:layout_marginBottom="@dimen/small_margin">
+
+        <EditText android:id="@+id/tvDate"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            style="@style/dEditText"
+            android:hint="@string/date"
+            android:layout_marginRight="@dimen/small_margin">
+        </EditText>
+
+        <Button android:id="@+id/btDate"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_width="150dp"
+            android:text="Select"
+            style="@style/dBigButton"
+            android:background="@drawable/purplebutton">
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/lStime"
+        android:layout_below="@id/ldate"
+        android:layout_marginBottom="@dimen/small_margin">
+
+        <EditText android:id="@+id/tvSTime"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            style="@style/dEditText"
+            android:hint="@string/stime"
+            android:layout_marginRight="@dimen/small_margin">
+
+        </EditText>
+
+        <Button android:id="@+id/btSTime"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_width="150dp"
+            android:text="Select"
+            android:background="@drawable/purplebutton"
+            style="@style/dBigButton">
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/lEtime"
+        android:layout_below="@id/lStime"
+        android:layout_marginBottom="@dimen/small_margin">
+
+        <EditText android:id="@+id/tvETime"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            style="@style/dEditText"
+            android:hint="@string/etime"
+            android:layout_marginRight="@dimen/small_margin">
+
+        </EditText>
+
+        <Button android:id="@+id/btETime"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:layout_width="150dp"
+            android:text="Select"
+            android:background="@drawable/purplebutton"
+            style="@style/dBigButton">
+        </Button>
+
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/sPrivacy"
+        android:layout_below="@id/lEtime"
+        android:layout_marginBottom="@dimen/big_margin"
+        style="@style/dEditText"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Guest"
+        android:layout_below="@id/sPrivacy"
+        android:clickable="true"
+        android:layout_marginBottom="@dimen/big_margin"
+        android:background="@drawable/item_box"
+        android:padding="@dimen/et_top_bottom_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Invite Guest(s)"
+            android:id="@+id/tGuest"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/small_margin"/>
+
+        <ImageView
+            android:id="@+id/ivArrow4"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:src="@drawable/rightarrow"
+            android:layout_toRightOf="@id/tGuest"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:text="Guest(s) can invite friends."
+        android:id="@+id/cGuest"
+        android:layout_below="@+id/Guest"
+        android:layout_alignParentLeft="true"
+        style="@style/dCheckBox" />
+
+    <Button
+        android:text="Save"
+        android:id="@+id/bSave"
+        android:layout_below="@id/cGuest"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:background="@drawable/purplebutton"
+        style="@style/dBigButton"/>
+
+
+</RelativeLayout>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -19,7 +20,7 @@ public class PartiActivity extends AppCompatActivity {
     ListView listView;
 
     //Dummy Parti list with Profile Pics
-    int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
+    int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
 
     @Override
@@ -27,13 +28,14 @@ public class PartiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parti);
         listView=(ListView)findViewById(R.id.lvParti);
-        ListAdapter mAdapter = new MyAdapter(this,R.layout.item_parti,tvParti);
+        // TODO: make logic to determine whether checkbox is needed
+        ListAdapter mAdapter = new GuestAdapter(this,R.layout.item_parti,tvParti);
         listView.setAdapter(mAdapter);
 
     }
 
-    class MyAdapter extends ArrayAdapter<String> {
-        public MyAdapter(Context context, int resource, String[] tvParti) {
+    class PartiAdapter extends ArrayAdapter<String> {
+        public PartiAdapter(Context context, int resource, String[] tvParti) {
             super(context, R.layout.item_parti, tvParti);
         }
 
@@ -46,9 +48,30 @@ public class PartiActivity extends AppCompatActivity {
             TextView mText = (TextView) customView.findViewById(R.id.tvParti);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivParti);
             mText.setText(item);
-            mImg.setImageResource(ivParti[position]);
+            mImg.setImageResource(mImgArr[position]);
             return customView;
 
+
+        }
+
+    }
+    class GuestAdapter extends ArrayAdapter<String> {
+        public GuestAdapter(Context context, int resource, String[] tvParti) {
+            super(context, R.layout.item_inviteguest, tvParti);
+        }
+
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent){
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_inviteguest, parent, false);
+            String item = getItem(position);
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvGuest);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivGuest);
+            CheckBox mCB = (CheckBox) customView.findViewById(R.id.cGuestInvite);
+            mText.setText(item);
+            mImg.setImageResource(mImgArr[position]);
+            return customView;
 
         }
 

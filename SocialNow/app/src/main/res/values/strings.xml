@@ -17,6 +17,13 @@
         <item>Assistant</item>
         <item>Alumni</item>
     </string-array>
+    <string-array name="privacy">
+        <item>Select Privacy</item>
+        <item>Invited by host</item>
+        <item>Invited by host or a guest</item>
+        <item>Friends of any guest</item>
+        <item>Any SocialNow user</item>
+    </string-array>
     <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>
     <string name="title_activity_home_page">Home Page</string>
 
@@ -39,5 +46,12 @@
         <item>Event 4</item>
     </string-array>
     <string name="title_activity_event">Event Title</string>
+    <string name="title_activity_editevent">Edit Event</string>
+    <string name="eventdes">Description</string>
     <string name="description">Our project is about creating a social network for people in Bogazici University CmpE department. It will be a closed system in which people can create their own profile pages and can share their interest topics. Users will also be able to create interest groups and events. There will be an android application and a website for this social network project.</string>
+    <string name="eventname">Event Name</string>
+    <string name="location">Location</string>
+    <string name="date">Date</string>
+    <string name="stime">Start Time</string>
+    <string name="etime">End Time</string>
 </resources>
