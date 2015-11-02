@@ -1,5 +1,6 @@
 package com.socialnow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -136,6 +137,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
         else {
             Fragment fragment;
+            Activity activity;
             switch (position){
                 case 0:
                     fragment = new HomeFrag();

@@ -9,25 +9,31 @@
         android:layout_width="@dimen/big_icon"
         android:layout_height="@dimen/big_icon"
         android:id="@+id/profilepicture"
-        android:layout_alignParentLeft="true"
         android:src="@drawable/icusername"
         android:contentDescription="homeIcon"
         android:clickable= "true"
-        android:layout_marginBottom="@dimen/big_margin"
-        android:layout_marginTop="@dimen/big_margin" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="47dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User Name"
+        android:id="@+id/tUserName"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+      />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/tPersonalInfo"
-        android:layout_alignTop="@+id/profilepicture"
-        android:layout_alignBottom="@+id/profilepicture"
-        android:layout_alignRight="@+id/bSignUp"
-        android:layout_alignEnd="@+id/bSignUp"
-        android:layout_toRightOf="@+id/profilepicture"
-        android:layout_toEndOf="@+id/profilepicture" />
+        android:text="User Email"
+        android:id="@+id/tUserEmail"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

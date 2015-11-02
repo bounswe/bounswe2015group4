@@ -39,7 +39,18 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
         .when(eventsUrl,
         {
             templateUrl: 'pages/events.html',
-            controller: 'eventsController'
+            controller: 'eventsController',
+            access: {
+                loginRequired: true
+            }
+        })
+        .when('/profile',
+        {
+            templateUrl: 'pages/profile.html',
+            controller: 'profileController',
+            access: {
+                loginRequired: true
+            }
         })
         .otherwise({
             redirectTo: '/'

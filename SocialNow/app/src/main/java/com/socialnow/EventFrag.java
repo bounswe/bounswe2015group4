@@ -65,6 +65,9 @@ public class EventFrag extends Fragment {
                 Object listItem = listView.getItemAtPosition(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
                 i2.putExtra("event_title", title.get(position));
+                i2.putExtra("event_date", date.get(position));
+                i2.putExtra("event_location", location.get(position));
+                i2.putExtra("host_name", hostName.get(position));
                 startActivity(i2);
             }
         });

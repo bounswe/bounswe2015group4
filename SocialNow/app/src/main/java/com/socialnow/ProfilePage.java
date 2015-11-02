@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
@@ -30,11 +31,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import android.widget.ImageView;
 
+//In this activity Profile Picture is set by picking image from gallery. Not completed.
+
 public class ProfilePage extends AppCompatActivity {
     Button logout;
     ParseUser current_user = ParseUser.getCurrentUser();
     String user_id= current_user.getObjectId();
-    ImageView pp_imageView;
+    ImageView profile_picture;
+    TextView user_name;
+    TextView user_email;
 
     private static final int SELECTED_PICTURE = 1;
 
@@ -42,11 +47,9 @@ public class ProfilePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-        pp_imageView = (ImageView)findViewById(R.id.profilepicture);
+        profile_picture = (ImageView)findViewById(R.id.profilepicture);
 
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        //intent.setType("image/*");
-        //intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,  SELECTED_PICTURE);
     }
 
@@ -72,7 +75,7 @@ public class ProfilePage extends AppCompatActivity {
             {
 
                 Uri uri = data.getData();
-                pp_imageView.setImageURI(uri);
+                profile_picture.setImageURI(uri);
 
                 //
                 String[] projection = {MediaStore.Images.Media.DATA};
@@ -98,7 +101,7 @@ public class ProfilePage extends AppCompatActivity {
 
                 /*Drawable d = new BitmapDrawable(your_selected_image);
                 pp_imageView.setBackground(d);*/
-                pp_imageView.setImageBitmap(selected_img);
+                profile_picture.setImageBitmap(selected_img);
 
 
             }
