@@ -30,7 +30,10 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +43,8 @@ public class EventActivity extends AppCompatActivity {
     ListView listView;
     TextView description;
     TextView eventdate;
+    TextView participantNumber;
+
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView eventlocation;
@@ -51,6 +56,8 @@ public class EventActivity extends AppCompatActivity {
     String location;
     String hostName;
     String event_title;
+    JSONArray parti;
+    ArrayList<ParseObject> participants;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -68,13 +75,14 @@ public class EventActivity extends AppCompatActivity {
      //   eventname = (TextView) findViewById(R.id.tEname);
 
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-
+    participants = new ArrayList<ParseObject>();
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
        eventlocation = (TextView) findViewById(R.id.tEventlocation);
-
+      participantNumber = (TextView) findViewById(R.id.tParti);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        parti = new JSONArray();
          toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
        // toolBarLayout.setTitle("Title");
 
@@ -164,6 +172,8 @@ public class EventActivity extends AppCompatActivity {
                     date = object.getDate("event_date");
                     location = object.getString("event_location");
                     descrip = object.getString("event_description");
+                    parti= object.getJSONArray("event_members");
+
                     //hostName = object.getParseObject("event_host").getString("Name") + " " + object.getParseObject("event_host").getString("Surname");
                     fileObject = (ParseFile) object.getParseFile("event_photo");
                     if (fileObject != null) {
@@ -238,7 +248,7 @@ public class EventActivity extends AppCompatActivity {
       }
         description.setText(descrip);
       eventdate.setText(date.toString());
-
+        participantNumber.setText(parti.length()+" people are going");
       eventlocation.setText(location);
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
     //  eventhost.setText(hostName);
