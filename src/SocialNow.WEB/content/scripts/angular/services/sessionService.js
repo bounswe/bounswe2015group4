@@ -1,12 +1,13 @@
 app.service('sessionService', function(roles, $cookies) {
-    this.setUserCredentials = function(userEmail, userRole, name, surname) {
+    this.setUserCredentials = function(userEmail, userRole, name, surname, profile_url) {
         $cookies.putObject("userInfo", {
             username: userEmail,
             email: userEmail,
             role: userRole,
             isAuthenticated: true,
             name : name,
-            surname: surname
+            surname: surname,
+            profile_url: profile_url
         });
 
     }

@@ -31,9 +31,7 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
 
     this.signup = function (currentUser) {
         var deferred = $q.defer();
-
         var user = new Parse.User();
-
         user.set("email", currentUser.Email);
         user.set("username", currentUser.Email);
         user.set("password", currentUser.Password);
@@ -43,17 +41,16 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         roleService.getRoles().then(function (roles) {
 
                 roles.forEach(function (role) {
-                    if (role.get('rolename') == currentUser.currentRole) {
-                        user.set("role",role);
+
+                    if (role.get("rolename") == currentUser.currentRole.name) {
+                        user.set("role",role.toPointer());
                     }
                 });
-            }, function (errors) {
-
+            }, function (error) {
                 console.log(error);
             }
         );
-
-        user.signUp(null, {
+        user.signup(null, {
             success: function (user) {
 
                 deferred.resolve(user);
@@ -62,7 +59,6 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
                 deferred.reject(error);
             }
         });
-
         return deferred.promise;
     }
 
@@ -104,6 +100,29 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         return deferred.promise;
     }
 
+    this.editUser = function(currentUser) {
+        var deferred = $q.defer();
+        var currentParseUser = Parse.User.current();
+
+        currentParseUser.set('Name', currentUser.name);
+        currentParseUser.set('Surname', currentUser.surname);
+
+        if(currentUser.profilePicture) {
+            var parseFile = new Parse.File('profile_picture', currentUser.profilePicture);
+            currentParseUser.set('Profile_Picture', parseFile);
+        }
+
+        currentParseUser.save(null, {
+            success: function (currentParseUser) {
+                deferred.resolve(currentParseUser);
+            }, error: function (currentParseUser, error) {
+                deferred.reject(error);
+            }
+        });
+
+        return deferred.promise;
+    }
+
     this.addEvent = function (event, currentUserEmail) {
         var deferred = $q.defer();
         var query = new Parse.Query(Parse.User);
@@ -136,6 +155,8 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
         });
         return deferred.promise;
     }
+
+
 
     /**
      * Returns the object of current user

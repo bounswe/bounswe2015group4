@@ -1,17 +1,24 @@
-app.controller('profileController', function($scope, sessionService) {
+app.controller('profileController', function ($scope, sessionService, userService) {
+    $scope.user = sessionService.getUserInfo();
     $scope.currentUser = sessionService.getUserInfo();
 
-    $scope.editProfile = function(isValid) {
-        if(!isValid) {
+    $scope.editProfile = function (isValid) {
+        if (!isValid) {
             $scope.submitted = true;
             return;
         }
 
-        var currentParseUser = Parse.User.current();
+        var profilePicker = document.getElementById('profilePicker');
+        if(profilePicker.files.length) {
+            $scope.currentUser.profilePicture = profilePicker.files[0];
+        }
 
-        currentParseUser.set('name', $scope.currentUser.name);
-        currentParseUser.set('surname', $scope.currentUser.surname);
-
-        currentParseUser.save();
+        userService.editUser($scope.currentUser).then(function(currentUser) {
+            sessionService.setUserCredentials($scope.user.Email, currentUser.relation('role'), currentUser.get('Name'), currentUser.get('Surname'));
+            $scope.successMessage = 'Your profile is edited successfully';
+            $scope.user = sessionService.getUserInfo();
+        }, function(error) {
+            $scope.errorMessage = error.message;
+        })
     }
 })
