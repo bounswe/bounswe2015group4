@@ -246,14 +246,19 @@ public class EventActivity extends AppCompatActivity {
 
    //   eventname.setText(title);
       toolBarLayout.setTitle(title);
+if(photo!=null){
+    Drawable d = new BitmapDrawable(getResources(), photo);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        img.setBackground(d);
+    }
+}
 
-      Drawable d = new BitmapDrawable(getResources(), photo);
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-          img.setBackground(d);
-      }
         description.setText(descrip);
       eventdate.setText(date.toString());
-        participantNumber.setText(parti.length()+" people are going");
+      if(parti!=null){
+          participantNumber.setText(parti.length()+" people are going");
+      }
+
       eventlocation.setText(location);
       event_host.setText(hostName);
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);

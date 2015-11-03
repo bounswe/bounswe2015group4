@@ -76,9 +76,9 @@ public class EditEventActivity extends AppCompatActivity{
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
 
-        etEventName.setText("first");
-        etEventDes.setText("desc");
-        etEventLoca.setText("loca");
+       // etEventName.setText("first");
+       // etEventDes.setText("desc");
+       // etEventLoca.setText("loca");
         tvDate.setText("2015-11-3");
         tvSTime.setText("20:45");
         tvETime.setText("21:45");
