@@ -1,4 +1,4 @@
-app.service('userService', function ($q, roles, sessionService, roleService) {
+app.service('userService', function ($q, sessionService, roleService) {
     this.logIn = function (email, password) {
         var deferred = $q.defer();
         Parse.User.logIn(email, password, {

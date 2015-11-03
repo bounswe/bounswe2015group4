@@ -1,4 +1,4 @@
-app.service('sessionService', function(roles, $cookies) {
+app.service('sessionService', function($cookies) {
     this.setUserCredentials = function(userEmail, userRole, name, surname, profile_url) {
         $cookies.putObject("userInfo", {
             username: userEmail,

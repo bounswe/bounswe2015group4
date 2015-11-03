@@ -1,11 +1,5 @@
 var app = angular.module('socialNowApp', ['ngRoute', 'ngCookies']);
 
-app.constant('roles', {
-    Student: 1,
-    Instructor: 2,
-    TA: 3
-});
-
 app.constant('signUpUrl', '/signup');
 app.constant('loginUrl', '/login');
 app.constant('eventsUrl', '/events');

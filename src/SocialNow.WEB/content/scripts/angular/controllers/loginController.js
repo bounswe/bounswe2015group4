@@ -1,4 +1,4 @@
-app.controller('loginController', function ($scope, userService, roles, sessionService, helperService) {
+app.controller('loginController', function ($scope, userService, sessionService, helperService) {
     $scope.login = function (isValidForm) {
         if (!isValidForm) {
             $scope.submitted = true;
