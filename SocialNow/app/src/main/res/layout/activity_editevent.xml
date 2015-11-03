@@ -111,7 +111,7 @@
     <Spinner
         android:id="@+id/sPrivacy"
         android:layout_below="@id/lEtime"
-        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginBottom="@dimen/small_margin"
         style="@style/dEditText"/>
 
     <RelativeLayout
@@ -120,7 +120,7 @@
         android:id="@+id/Guest"
         android:layout_below="@id/sPrivacy"
         android:clickable="true"
-        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginBottom="@dimen/small_margin"
         android:background="@drawable/item_box"
         android:padding="@dimen/et_top_bottom_padding">
 

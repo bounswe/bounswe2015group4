@@ -22,10 +22,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.text.ParseException;
 
 
 public class ProfileFrag extends Fragment {
@@ -38,6 +41,7 @@ public class ProfileFrag extends Fragment {
     ImageView profile_picture;
     TextView user_name;
     TextView user_email;
+    ParseFile fileObject;
 
     String userName;
     String userEmail;
@@ -59,17 +63,45 @@ public class ProfileFrag extends Fragment {
         user_name.setText(userName);
         user_email.setText(userEmail);
 
+        fileObject = (ParseFile) current_user.getParseFile("Profile_Picture");
+        byte[] data;
+
+
+
+        if (fileObject != null) {
+            try {
+                data = fileObject.getData();
+                Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                photo = bMap;
+
+                Drawable d = new BitmapDrawable(getResources(), photo);
+
+                profile_picture.setImageBitmap(photo);
+
+                //writeToList();
+
+            } catch (com.parse.ParseException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            Log.d("post", "error retriving posts");
+        }
+
+
+
         //below is required when setting profile picture.
         //Intent i2 = new Intent(getActivity(), ProfilePage.class);
         //startActivity(i2);
 
-        getData();
+      // getData();
+
 
         return v;
     }
 
 
-    void getData() {
+
+   /*void getData() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
         query.whereEqualTo("username", userName);
@@ -85,13 +117,20 @@ public class ProfileFrag extends Fragment {
 
                     //hostName = object.getParseObject("event_host").getString("Name") + " " + object.getParseObject("event_host").getString("Surname");
                     fileObject = (ParseFile) object.getParseFile("Profile_Picture");
-                    if (fileObject != null) {
+
+
+                 if (fileObject != null) {
                         try {
                             data = fileObject.getData();
                             Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
                             photo = bMap;
 
-                            writeToList();
+                            Drawable d = new BitmapDrawable(getResources(), photo);
+
+                            profile_picture.setImageBitmap(photo);
+
+
+                            //writeToList();
 
                         } catch (com.parse.ParseException e1) {
                             e1.printStackTrace();
@@ -104,14 +143,9 @@ public class ProfileFrag extends Fragment {
 
         });
 
-    }
+    }*/
 
     void writeToList(){
-
-        Drawable d = new BitmapDrawable(getResources(), photo);
-
-        profile_picture.setImageBitmap(photo);
-
 
 
     }

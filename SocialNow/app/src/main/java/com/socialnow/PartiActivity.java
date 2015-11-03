@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class PartiActivity extends AppCompatActivity {
     ListView listView;
-
+    //TODO this activity should list the user's friends and should be able to give results for other activities.
     //Dummy Parti list with Profile Pics
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
