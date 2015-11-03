@@ -50,7 +50,7 @@ app.service('userService', function ($q, roles, sessionService, roleService) {
                 console.log(error);
             }
         );
-        user.signup(null, {
+        user.signUp(null, {
             success: function (user) {
 
                 deferred.resolve(user);
