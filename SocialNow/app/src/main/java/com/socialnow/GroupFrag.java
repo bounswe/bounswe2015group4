@@ -46,7 +46,6 @@ public class GroupFrag extends Fragment {
         update = new LinkedList<Date>();
 
         return v;
-
     }
 
     class MyAdapter extends ArrayAdapter {
