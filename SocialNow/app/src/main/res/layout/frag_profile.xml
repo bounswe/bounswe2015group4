@@ -2,42 +2,92 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ProfilePage"
-    android:padding="@dimen/activity_horizontal_margin">
+    tools:context=".ProfilePage">
 
-    <ImageView
-        android:layout_width="@dimen/big_icon"
-        android:layout_height="@dimen/big_icon"
-        android:id="@+id/profilepicture"
-        android:src="@drawable/icusername"
-        android:contentDescription="homeIcon"
-        android:clickable= "true"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="47dp" />
+        android:background="@color/colorPrimary"
+        android:gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profilepicture"
+            android:layout_width="@dimen/mid_icon"
+            android:clickable= "true"
+            android:layout_height="@dimen/mid_icon"
+            android:src="@drawable/icusername"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/textDarkButton"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/big_margin"
+            android:layout_marginRight="@dimen/big_margin"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/profilepicture"
+            android:layout_toEndOf="@+id/profilepicture">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="User Name"
+                android:id="@+id/tUserName"
+                android:textColor="@color/textDarkButton" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Faculty Role"
+                android:id="@+id/tRole"
+                android:textColor="@color/textDarkButton"
+                android:layout_below="@id/tUserName"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Username"
+                android:id="@+id/tUserEmail"
+                android:textColor="@color/textDarkButton"
+                android:layout_below="@id/tRole"/>
+
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="User Name"
-        android:id="@+id/tUserName"
-        android:layout_marginBottom="@dimen/small_margin"
-        android:layout_marginTop="@dimen/small_margin"
-      />
+        android:layout_below="@+id/header"
+        android:background="?attr/colorPrimary"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/tab_layout"/>
 
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="User Email"
-        android:id="@+id/tUserEmail"
-        android:layout_centerVertical="true"
 
-        android:layout_toRightOf="@+id/profilepicture"
-        android:layout_alignRight="@+id/profilepicture"
-        android:layout_alignEnd="@+id/profilepicture" />
+
 
 </RelativeLayout>

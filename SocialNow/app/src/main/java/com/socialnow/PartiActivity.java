@@ -3,6 +3,7 @@ package com.socialnow;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import android.widget.TextView;
  */
 public class PartiActivity extends AppCompatActivity {
     ListView listView;
+
     //TODO this activity should list the user's friends and should be able to give results for other activities.
     //Dummy Parti list with Profile Pics
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,9 @@ public class PartiActivity extends AppCompatActivity {
         // TODO: make logic to determine whether checkbox is needed
         ListAdapter mAdapter = new GuestAdapter(this,R.layout.item_parti,tvParti);
         listView.setAdapter(mAdapter);
+
+        //Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
     }
 

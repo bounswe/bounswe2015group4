@@ -1,5 +1,6 @@
 package com.socialnow;
 
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,15 +13,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 
+
+import com.astuetz.PagerSlidingTabStrip;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseFile;
@@ -29,6 +36,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.text.ParseException;
+
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class ProfileFrag extends Fragment {
@@ -44,14 +53,19 @@ public class ProfileFrag extends Fragment {
     ParseFile fileObject;
 
     String userName;
+
     String userEmail;
     Bitmap photo;
+
+
+
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View v =  inflater.inflate(R.layout.frag_profile,container,false);
+
         profile_picture = (ImageView) v.findViewById(R.id.profilepicture);
         user_name = (TextView) v.findViewById(R.id.tUserName);
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
@@ -94,6 +108,36 @@ public class ProfileFrag extends Fragment {
         //startActivity(i2);
 
       // getData();
+
+        TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("ABOUT"));
+        tabLayout.addTab(tabLayout.newTab().setText("ACTIVITIES"));
+        tabLayout.addTab(tabLayout.newTab().setText("PHOTOS"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getChildFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
 
 
         return v;
@@ -147,6 +191,10 @@ public class ProfileFrag extends Fragment {
 
     void writeToList(){
 
+
+    }
+    public void changeToolBar()
+    {
 
     }
 }

@@ -1,17 +1,24 @@
 package com.socialnow;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +29,10 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
 import com.parse.ParseUser;
+
 
 import static com.socialnow.R.string.drawer_open;
 
@@ -33,9 +42,11 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     private ListView listview;
     private String[] panel;
     //Will be changed later depending the menu items we would like to include
-    int [] img ={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
+    int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.notidrawer,R.drawable.exit};
     private ActionBarDrawerToggle drawerListener;
     Fragment fragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         //listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, panel));
         ListAdapter mAdapter = new MyAdapter(this,R.layout.item_drawer,panel);
         listview.setAdapter(mAdapter);
+
 
         listview.setOnItemClickListener(this);
         drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
@@ -67,6 +79,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
         };
         drawerLayout.setDrawerListener(drawerListener);
+
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -91,6 +104,9 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivDrawer);
             String item = getItem(position);
             mText.setText(item);
+            if (position == 5){
+                mText.setTextColor(Color.RED);
+            }
             mImg.setImageResource(img[position]);
             return customView;
 
@@ -145,6 +161,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
                 case 1:
                     fragment = new ProfileFrag();
+                    //changeToolBar();
+
                     break;
 
                 case 2:
@@ -171,11 +189,13 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     public void selectItem(int position)
     {
         listview.setItemChecked(position, true);
+
         setTitle(panel[position]);
+
+
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
 
@@ -191,5 +211,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
             Log.d("error_logout", "logout failed");
         }
     }
+
+
+
 
 }

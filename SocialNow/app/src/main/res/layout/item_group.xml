@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/ivGroup"
+        android:layout_width="@dimen/mid_icon"
+        android:layout_height="@dimen/mid_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:src="@drawable/groupdrawer"
+        android:layout_marginRight="@dimen/big_margin"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/rGroup"
+        android:layout_toRightOf="@id/ivGroup"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Group Name"
+            android:id="@+id/tName"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/small_margin"/>
+
+        <ImageView
+            android:id="@+id/ivPrivacy"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/date"
+            android:layout_marginRight="@dimen/micro_margin"
+            android:layout_below="@id/tName"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Privacy"
+            android:id="@+id/tPrivacy"
+            android:layout_below="@+id/tName"
+            android:layout_toRightOf="@+id/ivPrivacy"
+            android:layout_toEndOf="@+id/ivPrivacy" />
+
+        <ImageView
+            android:id="@+id/ivMember"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/location"
+            android:layout_marginRight="@dimen/micro_margin"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tPrivacy"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="XX Members"
+            android:id="@+id/tMember"
+            android:layout_toRightOf="@+id/ivPrivacy"
+            android:layout_toEndOf="@+id/ivPrivacy"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tPrivacy"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Last update: "
+            android:id="@+id/tHost"
+            android:layout_below="@id/tMember"
+            android:layout_toLeftOf="@+id/tUpdate"
+            android:layout_toStartOf="@+id/tUpdate" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Update Date and Time"
+            android:id="@+id/tUpdate"
+            android:layout_below="@+id/tMember"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

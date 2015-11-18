@@ -2,6 +2,7 @@ package com.socialnow;
 
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -47,6 +48,19 @@ public class EditEventActivity extends AppCompatActivity{
     Spinner spinner;
     ArrayAdapter<CharSequence> adapter;
     String privacy_option = "";
+    Context context;
+    String eTitle1 = "Invalid Date";
+    String eTitle2 = "Invalid Time";
+    String eTitle3 = "Invalid Date/Time";
+    String eMsg1 = "Past date is selected";
+    String eMsg2 = "End time is not later than Start Time";
+    String eMsg3 = "Past time/date cannot be inputted";
+
+    final Calendar c = Calendar.getInstance();
+    int mCHour = c.get(Calendar.HOUR_OF_DAY);
+    int mCMinute = c.get(Calendar.MINUTE);
+    int CurrentTime = mCHour*60+mCMinute;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +78,8 @@ public class EditEventActivity extends AppCompatActivity{
         if (editFlag){
             mTitle = "Edit Event";
         }
+        context = this;
+
 
 
         getSupportActionBar().setTitle(mTitle);
@@ -79,9 +95,14 @@ public class EditEventActivity extends AppCompatActivity{
        // etEventName.setText("first");
        // etEventDes.setText("desc");
        // etEventLoca.setText("loca");
-        tvDate.setText("2015-11-3");
-        tvSTime.setText("20:45");
-        tvETime.setText("21:45");
+        /*if (!editFlag){
+            tvDate.setText("2015-11-3");
+            tvSTime.setText("20:45");
+            tvETime.setText("21:45");
+        }*/
+        tvSTime.setText("");
+        tvETime.setText("");
+
 
         btDate = (Button) findViewById(R.id.btDate);
         btSTime = (Button) findViewById(R.id.btSTime);
@@ -136,7 +157,14 @@ public class EditEventActivity extends AppCompatActivity{
             //event.put("event_comments", )
             event.saveInBackground();
             Toast.makeText(getBaseContext(), "Doing", Toast.LENGTH_LONG).show();
-        }else{
+
+
+        }else
+        {
+            if (PastTimeInput())
+            {
+                showErrorDialog(3,3);
+            }
             Toast.makeText(getBaseContext(), "Wrong Info", Toast.LENGTH_LONG).show();
         }
     }
@@ -144,9 +172,12 @@ public class EditEventActivity extends AppCompatActivity{
     private boolean inputs_correct() {
         if(etEventName.getText().toString() != "" && etEventDes.getText().toString() != "" && etEventLoca.getText().toString() != "" &&
         tvDate.getText().toString() != "" && etEventName.getText().toString() != "" && etEventName.getText().toString() != "")
-            return true;
-        else
-            return false;
+        {
+            if (PastTimeInput()){
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -162,6 +193,8 @@ public class EditEventActivity extends AppCompatActivity{
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
+                        // Check if the date is in the past
+
                         // Show selected date in text field
                         tvDate.setText(year + "-" + (monthOfYear + 1) + "-"
                                 + dayOfMonth);
@@ -182,12 +215,13 @@ public class EditEventActivity extends AppCompatActivity{
                 new TimePickerDialog.OnTimeSetListener() {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        // Show selected time in text field
-                        /*while (!validStartTime(hourOfDay, minute)){
-                            // TODO: alert user if endtime < starttime
 
-                        }*/
-                        tvSTime.setText(addZero(hourOfDay) + ":" + addZero(minute));
+                        // Show selected time in text field
+                        if (validStartTime(hourOfDay, minute)){
+                            tvSTime.setText(addZero(hourOfDay) + ":" + addZero(minute));
+                        }
+                        else
+                            showErrorDialog(2,2);
 
                     }
                 }, mSHour, mSMinute, false);
@@ -207,16 +241,12 @@ public class EditEventActivity extends AppCompatActivity{
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         // Show selected time in text field
-                        String mString = (String) tvSTime.getText().toString();
-                        if (mString.equals(null))
-                        {
-                            System.out.println("X");
+                        if (validEndTime(hourOfDay, minute)){
+                            tvETime.setText(addZero(hourOfDay) + ":" + addZero(minute));
                         }
-                        /*while (!validEndTime(hourOfDay,minute)){
-                            // TODO: alert user if endtime < starttime
-
-                        }*/
-                        tvETime.setText(addZero(hourOfDay) + ":" + addZero(minute));
+                        else{
+                            showErrorDialog(2,2);
+                        }
                     }
                 }, mEHour, mEMinute, false);
         tpd.show();
@@ -230,24 +260,26 @@ public class EditEventActivity extends AppCompatActivity{
         }
         return mString;
     }
-    Boolean validStartTime(int mHour,int mMinute){
+    boolean validStartTime(int mHour,int mMinute){
         int StartTime = mHour*60+mMinute;
         int EndTime = mEHour*60+mEMinute;
-        if (EndTime > StartTime){
-            return true;
+        String mString = (String) tvETime.getText().toString();
+        if (!mString.equals("")) {
+            if (StartTime >= EndTime)
+                return false;
         }
-        else
-            return false;
+        return true;
     }
 
     Boolean validEndTime(int mHour,int mMinute){
         int StartTime = mSHour*60+mSMinute;
         int EndTime = mHour*60+mMinute;
-        if (EndTime > StartTime){
-            return true;
+        String mString = (String) tvSTime.getText().toString();
+        if (!mString.equals("")) {
+            if (StartTime >= EndTime)
+                return false;
         }
-        else
-            return false;
+        return true;
     }
 
     public Date getEventDate() {
@@ -283,5 +315,48 @@ public class EditEventActivity extends AppCompatActivity{
 
         file.saveInBackground();
         return file;
+    }
+
+    void showErrorDialog(int mTitle, int mMsg){
+        // 1: Date; 2:Time
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+        switch (mTitle){
+            case 1:
+                dlgAlert.setTitle(eTitle1);
+                break;
+            case 2:
+                dlgAlert.setTitle(eTitle2);
+                break;
+            case 3:
+                dlgAlert.setTitle(eTitle3);
+            default:
+                break;
+        }
+
+        switch (mMsg){
+            case 1:
+                dlgAlert.setMessage(eMsg1);
+                break;
+            case 2:
+                dlgAlert.setMessage(eMsg2);
+                break;
+            case 3:
+                dlgAlert.setMessage(eMsg3);
+            default:
+                break;
+
+        }
+        dlgAlert.setPositiveButton("OK", null);
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
+    boolean PastTimeInput(){
+        String mString = (String) tvSTime.getText().toString();
+        char[] mCharArr = mString.toCharArray();
+        int StartTime = (mCharArr[0]*10+mCharArr[1])*60 +(mCharArr[3]*10 + mCharArr[4]);
+        if (StartTime > CurrentTime)
+            return false;
+        else
+            return true;
     }
 }

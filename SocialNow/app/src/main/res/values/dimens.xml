@@ -22,4 +22,5 @@
     <dimen name="mfab_width">10dp</dimen>
     <dimen name="mfab_margin">8dp</dimen>
     <dimen name="etbox_height">100dp</dimen>
+
 </resources>
