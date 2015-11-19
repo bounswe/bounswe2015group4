@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.mkyong.common.model.Shop;
 @Controller
 public class JSONController {
-	final String TAG= "";
+	final String TAG= "erdemTEST";
 	final Gson gson = new Gson();
 
 
