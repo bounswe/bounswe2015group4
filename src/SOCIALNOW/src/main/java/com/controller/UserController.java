@@ -53,9 +53,11 @@ public class UserController {
             errorJSON.setMessage("No user found");
             user.setErrorJSON(errorJSON);
         } else {
-
             user.setEmail(form.getEmail());
             user.setPassword(form.getPassword());
+            user.setRole(names[3]);
+            user.setName(names[1]);
+            user.setId(names[0]);
             return user;
         }
 

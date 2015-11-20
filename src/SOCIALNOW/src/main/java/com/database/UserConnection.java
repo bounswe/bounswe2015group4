@@ -2,6 +2,7 @@ package com.database;
 
 import com.mysql.jdbc.log.Log;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Logger;
@@ -42,13 +43,12 @@ public class UserConnection {
     public static boolean addUser(String email, String pass, String name, String role) {
         try {
             DBConnection conn = new DBConnection();
-            String sql = "INSERT INTO user VALUES(?,?,?,?,?)";
+            String sql = "INSERT INTO user (email, name, password, role) VALUES(?,?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1,0);
-            stmt.setString(2, email);
-            stmt.setString(3, name);
-            stmt.setString(4, pass);
-            stmt.setString(5, role);
+            stmt.setString(1, email);
+            stmt.setString(2, name);
+            stmt.setString(3, pass);
+            stmt.setString(4, role);
             stmt.executeUpdate();
             stmt.close();
             conn.close();
@@ -56,6 +56,26 @@ public class UserConnection {
         } catch (Exception e) {
             return false;
         }
+    }
+
+
+
+    public static boolean addEvent(int user_id, String title, String description, Date date){
+        try {
+            DBConnection conn = new DBConnection();
+            String sql = "INSERT INTO event (user_id, title, description, date) VALUES(?,?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,user_id);
+            stmt.setString(2, title);
+            stmt.setString(3, description);
+            stmt.setDate(4, date);
+            stmt.executeUpdate();
+            conn.close();
+        }catch (Exception e) {
+            return false;
+        }
+
+       return true;
     }
 
 }

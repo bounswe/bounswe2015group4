@@ -27,6 +27,15 @@ public class User {
     public void setErrorJSON(ErrorJSON errorJSON) {
         this.errorJSON = errorJSON;
     }
+    String  id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     ErrorJSON errorJSON;
     String email;
