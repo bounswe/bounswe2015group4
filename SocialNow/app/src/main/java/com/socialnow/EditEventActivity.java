@@ -126,7 +126,7 @@ public class EditEventActivity extends AppCompatActivity{
         });
 
         spinner = (Spinner) findViewById(R.id.sPrivacy);
-        adapter = ArrayAdapter.createFromResource(this, R.array.privacy, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.event_privacy, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -134,7 +134,7 @@ public class EditEventActivity extends AppCompatActivity{
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewGuest = new Intent(getApplicationContext(), PartiActivity.class);
+                Intent viewGuest = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "EditEventActivity");
                 startActivity(viewGuest);
                 //TODO activity should be started to get results as the guests to be invited.
             }

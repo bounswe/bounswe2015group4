@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".EditEventActivity"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <EditText
+        android:hint="@string/groupname"
+        android:id="@+id/etGroupName"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:layout_alignParentTop="true"
+        style="@style/dEditText" />
+
+    <EditText
+        android:hint="@string/eventdes"
+        android:id="@+id/etGroupDes"
+        android:layout_height="@dimen/etbox_height"
+        android:layout_below="@id/etGroupName"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:singleLine="false"
+        style="@style/dEditText"
+        android:gravity="top" />
+
+    <Spinner
+        android:id="@+id/sPrivacy"
+        android:layout_below="@id/etGroupDes"
+        android:layout_marginBottom="@dimen/small_margin"
+        style="@style/dEditText"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Member"
+        android:layout_below="@id/sPrivacy"
+        android:clickable="true"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:background="@drawable/item_box"
+        android:padding="@dimen/et_top_bottom_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Add Members"
+            android:id="@+id/tMember"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/small_margin"/>
+
+        <ImageView
+            android:id="@+id/ivArrow4"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:src="@drawable/rightarrow"
+            android:layout_toRightOf="@id/tMember"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:text="Member(s) can invite friends."
+        android:id="@+id/cMember"
+        android:layout_below="@id/Member"
+        android:layout_alignParentLeft="true"
+        style="@style/dCheckBox" />
+
+    <Button
+        android:text="Save"
+        android:id="@+id/bSave"
+        android:layout_below="@id/cMember"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:background="@drawable/purplebutton"
+        style="@style/dBigButton"
+        android:onClick="create_event"/>
+
+</RelativeLayout>

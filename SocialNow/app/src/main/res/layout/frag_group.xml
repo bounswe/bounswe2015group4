@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true">
 
     </ListView>
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fAdd"
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fAddGroup"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvGroup"
         android:layout_alignRight="@+id/lvGroup"

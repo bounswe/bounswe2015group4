@@ -11,14 +11,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +48,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.notidrawer,R.drawable.exit};
     private ActionBarDrawerToggle drawerListener;
     Fragment fragment;
+    static Menu menu;
 
 
 
@@ -52,6 +56,11 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         drawerLayout =(DrawerLayout)findViewById(R.id.drawerLayout);
         panel=getResources().getStringArray(R.array.panel);
@@ -61,8 +70,9 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         listview.setAdapter(mAdapter);
 
 
+
         listview.setOnItemClickListener(this);
-        drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
+        //drawerLayout=(DrawerLayout)findViewById(R.id.drawerLayout);
         drawerListener = new ActionBarDrawerToggle(this,drawerLayout,
                 drawer_open, R.string.drawer_close){
 
@@ -80,8 +90,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         };
         drawerLayout.setDrawerListener(drawerListener);
 
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         // Set default fragment to homepage
         fragment = new HomeFrag();
@@ -90,6 +99,16 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         setTitle(panel[0]);
 
     }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_event, menu);
+
+        return true;
+    }*/
+
+
     class MyAdapter extends ArrayAdapter<String> {
         public MyAdapter(Context context, int resource, String[] panel) {
             super(context, R.layout.item_drawer, panel);
@@ -117,6 +136,13 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
         if (drawerListener.onOptionsItemSelected(item))
         {
             return true;
@@ -131,7 +157,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     }
 
     @Override
-    protected void onPostCreate (Bundle savedInstanceState){
+    protected void onPostCreate (Bundle savedInstanceState) {
 
         super.onPostCreate(savedInstanceState);
         drawerListener.syncState();
@@ -167,6 +193,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
                 case 2:
                     fragment = new EventFrag();
+
                     break;
 
                 case 3:
@@ -212,6 +239,17 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
         }
     }
 
+    public static void hideItem(int index)
+    {
+        MenuItem mi = menu.getItem(index);
+        mi.setVisible(false);
+    }
+
+    public static void showItem(int index)
+    {
+        MenuItem mi = menu.getItem(index);
+        mi.setVisible(true);
+    }
 
 
 

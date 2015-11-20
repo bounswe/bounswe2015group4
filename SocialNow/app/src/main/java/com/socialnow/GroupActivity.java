@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -40,15 +41,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class EventActivity extends AppCompatActivity {
+public class GroupActivity extends AppCompatActivity {
     ListView listView;
     TextView description;
-    TextView eventdate;
-    TextView participantNumber;
-    TextView event_host;
+    TextView mCreatedate;
+    TextView mMember;
+    TextView mOwner;
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
-    TextView eventlocation;
+    TextView mPrivacy;
     android.support.design.widget.AppBarLayout img;
     String title;
     Date date;
@@ -58,6 +59,7 @@ public class EventActivity extends AppCompatActivity {
     String hostName;
     JSONArray parti;
     ArrayList<ParseObject> participants;
+    ImageView privacy;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -71,30 +73,34 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
-     //   eventname = (TextView) findViewById(R.id.tEname);
+        setContentView(R.layout.activity_group);
 
+
+        //toolBarLayout.setTitle("Group Name");
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-    participants = new ArrayList<ParseObject>();
-        eventdate = (TextView) findViewById(R.id.tEventDate);
+        participants = new ArrayList<ParseObject>();
+        mCreatedate = (TextView) findViewById(R.id.tCreateDate);
         description = (TextView) findViewById(R.id.tDes);
-       eventlocation = (TextView) findViewById(R.id.tEventlocation);
-        event_host = (TextView) findViewById(R.id.tEventHost);
+        mPrivacy = (TextView) findViewById(R.id.tPrivacy);
+        mOwner = (TextView) findViewById(R.id.tOwner);
 
-      participantNumber = (TextView) findViewById(R.id.tParti);
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mMember = (TextView) findViewById(R.id.tMember);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         parti = new JSONArray();
-         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-       // toolBarLayout.setTitle("Title");
+        toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        // toolBarLayout.setTitle("Title");
 
 
-        RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Parti);
+        RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Member);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "EventActivity");
-                startActivity(viewParti);
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                Intent i = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "GroupActivity");
+                startActivity(i);
             }
         });
 
@@ -103,18 +109,18 @@ public class EventActivity extends AppCompatActivity {
         listView.setAdapter(mAdapter);
 
 
-        Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                title= null;
-            } else {
-                title= extras.getString("event_title");
-                date = (Date)extras.get("event_date");
-                location = extras.getString("event_location");
-                hostName = extras.getString("host_name");
+        /*Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            title= null;
+        } else {
+            title= extras.getString("event_title");
+            date = (Date)extras.get("event_date");
+            location = extras.getString("event_location");
+            hostName = extras.getString("host_name");
 
-            }
+        }  */
 
-        getData();
+        //getData();
 
       /*  TextView eventname = (TextView) findViewById(R.id.tEname);
         eventname.setText(title);
@@ -126,7 +132,7 @@ public class EventActivity extends AppCompatActivity {
         eventlocation.setText(location);
         TextView eventhost = (TextView) findViewById(R.id.tHostName);
         eventhost.setText(hostName);*/
-
+        toolBarLayout.setTitle("Group Name");
 
     }
     class MyAdapter extends ArrayAdapter<String> {
@@ -154,11 +160,11 @@ public class EventActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_event, menu);
+        getMenuInflater().inflate(R.menu.menu_group, menu);
         return true;
     }
 
-    void getData() {
+    /*void getData() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.whereEqualTo("title", title);
@@ -198,7 +204,7 @@ public class EventActivity extends AppCompatActivity {
 
         });
 
-        /*ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.whereEqualTo("title", event_title);
         query.findInBackground(new FindCallback() {
                                    @Override
@@ -237,29 +243,28 @@ public class EventActivity extends AppCompatActivity {
                                        }
                                    }
                                }
-        );*/
+        );
     }
+    void writeToList(){
 
-  void writeToList(){
+        //   eventname.setText(title);
+        toolBarLayout.setTitle(title);
+        if(photo!=null){
+            Drawable d = new BitmapDrawable(getResources(), photo);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                img.setBackground(d);
+            }
+        }
 
-   //   eventname.setText(title);
-      toolBarLayout.setTitle(title);
-      if(photo!=null){
-          Drawable d = new BitmapDrawable(getResources(), photo);
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-              img.setBackground(d);
-          }
-      }
+        description.setText(descrip);
+        //eventdate.setText(date.toString());
+        if(parti!=null){
+            participantNumber.setText(parti.length()+" people are going");
+        }
 
-      description.setText(descrip);
-      eventdate.setText(date.toString());
-      if(parti!=null){
-          participantNumber.setText(parti.length()+" people are going");
-      }
-
-      eventlocation.setText(location);
-      event_host.setText(hostName);
-    //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
-    //  eventhost.setText(hostName);
-    }
+        eventlocation.setText(location);
+        event_host.setText(hostName);
+        //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
+        //  eventhost.setText(hostName);
+    }                                     */
 }

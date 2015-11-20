@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     android:id="@+id/coo_layout"
-    tools:context="com.socialnow.EventActivity">
+    tools:context="com.socialnow.GroupActivity">
 
     <android.support.design.widget.AppBarLayout android:id="@+id/app_bar"
         android:layout_height="@dimen/app_bar_height"
         android:layout_width="match_parent"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@drawable/devent"
+        android:background="@drawable/groupdrawer"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -36,8 +36,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_event" android:layout_width="match_parent"
-        android:layout_height="wrap_content" tools:context="com.socialnow.EventActivity"
+        tools:showIn="@layout/activity_group" android:layout_width="match_parent"
+        android:layout_height="wrap_content" tools:context="com.socialnow.GroupActivity"
         android:padding="@dimen/activity_horizontal_margin">
 
         <RelativeLayout
@@ -47,13 +47,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/eventInfo"
+                android:id="@+id/groupInfo"
                 android:background="@drawable/item_box"
                 android:padding="@dimen/et_top_bottom_padding"
                 android:layout_marginBottom="@dimen/big_margin">
 
                 <ImageView
-                    android:id="@+id/ivEventDate"
+                    android:id="@+id/ivCreateDate"
                     android:layout_width="@dimen/small_icon"
                     android:layout_height="@dimen/small_icon"
                     android:layout_alignParentLeft="true"
@@ -67,60 +67,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Event Date and Time"
-                    android:id="@+id/tEventDate"
+                    android:text="Created on DD/MM/YYYY"
+                    android:id="@+id/tCreateDate"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/ivEventDate"
+                    android:layout_toRightOf="@+id/ivCreateDate"
                     android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_toEndOf="@+id/ivEventDate" />
+                    android:layout_toEndOf="@+id/ivCreateDate" />
 
                 <ImageView
-                    android:id="@+id/ivEventLocation"
+                    android:id="@+id/ivPrivacy"
                     android:layout_width="@dimen/small_icon"
                     android:layout_height="@dimen/small_icon"
                     android:layout_alignParentLeft="true"
-                    android:src="@drawable/location"
+                    android:src="@drawable/ic_lock"
                     android:layout_marginRight="@dimen/big_margin"
                     android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_below="@id/tEventDate"/>
+                    android:layout_below="@id/tCreateDate"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Event Location"
-                    android:id="@+id/tEventlocation"
-                    android:layout_toRightOf="@+id/ivEventLocation"
-                    android:layout_toEndOf="@+id/ivEventLocation"
+                    android:text="Privacy Setting"
+                    android:id="@+id/tPrivacy"
+                    android:layout_toRightOf="@id/ivPrivacy"
+                    android:layout_toEndOf="@id/ivPrivacy"
                     android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_below="@id/tEventDate"/>
+                    android:layout_below="@id/tCreateDate"/>
 
                 <ImageView
-                    android:id="@+id/ivEventHost"
+                    android:id="@+id/ivOwner"
                     android:layout_width="@dimen/small_icon"
                     android:layout_height="@dimen/small_icon"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/host"
                     android:layout_marginRight="@dimen/big_margin"
-                    android:layout_below="@id/tEventlocation"/>
+                    android:layout_below="@id/tPrivacy"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Host by User"
-                    android:id="@+id/tEventHost"
-                    android:layout_toRightOf="@id/ivEventHost"
-                    android:layout_toEndOf="@id/ivEventHost"
-                    android:layout_below="@id/tEventlocation"/>
+                    android:text="Name of Owner"
+                    android:id="@+id/tOwner"
+                    android:layout_toRightOf="@id/ivOwner"
+                    android:layout_toEndOf="@id/ivOwner"
+                    android:layout_below="@id/tPrivacy"/>
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Parti"
-                android:layout_below="@id/eventInfo"
+                android:id="@+id/Member"
+                android:layout_below="@id/groupInfo"
                 android:clickable="true"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:background="@drawable/item_box"
@@ -130,8 +130,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="XX people are going"
-                    android:id="@+id/tParti"
+                    android:text="xx members"
+                    android:id="@+id/tMember"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
@@ -142,7 +142,7 @@
                     android:layout_width="@dimen/small_icon"
                     android:layout_height="@dimen/small_icon"
                     android:src="@drawable/rightarrow"
-                    android:layout_toRightOf="@id/tParti"
+                    android:layout_toRightOf="@id/tMember"
                     android:layout_centerVertical="true"/>
 
 
@@ -152,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Des"
-                android:layout_below="@id/Parti"
+                android:layout_below="@id/Member"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:padding="@dimen/et_top_bottom_padding"
                 android:background="@drawable/item_box">

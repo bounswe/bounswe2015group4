@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="com.socialnow.EventActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.socialnow.GroupActivity">
     <item android:id="@+id/action_comment" android:title="Comment"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_share" android:title="Share"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_invite" android:title="Invite Guests"
+    <item android:id="@+id/action_subscribe" android:title="Subscribe/Unsubscribe"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_report" android:title="Report Event"
+    <item android:id="@+id/action_request" android:title="Request Joining"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_invite" android:title="Invite Members"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_report" android:title="Report Group"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_edit" android:title="Settings"
         android:orderInCategory="100" app:showAsAction="never" />

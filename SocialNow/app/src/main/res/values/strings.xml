@@ -17,7 +17,7 @@
         <item>Assistant</item>
         <item>Alumni</item>
     </string-array>
-    <string-array name="privacy">
+    <string-array name="event_privacy">
         <item>Select Privacy</item>
         <item>Invited by host</item>
         <item>Invited by host or a guest</item>
@@ -54,4 +54,5 @@
     <string name="date">Date</string>
     <string name="stime">Start Time</string>
     <string name="etime">End Time</string>
+    <string name="groupname">Group Name</string>
 </resources>
