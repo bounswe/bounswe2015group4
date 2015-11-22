@@ -9,6 +9,7 @@ public class User_Form {
     String role;
     String name;
     String surname;
+    String user_token;
 
     @Override
     public String toString() {
@@ -59,6 +60,14 @@ public class User_Form {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUser_token() {
+        return user_token;
+    }
+
+    public void setUser_token(String token) {
+        this.user_token = token;
     }
 
 }
