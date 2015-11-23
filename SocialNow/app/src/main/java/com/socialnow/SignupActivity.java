@@ -16,6 +16,29 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+import java.util.Collections;
+
+
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -31,6 +54,11 @@ public class SignupActivity extends AppCompatActivity {
     CheckBox terms_and_services;
     String faculty_position = "";
     Context context;
+    String uname;
+    String usurname;
+    String uemail;
+    String upassword;
+    String TAG;
 
     ArrayAdapter<CharSequence> adapter;
 
@@ -47,6 +75,15 @@ public class SignupActivity extends AppCompatActivity {
         user_name = (EditText) findViewById(R.id.etUsername);
         password = (EditText) findViewById(R.id.etPW);
         terms_and_services = (CheckBox) findViewById(R.id.cbAccept);
+
+        uname = user_name.getText().toString();
+        usurname = surname.getText().toString();
+        uemail = email.getText().toString();
+        upassword = password.getText().toString();
+
+        TAG = SignupActivity.class.getSimpleName();
+
+
 
         spinner = (Spinner) findViewById(R.id.sUserType);
         adapter = ArrayAdapter.createFromResource(this, R.array.user_type, android.R.layout.simple_spinner_item);
@@ -79,6 +116,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         if (is_inputs_right) {
+            /*
             ParseUser user = new ParseUser();
             user.setUsername(user_name.getText().toString());
             user.setPassword(password.getText().toString());
@@ -113,10 +151,81 @@ public class SignupActivity extends AppCompatActivity {
                         dlgAlert.create().show();
                     }
                 }
-            });
+            }); */
+            try {
+                sendJson(10000, uname, usurname, uemail, upassword, faculty_position);
+            } catch (IOException ex) {
+
+            }
+
         } else {
             Toast.makeText(getBaseContext(), "Wrong Info", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public String sendJson(int timeout, final String uname, final String usurname,final String uemail, final String upassword, final String faculty_position) throws IOException {
+        HttpURLConnection c = null;
+        StringBuilder sb =new StringBuilder();
+        try {
+            URL u = new URL(AppConfig.URL_REGISTER);
+            c = (HttpURLConnection) u.openConnection();
+            c.setRequestMethod("POST");
+            c.setRequestProperty("Content-length", "0");
+            c.setUseCaches(false);
+            c.setAllowUserInteraction(false);
+            c.setConnectTimeout(timeout);
+            c.setReadTimeout(timeout);
+            c.connect();
+            int status = c.getResponseCode();
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", uemail);
+            jsonObject.put("password", upassword);
+            jsonObject.put("role", faculty_position);
+            jsonObject.put("name", uname);
+            jsonObject.put("surname", usurname);
+
+            String json = jsonObject.toString();
+
+            int HttpResult =c.getResponseCode();
+            if(HttpResult ==HttpURLConnection.HTTP_OK){
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        c.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                br.close();
+
+                System.out.println(""+sb.toString());
+
+                // Send POST output.
+                DataOutputStream printout;
+                printout = new DataOutputStream(c.getOutputStream ());
+                printout.writeBytes(URLEncoder.encode(jsonObject.toString(), "UTF-8"));
+                printout.flush();
+                printout.close();
+
+            }else{
+                System.out.println(c.getResponseMessage());
+            }
+
+        } catch (MalformedURLException ex) {
+
+        } catch (IOException ex) {
+
+        }  catch (JSONException ex) {
+
+        } finally {
+            if (c != null) {
+                try {
+                    c.disconnect();
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+        return null;
     }
 
     private boolean checkPassword(Editable text) {

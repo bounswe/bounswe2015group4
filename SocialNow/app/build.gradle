@@ -32,5 +32,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.android.support:design:23.0.1'
+    compile project(":volley");
 }
 
