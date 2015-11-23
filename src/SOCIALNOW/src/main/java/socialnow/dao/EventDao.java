@@ -39,6 +39,11 @@ public class EventDao {
         return entityManager.createQuery("from Event").getResultList();
     }
 
+    public List<Event> getAllByToken(String token){
+        return entityManager.createQuery("from Event where event_host_token =:eventtoken").setParameter("eventtoken",token).getResultList();
+
+    }
+
 
     /**
      * Return the event having the passed id.

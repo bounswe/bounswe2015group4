@@ -35,11 +35,18 @@ public class EventController {
 
     @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
     public @ResponseBody
-    List<Event> listEvent(){
+    List<Event> listAllEvents(){
         List<Event> eventList  = eventDao.getAll();
         return  eventList;
     }
 
+    @RequestMapping( value = "/listEvents", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Event> listEventOfUser(@RequestBody String token){
+        Event_Form form = gson.fromJson(token, Event_Form.class);
+        List<Event> eventList  = eventDao.getAllByToken(form.getEvent_host_token());
+        return  eventList;
+    }
 
 
 }
