@@ -10,6 +10,8 @@ import socialnow.forms.Event_Form;
 import socialnow.model.Event;
 import socialnow.model.User;
 
+import java.util.List;
+
 /**
  * Created by mertcan on 22.11.2015.
  */
@@ -29,4 +31,15 @@ public class EventController {
         eventDao.create(e);
         return e;
     }
+
+
+    @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Event> listEvent(){
+        List<Event> eventList  = eventDao.getAll();
+        return  eventList;
+    }
+
+
+
 }

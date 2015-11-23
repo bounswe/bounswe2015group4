@@ -56,6 +56,9 @@ public class Event {
         event_comments = e_f.getEvent_comments();
         event_photo = e_f.getEvent_photo();
     }
+    public  Event(){
+
+    }
 
     public Event(Error_JSON e) {
         id = -1;
