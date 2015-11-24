@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.dao.PostDao;
 import socialnow.forms.Post_Form;
+import socialnow.forms.User_Token_Form;
 import socialnow.model.Post;
+
+import java.util.List;
 
 /**
  * Created by Erdem on 11/23/2015.
@@ -29,6 +32,25 @@ public class PostController {
 
 
     }
+
+
+    @RequestMapping( value = "/listPostsOfUser", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Post> listPostsOfUser(@RequestBody String token){
+        User_Token_Form form = gson.fromJson(token, User_Token_Form.class);
+      return postDao.getAllByToken(form.getUser_token());
+    }
+
+
+    @RequestMapping( value = "/listPostsOfGroup", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Post> listPostsOfGroup(@RequestBody String token){
+        User_Token_Form form = gson.fromJson(token, User_Token_Form.class);
+        return postDao.getAllByToken(form.getUser_token());
+    }
+
+
+
 
 
 
