@@ -1,9 +1,7 @@
 package socialnow.model;
 
 import socialnow.Utils.Error_JSON;
-import socialnow.Utils.Util;
 import socialnow.forms.Event_Form;
-import socialnow.forms.User_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,14 +35,20 @@ public class Event {
     @NotNull
     private String event_host_token;
 
-    @Column(name = "event_participants")
-    private String event_participants;
+    @Column(name = "event_participants", length = 2000)
+    private String event_participants ;
+
+
+    @Column(name = "tags", length = 500)
+    private String tags = "";
 
     @Column(name = "event_comments")
     private String event_comments;
 
     @Column(name = "event_photo")
     private String event_photo;
+
+
 
     public Event(Event_Form e_f) {
         title = e_f.getTitle();
@@ -55,6 +59,7 @@ public class Event {
         event_participants = e_f.getEvent_participants();
         event_comments = e_f.getEvent_comments();
         event_photo = e_f.getEvent_photo();
+        event_participants = "";
     }
     public  Event(){
 
@@ -69,6 +74,28 @@ public class Event {
         return title;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", event_description='" + event_description + '\'' +
+                ", event_date=" + event_date +
+                ", event_location='" + event_location + '\'' +
+                ", event_host_token='" + event_host_token + '\'' +
+                ", event_participants='" + event_participants + '\'' +
+                ", event_comments='" + event_comments + '\'' +
+                ", event_photo='" + event_photo + '\'' +
+                '}';
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
@@ -138,4 +165,6 @@ public class Event {
     public void setId(long id) {
         this.id = id;
     }
+
+
 }

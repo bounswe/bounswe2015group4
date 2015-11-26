@@ -33,6 +33,29 @@ public class Util {
         return enc.encodeToString(hash);
     }
 
+
+    public static boolean arrayContains(String[] arr, String elem){
+        for (int i = 0; i <arr.length ; i++) {
+            if(arr[i].equals(elem))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static String deleteFromArray(String[] arr, String elem){
+        String result = "";
+
+        for (int i = 0; i <arr.length ; i++) {
+            if(!arr[i].equals(elem) && !arr[i].equals("")){
+                result = result + "," + arr[i];
+            }
+
+        }
+
+    return result;
+    }
+
     public static String generate_token(){
         return UUID.randomUUID().toString();
     }

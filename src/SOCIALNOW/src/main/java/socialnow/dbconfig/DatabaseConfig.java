@@ -86,7 +86,7 @@ public class DatabaseConfig {
         entityManagerFactory.getObject());
     return transactionManager;
   }
-  
+
   /**
    * PersistenceExceptionTranslationPostProcessor is a bean post processor
    * which adds an advisor to any bean annotated with Repository so that any

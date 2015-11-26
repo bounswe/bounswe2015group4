@@ -5,6 +5,8 @@ package socialnow.forms;
  */
 public class User_Token_Form {
 
+
+
     public User_Token_Form(String user_token) {
         this.user_token = user_token;
     }
@@ -14,6 +16,16 @@ public class User_Token_Form {
         return "User_Token_Form{" +
                 "user_token='" + user_token + '\'' +
                 '}';
+    }
+
+    private int event_id;
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
     }
 
     private String user_token;

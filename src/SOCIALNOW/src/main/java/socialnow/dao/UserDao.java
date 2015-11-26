@@ -64,6 +64,12 @@ public class UserDao {
                 .setParameter("email", email)
                 .getSingleResult();
     }
+    public User getByToken(String token) {
+        return (User) entityManager.createQuery(
+                "from User where user_token = :token")
+                .setParameter("token", token)
+                .getSingleResult();
+    }
 
     /**
      * Return the user having the passed id.

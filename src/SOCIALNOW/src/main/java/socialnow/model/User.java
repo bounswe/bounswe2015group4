@@ -6,8 +6,6 @@ import socialnow.forms.User_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents an User for this web application.
@@ -42,7 +40,18 @@ public class User {
     @Column(name = "user_token", unique = true)
     private String user_token;
 
-//  private List<Event> events = new ArrayList<Event>() ;
+    public String getUser_participating_events() {
+        return user_participating_events;
+    }
+
+    public void setUser_participating_events(String user_participating_events) {
+        this.user_participating_events = user_participating_events;
+    }
+
+    @Column(name = "user_participating_events", length = 2000)
+    private String user_participating_events ;
+
+//  private List<Event> user_participating_events
 
     // ------------------------
     // PUBLIC METHODS
@@ -58,6 +67,7 @@ public class User {
     public User(String email, String name) {
         this.email = email;
         this.name = name;
+        this.user_participating_events = "";
     }
 
     public long getId() {
@@ -112,6 +122,20 @@ public class User {
         return user_token;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", role='" + role + '\'' +
+                ", user_token='" + user_token + '\'' +
+                ", user_participating_events=" + user_participating_events +
+                '}';
+    }
+
     public void setUser_token(String token) {
         this.user_token = token;
     }
@@ -123,6 +147,7 @@ public class User {
         role = u_f.getRole();
         surname = u_f.getSurname();
         user_token = u_f.getUser_token();
+        this.user_participating_events = "";
     }
 
     public User(Error_JSON e) {
