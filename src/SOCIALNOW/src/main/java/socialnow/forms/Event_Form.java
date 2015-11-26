@@ -22,6 +22,15 @@ public class Event_Form {
 
     private String event_photo;
 
+    private String tags;
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
 
     public String getTitle() {
         return title;

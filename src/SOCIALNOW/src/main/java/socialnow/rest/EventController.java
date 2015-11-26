@@ -2,9 +2,12 @@ package socialnow.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import socialnow.SemanticTagging.SemanticResponse;
 import socialnow.Utils.Error_JSON;
+import socialnow.Utils.RequestSender;
 import socialnow.Utils.Util;
 import socialnow.dao.EventDao;
 import socialnow.dao.UserDao;
@@ -36,6 +39,19 @@ public class EventController {
         eventDao.create(e);
         return e;
     }
+
+
+
+
+    @RequestMapping( value = "/deneme", method = RequestMethod.POST)
+    public @ResponseBody
+    SemanticResponse FOOO(@RequestBody String addEventForm) throws UnirestException {
+
+        return  RequestSender.searchSemantics("Java");
+    }
+
+
+
 
 
     @RequestMapping(value = "/events/addParticipant", method = RequestMethod.POST)

@@ -59,6 +59,7 @@ public class Event {
         event_participants = e_f.getEvent_participants();
         event_comments = e_f.getEvent_comments();
         event_photo = e_f.getEvent_photo();
+        tags= e_f.getTags();
         event_participants = "";
     }
     public  Event(){
