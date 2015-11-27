@@ -17,7 +17,7 @@ public class User  implements SearchReturn {
     // ------------------------
     // PRIVATE FIELDS
     // ------------------------
-
+    String type;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -166,4 +166,12 @@ public class User  implements SearchReturn {
             surname = u_f.getSurname();
     }
 
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(String type) {
+        this.type=type;
+    }
 } // class User

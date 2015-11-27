@@ -5,4 +5,6 @@ package socialnow.model;
  */
 public interface SearchReturn {
     String type="";
+
+    public void setType(String type);
 }

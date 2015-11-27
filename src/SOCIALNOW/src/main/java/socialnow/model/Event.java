@@ -66,6 +66,11 @@ public class Event implements SearchReturn {
 
     }
 
+    public String getType() {
+        return type;
+    }
+
+    String type;
     public Event(Error_JSON e) {
         id = -1;
         title = e.toString();
@@ -168,4 +173,8 @@ public class Event implements SearchReturn {
     }
 
 
+    @Override
+    public void setType(String type) {
+        this.type=type;
+    }
 }

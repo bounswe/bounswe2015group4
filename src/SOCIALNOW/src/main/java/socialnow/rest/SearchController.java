@@ -42,17 +42,20 @@ public class SearchController {
         List<Post> posts = postDao.getAll();
         List<User> users = userDao.getAll();
         for (Event event : events) {
-            if(event.getTitle().contains(search)){
+            if(event.getTitle().toLowerCase().contains(search.toLowerCase())){
+                event.setType("event");
                 searchReturns.add(event);
             }
         }
         for (User user : users) {
-            if(user.getSurname().equals(search)|| user.getName().equals(search)){
+            if(user.getSurname().equalsIgnoreCase(search)|| user.getName().equalsIgnoreCase(search)){
+                user.setType("user");
                 searchReturns.add(user);
             }
         }
         for (Post post : posts) {
-            if(post.getContent().contains(search)){
+            if(post.getContent().toLowerCase().contains(search.toLowerCase())){
+                post.setType("post");
                 searchReturns.add(post);
             }
         }

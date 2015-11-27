@@ -12,6 +12,12 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "posts")
 public class Post  implements SearchReturn  {
+
+    public String getType() {
+        return type;
+    }
+
+    String type;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -81,5 +87,10 @@ public class Post  implements SearchReturn  {
         content = e.toString();
     }
     public Post() {
+    }
+
+    @Override
+    public void setType(String type) {
+        this.type=type;
     }
 }
