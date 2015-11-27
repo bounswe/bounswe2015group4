@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User  implements SearchReturn {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -57,7 +57,7 @@ public class User {
     // PUBLIC METHODS
     // ------------------------
 
-    public User() {
+    public User(){
     }
 
     public User(long id) {

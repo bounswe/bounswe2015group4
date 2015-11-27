@@ -1,6 +1,7 @@
 package socialnow.dao;
 
 import org.springframework.stereotype.Repository;
+import socialnow.model.Event;
 import socialnow.model.Post;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,8 @@ public class PostDao {
 
     }
 
-
+    public List<Post> getAll() {
+        return entityManager.createQuery("from Post").getResultList();
+    }
 
 }

@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "events")
-public class Event {
+public class Event implements SearchReturn {
     // ------------------------
     // PRIVATE FIELDS
 

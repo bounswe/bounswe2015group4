@@ -14,6 +14,7 @@ import socialnow.dao.UserDao;
 import socialnow.forms.Event_Form;
 import socialnow.forms.User_Token_Form;
 import socialnow.model.Event;
+import socialnow.model.SearchReturn;
 import socialnow.model.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +42,15 @@ public class EventController {
     }
 
 
-
-
     @RequestMapping( value = "/deneme", method = RequestMethod.POST)
     public @ResponseBody
-    SemanticResponse FOOO(@RequestBody String addEventForm) throws UnirestException {
-
-        return  RequestSender.searchSemantics("Java");
+    SemanticResponse FOOO(@RequestBody String search) throws UnirestException {
+        return  RequestSender.searchSemantics(search);
     }
+
+
+
+
 
 
 

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post  implements SearchReturn  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
