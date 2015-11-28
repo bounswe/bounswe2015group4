@@ -11,9 +11,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.socialnow.API.API;
+import com.socialnow.Models.User;
+
+import javax.xml.transform.ErrorListener;
+import javax.xml.transform.TransformerException;
 
 /**
  * Created by lauamy on 23/10/15.
@@ -46,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
     void isValidUser(){
-        ParseUser.logInInBackground(userName, password, new LogInCallback() {
+        /*ParseUser.logInInBackground(userName, password, new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     // Hooray! The user is logged in.
@@ -74,7 +81,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 }
 
-        });
+        });*/
+
+        User u = new User();
+        u.setEmail(etUserName.getText().toString());
+        u.setPassword(etPassword.getText().toString());
+
+        Response.Listener<User> response = new Response.Listener<User>() {
+            @Override
+            public void onResponse(User response) {
+                if(response.getId() != -1) {
+                    Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
+                    //TODO CASH USER LOGIN
+                    //TODO OPEN HOMEPAGE
+//                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+//                    startActivity(i2);
+                }else{
+                    Log.d("Login", "Error: " + response.getUser_token());
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+               Log.d("Failed", "Login Failed");
+           }
+        };
+
+        API.login("login", u, response, errorListener);
+
     }
     @Override
     public void onClick(View v) {

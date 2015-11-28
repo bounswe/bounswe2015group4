@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
+import com.socialnow.API.API;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         Parse.initialize(this, "nYZwu2d21NWTk7oIdS6N4IBcEDuNwoN48sRrl7Zd", "oRp46EvVPamz2XQtywDTImZI4YIPRLLlxVit8HcA");
 
         ParseUser currentUser = ParseUser.getCurrentUser();
+
         if (currentUser != null) {
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

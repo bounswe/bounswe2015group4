@@ -52,7 +52,7 @@ public class API {
             }
         });
     }
-    public static void login(String tag, User user, Response.Listener<AccessToken> successListener,
+    public static void login(String tag, User user, Response.Listener<User> successListener,
                              Response.ErrorListener failureListener) {
         String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
             @Override
@@ -67,7 +67,7 @@ public class API {
         }).create().toJson(user, User.class);
         System.out.println(postBody);
         mQueue.add(new GeneralRequest<>(Request.Method.POST,
-                MAIN_URL + "/login", AccessToken.class, successListener, failureListener)
+                MAIN_URL + "/login", User.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
@@ -105,6 +105,7 @@ public class API {
         public GeneralRequest<T> setPostBodyInJSONForm(String postBody) {
             this.postBody = postBody;
             Log.v("Request", postBody);
+//            this.postBody = "{email:erdem@gmail.com,password:123456}";
             return this;
         }
 
@@ -124,7 +125,7 @@ public class API {
 
         @Override
         protected void deliverResponse(T response) {
-            Log.v("Request", new Gson().toJson(response));
+            Log.v("Response", new Gson().toJson(response));
             if (listener != null)
                 listener.onResponse(response);
         }
