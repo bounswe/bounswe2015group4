@@ -31,7 +31,6 @@ public class API {
     private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend/";
     private static RequestQueue mQueue;
     private static API instance;
-
     private static String UUID;
 
     public static void init() {
@@ -41,9 +40,13 @@ public class API {
         }
     }
 
+    public static void setUUID() {
+        instance.UUID = UUID;
+    }
     public static void setUUID(String UUID) {
         instance.UUID = UUID;
     }
+
     public static void cancelRequestByTag(final String tag) {
         mQueue.cancelAll(new RequestQueue.RequestFilter() {
             @Override
