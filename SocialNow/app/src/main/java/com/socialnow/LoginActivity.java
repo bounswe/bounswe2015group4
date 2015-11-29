@@ -13,11 +13,10 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+
 import com.socialnow.API.API;
 import com.socialnow.Models.User;
+import android.content.SharedPreferences;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
@@ -34,6 +33,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userName;
     String password;
     Context context;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor loginStateEditor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignup.setOnClickListener(this);
         btnForgotPassword = (Button) findViewById(R.id.bFpw);
         btnForgotPassword.setOnClickListener(this);
+
+        sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
 
     }
     void isValidUser(){
@@ -86,18 +89,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         User u = new User();
         u.setEmail(etUserName.getText().toString());
         u.setPassword(etPassword.getText().toString());
-
+        loginStateEditor = sharedPref.edit();
         Response.Listener<User> response = new Response.Listener<User>() {
             @Override
             public void onResponse(User response) {
                 if(response.getId() != -1) {
                     Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
+
+                    // Writing data to SharedPreferences
+
+                    loginStateEditor.putBoolean("success_login", true);
+
                     //TODO CASH USER LOGIN
                     //TODO OPEN HOMEPAGE
-//                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-//                    startActivity(i2);
+                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(i2);
                 }else{
                     Log.d("Login", "Error: " + response.getUser_token());
+                    Log.d("Wrong credentials:", "Not valid username and password");
+                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+                    dlgAlert.setMessage("Wrong password or username.");
+                    dlgAlert.setTitle("Error Message");
+                    dlgAlert.setPositiveButton("OK", null);
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    etUserName.setText("");
+                                    etPassword.setText("");
+                                }
+                            });
+                    dlgAlert.create().show();
                 }
             }
         };
@@ -106,9 +128,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            @Override
            public void onErrorResponse(VolleyError error) {
                Log.d("Failed", "Login Failed");
+               loginStateEditor.putBoolean("success_login", false);
            }
         };
-
+        loginStateEditor.commit();
         API.login("login", u, response, errorListener);
 
     }
