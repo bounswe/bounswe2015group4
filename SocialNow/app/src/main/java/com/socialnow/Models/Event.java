@@ -1,6 +1,7 @@
 package com.socialnow.Models;
 
 import java.util.Date;
+import android.graphics.Bitmap;
 
 /**
  * Created by mugekurtipek on 24/11/15.
@@ -25,7 +26,7 @@ public class Event {
 
     private String event_comments;
 
-    private String event_photo;
+    private Bitmap event_photo;
 
   /*  public Event(Event_Form e_f) {
         title = e_f.getTitle();
@@ -102,11 +103,11 @@ public class Event {
         this.event_comments = event_comments;
     }
 
-    public String getEvent_photo() {
+    public Bitmap getEvent_photo() {
         return event_photo;
     }
 
-    public void setEvent_photo(String event_photo) {
+    public void setEvent_photo(Bitmap event_photo) {
         this.event_photo = event_photo;
     }
 
