@@ -35,6 +35,7 @@ import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,7 +69,14 @@ public class EventFrag extends Fragment {
                 Object listItem = listView.getItemAtPosition(position);
                 Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
-                i2.putExtra("Event", (Parcelable) event);
+                //i2.putExtra("Event", event);
+                i2.putExtra("title", event.getTitle());
+                i2.putExtra("date", event.getEvent_date());
+                i2.putExtra("location", event.getEvent_location());
+                i2.putExtra("hostname", event.getEvent_host_token());
+                i2.putExtra("participants", event.getEvent_participants());
+                i2.putExtra("photo", event.getEvent_photo());
+                i2.putExtra("description", event.getEvent_description());
                 startActivity(i2);
             }
         });

@@ -30,6 +30,8 @@ import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.socialnow.Models.Event;
+import com.socialnow.Models.User;
 
 import org.json.JSONArray;
 
@@ -46,18 +48,20 @@ public class EventActivity extends AppCompatActivity {
     TextView eventdate;
     TextView participantNumber;
     TextView event_host;
+    TextView eventname;
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView eventlocation;
     android.support.design.widget.AppBarLayout img;
     String title;
-    Date date;
+    String date;
     Bitmap photo;
     String descrip;
     String location;
     String hostName;
-    JSONArray parti;
-    ArrayList<ParseObject> participants;
+    String parti;
+    Event e;
+    byte[] data;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -72,10 +76,7 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
-     //   eventname = (TextView) findViewById(R.id.tEname);
-
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-    participants = new ArrayList<ParseObject>();
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
        eventlocation = (TextView) findViewById(R.id.tEventlocation);
@@ -84,7 +85,7 @@ public class EventActivity extends AppCompatActivity {
       participantNumber = (TextView) findViewById(R.id.tParti);
          toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        parti = new JSONArray();
+
          toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
        // toolBarLayout.setTitle("Title");
 
@@ -104,29 +105,23 @@ public class EventActivity extends AppCompatActivity {
 
 
         Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                title= null;
-            } else {
-                title= extras.getString("event_title");
-                date = (Date)extras.get("event_date");
-                location = extras.getString("event_location");
-                hostName = extras.getString("host_name");
+        if(extras == null) {
+            title= null;
+        } else {
+            title= extras.getString("title");
+            date = extras.getString("date");
+            location = extras.getString("location");
+            hostName = extras.getString("hostname");
+            descrip = extras.getString("description");
+            //participants = extras.getString("participants");
+            //data = extras.getByteArray("photo");
+        }
 
-            }
+        e = extras.getParcelable("Event");
 
-        getData();
+        //getData();
 
-      /*  TextView eventname = (TextView) findViewById(R.id.tEname);
-        eventname.setText(title);
-        ImageView img = (ImageView) findViewById(R.id.ivEvent);
-        img.setImageBitmap(photo);
-        TextView eventdate = (TextView) findViewById(R.id.tEdate);
-        eventdate.setText(date.toString());
-        TextView eventlocation = (TextView) findViewById(R.id.tElocation);
-        eventlocation.setText(location);
-        TextView eventhost = (TextView) findViewById(R.id.tHostName);
-        eventhost.setText(hostName);*/
-
+        writeToList();
 
     }
     class MyAdapter extends ArrayAdapter<String> {
@@ -160,50 +155,20 @@ public class EventActivity extends AppCompatActivity {
 
     void getData() {
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("title", title);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, com.parse.ParseException e) {
-                if (object == null) {
-                    Log.d("score", "The getFirst request failed.");
-                } else {
-                    ParseFile fileObject;
-                    byte[] data;
-                    Log.d("score", "Retrieved the object.");
-                    //title = object.getString("title");
-                    //date = object.getDate("event_date");
-                    //location = object.getString("event_location");
-                    descrip = object.getString("event_description");
-                    parti= object.getJSONArray("event_members");
 
-                    //hostName = object.getParseObject("event_host").getString("Name") + " " + object.getParseObject("event_host").getString("Surname");
-                    fileObject = (ParseFile) object.getParseFile("event_photo");
-                    if (fileObject != null) {
-                        try {
-                            data = fileObject.getData();
-                            Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            photo = bMap;
-
-                            writeToList();
-
-                        } catch (com.parse.ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        Log.d("post", "error retriving posts");
-                    }
-                }
-            }
-
-        });
-
-
+        /* byte[] data;
+        title = e.getTitle();
+        date = e.getEvent_date();
+        location = e.getEvent_location();
+        descrip = e.getEvent_description();
+        parti= e.getEvent_participants();
+        photo = e.getEvent_photo();
+        hostName = e.getEvent_host_token();*/
     }
 
   void writeToList(){
 
-   //   eventname.setText(title);
+
       toolBarLayout.setTitle(title);
       if(photo!=null){
           Drawable d = new BitmapDrawable(getResources(), photo);
@@ -213,10 +178,11 @@ public class EventActivity extends AppCompatActivity {
       }
 
       description.setText(descrip);
-      eventdate.setText(date.toString());
-      if(parti!=null){
+      eventdate.setText(date);
+
+     /* if(parti!=null){
           participantNumber.setText(parti.length()+" people are going");
-      }
+      }*/
 
       eventlocation.setText(location);
       event_host.setText(hostName);

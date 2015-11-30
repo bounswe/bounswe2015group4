@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
        //sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
         sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
-        boolean already_logged_in = sharedPref.getBoolean("success_login", false);
-        if (already_logged_in) {
+       // boolean already_logged_in = sharedPref.getBoolean("success_login", true);
+        if ( sharedPref.getBoolean("success_login", true)) {
 
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             startActivity(i2);
