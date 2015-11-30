@@ -1,0 +1,37 @@
+<div class="login-box">
+    <div class="login-logo">
+        <a style="color:#0097bc;">Create Event</a>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">You Can Create Your Event</p>
+
+        <form novalidate ng-submit="createEvent()">
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Title" ng-model="eventTitle" required>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Description" ng-model="eventDescription" required>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <!-- Date and time range -->
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control " ng-model="eventTime" id="eventTime" placeholder="Event Date" readonly="true" required>
+                <span class="glyphicon glyphicon-time form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-8">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Add Event</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+
+
+    </div>
+
+</div>

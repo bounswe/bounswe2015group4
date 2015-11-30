@@ -1,0 +1,61 @@
+<ng-include src="'~/../pages/partials/mainHeader.html'"></ng-include>
+
+<div class="content-wrapper" style="min-height: 780px;">
+  <!-- content goes here -->
+
+  <div style="padding: 10px 0 0 0; margin: 0px;" class="text-center">
+    <div class="btn-group ">
+      <a style="color:#0097bc;"></a>
+    </div>
+  </div>
+  <div class="login-box">
+    <div class="login-logo">
+
+    </div>
+    <div class="login-box-body">
+      <p class="login-box-msg">You Can Edit Your Profile</p>
+
+      <form name="profileForm" novalidate>
+        <div class="form-group has-feedback">
+          <input type="email" class="form-control" name="email" placeholder="Email" ng-bind="currentUser.email" readonly>
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="name" placeholder="Name" ng-model="currentUser.name"
+                 required>
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+          <div ng-show="profileForm.name.$error.required && submitted">
+            <message type="error" display="'Name field is required'"></message>
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="surname" placeholder="Surname"
+                 ng-model="currentUser.surname" required>
+          <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+          <div ng-show="profileForm.surname.$error.required && submitted">
+            <message type="error" display="'Surname field is required'"></message>
+          </div>
+        </div>
+        <div class="form-group has-feedback">
+          <input type="file" id="profilePicker" class="form-control" name="profilePicture">
+          <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <message type="success" display="successMessage"></message>
+            <message type="error" display="errorMessage"></message>
+          </div>
+
+          <div class="col-md-4">
+            <button type="submit" ng-click="editProfile(profileForm.$valid)" class="btn btn-primary btn-block btn-flat">Edit</button>
+          </div>
+        </div>
+        <div class="row">
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
