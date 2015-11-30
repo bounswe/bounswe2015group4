@@ -120,7 +120,7 @@ public class EventFrag extends Fragment {
             public void onResponse(Event[] response) {
                 if(response != null) {
                     Log.d("Event", response.toString());
-                    for( int i= 0;i<=response.length;i++){
+                    for( int i= 0;i<response.length;i++){
                         events.add(i,response[i]);
                     }
                     writeToList();
