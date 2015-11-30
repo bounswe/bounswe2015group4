@@ -1,8 +1,11 @@
 package com.socialnow;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +28,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.socialnow.App;
+
+import com.socialnow.API.API;
+import com.socialnow.Models.User;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.parse.GetCallback;
@@ -34,6 +47,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.socialnow.Models.User;
 
 import java.text.ParseException;
 
@@ -45,15 +59,12 @@ public class ProfileFrag extends Fragment {
     private static final int SELECTED_PICTURE = 1;
 
     Button logout;
-    ParseUser current_user;
-    String user_id;
+    User current_user;
+    Long user_id;
     ImageView profile_picture;
     TextView user_name;
     TextView user_email;
-    ParseFile fileObject;
-
     String userName;
-
     String userEmail;
     Bitmap photo;
 
@@ -65,19 +76,51 @@ public class ProfileFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View v =  inflater.inflate(R.layout.frag_profile,container,false);
-
         profile_picture = (ImageView) v.findViewById(R.id.profilepicture);
         user_name = (TextView) v.findViewById(R.id.tUserName);
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
-        current_user = ParseUser.getCurrentUser();
-        user_id= current_user.getObjectId();
-        userName = current_user.getString("username");
-        userEmail = current_user.getString("email");
+        current_user = new User();
 
-        user_name.setText(userName);
-        user_email.setText(userEmail);
+        SharedPreferences sharedPref =  this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
-        fileObject = (ParseFile) current_user.getParseFile("Profile_Picture");
+        user_id= sharedPref.getLong("current_user_id", 1);
+        userName = sharedPref.getString("current_user_name", "");
+        userName = sharedPref.getString("current_user_email", "");
+
+
+
+        current_user.setId(user_id);
+
+        Response.Listener<User> response = new Response.Listener<User>() {
+            @Override
+            public void onResponse(User response) {
+                if(response.getId() != -1) {
+                    Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
+
+                    user_name.setText(response.getName());
+                    user_email.setText(response.getEmail());
+
+                    //TODO CASH USER LOGIN
+                    //TODO OPEN HOMEPAGE
+                    Intent i2 = new Intent(getActivity(), ProfilePage.class);
+                    startActivity(i2);
+                } else {
+                    Log.d("ProfilePage", "Error: " + response.getUser_token());
+                    Log.d("ProfilePage error:", "error response");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Login Failed");
+
+
+            }
+        };
+
+      /*  fileObject = (ParseFile) current_user.getParseFile("Profile_Picture");
         byte[] data;
 
 
@@ -99,7 +142,7 @@ public class ProfileFrag extends Fragment {
             }
         } else {
             Log.d("post", "error retriving posts");
-        }
+        }*/
 
 
 

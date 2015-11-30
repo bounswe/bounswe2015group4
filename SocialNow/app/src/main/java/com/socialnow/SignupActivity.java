@@ -20,6 +20,8 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.socialnow.API.API;
+import com.socialnow.Models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,12 +38,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.MalformedURLException;
 
+
 import java.util.Collections;
 
-
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -84,7 +83,6 @@ public class SignupActivity extends AppCompatActivity {
         TAG = SignupActivity.class.getSimpleName();
 
 
-
         spinner = (Spinner) findViewById(R.id.sUserType);
         adapter = ArrayAdapter.createFromResource(this, R.array.user_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -115,55 +113,60 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
 
-        if (is_inputs_right) {
-            /*
-            ParseUser user = new ParseUser();
-            user.setUsername(user_name.getText().toString());
-            user.setPassword(password.getText().toString());
-            user.setEmail(email.getText().toString());
+        User u = new User();
+        u.setEmail(uname);
+        u.setPassword(upassword);
+        u.setRole(faculty_position);
+        u.setName(uname);
+        u.setSurname(usurname);
 
-// other fields can be set just like with ParseObject
-            user.put("Name", name.getText().toString());
-            user.put("Surname", surname.getText().toString());
-            user.put("Department_Position", faculty_position);
+        Response.Listener<User> response = new Response.Listener<User>() {
+            @Override
+            public void onResponse(User response) {
+                if(response.getId() != -1) {
+                    Log.d("signUp", "Sign in success" + response.getEmail() + " " + response.getName());
 
-            user.signUpInBackground(new SignUpCallback() {
-                public void done(ParseException e) {
-                    if (e == null) {
-                        // Hooray! Let them use the app now.
-                        Toast.makeText(getBaseContext(), "Your request is sent", Toast.LENGTH_LONG).show();
-                        Log.d("sign up", "User is created");
-                        Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-                        startActivity(i2);
-                    } else {
-                        Log.d("sign up error", "Something gone wrong whle sign up");
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
-                        dlgAlert.setMessage("Something gone wrong!" + e.toString());
-                        dlgAlert.setTitle("Error Message");
-                        dlgAlert.setPositiveButton("OK", null);
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
+                    // Writing data to SharedPreferences
 
-                                    }
-                                });
-                        dlgAlert.create().show();
-                    }
+                    //TODO CASH USER LOGIN
+                    //TODO OPEN HOMEPAGE
+                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(i2);
+                }else{
+                    Log.d("signUp", "Error: " + response.getUser_token());
+                    Log.d("Wrong credentials:", "Not valid username and password");
+                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+                    dlgAlert.setMessage("Wrong password or username.");
+                    dlgAlert.setTitle("Error Message");
+                    dlgAlert.setPositiveButton("OK", null);
+                    dlgAlert.setCancelable(true);
+                    dlgAlert.setPositiveButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    user_name.setText("");
+                                    password.setText("");
+                                }
+                            });
+                    dlgAlert.create().show();
                 }
-            }); */
-            try {
-                sendJson(10000, uname, usurname, uemail, upassword, faculty_position);
-            } catch (IOException ex) {
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Signin Failed");
 
             }
+        };
 
-        } else {
-            Toast.makeText(getBaseContext(), "Wrong Info", Toast.LENGTH_LONG).show();
-        }
+        API.signin("signUp", u, response, errorListener);
+
     }
 
-    public String sendJson(int timeout, final String uname, final String usurname,final String uemail, final String upassword, final String faculty_position) throws IOException {
+
+
+   /* public String sendJson(int timeout, final String uname, final String usurname,final String uemail, final String upassword, final String faculty_position) throws IOException {
         HttpURLConnection c = null;
         StringBuilder sb =new StringBuilder();
         try {
@@ -226,7 +229,8 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
         return null;
-    }
+    } */
+
 
     private boolean checkPassword(Editable text) {
         if (text.toString() != "")

@@ -18,7 +18,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.socialnow.App;
 import com.socialnow.Models.AccessToken;
-import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 
 import java.io.UnsupportedEncodingException;
@@ -75,10 +74,23 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
-    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
-                                     Response.ErrorListener failureListener) {
-        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
-                Event[].class, successListener, failureListener));
+    public static void signin(String tag, User user, Response.Listener<User> successListener,
+                             Response.ErrorListener failureListener) {
+        String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes f) {
+                return !(f.getName().equals("email") || f.getName().equals("password"));
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> clazz) {
+                return false;
+            }
+        }).create().toJson(user, User.class);
+        System.out.println(postBody);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST,
+                MAIN_URL + "/signUp", User.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
     private static class GeneralRequest<T> extends Request<T> {

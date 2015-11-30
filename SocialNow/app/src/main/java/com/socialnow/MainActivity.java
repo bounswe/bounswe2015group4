@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
         App app = new App();
         app.onCreate();
 
-        sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
+        Intent i = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(i);
+
+       /*sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
 
         if (sharedPref.getBoolean("success_login", true)) {
 
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
-        }
+        }*/
 
 
        /* if (currentUser != null) {

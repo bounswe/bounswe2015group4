@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         u.setEmail(etUserName.getText().toString());
         u.setPassword(etPassword.getText().toString());
         loginStateEditor = sharedPref.edit();
+
         Response.Listener<User> response = new Response.Listener<User>() {
             @Override
             public void onResponse(User response) {
@@ -70,6 +71,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     // Writing data to SharedPreferences
 
                     loginStateEditor.putBoolean("success_login", true);
+                    loginStateEditor.putLong("current_user_id", response.getId());
+                    loginStateEditor.putString("current_user_name", response.getName());
+                    loginStateEditor.putString("current_user_email", response.getEmail());
 
                     //TODO CASH USER LOGIN
                     //TODO OPEN HOMEPAGE
@@ -100,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            public void onErrorResponse(VolleyError error) {
                Log.d("Failed", "Login Failed");
                loginStateEditor.putBoolean("success_login", false);
+
            }
         };
         loginStateEditor.commit();
