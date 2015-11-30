@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -81,12 +82,15 @@ public class ProfileFrag extends Fragment {
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
         current_user = new User();
 
-        SharedPreferences sharedPref =  this.getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        Context context = this.getActivity();
+        SharedPreferences sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
         user_id= sharedPref.getLong("current_user_id", 1);
-        userName = sharedPref.getString("current_user_name", "");
-        userName = sharedPref.getString("current_user_email", "");
+        userName = sharedPref.getString("current_user_name", "asdfg");
+        userEmail = sharedPref.getString("current_user_email", "şlkjh");
 
+        user_name.setText(userName);
+        user_email.setText(userEmail);
 
 
         current_user.setId(user_id);
@@ -97,13 +101,12 @@ public class ProfileFrag extends Fragment {
                 if(response.getId() != -1) {
                     Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
 
-                    user_name.setText(response.getName());
-                    user_email.setText(response.getEmail());
+                    // user_name.setText(response.getName());
+                   // user_email.setText(response.getEmail());
 
                     //TODO CASH USER LOGIN
                     //TODO OPEN HOMEPAGE
-                    Intent i2 = new Intent(getActivity(), ProfilePage.class);
-                    startActivity(i2);
+
                 } else {
                     Log.d("ProfilePage", "Error: " + response.getUser_token());
                     Log.d("ProfilePage error:", "error response");

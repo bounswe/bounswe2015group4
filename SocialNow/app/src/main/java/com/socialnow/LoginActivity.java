@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnForgotPassword = (Button) findViewById(R.id.bFpw);
         btnForgotPassword.setOnClickListener(this);
 
-        sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
+        sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
     }
     void isValidUser(){
