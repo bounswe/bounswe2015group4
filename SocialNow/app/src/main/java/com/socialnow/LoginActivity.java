@@ -56,35 +56,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
     void isValidUser(){
-        /*ParseUser.logInInBackground(userName, password, new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    // Hooray! The user is logged in.
-                    //TODO create intent to home page
-                    Log.d("Right credentials:", "Valid username and password");
-                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-                    startActivity(i2);
-                } else {
-                    // Signup failed. Look at the ParseException to see what happened.
-                    Log.d("Wrong credentials:", "Not valid username and password");
-                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                    dlgAlert.setMessage("Wrong password or username.");
-                    dlgAlert.setTitle("Error Message");
-                    dlgAlert.setPositiveButton("OK", null);
-                    dlgAlert.setCancelable(true);
-                    dlgAlert.setPositiveButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    etUserName.setText("");
-                                    etPassword.setText("");
-                                }
-                            });
-                    dlgAlert.create().show();
-                }
-
-                }
-
-        });*/
 
         User u = new User();
         u.setEmail(etUserName.getText().toString());
@@ -94,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(User response) {
                 if(response.getId() != -1) {
-                    Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
+                    Log.d("Login", "Login success " + response.getEmail() + " " + response.getName());
 
                     // Writing data to SharedPreferences
 

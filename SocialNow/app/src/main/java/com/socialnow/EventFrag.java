@@ -115,15 +115,18 @@ public class EventFrag extends Fragment {
 
     void getData() {
 
-        Response.Listener<Event> response = new Response.Listener<Event>() {
+        Response.Listener<Event[]> response = new Response.Listener<Event[]>() {
             @Override
-            public void onResponse(Event response) {
-                if(response.getId() != -1) {
-                    Log.d("Event", "Event caught" + response.getTitle() + " " + response.getEvent_date());
-
+            public void onResponse(Event[] response) {
+                if(response != null) {
+                    Log.d("Event", response.toString());
+                    for( int i= 0;i<=response.length;i++){
+                        events.add(i,response[i]);
+                    }
+                    writeToList();
 
                 }else{
-
+                    Log.d("Event", "error");
                 }
             }
         };
@@ -131,56 +134,16 @@ public class EventFrag extends Fragment {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("Failed", error.toString());
 
             }
         };
 
-       // API.login("login", u, response, errorListener);
-        /*ParseQuery query = new ParseQuery("Event");
-        query.include("event_host");
-        query.findInBackground(new FindCallback() {
-            @Override
-            public void done(List objects, com.parse.ParseException e) {
-            }
-
-            @Override
-            public void done(Object o, Throwable throwable) {
-                List<ParseObject> myObject = (List<ParseObject>) o;
-                maxCount = myObject.size();
-                if (throwable == null && maxCount > 0) {
-                    int count = 0;
-                    ParseFile fileObject;
-                    byte[] data;
-                    for (int i = 0; i < maxCount; i++) {
-                        title.add(count, myObject.get(i).getString("title"));
-                        date.add(count, myObject.get(i).getDate("event_date"));
-                        location.add(count, myObject.get(i).getString("event_location"));
-                        hostName.add(count, myObject.get(i).getParseObject("event_host").getString("Name") + " " + myObject.get(i).getParseObject("event_host").getString("Surname"));
-                        fileObject = (ParseFile) myObject.get(i).getParseFile("event_photo");
-                        if (fileObject != null) {
-                            try {
-                                data = fileObject.getData();
-                                Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                photo.add(count, bMap);
-                                count++;
-                                if (count == maxCount) {
-                                    //All friends added, do something
-                                    writeToList();
-                                }
-                            } catch (com.parse.ParseException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-                } else {
-                    Log.d("post", "error retriving posts");
-                }
-            }
-        }); */
+        API.listAllEvents("listAllEvents", response, errorListener);
     }
 
     void writeToList(){
+        Log.d("Event", events.toString());
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, events));
     }
 }

@@ -26,7 +26,12 @@ public class Event {
 
     private String event_comments;
 
+    private String tags;
+
+    private String type;
+
     private Bitmap event_photo;
+
 
   /*  public Event(Event_Form e_f) {
         title = e_f.getTitle();
@@ -46,6 +51,20 @@ public class Event {
         id = -1;
         title = e.toString();
     }*/
+
+    public Event(Long id, String title,String type, Bitmap event_photo, String event_comments,String event_description,Date event_date,String event_participants,String tags,String event_host_token, String event_location){
+        this.id = id;
+        this.title = title;
+        this.event_host_token = event_host_token;
+        this.event_location = event_location;
+        this.event_description = event_description;
+        this.event_date = event_date;
+        this.event_participants = event_participants;
+        this.tags = tags;
+        this.event_comments = event_comments;
+        this.event_photo =event_photo;
+        this.type = type;
+    }
 
     public String getTitle() {
         return title;
@@ -119,6 +138,22 @@ public class Event {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getEvent_tags() {
+        return tags;
+    }
+
+    public void setEvent_tags(String event_tags) {
+        this.tags = event_tags;
+    }
+
+    public String getEvent_type() {
+        return type;
+    }
+
+    public void setEvent_type(String event_type) {
+        this.type = event_type;
     }
 
 }
