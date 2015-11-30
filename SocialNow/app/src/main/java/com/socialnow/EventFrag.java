@@ -1,7 +1,9 @@
 package com.socialnow;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,12 +22,18 @@ import android.widget.ListView;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Parcelable;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.parse.FindCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.socialnow.API.API;
+import com.socialnow.Models.Event;
+import com.socialnow.Models.User;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,12 +45,10 @@ import java.util.List;
 public class EventFrag extends Fragment {
     private ListView listView;
     private View v;
-    List<String> title;
-    List<Date> date;
-    List<Bitmap> photo;
-    List<String> location;
-    List<String> hostName;
+
     int maxCount = 0;
+    List<Event> events;
+    List<String> titles;
 
 
     @Nullable
@@ -51,11 +57,8 @@ public class EventFrag extends Fragment {
 
         v = inflater.inflate(R.layout.frag_event, container, false);
         listView = (ListView)v.findViewById(R.id.lvEvent);
-        title = new LinkedList<String>();
-        date = new LinkedList<Date>();
-        photo = new LinkedList<Bitmap>();
-        location = new LinkedList<String>();
-        hostName = new LinkedList<String>();
+        events = new LinkedList<>();
+        titles = new LinkedList<>();
         getData();
 
 
@@ -63,11 +66,9 @@ public class EventFrag extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object listItem = listView.getItemAtPosition(position);
+                Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
-                i2.putExtra("event_title", title.get(position));
-                i2.putExtra("event_date", date.get(position));
-                i2.putExtra("event_location", location.get(position));
-                i2.putExtra("host_name", hostName.get(position));
+                i2.putExtra("Event", (Parcelable) event);
                 startActivity(i2);
             }
         });
@@ -97,15 +98,15 @@ public class EventFrag extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_event,null);
             TextView eventname = (TextView) v.findViewById(R.id.tEname);
-            eventname.setText(title.get(position));
+            eventname.setText(events.get(position).getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
-            img.setImageBitmap(photo.get(position));
+            img.setImageBitmap(events.get(position).getEvent_photo());
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
-            eventdate.setText(date.get(position).toString());
+            eventdate.setText(events.get(position).getEvent_date().toString());
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
-            eventlocation.setText(location.get(position));
+            eventlocation.setText(events.get(position).getEvent_location());
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
-            eventhost.setText(hostName.get(position));
+            eventhost.setText(events.get(position).getEvent_host_token());
 
 
             return v;
@@ -113,51 +114,37 @@ public class EventFrag extends Fragment {
     }
 
     void getData() {
-        ParseQuery query = new ParseQuery("Event");
-        query.include("event_host");
-        query.findInBackground(new FindCallback() {
-            @Override
-            public void done(List objects, com.parse.ParseException e) {
-            }
 
+        Response.Listener<Event[]> response = new Response.Listener<Event[]>() {
             @Override
-            public void done(Object o, Throwable throwable) {
-                List<ParseObject> myObject = (List<ParseObject>) o;
-                maxCount = myObject.size();
-                if (throwable == null && maxCount > 0) {
-                    int count = 0;
-                    ParseFile fileObject;
-                    byte[] data;
-                    for (int i = 0; i < maxCount; i++) {
-                        title.add(count, myObject.get(i).getString("title"));
-                        date.add(count, myObject.get(i).getDate("event_date"));
-                        location.add(count, myObject.get(i).getString("event_location"));
-                        hostName.add(count, myObject.get(i).getParseObject("event_host").getString("Name") + " " + myObject.get(i).getParseObject("event_host").getString("Surname"));
-                        fileObject = (ParseFile) myObject.get(i).getParseFile("event_photo");
-                        if (fileObject != null) {
-                            try {
-                                data = fileObject.getData();
-                                Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                photo.add(count, bMap);
-                                count++;
-                                if (count == maxCount) {
-                                    //All friends added, do something
-                                    writeToList();
-                                }
-                            } catch (com.parse.ParseException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+            public void onResponse(Event[] response) {
+                if(response != null) {
+                    Log.d("Event", response.toString());
+                    for( int i= 0;i<response.length;i++){
+                        events.add(i,response[i]);
                     }
-                } else {
-                    Log.d("post", "error retriving posts");
+                    writeToList();
+
+                }else{
+                    Log.d("Event", "error");
                 }
             }
-        });
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", error.toString());
+
+            }
+        };
+
+        API.listAllEvents("listAllEvents", response, errorListener);
     }
 
     void writeToList(){
-        listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, title));
+        Log.d("Event", events.toString());
+        listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, events));
     }
 }
 

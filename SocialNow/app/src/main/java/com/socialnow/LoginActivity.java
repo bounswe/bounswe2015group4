@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,11 +14,10 @@ import android.widget.EditText;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+
 import com.socialnow.API.API;
 import com.socialnow.Models.User;
+import android.content.SharedPreferences;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.TransformerException;
@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userName;
     String password;
     Context context;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor loginStateEditor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,18 +53,35 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnForgotPassword = (Button) findViewById(R.id.bFpw);
         btnForgotPassword.setOnClickListener(this);
 
+        sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
+
     }
     void isValidUser(){
-        /*ParseUser.logInInBackground(userName, password, new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    // Hooray! The user is logged in.
-                    //TODO create intent to home page
-                    Log.d("Right credentials:", "Valid username and password");
+
+        User u = new User();
+        u.setEmail(etUserName.getText().toString());
+        u.setPassword(etPassword.getText().toString());
+        loginStateEditor = sharedPref.edit();
+
+        Response.Listener<User> response = new Response.Listener<User>() {
+            @Override
+            public void onResponse(User response) {
+                if(response.getId() != -1) {
+                    Log.d("Login", "Login success " + response.getEmail() + " " + response.getName());
+
+                    // Writing data to SharedPreferences
+
+                    loginStateEditor.putBoolean("success_login", true);
+                    loginStateEditor.putLong("current_user_id", response.getId());
+                    loginStateEditor.putString("current_user_name", response.getName());
+                    loginStateEditor.putString("current_user_email", response.getEmail());
+
+                    //TODO CASH USER LOGIN
+                    //TODO OPEN HOMEPAGE
                     Intent i2 = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(i2);
-                } else {
-                    // Signup failed. Look at the ParseException to see what happened.
+                }else{
+                    Log.d("Login", "Error: " + response.getUser_token());
                     Log.d("Wrong credentials:", "Not valid username and password");
                     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
                     dlgAlert.setMessage("Wrong password or username.");
@@ -78,27 +97,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             });
                     dlgAlert.create().show();
                 }
-
-                }
-
-        });*/
-
-        User u = new User();
-        u.setEmail(etUserName.getText().toString());
-        u.setPassword(etPassword.getText().toString());
-
-        Response.Listener<User> response = new Response.Listener<User>() {
-            @Override
-            public void onResponse(User response) {
-                if(response.getId() != -1) {
-                    Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
-                    //TODO CASH USER LOGIN
-                    //TODO OPEN HOMEPAGE
-//                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-//                    startActivity(i2);
-                }else{
-                    Log.d("Login", "Error: " + response.getUser_token());
-                }
             }
         };
 
@@ -106,9 +104,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            @Override
            public void onErrorResponse(VolleyError error) {
                Log.d("Failed", "Login Failed");
+               loginStateEditor.putBoolean("success_login", false);
+
            }
         };
-
+        loginStateEditor.commit();
         API.login("login", u, response, errorListener);
 
     }

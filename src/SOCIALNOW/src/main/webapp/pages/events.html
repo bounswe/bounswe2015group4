@@ -1,0 +1,77 @@
+<ng-include src="'~/../pages/partials/mainHeader.html'"></ng-include>
+
+<div class="content-wrapper" style="min-height: 780px;">
+    <!-- content goes here -->
+
+        <div style="padding: 10px 0 0 0; margin: 0px;" class="text-center">
+            <div class="btn-group ">
+                <button class="btn btn-danger" ng-click="showNewEvent()"> Create New Event</button>
+                <button class="btn  bg-blue" ng-click="ShowEvents()"> Show My Events</button>
+                <button class="btn bg-green" ng-click="showAllEvents()">Show All Events</button>
+            </div>
+        </div>
+        <div ng-show="createEventShow" class="login-box">
+            <div class="login-logo">
+                <a style="color:#0097bc;">Create Event</a>
+            </div>
+            <div class="login-box-body">
+                <p class="login-box-msg">You Can Create Your Event</p>
+
+                <form novalidate ng-submit="createEvent()">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Title" ng-model="eventTitle" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Description" ng-model="eventDescription"
+                               required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" placeholder="Location" ng-model="eventLocation"
+                               required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <!-- Date and time range -->
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control " ng-model="eventTime" id="eventTime"
+                               placeholder="Event Date" readonly="true" required>
+                        <span class="glyphicon glyphicon-time form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="file" id="evenPhotoPicker" class="form-control" placeholder="Description"                                required>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <div class="row">
+                            <div class="col-md-4 col-md-offset-8">
+                                <button type="submit" class="btn btn-primary btn-block btn-flat">Add Event</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div ng-show="eventsShow" class="login-box">
+            <div class="form-group has-feedback" ng-repeat="x in eventDetails">>
+                <span><img width="100" height="70" class="img-rounded" src="{{x.src}}"></span>
+                <span class="text-danger"> <b>{{x.title}}</b></span>
+                <span class="text-aqua">{{x.description}}</span>
+                <span class="text-aqua"> {{x.date}}</span>
+
+            </div>
+        </div>
+
+    <div ng-show="allEventsShow" class="login-box">
+        <div class="form-group has-feedback" ng-repeat="x in allEventDetails">>
+            <span><img width="100" height="70" class="img-rounded " src="{{x.src}}"></span>
+            <span  class="text-danger" > <b>{{x.title}}</b></span>
+            <span>{{x.description}}</span>
+            <span class="text-aqua"> {{x.date+"  " +x.location}}</span>
+
+        </div>
+    </div>
+</div>
+
+

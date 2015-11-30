@@ -198,46 +198,7 @@ public class EventActivity extends AppCompatActivity {
 
         });
 
-        /*ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("title", event_title);
-        query.findInBackground(new FindCallback() {
-                                   @Override
-                                   public void done(List objects, com.parse.ParseException e) {
-                                   }
 
-                                   @Override
-                                   public void done(Object o, Throwable throwable) {
-                                       List<ParseObject> myObject = (List<ParseObject>) o;
-
-                                       if (throwable == null) {
-                                           int count = 0;
-                                           ParseFile fileObject;
-                                           byte[] data;
-
-                                           title = myObject.get(0).getString("title");
-                                           date = myObject.get(0).getDate("event_date");
-                                           location = myObject.get(0).getString("event_location");
-                                           hostName = myObject.get(0).getParseObject("event_host").getString("Name") + " " + myObject.get(0).getParseObject("event_host").getString("Surname");
-                                           fileObject = (ParseFile) myObject.get(0).getParseFile("event_photo");
-                                           if (fileObject != null) {
-                                               try {
-                                                   data = fileObject.getData();
-                                                   Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                                   photo = bMap;
-
-                                                   //writeToList();
-
-                                               } catch (com.parse.ParseException e1) {
-                                                   e1.printStackTrace();
-                                               }
-                                           }
-
-                                       } else {
-                                           Log.d("post", "error retriving posts");
-                                       }
-                                   }
-                               }
-        );*/
     }
 
   void writeToList(){
