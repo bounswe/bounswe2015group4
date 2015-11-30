@@ -5,7 +5,6 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
 
@@ -29,8 +28,7 @@ public class Util {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        Base64.Encoder enc = Base64.getEncoder();
-        return enc.encodeToString(hash);
+        return "";
     }
 
 
