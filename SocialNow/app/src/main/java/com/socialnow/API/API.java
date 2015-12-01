@@ -22,6 +22,7 @@ import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,7 +106,8 @@ public class API {
         private static final String PROTOCOL_CONTENT_TYPE =
                 String.format("application/json; charset=%s", PROTOCOL_CHARSET);
 
-        private Gson gson = new Gson();
+        private Gson gson = new GsonBuilder()
+                .setDateFormat(DateFormat.FULL, DateFormat.FULL).create();
         private Class<T> responseClazz;
         private Map<String, String> headers = new HashMap<>();
         private Response.Listener<T> listener;

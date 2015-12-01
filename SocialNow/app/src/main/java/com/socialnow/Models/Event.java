@@ -16,7 +16,7 @@ public class Event {
 
     private String event_description;
 
-    private String event_date;
+    private Long event_date;
 
     private String event_location;
 
@@ -52,7 +52,7 @@ public class Event {
         title = e.toString();
     }*/
 
-    public Event(Long id, String title,String type, Bitmap event_photo, String event_comments,String event_description,String event_date,String event_participants,String tags,String event_host_token, String event_location){
+    public Event(Long id, String title,String type, Bitmap event_photo, String event_comments,String event_description,Long event_date,String event_participants,String tags,String event_host_token, String event_location){
         this.id = id;
         this.title = title;
         this.event_host_token = event_host_token;
@@ -82,11 +82,11 @@ public class Event {
         this.event_description = event_description;
     }
 
-    public String getEvent_date() {
+    public Long getEvent_date() {
         return event_date;
     }
 
-    public void setEvent_date(String event_date) {
+    public void setEvent_date(Long event_date) {
         this.event_date = event_date;
     }
 

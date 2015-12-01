@@ -36,6 +36,7 @@ import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -104,13 +105,14 @@ public class EventFrag extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
             View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_event,null);
             TextView eventname = (TextView) v.findViewById(R.id.tEname);
             eventname.setText(events.get(position).getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
             img.setImageBitmap(events.get(position).getEvent_photo());
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
-            eventdate.setText(events.get(position).getEvent_date().toString());
+            eventdate.setText(ft.format(new Date(events.get(position).getEvent_date())));
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(events.get(position).getEvent_location());
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);

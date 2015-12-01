@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();*/
         Context context = this;
-        App app = new App();
-        app.onCreate();
+//        App app = new App();
+//        app.onCreate();
 
        //sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
         sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
