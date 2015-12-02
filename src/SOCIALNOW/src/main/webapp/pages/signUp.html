@@ -7,7 +7,7 @@
 
         <form novalidate name="signUpForm">
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.Email"
+                <input type="email" class="form-control" name="email" placeholder="Email" ng-model="currentUser.email"
                        required ng-pattern="/^[a-z0-9.\-_]+@boun\.edu\.tr$/">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
 
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" name="password" placeholder="Password"
-                       ng-model="currentUser.Password" required ng-minlength="6">
+                       ng-model="currentUser.password" required ng-minlength="6">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                 <div ng-show="signUpForm.password.$error.required && submitted">
@@ -50,7 +50,7 @@
             </div>
             <div class="form-group has-feedback">
                 <input type="password" class="form-control" name="repassword" placeholder="Confirm Password"
-                       compare-to="currentUser.Password" ng-model="currentUser.RePassword" required>
+                       compare-to="currentUser.password" ng-model="currentUser.RePassword" required>
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 
                 <div ng-show="signUpForm.repassword.$error.required && submitted">
@@ -61,8 +61,8 @@
                 </div>
             </div>
             <div class="form-group has-feedback">
-                <select class="form-control" ng-model="currentUser.currentRole"
-                        ng-options="role.name for role in roles"></select>
+                <select class="form-control" ng-model="currentUser.role"
+                        ng-options="role for role in roles"></select>
             </div>
             <div class="row">
                 <div class="col-md-4">
