@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.HomeScreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,16 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.socialnow.R;
+
 
 /**
  * Created by lauamy on 27/10/15.
  */
-public class ActivityTabFrag extends Fragment {
+public class NotiFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.tabfrag_activity,container,false);
+        return inflater.inflate(R.layout.frag_noti,container,false);
 
     }
-
 }

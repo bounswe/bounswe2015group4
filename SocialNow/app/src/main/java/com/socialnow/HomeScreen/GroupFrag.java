@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.HomeScreen;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.*;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 
+import com.socialnow.Groups.EditGroupActivity;
+import com.socialnow.Groups.GroupActivity;
+import com.socialnow.R;
+
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 

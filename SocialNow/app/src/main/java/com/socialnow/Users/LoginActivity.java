@@ -1,11 +1,10 @@
-package com.socialnow;
+package com.socialnow.Users;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import com.socialnow.API.API;
+import com.socialnow.HomePage;
 import com.socialnow.Models.User;
-import android.content.SharedPreferences;
-
-import javax.xml.transform.ErrorListener;
-import javax.xml.transform.TransformerException;
+import com.socialnow.R;
 
 /**
  * Created by lauamy on 23/10/15.
@@ -34,8 +31,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userName;
     String password;
     Context context;
-    SharedPreferences sharedPref;
-    SharedPreferences.Editor loginStateEditor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnForgotPassword = (Button) findViewById(R.id.bFpw);
         btnForgotPassword.setOnClickListener(this);
 
-        sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
     }
     void isValidUser(){
@@ -61,7 +55,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         User u = new User();
         u.setEmail(etUserName.getText().toString());
         u.setPassword(etPassword.getText().toString());
-        loginStateEditor = sharedPref.edit();
 
         Response.Listener<User> response = new Response.Listener<User>() {
             @Override
@@ -71,13 +64,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     // Writing data to SharedPreferences
 
-                    loginStateEditor.putBoolean("success_login", true);
-                    loginStateEditor.putLong("current_user_id", response.getId());
-                    loginStateEditor.putString("current_user_name", response.getName());
-                    loginStateEditor.putString("current_user_email", response.getEmail());
+                    Utils.cacheUser(response);
+                    Utils.setCurrentUser(true, response);
 
-                    //TODO CASH USER LOGIN
-                    //TODO OPEN HOMEPAGE
                     Intent i2 = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(i2);
                 }else{
@@ -104,11 +93,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            @Override
            public void onErrorResponse(VolleyError error) {
                Log.d("Failed", "Login Failed");
-               loginStateEditor.putBoolean("success_login", false);
+               Utils.setCurrentUser(false, null);
 
            }
         };
-        loginStateEditor.commit();
         API.login("login", u, response, errorListener);
 
     }

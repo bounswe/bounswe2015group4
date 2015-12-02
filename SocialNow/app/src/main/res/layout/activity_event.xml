@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:fitsSystemWindows="true"
     android:id="@+id/coo_layout"
-    tools:context="com.socialnow.EventActivity">
+    tools:context="com.socialnow.Events.EventActivity">
 
     <android.support.design.widget.AppBarLayout android:id="@+id/app_bar"
         android:layout_height="@dimen/app_bar_height"
@@ -37,7 +37,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_event" android:layout_width="match_parent"
-        android:layout_height="wrap_content" tools:context="com.socialnow.EventActivity"
+        android:layout_height="wrap_content" tools:context="com.socialnow.Events.EventActivity"
         android:padding="@dimen/activity_horizontal_margin">
 
         <RelativeLayout

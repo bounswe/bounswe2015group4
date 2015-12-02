@@ -28,7 +28,7 @@ public class Util {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return "";
+        return new String(hash);
     }
 
 

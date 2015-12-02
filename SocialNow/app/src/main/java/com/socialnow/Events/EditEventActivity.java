@@ -1,24 +1,18 @@
-package com.socialnow;
+package com.socialnow.Events;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,9 +26,16 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
+//import com.parse.ParseFile;
+//import com.parse.ParseObject;
+//import com.parse.ParseUser;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.socialnow.API.API;
+import com.socialnow.Models.Event;
+import com.socialnow.PartiActivity;
+import com.socialnow.R;
+import com.socialnow.Users.Utils;
 
 /**
  * Created by lauamy on 2/11/15.
@@ -144,18 +145,39 @@ public class EditEventActivity extends AppCompatActivity{
 
     public void create_event(View v){
         if(inputs_correct()){
-            ParseObject event = new ParseObject("Event");
-            event.put("title", etEventName.getText().toString());
-            event.put("event_description", etEventDes.getText().toString());
-            event.put("event_location", etEventLoca.getText().toString());
-            event.put("event_date", getEventDate());
-            event.put("event_photo", getEventPhoto());
-            event.put("event_host", ParseUser.getCurrentUser());
+            Event event = new Event();
+            event.setTitle(etEventName.getText().toString());
+            event.setEvent_description(etEventDes.getText().toString());
+            event.setEvent_location(etEventLoca.getText().toString());
+            event.setEvent_date(getEventDate().getTime());
+//            event.setEvent_photo(getEventPhoto());
+            event.setEvent_host_token(Utils.getCurrentUser().getUser_token());
             //TODO guest member adding should be handled
             //event.put("event_members", )
             //TODO comment part should also be handled
             //event.put("event_comments", )
-            event.saveInBackground();
+
+            Response.Listener<Event> response = new Response.Listener<Event>() {
+                @Override
+                public void onResponse(Event response) {
+                    if(response.getId() != -1) {
+                        Log.d("Event", "Creating success " + response.getEvent_description());
+
+                    }else{
+                        Log.d("Creation", "Error: Unknown");
+                    }
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Failed", "Creation Failed");
+
+                }
+            };
+            API.createEvent("createEvent", event, response, errorListener);
+
             Toast.makeText(getBaseContext(), "Doing", Toast.LENGTH_LONG).show();
 
 
@@ -301,20 +323,7 @@ public class EditEventActivity extends AppCompatActivity{
         return t;
     }
 
-    public ParseFile getEventPhoto() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
-                R.drawable.devent);
-        // Convert it to byte
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        // Compress image to lower quality scale 1 - 100
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] image = stream.toByteArray();
-
-
-        ParseFile file = new ParseFile("event.png", image);
-
-        file.saveInBackground();
-        return file;
+    public void getEventPhoto() {
     }
 
     void showErrorDialog(int mTitle, int mMsg){

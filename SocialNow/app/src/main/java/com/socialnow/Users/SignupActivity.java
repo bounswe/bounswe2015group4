@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Users;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,30 +16,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.socialnow.API.API;
+import com.socialnow.HomePage;
 import com.socialnow.Models.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-
-import java.util.Collections;
+import com.socialnow.R;
 
 
 public class SignupActivity extends AppCompatActivity {

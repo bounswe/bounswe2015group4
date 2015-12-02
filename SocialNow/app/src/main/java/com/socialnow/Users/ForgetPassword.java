@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Users;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
+import com.socialnow.R;
 
 /**
  * Created by mugekurtipek on 26/10/15.

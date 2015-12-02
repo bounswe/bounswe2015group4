@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Util;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;

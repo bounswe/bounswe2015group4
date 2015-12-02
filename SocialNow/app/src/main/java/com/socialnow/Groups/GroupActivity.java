@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Groups;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +31,8 @@ import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.socialnow.PartiActivity;
+import com.socialnow.R;
 
 import org.json.JSONArray;
 

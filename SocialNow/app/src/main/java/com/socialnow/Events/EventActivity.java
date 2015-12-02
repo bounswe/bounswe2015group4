@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Events;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
+import com.socialnow.PartiActivity;
+import com.socialnow.R;
 
 import org.json.JSONArray;
 

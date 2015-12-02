@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.HomeScreen;
 
 import android.app.AlertDialog;
 import android.app.TabActivity;
@@ -49,6 +49,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.socialnow.Models.User;
+import com.socialnow.PagerAdapter;
+import com.socialnow.R;
 
 import java.text.ParseException;
 

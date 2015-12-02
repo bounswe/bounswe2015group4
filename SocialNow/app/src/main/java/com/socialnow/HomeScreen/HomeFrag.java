@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.HomeScreen;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.socialnow.R;
 
 
 /**

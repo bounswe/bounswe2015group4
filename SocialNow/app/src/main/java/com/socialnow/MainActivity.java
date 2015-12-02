@@ -3,12 +3,11 @@ package com.socialnow;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import com.socialnow.App;
 
-import com.socialnow.API.API;
-import com.socialnow.Models.User;
+import com.socialnow.Users.LoginActivity;
+import com.socialnow.Users.Utils;
+
 import android.content.SharedPreferences;
 
 
@@ -19,20 +18,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Enable Local Datastore.
-        /*Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "nYZwu2d21NWTk7oIdS6N4IBcEDuNwoN48sRrl7Zd", "oRp46EvVPamz2XQtywDTImZI4YIPRLLlxVit8HcA");
-
-        ParseUser currentUser = ParseUser.getCurrentUser();*/
         Context context = this;
-//        App app = new App();
-//        app.onCreate();
 
-       //sharedPref = getSharedPreferences("prefs", MODE_PRIVATE);
-        sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
-       // boolean already_logged_in = sharedPref.getBoolean("success_login", true);
-        if ( sharedPref.getBoolean("success_login", true)) {
+        Utils.initialize(this);
 
+        if(Utils.getCurrentUserMode()){
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             startActivity(i2);
         }

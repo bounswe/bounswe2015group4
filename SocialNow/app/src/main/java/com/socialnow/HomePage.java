@@ -1,27 +1,19 @@
 package com.socialnow;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +27,13 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
 import com.parse.ParseUser;
+import com.socialnow.HomeScreen.EventFrag;
+import com.socialnow.HomeScreen.GroupFrag;
+import com.socialnow.HomeScreen.HomeFrag;
+import com.socialnow.HomeScreen.NotiFrag;
+import com.socialnow.HomeScreen.ProfileFrag;
+import com.socialnow.Users.LoginActivity;
+import com.socialnow.Users.Utils;
 
 
 import static com.socialnow.R.string.drawer_open;
@@ -167,9 +166,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 5) {
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            if (currentUser != null) {
-                ParseUser.logOut();
+            if (Utils.getCurrentUserMode()) {
+                Utils.logout();
                 Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i2);
             } else {

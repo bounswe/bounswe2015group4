@@ -22,10 +22,10 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".Users.LoginActivity" >
         </activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".ForgetPassword" />
+        <activity android:name=".Users.SignupActivity" />
+        <activity android:name=".Users.ForgetPassword" />
         <activity android:name=".ProfilePage" />
         <activity
             android:name=".HomePage"
@@ -34,12 +34,12 @@
         </activity>
         <!--<activity android:name=".Event" />-->
         <activity
-            android:name=".EventActivity"
+            android:name=".Events.EventActivity"
             android:theme="@style/AppTheme.NoActionBar" >
 
         </activity>
         <activity
-            android:name=".GroupActivity"
+            android:name=".Groups.GroupActivity"
             android:theme="@style/AppTheme.NoActionBar" >
 
 
@@ -50,10 +50,10 @@
         <activity
             android:name=".PartiActivity">
         </activity>
-        <activity android:name=".EditEventActivity">
+        <activity android:name=".Events.EditEventActivity">
 
         </activity>
-        <activity android:name=".EditGroupActivity">
+        <activity android:name=".Groups.EditGroupActivity">
 
         </activity>
         <activity android:name=".ProfileActivity">

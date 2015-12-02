@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Groups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+
+import com.socialnow.PartiActivity;
+import com.socialnow.R;
 
 /**
  * Created by lauamy on 20/11/15.

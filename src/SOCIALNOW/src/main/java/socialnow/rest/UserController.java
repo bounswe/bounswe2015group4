@@ -30,6 +30,7 @@ public class UserController {
   @RequestMapping( value = "/signUp", method = RequestMethod.POST)
   public @ResponseBody
   User signUp(@RequestBody String formData) {
+
     User_Form user_form = gson.fromJson(formData, User_Form.class);
     user_form.setUser_token(Util.generate_token());
 

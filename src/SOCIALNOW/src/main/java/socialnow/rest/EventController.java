@@ -1,7 +1,6 @@
 package socialnow.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,10 @@ import socialnow.forms.User_Token_Form;
 import socialnow.model.Event;
 import socialnow.model.SearchReturn;
 import socialnow.model.User;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,12 +31,25 @@ public class EventController {
     @Autowired
     private UserDao userDao;
     Logger log = Logger.getLogger("EVENTCONTROLLER");
+    // Creates the json object which will manage the information received
+    GsonBuilder builder = new GsonBuilder();
+
+// Register an adapter to manage the date types as long values
+
+
     Gson gson = new GsonBuilder()
             .setDateFormat("dd/MM/yyyy")
             .create();
     @RequestMapping( value = "/createEvent", method = RequestMethod.POST)
     public @ResponseBody
     Event addEvent(@RequestBody String addEventForm) {
+        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return new Date(json.getAsJsonPrimitive().getAsLong());
+            }
+        });
+        gson = builder.create();
+
         Event_Form form = gson.fromJson(addEventForm, Event_Form.class);
         Event e = new Event(form);
         eventDao.create(e);

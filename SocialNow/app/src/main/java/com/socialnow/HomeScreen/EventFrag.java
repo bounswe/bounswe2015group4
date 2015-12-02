@@ -1,12 +1,8 @@
-package com.socialnow;
+package com.socialnow.HomeScreen;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,26 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.os.Parcelable;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.parse.FindCallback;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.socialnow.API.API;
+import com.socialnow.Events.EditEventActivity;
+import com.socialnow.Events.EventActivity;
 import com.socialnow.Models.Event;
-import com.socialnow.Models.User;
+import com.socialnow.R;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;

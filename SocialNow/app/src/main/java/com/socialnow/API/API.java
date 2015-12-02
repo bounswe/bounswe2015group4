@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class API {
     private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend/";
+//    private static String MAIN_URL = "http://10.0.3.2:8080/";//To try local database via genymotion emulator
     private static RequestQueue mQueue;
     private static API instance;
     private static String UUID;
@@ -99,6 +100,14 @@ public class API {
                 mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
                               Event[].class, successListener, failureListener));
           }
+
+    public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,
+                                     Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(e);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
 
     private static class GeneralRequest<T> extends Request<T> {
 
