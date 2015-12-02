@@ -1,76 +1,30 @@
-app.controller('eventsController', function ($scope, sessionService, userService, $location, helperService, eventService) {
-
-    var getInfo = function () {
-
-        var user = sessionService.getUserInfo();
-        $scope.user = user;
-        $scope.role = user;
-
-
+app.controller('eventsController', function ($scope, $http, sessionService, userService, $location, helperService, eventService, $interval) {
+    $scope.eventRoutes = {
+        addNew: 1,
+        myEvents: 2,
+        allEvents: 3
     }
+
+    $scope.currentEventRoute = $scope.eventRoutes.allEvents;
+    $scope.user = sessionService.getUserInfo();
 
     var getAllEvents = function () {
         eventService.getAllEvents().then(function (events) {
-            var allEventDetails = [];
-
-            events.forEach(function (event) {
-
-                var event = event.attributes;
-                console.log(event.event_photo._url);
-                var eventDetail = {
-                    description: event.event_description,
-                    title: event.title,
-                    date: event.event_date,
-                    location: event.event_location,
-                    src: event.event_photo._url
-                }
-                allEventDetails.push(eventDetail);
-            });
-            $scope.allEventDetails = allEventDetails;
-            $scope.createEventShow = true;
-            $scope.eventsShow = false;
-
-
+            $scope.allEvents = events;
+            console.log($scope.allEvents);
         }, function (error) {
-            console.log(error + "getAllEvents");
+            console.log(error);
         });
-
     }
 
-
-    var getEvents = function () {
-
-        eventService.getEventsOfCurrentUser().then(function (events) {
-                var eventDetails = [];
-                console.log(events);
-                events.forEach(function (event) {
-                    if (event) {
-                        var event = event.attributes;
-                        var eventDetail = {
-                            description: event.event_description,
-                            title: event.title,
-                            date: event.event_date,
-                            location: event.event_location,
-                            src: event.event_photo._url
-                        }
-                        eventDetails.push(eventDetail);
-
-
-                    }
-
-                });
-                $scope.eventDetails = eventDetails;
-                $scope.createEventShow = true;
-                $scope.eventsShow = false;
-                $scope.allEventsShow = false;
-            },
-            function (error) {
-                alert(error.message);
-            }
-        );
-
-
+    var getMyEvents = function () {
+        eventService.getMyEvents($scope.user.token).then(function (events) {
+            $scope.myAllEvents = events;
+        }, function (error) {
+            console.log(error);
+        });
     }
+
     $scope.createEvent = function () {
         var eventPhotoPicker = document.getElementById('evenPhotoPicker');
         var eventPicture = "";
@@ -90,44 +44,20 @@ app.controller('eventsController', function ($scope, sessionService, userService
             );
 
         }, function (error) {
-
-            alert(error.message);
+            console.log(error);
         });
     }
 
-    $scope.showNewEvent = function () {
-        $scope.createEventShow = true;
-        $scope.eventsShow = false;
-        $scope.allEventsShow = false;
-    }
+    $scope.$watch(function() { return $scope.tabContentInit; }, function(newValue, oldValue) {
+        console.log(newValue + " " + oldValue);
+    })
 
-    $scope.ShowEvents = function () {
-        $scope.createEventShow = false;
-        $scope.eventsShow = true;
-        $scope.allEventsShow = false;
-    }
-
-    $scope.showAllEvents = function () {
-        $scope.createEventShow = false;
-        $scope.eventsShow = false;
-        $scope.allEventsShow = true;
-    }
-
-    /**
-     * returns the events of logged in user
-     *
-     * $scope has event attributes
-     */
-
-
-    getInfo();
-    getEvents();
+    getMyEvents();
     getAllEvents();
-    var datePickerElement = angular.element(document.getElementById('eventTime'));
+
+    var datePickerElement = angular.element(document.getElementById('inputTime'));
     datePickerElement.daterangepicker({
         singleDatePicker: true,
         showDropdowns: true
     });
-
-
 });

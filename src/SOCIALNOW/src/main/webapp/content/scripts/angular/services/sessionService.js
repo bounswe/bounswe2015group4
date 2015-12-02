@@ -1,15 +1,18 @@
-app.service('sessionService', function($cookies) {
-    this.setUserCredentials = function(userEmail, userRole, name, surname, profile_url) {
-        $cookies.putObject("userInfo", {
-            username: userEmail,
-            email: userEmail,
-            role: userRole,
+app.service('sessionService', function($cookies, $rootScope) {
+    this.setUserCredentials = function(user) {
+        var currentUser = {
+            username: user.email,
+            email: user.email,
+            role: user.role,
             isAuthenticated: true,
-            name : name,
-            surname: surname,
-            profile_url: profile_url
-        });
+            name : user.name,
+            surname: user.surname,
+            token: user.user_token
+        }
 
+        $cookies.putObject("userInfo", currentUser);
+
+        $rootScope.user = currentUser;
     }
 
     this.isUserAuthenticated = function() {
@@ -24,5 +27,4 @@ app.service('sessionService', function($cookies) {
     this.remove = function(key) {
         $cookies.remove(key);
     }
-
 })

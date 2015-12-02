@@ -2,45 +2,28 @@ app.controller('signUpController', function ($scope, userService, roleService, h
     $scope.currentUser = {};
 
     var getRoles = function () {
-        roleService.getRoles().then(function (roles) {
+        $scope.roles = roleService.getRoles();
+        $scope.currentUser.role = $scope.roles[0];
+    }
 
-            roleNames = [];
-            roles.forEach(function (role) {
-                roleNames.push({
-                    name: role.get("rolename")
-                });
+    $scope.signUp = function (isValid) {
+        if (!isValid) {
+            $scope.submitted = true;
+            return;
+        }
+
+        userService.signup($scope.currentUser).then(function (user) {
+            $scope.errorMessage = '';
+            $scope.successMessage = 'You are successfully signed up!';
+            sessionService.setUserCredentials(user);
+            $timeout(function () {
+                helperService.goToPage('/');
+            }, 2000);
+
+        }, function (error) {
+            $scope.errorMessage = error;
         });
-        $scope.roles = roleNames ;
-        $scope.currentUser.currentRole = roleNames[0];
-    }
-    )
-    ;
-}
-
-$scope.signUp = function (isValid) {
-    if (!isValid) {
-        $scope.submitted = true;
-        return;
     }
 
-    userService.signup($scope.currentUser).then(function () {
-        $scope.errorMessage = '';
-        $scope.successMessage = 'Activation email was sent';
-        $timeout(function () {
-            helperService.goToPage('/login');
-        }, 3000);
-
-    }, function (error) {
-        $scope.errorMessage = error.message;
-    });
-}
-
-$scope.getUsers = function () {
-    userService.getUsers().then(function (users) {
-        $scope.users = users;
-    });
-}
-
-getRoles();
-})
-;
+    getRoles();
+});

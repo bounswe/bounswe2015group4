@@ -13,6 +13,5 @@ app.service('helperService', function($location, $log, $route) {
 
     this.reload = function(){
         $route.reload();
-
     }
 })

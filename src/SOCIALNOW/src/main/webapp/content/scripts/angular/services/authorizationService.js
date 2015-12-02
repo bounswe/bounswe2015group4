@@ -10,7 +10,9 @@ app.service('authorizationService', function (sessionService) {
     };
 });
 
-app.run(function ($rootScope, $location, authorizationService, loginUrl) {
+app.run(function ($rootScope, $location, authorizationService, loginUrl, sessionService) {
+    $rootScope.user = sessionService.getUserInfo();
+
     $rootScope.$on('$routeChangeStart', function (event, next) {
         if (next.access) {
             var accessControl = authorizationService.authorize();
