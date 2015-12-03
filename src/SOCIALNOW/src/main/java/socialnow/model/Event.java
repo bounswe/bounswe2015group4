@@ -1,7 +1,7 @@
 package socialnow.model;
 
 import socialnow.Utils.Error_JSON;
-import socialnow.forms.Event_Form;
+import socialnow.forms.Event.Event_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -44,13 +44,7 @@ public class Event implements SearchReturn {
     @Column(name = "tags", length = 5000)
     private String tags = "";
 
-    public String getEvent_posts() {
-        return event_posts;
-    }
 
-    public void setEvent_posts(String event_posts) {
-        this.event_posts = event_posts;
-    }
 
     @Column(name = "event_posts", length = 5000)
     private String event_posts = "";
@@ -63,7 +57,13 @@ public class Event implements SearchReturn {
     private String event_photo;
 
 
+    public String getEvent_posts() {
+        return event_posts;
+    }
 
+    public void setEvent_posts(String event_posts) {
+        this.event_posts = event_posts;
+    }
     public Event(Event_Form e_f) {
         title = e_f.getTitle();
         event_description = e_f.getEvent_description();

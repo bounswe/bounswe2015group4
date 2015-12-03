@@ -34,4 +34,11 @@ public class PostDao {
         return entityManager.createQuery("from Post").getResultList();
     }
 
+    public Post getById(long id) {
+        return entityManager.find(Post.class, id);
+    }
+
+    public Post getById(String id) {
+        return entityManager.find(Post.class,Long.parseLong(id));
+    }
 }

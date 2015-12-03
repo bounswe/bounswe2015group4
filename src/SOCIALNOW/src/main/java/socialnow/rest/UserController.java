@@ -2,23 +2,21 @@ package socialnow.rest;
 
 
 import com.google.gson.Gson;
-import org.springframework.beans.factory.parsing.Problem;
 import socialnow.Utils.Error_JSON;
 import socialnow.Utils.Util;
 import socialnow.dao.EventDao;
 import socialnow.dao.Interest_GroupDao;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
-import socialnow.forms.Follow_User_Form;
-import socialnow.forms.Login_Form;
-import socialnow.forms.User_Form;
-import socialnow.forms.User_Token_Form;
+import socialnow.forms.User.Follow_User_Form;
+import socialnow.forms.User.Login_Form;
+import socialnow.forms.User.User_Form;
+import socialnow.forms.User.User_Token_Form;
 import socialnow.model.Event;
 import socialnow.model.Interest_Group;
 import socialnow.model.Profile;
 import socialnow.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class UserController {
 
     User_Form user_form = gson.fromJson(formData, User_Form.class);
     user_form.setUser_token(Util.generate_token());
-
+    log.info(user_form.toString());
     User user = new User(user_form);
       try {
           userDao.create(user);
@@ -103,8 +101,12 @@ public class UserController {
         User u = userDao.getByToken(form.getUser_token());
         log.info(u.toString());
         Profile p = new Profile(u);
-        ArrayList<String > tags= new ArrayList<String>(Arrays.asList(u.getUser_tags().substring(1).split(",")));
-        p.setUser_tags(tags);
+        String tag = u.getUser_tags();
+        if(tag.contains(",")) {
+            ArrayList<String > tags= new ArrayList<String>(Arrays.asList(tag.substring(1).split(",")));
+            p.setUser_tags(tags);
+        }
+
             String[] arr = u.getUser_interest_groups().split(",");
             log.info(arr.length+"asdasd");
         ArrayList<Interest_Group> igs= new ArrayList<>();

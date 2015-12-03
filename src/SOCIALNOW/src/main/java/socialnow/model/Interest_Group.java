@@ -1,6 +1,7 @@
 package socialnow.model;
 
-import socialnow.forms.Interest_Group_Form;
+import socialnow.Utils.Error_JSON;
+import socialnow.forms.Interest_Group.Interest_Group_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,11 @@ public class Interest_Group implements SearchReturn{
 
     @Transient
     String type;
+
+    public Interest_Group(Error_JSON e) {
+        id = -1;
+        group_name = e.toString();
+    }
 
     @Override
     public void setType(String type) {
@@ -59,7 +65,7 @@ public class Interest_Group implements SearchReturn{
 
         this.setGroup_events("");
         this.setGroup_members("");
-        this.setGroup_name(form.getName());
+        this.setGroup_name(form.getGroup_name());
         this.setGroup_posts("");
     }
 

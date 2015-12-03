@@ -1,4 +1,4 @@
-package socialnow.forms;
+package socialnow.forms.Interest_Group;
 
 /**
  * Created by Erdem on 11/26/2015.
@@ -6,12 +6,12 @@ package socialnow.forms;
 public class Interest_Group_Form {
 
     private String tags = "";
-    private String name;
+    private String group_name;
     private String owner_token;
 
-    public Interest_Group_Form(String tags, String name, String owner_token) {
+    public Interest_Group_Form(String tags, String group_name, String owner_token) {
         this.tags = tags;
-        this.name = name;
+        this.group_name = group_name;
         this.owner_token = owner_token;
     }
 
@@ -28,12 +28,12 @@ public class Interest_Group_Form {
         this.tags = tags;
     }
 
-    public String getName() {
-        return name;
+    public String getGroup_name() {
+        return group_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGroup_name(String group_name) {
+        this.group_name = group_name;
     }
 
     public String getOwner_token() {

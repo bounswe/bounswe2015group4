@@ -21,11 +21,15 @@ public class Interest_GroupDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-    public void create(Post post) {
-        entityManager.persist(post);
+    public void create(Interest_Group group) {
+        entityManager.persist(group);
         return;
     }
 
+    public void update(Interest_Group group) {
+        entityManager.merge(group);
+        return;
+    }
     public List<Interest_Group> getAllByToken(String token){
         return entityManager.createQuery("from Interest_Group where owner_token =:token").setParameter("token",token).getResultList();
 

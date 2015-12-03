@@ -1,4 +1,4 @@
-package socialnow.forms;
+package socialnow.forms.User;
 
 /**
  * Created by Erdem on 12/3/2015.

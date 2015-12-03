@@ -2,7 +2,7 @@ package socialnow.model;
 
 import socialnow.Utils.Error_JSON;
 import socialnow.Utils.Util;
-import socialnow.forms.User_Form;
+import socialnow.forms.User.User_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -89,6 +89,17 @@ public class User  implements SearchReturn {
 
     @NotNull
     private String surname;
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
+
+    @Column
+    String user_photo;
 
     @NotNull
     private String role;
@@ -222,6 +233,7 @@ public class User  implements SearchReturn {
         role = u_f.getRole();
         surname = u_f.getSurname();
         user_token = u_f.getUser_token();
+        user_photo = u_f.getUser_photo();
         this.user_participating_events = "";
         this.user_tags= "";
         this.user_followers="";

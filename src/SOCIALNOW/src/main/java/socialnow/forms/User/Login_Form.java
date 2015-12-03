@@ -1,4 +1,4 @@
-package socialnow.forms;
+package socialnow.forms.User;
 
 /**
  * Created by mertcan on 22.11.2015.

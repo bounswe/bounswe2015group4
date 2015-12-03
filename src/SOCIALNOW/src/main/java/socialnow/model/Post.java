@@ -1,7 +1,7 @@
 package socialnow.model;
 
 import socialnow.Utils.Error_JSON;
-import socialnow.forms.Post_Form;
+import socialnow.forms.Post.Post_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

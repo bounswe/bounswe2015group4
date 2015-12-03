@@ -1,4 +1,4 @@
-package socialnow.forms;
+package socialnow.forms.User;
 
 /**
  * Created by mertcan on 22.11.2015.
@@ -10,16 +10,23 @@ public class User_Form {
     String name;
     String surname;
     String user_token;
+    String user_photo;
 
     @Override
     public String toString() {
-        return "SignUpForm{" +
+        return "User_Form{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", user_token='" + user_token + '\'' +
+                ", user_photo='" + user_photo + '\'' +
                 '}';
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
     }
 
     public String getSurname() {
@@ -70,4 +77,7 @@ public class User_Form {
         this.user_token = token;
     }
 
+    public String getUser_photo() {
+        return user_photo;
+    }
 }

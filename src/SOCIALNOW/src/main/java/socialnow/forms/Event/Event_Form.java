@@ -1,4 +1,4 @@
-package socialnow.forms;
+package socialnow.forms.Event;
 
 import java.util.Date;
 

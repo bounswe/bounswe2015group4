@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
-import socialnow.forms.Post_Form;
-import socialnow.forms.User_Token_Form;
+import socialnow.forms.Event.Add_Post_Event_Form;
+import socialnow.forms.Post.Post_Form;
+import socialnow.forms.User.User_Token_Form;
+import socialnow.model.Interest_Group;
 import socialnow.model.Post;
+import socialnow.model.PostDetail;
 import socialnow.model.User;
 
 import java.util.List;
@@ -51,6 +54,18 @@ public class PostController {
         User_Token_Form form = gson.fromJson(token, User_Token_Form.class);
         return postDao.getAllByToken(form.getUser_token());
     }
+
+
+    @RequestMapping( value = "/getPostDetail", method = RequestMethod.POST)
+    public @ResponseBody
+    PostDetail getPostDetail(@RequestBody String id){
+        Add_Post_Event_Form form = gson.fromJson(id, Add_Post_Event_Form.class);
+        Post post = postDao.getById(form.getPost_id());
+        PostDetail postDetail = new PostDetail(post);
+        postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
+        return  postDetail;
+    }
+
 
 
 

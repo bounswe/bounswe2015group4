@@ -2,7 +2,6 @@ package socialnow.rest;
 
 import com.google.gson.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.SemanticTagging.SemanticResponse;
@@ -10,17 +9,15 @@ import socialnow.Utils.Error_JSON;
 import socialnow.Utils.RequestSender;
 import socialnow.Utils.Util;
 import socialnow.dao.EventDao;
+import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
-import socialnow.forms.Add_Post_Event_Form;
-import socialnow.forms.Event_Form;
-import socialnow.forms.User_Token_Form;
-import socialnow.model.Event;
-import socialnow.model.SearchReturn;
-import socialnow.model.User;
+import socialnow.forms.Event.Add_Post_Event_Form;
+import socialnow.forms.Event.Event_Form;
+import socialnow.forms.User.User_Token_Form;
+import socialnow.model.*;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -32,6 +29,9 @@ public class EventController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private PostDao postDao;
     Logger log = Logger.getLogger("EVENTCONTROLLER");
     // Creates the json object which will manage the information received
     GsonBuilder builder = new GsonBuilder();
@@ -40,25 +40,22 @@ public class EventController {
 
 
     Gson gson = new GsonBuilder()
-            .setDateFormat("dd/MM/yyyy")
+            .setDateFormat("dd/mm/yyyy")
             .create();
     @RequestMapping( value = "/createEvent", method = RequestMethod.POST)
     public @ResponseBody
     Event addEvent(@RequestBody String addEventForm) {
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return new Date(json.getAsJsonPrimitive().getAsLong());
-            }
-        });
-        gson = builder.create();
-
         Event_Form form = gson.fromJson(addEventForm, Event_Form.class);
         Event e = new Event(form);
         User u = userDao.getByToken(e.getEvent_host_token());
         u.setUser_tags(u.getUser_tags() + e.getTags());
+        u.setUser_participating_events(u.getUser_participating_events()+"," + e.getId());
+        e.event_participants= (e.event_participants+"," + e.getEvent_host_token());
+        userDao.update(u);
         eventDao.create(e);
         return e;
     }
+
 
     @RequestMapping( value = "/events/addPost", method = RequestMethod.POST)
     public @ResponseBody
@@ -67,11 +64,9 @@ public class EventController {
         Add_Post_Event_Form apef = gson.fromJson(addPostEventForm, Add_Post_Event_Form.class);
         Event e = eventDao.getById(apef.getEvent_id());
         e.setEvent_posts(e.getEvent_posts()+","+ apef.getPost_id());
+        eventDao.update(e);
         return e;
     }
-
-
-
 
 
     @RequestMapping( value = "/deneme", method = RequestMethod.POST)
@@ -79,6 +74,7 @@ public class EventController {
     SemanticResponse FOOO(@RequestBody String search) throws UnirestException {
         return  RequestSender.searchSemantics(search);
     }
+
 
     @RequestMapping(value = "/events/addParticipant", method = RequestMethod.POST)
     public @ResponseBody Event addParticipant(@RequestBody String token){
@@ -94,8 +90,6 @@ public class EventController {
         user.setUser_participating_events(user.getUser_participating_events()+"," + form.getEvent_id());
         event.event_participants= (event.event_participants+"," + form.getUser_token());
 
-        log.info(user.getUser_tags());
-        log.info(event.getTags());
         user.setUser_tags(user.getUser_tags() + event.getTags());
         try{
             userDao.update(user);
@@ -138,13 +132,11 @@ public class EventController {
             errorJSON.setCode(8081);
             errorJSON.setMessage("DATABASE ERROR:" + e.toString());
             return new Event(errorJSON);
-
         }
-
-
         return  this.fillEvent(event);
-
     }
+
+
 
     @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
     public @ResponseBody
@@ -155,33 +147,6 @@ public class EventController {
                 eventList) {
             eventlistFilled.add(this.fillEvent(event));
         }
-
-
-
-
-        String[][] tags = new String[5][20];
-        tags[0][0]="java";
-        tags[0][1]="science fiction";
-        tags[0][2]="music";
-        tags[1][0]="book";
-        tags[1][1]="music";
-        tags[1][2]="c++";
-        tags[1][3]="love stories";
-        tags[1][4]="c++";
-        tags[1][5]="c++";
-        tags[1][6]="body building";
-        tags[1][7]="body building";
-        tags[2][0]="book";
-        tags[2][1]="java";
-        tags[2][2]="java";
-
-        String[] result=Util.find_common(tags,1);
-        for(int i=0;i<result.length;i++)
-            log.info(result[i]);
-
-
-
-
         return  eventlistFilled;
     }
 
@@ -217,15 +182,55 @@ public class EventController {
                 Event e = eventDao.getById(id);
                 eventList.add( this.fillEvent(e));
             }catch (Exception e){
-
-
             }
-
-
         }
-
         return eventList;
     }
+
+    @RequestMapping( value = "/events/getEventDetail", method = RequestMethod.POST)
+    public @ResponseBody
+    EventDetail getEventDetails(@RequestBody String eventId){
+
+        Add_Post_Event_Form form = gson.fromJson(eventId, Add_Post_Event_Form.class);
+        Event event = eventDao.getById(form.getEvent_id());
+        EventDetail eventDetail = new EventDetail(event);
+        String [] participantId = event.event_participants.split(",");
+        ArrayList<User> users = new ArrayList<User>();
+        for (int i = 0; i <participantId.length ; i++) {
+            if (!participantId[i].equals("")) {
+                users.add(userDao.getByToken(participantId[i]));
+            }
+        }
+
+        participantId= event.getEvent_posts().split(",");
+        eventDetail.setEvent_participants(users);
+        ArrayList<PostDetail> posts = new ArrayList<>();
+        for (int i = 0; i <participantId.length ; i++) {
+            if (!participantId[i].equals("")) {
+                Post post = postDao.getById(participantId[i]);
+                PostDetail postDetail = new PostDetail(post);
+                postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
+                posts.add(postDetail);
+            }
+        }
+        eventDetail.setEvent_posts(posts);
+        String tag = event.getTags();
+        if(tag.contains(",")) {
+            ArrayList<String > tags= new ArrayList<String>(Arrays.asList(tag.substring(1).split(",")));
+            eventDetail.setTags(tags);
+        }
+
+        return eventDetail;
+    }
+
+
+
+
+
+
+
+
+
 
     public  Event fillEvent(Event event){
         String [] participantId = event.event_participants.split(",");
