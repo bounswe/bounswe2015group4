@@ -16,8 +16,10 @@ public class Post  implements SearchReturn  {
     public String getType() {
         return type;
     }
-
+    @Transient
     String type;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -28,8 +30,6 @@ public class Post  implements SearchReturn  {
     @NotNull
     private String content;
 
-    @NotNull
-    private long post_interest_group_id;
 
     @Column(name = "post_comments")
     private String post_comments;
@@ -58,14 +58,6 @@ public class Post  implements SearchReturn  {
         this.content = content;
     }
 
-    public long getPost_interest_group_id() {
-        return post_interest_group_id;
-    }
-
-    public void setPost_interest_group_id(long post_interest_group_id) {
-        this.post_interest_group_id = post_interest_group_id;
-    }
-
     public String getPost_comments() {
         return post_comments;
     }
@@ -77,7 +69,6 @@ public class Post  implements SearchReturn  {
     public Post(Post_Form form){
         this.setContent(form.getContent());
         this.setOwner_token(form.getOwner_token());
-        this.setPost_interest_group_id(form.getPost_interest_group_id());
         this.setPost_comments(form.getPost_comments());
 
     }

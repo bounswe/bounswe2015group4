@@ -5,7 +5,9 @@ import socialnow.forms.Event_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by mertcan on 22.11.2015.
@@ -36,11 +38,23 @@ public class Event implements SearchReturn {
     private String event_host_token;
 
     @Column(name = "event_participants", length = 2000)
-    private String event_participants ;
+    public  String event_participants ;
 
 
-    @Column(name = "tags", length = 500)
+    @Column(name = "tags", length = 5000)
     private String tags = "";
+
+    public String getEvent_posts() {
+        return event_posts;
+    }
+
+    public void setEvent_posts(String event_posts) {
+        this.event_posts = event_posts;
+    }
+
+    @Column(name = "event_posts", length = 5000)
+    private String event_posts = "";
+
 
     @Column(name = "event_comments")
     private String event_comments;
@@ -59,8 +73,14 @@ public class Event implements SearchReturn {
         event_participants = e_f.getEvent_participants();
         event_comments = e_f.getEvent_comments();
         event_photo = e_f.getEvent_photo();
-        tags= e_f.getTags();
+        if(e_f.getTags().startsWith(",")){
+            tags= e_f.getTags();
+        } else{
+            tags = ","+e_f.getTags();
+        }
         event_participants = "";
+        event_posts = "";
+
     }
     public  Event(){
 
@@ -70,10 +90,29 @@ public class Event implements SearchReturn {
         return type;
     }
 
+    @Transient
     String type;
+
+
     public Event(Error_JSON e) {
         id = -1;
         title = e.toString();
+    }
+
+    public List<User> getEvent_participant_users() {
+        return event_participant_users;
+    }
+
+    public void setEvent_participant_users(List<User> users) {
+        this.event_participant_users = users;
+    }
+
+
+    @Transient
+    List<User> event_participant_users = new ArrayList<User>();
+    public void  fillUsers(List<User> temp){
+        event_participant_users.clear();
+         event_participant_users.addAll(temp);
     }
 
     public String getTitle() {
@@ -94,7 +133,6 @@ public class Event implements SearchReturn {
                 ", event_photo='" + event_photo + '\'' +
                 '}';
     }
-
     public String getTags() {
         return tags;
     }
@@ -136,14 +174,6 @@ public class Event implements SearchReturn {
 
     public void setEvent_host_token(String event_host_token) {
         this.event_host_token = event_host_token;
-    }
-
-    public String getEvent_participants() {
-        return event_participants;
-    }
-
-    public void setEvent_participants(String event_participants) {
-        this.event_participants = event_participants;
     }
 
     public String getEvent_comments() {

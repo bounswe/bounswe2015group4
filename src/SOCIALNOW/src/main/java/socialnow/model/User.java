@@ -17,10 +17,49 @@ public class User  implements SearchReturn {
     // ------------------------
     // PRIVATE FIELDS
     // ------------------------
+    @Transient
     String type;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+
+    public int getNumberOfFollowers() {
+        return numberOfFollowers;
+    }
+
+    public void setNumberOfFollowers(int numberOfFollowers) {
+        this.numberOfFollowers = numberOfFollowers;
+    }
+
+    public int getNumberOfFollowings() {
+        return numberOfFollowings;
+    }
+
+    public void setNumberOfFollowings(int numberOfFollowings) {
+        this.numberOfFollowings = numberOfFollowings;
+    }
+
+    public String getUser_interest_groups() {
+
+        return user_interest_groups;
+    }
+
+    public void setUser_interest_groups(String user_interest_groups) {
+        this.user_interest_groups = user_interest_groups;
+    }
+
+    @Column(name = "user_interest_groups", length = 10000)
+    String user_interest_groups;
+
+
+
+    @Column(name = "user_followers", length = 10000)
+    String user_followers;
+
+    @Column(name = "user_followings", length = 10000)
+    String user_followings;
 
     @Column(name = "email", unique = true)
     private String email;
@@ -30,6 +69,23 @@ public class User  implements SearchReturn {
 
     @NotNull
     private String name;
+
+    @Column
+    public int numberOfFollowers;
+
+    @Column
+    public int numberOfFollowings;
+
+    public String getUser_tags() {
+        return user_tags;
+    }
+
+    public void setUser_tags(String user_tags) {
+        this.user_tags = user_tags;
+    }
+
+    @Column(name = "user_tags", length = 2000)
+    String user_tags;
 
     @NotNull
     private String surname;
@@ -140,6 +196,25 @@ public class User  implements SearchReturn {
         this.user_token = token;
     }
 
+
+
+
+    public String getUser_followers() {
+        return user_followers;
+    }
+
+    public void setUser_followers(String user_followers) {
+        this.user_followers = user_followers;
+    }
+
+    public String getUser_followings() {
+        return user_followings;
+    }
+
+    public void setUser_followings(String user_followings) {
+        this.user_followings = user_followings;
+    }
+
     public User(User_Form u_f) {
         name = u_f.getName();
         password = Util.hash(u_f.getPassword());
@@ -148,6 +223,12 @@ public class User  implements SearchReturn {
         surname = u_f.getSurname();
         user_token = u_f.getUser_token();
         this.user_participating_events = "";
+        this.user_tags= "";
+        this.user_followers="";
+        this.user_followings="";
+        this.numberOfFollowers = 0;
+        this.numberOfFollowings = 0;
+        this.setUser_interest_groups("");
     }
 
     public User(Error_JSON e) {

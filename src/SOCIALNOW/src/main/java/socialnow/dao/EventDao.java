@@ -52,6 +52,9 @@ public class EventDao {
         return entityManager.find(Event.class, id);
     }
 
+    public Event getById(String id) {
+        return entityManager.find(Event.class,Long.parseLong(id));
+    }
     /**
      * Update the passed event in the database.
      */

@@ -2,6 +2,7 @@ package socialnow.rest;
 
 import com.google.gson.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.SemanticTagging.SemanticResponse;
@@ -10,6 +11,7 @@ import socialnow.Utils.RequestSender;
 import socialnow.Utils.Util;
 import socialnow.dao.EventDao;
 import socialnow.dao.UserDao;
+import socialnow.forms.Add_Post_Event_Form;
 import socialnow.forms.Event_Form;
 import socialnow.forms.User_Token_Form;
 import socialnow.model.Event;
@@ -52,9 +54,24 @@ public class EventController {
 
         Event_Form form = gson.fromJson(addEventForm, Event_Form.class);
         Event e = new Event(form);
+        User u = userDao.getByToken(e.getEvent_host_token());
+        u.setUser_tags(u.getUser_tags() + e.getTags());
         eventDao.create(e);
         return e;
     }
+
+    @RequestMapping( value = "/events/addPost", method = RequestMethod.POST)
+    public @ResponseBody
+    Event addPost(@RequestBody String addPostEventForm) {
+
+        Add_Post_Event_Form apef = gson.fromJson(addPostEventForm, Add_Post_Event_Form.class);
+        Event e = eventDao.getById(apef.getEvent_id());
+        e.setEvent_posts(e.getEvent_posts()+","+ apef.getPost_id());
+        return e;
+    }
+
+
+
 
 
     @RequestMapping( value = "/deneme", method = RequestMethod.POST)
@@ -62,14 +79,6 @@ public class EventController {
     SemanticResponse FOOO(@RequestBody String search) throws UnirestException {
         return  RequestSender.searchSemantics(search);
     }
-
-
-
-
-
-
-
-
 
     @RequestMapping(value = "/events/addParticipant", method = RequestMethod.POST)
     public @ResponseBody Event addParticipant(@RequestBody String token){
@@ -83,7 +92,11 @@ public class EventController {
             return new Event(errorJSON);
         }
         user.setUser_participating_events(user.getUser_participating_events()+"," + form.getEvent_id());
-        event.setEvent_participants(event.getEvent_participants()+"," + form.getUser_token());
+        event.event_participants= (event.event_participants+"," + form.getUser_token());
+
+        log.info(user.getUser_tags());
+        log.info(event.getTags());
+        user.setUser_tags(user.getUser_tags() + event.getTags());
         try{
             userDao.update(user);
             eventDao.update(event);
@@ -93,11 +106,8 @@ public class EventController {
             errorJSON.setCode(8081);
             errorJSON.setMessage("DATABASE ERROR: " + e.toString());
             return new Event(errorJSON);
-
         }
-
-        return  event;
-
+        return  this.fillEvent(event);
     }
 
 
@@ -117,7 +127,8 @@ public class EventController {
         }
         log.info(Util.deleteFromArray(user.getUser_participating_events().split(","),event.getId()+""));
         user.setUser_participating_events(Util.deleteFromArray(user.getUser_participating_events().split(","),event.getId()+""));
-        event.setEvent_participants( Util.deleteFromArray( event.getEvent_participants().split(","), form.getUser_token()));
+        event.event_participants = ( Util.deleteFromArray( event.event_participants.split(","), form.getUser_token()));
+        user.setUser_tags(Util.deleteFromArray(user.getUser_tags().split(","),   event.getTags().split(",")));
         try{
             userDao.update(user);
             eventDao.update(event);
@@ -130,20 +141,48 @@ public class EventController {
 
         }
 
-        return  event;
+
+        return  this.fillEvent(event);
 
     }
-
-
-
-
-
 
     @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
     public @ResponseBody
     List<Event> listAllEvents(){
         List<Event> eventList  = eventDao.getAll();
-        return  eventList;
+        List<Event>    eventlistFilled = new ArrayList<Event>();
+        for (Event event :
+                eventList) {
+            eventlistFilled.add(this.fillEvent(event));
+        }
+
+
+
+
+        String[][] tags = new String[5][20];
+        tags[0][0]="java";
+        tags[0][1]="science fiction";
+        tags[0][2]="music";
+        tags[1][0]="book";
+        tags[1][1]="music";
+        tags[1][2]="c++";
+        tags[1][3]="love stories";
+        tags[1][4]="c++";
+        tags[1][5]="c++";
+        tags[1][6]="body building";
+        tags[1][7]="body building";
+        tags[2][0]="book";
+        tags[2][1]="java";
+        tags[2][2]="java";
+
+        String[] result=Util.find_common(tags,1);
+        for(int i=0;i<result.length;i++)
+            log.info(result[i]);
+
+
+
+
+        return  eventlistFilled;
     }
 
     @RequestMapping( value = "/listMyEvents", method = RequestMethod.POST)
@@ -151,7 +190,12 @@ public class EventController {
     List<Event> listEventOfUser(@RequestBody String token){
         Event_Form form = gson.fromJson(token, Event_Form.class);
         List<Event> eventList  = eventDao.getAllByToken(form.getEvent_host_token());
-        return  eventList;
+        List<Event>    eventlistFilled = new ArrayList<Event>();
+        for (Event event :
+                eventList) {
+            eventlistFilled.add(this.fillEvent(event));
+        }
+        return  eventlistFilled;
     }
 
     @RequestMapping( value = "/listAttendingEvents", method = RequestMethod.POST)
@@ -171,7 +215,7 @@ public class EventController {
             try {
                 int id = Integer.parseInt(eventIdArray[i]);
                 Event e = eventDao.getById(id);
-                eventList.add(e);
+                eventList.add( this.fillEvent(e));
             }catch (Exception e){
 
 
@@ -183,5 +227,18 @@ public class EventController {
         return eventList;
     }
 
+    public  Event fillEvent(Event event){
+        String [] participantId = event.event_participants.split(",");
+        List<User> users = new ArrayList<User>();
+        for (int i = 0; i <participantId.length ; i++) {
+            if (!participantId[i].equals("")) {
+
+                users.add(userDao.getByToken(participantId[i]));
+            }
+        }
+        event.fillUsers(users);
+
+        return event;
+    }
 
 }

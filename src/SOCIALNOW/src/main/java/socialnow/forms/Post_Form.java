@@ -8,7 +8,6 @@ public class Post_Form {
     private String content;
     private String post_comments;
     private String owner_token;
-    private  long  post_interest_group_id;
 
     @Override
     public String toString() {
@@ -16,7 +15,6 @@ public class Post_Form {
                 "content='" + content + '\'' +
                 ", comments='" + post_comments + '\'' +
                 ", owner_token='" + owner_token + '\'' +
-                ", post_interest_group_id=" + post_interest_group_id +
                 '}';
     }
 
@@ -44,11 +42,4 @@ public class Post_Form {
         this.owner_token = owner_token;
     }
 
-    public long getPost_interest_group_id() {
-        return post_interest_group_id;
-    }
-
-    public void setPost_interest_group_id(long post_interest_group_id) {
-        this.post_interest_group_id = post_interest_group_id;
-    }
 }

@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.dao.PostDao;
+import socialnow.dao.UserDao;
 import socialnow.forms.Post_Form;
 import socialnow.forms.User_Token_Form;
 import socialnow.model.Post;
+import socialnow.model.User;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostDao postDao;
-
+    @Autowired
+    private UserDao userDao;
     final Gson gson = new Gson();
 
     @RequestMapping( value = "/createPost", method = RequestMethod.POST)
@@ -26,11 +29,11 @@ public class PostController {
     Post createPost(@RequestBody String createPostForm){
         Post_Form form = gson.fromJson(createPostForm, Post_Form.class);
         Post p = new Post(form);
+       User u = userDao.getByToken(p.getOwner_token());
+        u.setUser_interest_groups(u.getUser_interest_groups()+","+p.getId());
         postDao.create(p);
+        userDao.update(u);
         return p;
-
-
-
     }
 
 
