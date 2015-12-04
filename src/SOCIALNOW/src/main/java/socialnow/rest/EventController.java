@@ -49,10 +49,10 @@ public class EventController {
         Event e = new Event(form);
         User u = userDao.getByToken(e.getEvent_host_token());
         u.setUser_tags(u.getUser_tags() + e.getTags());
-        u.setUser_participating_events(u.getUser_participating_events()+"," + e.getId());
         e.event_participants= (e.event_participants+"," + e.getEvent_host_token());
-        userDao.update(u);
         eventDao.create(e);
+        u.setUser_participating_events(u.getUser_participating_events()+","+e.getId());
+        userDao.update(u);
         return e;
     }
 

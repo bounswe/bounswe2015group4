@@ -8,6 +8,15 @@ public class Interest_Group_Form {
     private String tags = "";
     private String group_name;
     private String owner_token;
+    private String group_description;
+
+    public String getGroup_description() {
+        return group_description;
+    }
+
+    public void setGroup_description(String group_description) {
+        this.group_description = group_description;
+    }
 
     public Interest_Group_Form(String tags, String group_name, String owner_token) {
         this.tags = tags;

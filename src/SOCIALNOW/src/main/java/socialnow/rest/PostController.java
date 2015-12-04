@@ -35,6 +35,7 @@ public class PostController {
        User u = userDao.getByToken(p.getOwner_token());
         u.setUser_interest_groups(u.getUser_interest_groups()+","+p.getId());
         postDao.create(p);
+
         userDao.update(u);
         return p;
     }
@@ -51,6 +52,7 @@ public class PostController {
     @RequestMapping( value = "/listPostsOfGroup", method = RequestMethod.POST)
     public @ResponseBody
     List<Post> listPostsOfGroup(@RequestBody String token){
+
         User_Token_Form form = gson.fromJson(token, User_Token_Form.class);
         return postDao.getAllByToken(form.getUser_token());
     }

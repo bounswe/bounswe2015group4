@@ -102,13 +102,12 @@ public class UserController {
         log.info(u.toString());
         Profile p = new Profile(u);
         String tag = u.getUser_tags();
-        if(tag.contains(",")) {
+        if(tag.contains(",")) {  // TAGS
             ArrayList<String > tags= new ArrayList<String>(Arrays.asList(tag.substring(1).split(",")));
             p.setUser_tags(tags);
         }
 
-            String[] arr = u.getUser_interest_groups().split(",");
-            log.info(arr.length+"asdasd");
+        String[] arr = u.getUser_interest_groups().split(",");
         ArrayList<Interest_Group> igs= new ArrayList<>();
         for (int i = 0; i <arr.length ; i++) {
             if(!arr[i].equals(""))

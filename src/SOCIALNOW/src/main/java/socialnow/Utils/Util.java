@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by mertcan on 22.11.2015.
@@ -20,7 +21,7 @@ import java.util.*;
 public class Util {
     public static Random random = new Random();
 
-
+    static Logger log = Logger.getLogger("Recommendation Controller");
     public static String hash(String password){
         String salt_ = "AGnkbkhBHgvspuh";
         byte[] salt = salt_.getBytes();
@@ -106,6 +107,57 @@ public class Util {
         }
         return result;
     }
+
+
+
+
+  public static String[] findMostOccurence(String[] tags){
+       String[] result = new String[3];
+      HashMap<String,Integer> map = new HashMap<>();
+        for (int i = 0; i <tags.length ; i++) {
+          String  tag = tags[i];
+            if(map.containsKey(tag)){
+                map.put(tag,map.get(tag)+1);
+            }
+            else {
+                map.put(tag,1);
+            }
+
+        }
+        int max=0;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            int value = entry.getValue();
+            if(value >= max){
+                max = value;
+                result[0]=key;
+            }
+        }
+      map.remove(result[0]);
+       max=0;
+      for (Map.Entry<String, Integer> entry : map.entrySet()) {
+          String key = entry.getKey();
+          int value = entry.getValue();
+          if(value >= max){
+              max = value;
+              result[1]=key;
+          }
+      }
+      map.remove(result[1]);
+      max=0;
+      for (Map.Entry<String, Integer> entry : map.entrySet()) {
+          String key = entry.getKey();
+          int value = entry.getValue();
+          if(value >= max){
+              max = value;
+              result[2]=key;
+          }
+      }
+
+        return result;
+    }
+
+
 
 
 

@@ -81,6 +81,7 @@ public class Event implements SearchReturn {
         event_participants = "";
         event_posts = "";
 
+
     }
     public  Event(){
 
