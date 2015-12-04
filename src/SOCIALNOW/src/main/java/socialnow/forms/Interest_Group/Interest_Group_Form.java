@@ -10,6 +10,16 @@ public class Interest_Group_Form {
     private String owner_token;
     private String group_description;
 
+    public String getGroup_photo() {
+        return group_photo;
+    }
+
+    public void setGroup_photo(String group_photo) {
+        this.group_photo = group_photo;
+    }
+
+    private String group_photo;
+
     public String getGroup_description() {
         return group_description;
     }
@@ -52,4 +62,6 @@ public class Interest_Group_Form {
     public void setOwner_token(String owner_token) {
         this.owner_token = owner_token;
     }
+
+
 }

@@ -20,6 +20,7 @@ import socialnow.model.SearchReturn;
 import socialnow.model.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -51,22 +52,48 @@ public class RecommendationController {
             String [] x =(Util.findMostOccurence(tags.substring(1).split(",")));
             ArrayList<Event>  events = (ArrayList<Event>) eventDao.getAll();
             ArrayList<Interest_Group> groups = (ArrayList<Interest_Group>) groupDao.getAll();
-
+            ArrayList<String[]> twoDtags = new ArrayList<>();
             for (Event e: events) {
+                if(e.getTags().contains(x[1])|| e.getTags().contains(x[2])|| e.getTags().contains(x[0])){
+                    String [] eventUsers = e.event_participants.split(",");
+                    for (int i = 0; i <eventUsers.length ; i++) {
+                        if(!eventUsers[i].equals("")){
 
+                          User u= userDao.getByToken(eventUsers[i]);
+                           String user_tags = u.getUser_tags();
+                            if (user_tags.contains(",")){
 
+                                twoDtags.add(user_tags.substring(1).split(","));
+                            }
+                        }
+                    }
+                }
             }
-            for (Interest_Group g: groups) {
-
-
-
+            for (Interest_Group e: groups) {
+                if(e.getTags().contains(x[1])|| e.getTags().contains(x[2])|| e.getTags().contains(x[0])){
+                    String [] postUSers = e.getGroup_members().split(",");
+                    for (int i = 0; i <postUSers.length ; i++) {
+                        if(!postUSers[i].equals("")){
+                            User u= userDao.getByToken(postUSers[i]);
+                            String user_tags = u.getUser_tags();
+                            if (user_tags.contains(",")){
+                                twoDtags.add(user_tags.substring(1).split(","));
+                            }
+                        }
+                    }
+                }
             }
 
+            String[][] array= new String [twoDtags.size()+1][10];
+            for (int i = 0; i <twoDtags.size() ; i++) {
+                for (int j = 0; j < twoDtags.get(i).length; j++) {
+                    array[i][j] = twoDtags.get(i)[j];
+                }
+                array[i][twoDtags.get(i).length] = null;
+            }
+            array[twoDtags.size()][0] = null;
 
-
-
-
-
+            log.info(Arrays.toString(Util.find_common(array,2)));
 
         }else{
 

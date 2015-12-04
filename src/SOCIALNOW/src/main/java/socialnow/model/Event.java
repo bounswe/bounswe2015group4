@@ -26,6 +26,7 @@ public class Event implements SearchReturn {
     private String title;
 
     @NotNull
+    @Column(length = 2000)
     private String event_description;
 
     @NotNull

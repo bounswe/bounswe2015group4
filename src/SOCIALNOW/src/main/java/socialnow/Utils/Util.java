@@ -143,8 +143,8 @@ public class Util {
               result[1]=key;
           }
       }
-      map.remove(result[1]);
       max=0;
+      map.remove(result[1]);
       for (Map.Entry<String, Integer> entry : map.entrySet()) {
           String key = entry.getKey();
           int value = entry.getValue();
@@ -153,6 +153,8 @@ public class Util {
               result[2]=key;
           }
       }
+
+
 
         return result;
     }

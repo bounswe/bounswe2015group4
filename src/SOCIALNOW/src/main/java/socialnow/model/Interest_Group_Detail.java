@@ -14,6 +14,16 @@ public class Interest_Group_Detail {
 
     private long id;
 
+    private String group_photo;
+
+    public String getGroup_photo() {
+        return group_photo;
+    }
+
+    public void setGroup_photo(String group_photo) {
+        this.group_photo = group_photo;
+    }
+
     private String group_name;
     private String group_description;
     private User owner;
@@ -27,6 +37,7 @@ public class Interest_Group_Detail {
         this.id = group.getId();
         this.group_description= group.group_description;
         this.group_name= group.group_name;
+        this.setGroup_photo(group.getGroup_photo());
     }
 
 

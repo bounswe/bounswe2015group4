@@ -65,13 +65,6 @@ public class Interest_Group_Controller {
 
 
 
-
-
-
-
-
-
-
     @RequestMapping( value = "/groups/addMember", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group addMember(@RequestBody String addMemberForm) {

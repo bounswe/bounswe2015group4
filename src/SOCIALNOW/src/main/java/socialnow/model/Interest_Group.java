@@ -49,6 +49,16 @@ public class Interest_Group implements SearchReturn{
     @Column(name = "group_posts", length = 10000)
     public  String group_posts ;
 
+    public String getGroup_photo() {
+        return group_photo;
+    }
+
+    public void setGroup_photo(String group_photo) {
+        this.group_photo = group_photo;
+    }
+
+    @Column(name = "group_photo")
+    public  String group_photo ;
 
 
     @Override
@@ -105,6 +115,7 @@ public class Interest_Group implements SearchReturn{
         this.setGroup_members("");
         this.setGroup_name(form.getGroup_name());
         this.setGroup_posts("");
+        this.setGroup_photo(form.getGroup_photo());
     }
 
 
