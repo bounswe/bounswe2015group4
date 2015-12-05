@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "interest_groups")
-public class Interest_Group implements SearchReturn{
+public class Interest_Group {
 
     @Transient
     String type;
@@ -19,11 +19,6 @@ public class Interest_Group implements SearchReturn{
     public Interest_Group(Error_JSON e) {
         id = -1;
         group_name = e.toString();
-    }
-
-    @Override
-    public void setType(String type) {
-        this.type=type;
     }
 
     @Id

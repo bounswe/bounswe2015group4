@@ -19,6 +19,15 @@ public class Profile {
     private String surname;
     private String role;
     private String user_token;
+    private  String user_photo;
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
 
     public Profile(User u) {
         this.setName(u.getName());
@@ -28,6 +37,7 @@ public class Profile {
         this.setUser_token(u.getUser_token());
         this.setNumberOfFollowers(u.getNumberOfFollowers());
         this.setNumberOfFollowings(u.getNumberOfFollowings());
+        this.setUser_photo(u.getUser_photo());
     }
 
     public Profile(ArrayList<Interest_Group> user_interest_groups, ArrayList<User> user_followers, ArrayList<User> user_following, ArrayList<String> user_tags, ArrayList<Event> user_participating_events, String email, String name, int numberOfFollowers, int numberOfFollowings, String surname, String role, String user_token) {

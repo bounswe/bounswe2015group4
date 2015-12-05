@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "events")
-public class Event implements SearchReturn {
+public class Event  {
     // ------------------------
     // PRIVATE FIELDS
 
@@ -204,9 +204,4 @@ public class Event implements SearchReturn {
         this.id = id;
     }
 
-
-    @Override
-    public void setType(String type) {
-        this.type=type;
-    }
 }

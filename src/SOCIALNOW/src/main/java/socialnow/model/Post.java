@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "posts")
-public class Post  implements SearchReturn  {
+public class Post  {
 
     public String getType() {
         return type;
@@ -80,8 +80,4 @@ public class Post  implements SearchReturn  {
     public Post() {
     }
 
-    @Override
-    public void setType(String type) {
-        this.type=type;
-    }
 }
