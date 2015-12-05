@@ -14,10 +14,7 @@ import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
 import socialnow.forms.User.User_Form;
 import socialnow.forms.User.User_Token_Form;
-import socialnow.model.Event;
-import socialnow.model.Interest_Group;
-import socialnow.model.SearchReturn;
-import socialnow.model.User;
+import socialnow.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,9 +40,9 @@ public class RecommendationController {
     Logger log = Logger.getLogger("Recommendation Controller");
 
     @RequestMapping( value = "/recommend", method = RequestMethod.POST)
-    public ArrayList<SearchReturn> edit_user(@RequestBody String token) {
+    public RecommendReturn recommend(@RequestBody String token) {
         User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
-        ArrayList<SearchReturn> suggests = new ArrayList<>();
+        RecommendReturn suggests = new RecommendReturn();
         User user = userDao.getByToken(form.getUser_token());
         String tags = user.getUser_tags();
         if (tags.contains(",")){
@@ -58,11 +55,9 @@ public class RecommendationController {
                     String [] eventUsers = e.event_participants.split(",");
                     for (int i = 0; i <eventUsers.length ; i++) {
                         if(!eventUsers[i].equals("")){
-
                           User u= userDao.getByToken(eventUsers[i]);
                            String user_tags = u.getUser_tags();
                             if (user_tags.contains(",")){
-
                                 twoDtags.add(user_tags.substring(1).split(","));
                             }
                         }
@@ -83,8 +78,7 @@ public class RecommendationController {
                     }
                 }
             }
-
-            String[][] array= new String [twoDtags.size()+1][10];
+            String[][] array= new String [twoDtags.size()+1][100];
             for (int i = 0; i <twoDtags.size() ; i++) {
                 for (int j = 0; j < twoDtags.get(i).length; j++) {
                     array[i][j] = twoDtags.get(i)[j];
@@ -93,7 +87,21 @@ public class RecommendationController {
             }
             array[twoDtags.size()][0] = null;
 
-            log.info(Arrays.toString(Util.find_common(array,2)));
+            String [] recommendedTags = Util.find_common(array,2);
+
+            for (Event e: events) {
+                if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getEvent_participant_users().contains(user.getUser_token()) && !e.getEvent_host_token().contains(user.getUser_token())){
+                    suggests.getEvents().add(e);
+                }
+            }
+            for (Interest_Group e: groups) {
+                if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getGroup_members().contains(user.getUser_token()) && !e.getOwner_token().contains(user.getUser_token())){
+                    suggests.getGroup().add(e);
+
+                    }
+            }
+
+
 
         }else{
 
