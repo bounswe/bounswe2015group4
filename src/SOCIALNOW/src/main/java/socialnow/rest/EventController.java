@@ -194,6 +194,8 @@ public class EventController {
         Add_Post_Event_Form form = gson.fromJson(eventId, Add_Post_Event_Form.class);
         Event event = eventDao.getById(form.getEvent_id());
         EventDetail eventDetail = new EventDetail(event);
+        User user = userDao.getByToken(event.getEvent_host_token());
+        eventDetail.setEvent_host(user);
         String [] participantId = event.event_participants.split(",");
         ArrayList<User> users = new ArrayList<User>();
         for (int i = 0; i <participantId.length ; i++) {

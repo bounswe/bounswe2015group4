@@ -12,6 +12,15 @@ public class EventDetail {
     ArrayList<String>  tags;
     ArrayList<PostDetail> event_posts;
     ArrayList<User> event_participants ;
+
+    public User getEvent_host() {
+        return event_host;
+    }
+
+    public void setEvent_host(User event_host) {
+        this.event_host = event_host;
+    }
+
     private User event_host;
 
     private long id;
