@@ -1,5 +1,5 @@
-app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
-    this.getAllEvents = function () {
+app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
+    /*this.getAllGroups = function () {
         var deferred = $q.defer();
 
         $http({
@@ -14,18 +14,18 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
         })
 
         return deferred.promise;
-    }
+    }*/
 
-    this.createEvent = function (event, userToken) {
+    this.createGroup = function (group, userToken) {
         var deferred = $q.defer();
 
-        event.event_host_token = userToken;
+        group.owner_token = userToken;
         $http({
-            url: baseApiUrl + '/createEvent',
+            url: baseApiUrl + '/createInterestGroup',
             method: 'POST',
-            data: JSON.stringify(event)
-        }).success(function (events) {
-            deferred.resolve(events);
+            data: JSON.stringify(group)
+        }).success(function (group) {
+            deferred.resolve(group);
         }).error(function (response) {
             deferred.reject('An error occurred!');
         })
@@ -33,7 +33,7 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
         return deferred.promise;
     }
 
-    this.getMyEvents = function (userToken) {
+    /*this.getMyGroups = function (userToken) {
         var deferred = $q.defer();
 
         var request = {
@@ -53,5 +53,6 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
         })
 
         return deferred.promise;
-    }
+    }*/
 })
+

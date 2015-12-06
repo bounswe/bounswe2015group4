@@ -2,11 +2,11 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
+        <form method="get" class="sidebar-form">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Not functional...">
+                <input type="text" class="form-control" placeholder="Search.." ng-model="search.word" id="test">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                <button type="button" name="search" id="search-btn" class="btn btn-flat" ng-click="doSearch()"><i class="fa fa-search"></i>
                 </button>
               </span>
             </div>
@@ -28,6 +28,12 @@
             <li link-button="'/eventDetail'">
                 <a>
                     <i class="fa fa-files-o"></i> <span>Event Detail</span>
+                    <span class="label label-primary pull-right"><</span>
+                </a>
+            </li>
+            <li link-button="'/groups'">
+                <a>
+                    <i class="glyphicon glyphicon-list"></i> <span>Groups</span>
                     <span class="label label-primary pull-right"><</span>
                 </a>
             </li>

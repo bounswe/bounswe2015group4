@@ -11,6 +11,29 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             method: 'POST',
             data: JSON.stringify(request)
         }).success(function(user) {
+            if(user.id != -1) {
+                deferred.resolve(user);
+            } else {
+                deferred.reject('Wrong email or password!');
+            }
+        }).error(function(response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.getProfileDetails = function(token) {
+        var deferred = $q.defer();
+        var request = {
+            user_token: token
+        }
+
+        $http({
+            url: baseApiUrl + '/showProfileDetails',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function(user) {
             deferred.resolve(user);
         }).error(function(response) {
             deferred.reject('An error occurred!');
@@ -70,36 +93,76 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
         return deferred.promise;
     }
 
-    this.addEvent = function (event, currentUserEmail) {
+    this.followUser = function(userToken, followToken) {
         var deferred = $q.defer();
-        var query = new Parse.Query(Parse.User);
-        query.equalTo('email', currentUserEmail);
-        query.first({
-            success: function (user) {
+        var request = {
+            user_token: userToken,
+            user_token_follow: followToken
+        }
 
-                if (!user.get("events")) {
-                    var events = [];
-                    events.push(event);
-                    user.set("events", events);
-                } else {
-                    var events = user.get("events");
-                    events.push(event);
-                    user.set("events", events);
-                }
-                user.save(null, {
-                    success: function (user) {
-                        deferred.resolve(user);
-                    },
-                    error: function () {
-                        deferred.reject(error);
-                    }
+        $http({
+            url: baseApiUrl + '/followUser',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {
+            deferred.reject('An error occurred!');
+        })
 
-                });
-            },
-            error: function (user, error) {
-                deferred.reject(error);
-            }
-        });
         return deferred.promise;
+    }
+
+    this.unfollowUser = function(userToken, unfollowToken) {
+        var deferred = $q.defer();
+        var request = {
+            user_token: userToken,
+            user_token_follow: unfollowToken
+        }
+
+        $http({
+            url: baseApiUrl + '/unFollowUser',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function(response) {
+            deferred.resolve(response);
+        }).error(function(response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.setShowingUserProfile = function(user) {
+        var currentUser = {};
+
+        currentUser.followers = user.user_followers;
+        currentUser.followings = user.user_followings;
+        currentUser.interestGroups = user.user_interest_groups;
+        currentUser.participatingEvents = user.user_participating_events;
+        currentUser.tags = utils.manipulateTags(user.user_tags);
+        currentUser.numberOfFollowers = user.numberOfFollowers;
+        currentUser.numberOfFollowings = user.numberOfFollowings;
+        currentUser.name = user.name;
+        currentUser.surname = user.surname;
+        currentUser.role = user.role;
+        currentUser.email = user.email;
+        currentUser.user_token = user.user_token;
+        currentUser.user_photo = user.user_photo;
+
+        currentUser.participatingEvents = utils.manipulateEvents(currentUser.participatingEvents);
+
+        utils.manipulateUser(currentUser);
+
+        currentUser.stringTags = currentUser.tags.join();
+
+        return currentUser;
+    }
+
+    this.updateProfileDetails = function(token) {
+        this.getProfileDetails(token).then(function(currentUser) {
+            sessionService.setUserProfileDetails(currentUser);
+        }, function(response) {
+        })
     }
 })

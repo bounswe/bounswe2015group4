@@ -47,10 +47,33 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
                 loginRequired: true
             }
         })
-        .when('/profile',
+        .when('/profile/:userToken',
         {
             templateUrl: 'pages/profile.html',
             controller: 'profileController',
+            access: {
+                loginRequired: true
+            }
+        })
+        .when('/profile',
+            {
+                templateUrl: 'pages/profile.html',
+                controller: 'profileController',
+                access: {
+                    loginRequired: true
+                }
+            })
+        .when('/groups',
+            {
+                templateUrl: 'pages/groups.html',
+                controller: 'groupsController',
+                access: {
+                    loginRequired: true
+                }
+            })
+        .when('/search/:searchTerm', {
+            templateUrl: 'pages/search.html',
+            controller: 'searchController',
             access: {
                 loginRequired: true
             }
@@ -60,4 +83,13 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
         })
 })
 
+app.run(function ($rootScope, helperService) {
+    $rootScope.search = {
+        word: ""
+    };
+
+    $rootScope.doSearch = function() {
+        helperService.goToPage('/search/' + $rootScope.search.word);
+    }
+})
 

@@ -1,0 +1,192 @@
+<div ng-include src="'pages/partials/mainHeader.html'"></div>
+<div ng-include src="'pages/partials/mainSidebar.html'"></div>
+
+<div class="wrapper">
+    <div class="content-wrapper" style="min-height: 780px;">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"  ng-click="currentGroupRoute = groupRoutes.addNew"><a data-toggle="tab">New Group</a></li>
+                            <!--<li ng-click="currentEventRoute = eventRoutes.myEvents"><a data-toggle="tab">My Events</a></li>
+                            <li class="active" ng-click="currentEventRoute = eventRoutes.allEvents"><adata-toggle="tab">All Events</a></li>-->
+                            <li class="pull-left header"><i class="fa fa-files-o"></i>Groups</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div>
+                                <div ng-show="currentGroupRoute == groupRoutes.addNew">
+                                    <section class="content">
+                                        <div class="row">
+                                            <!-- left column -->
+                                            <div class="col-md-12">
+                                                <!-- general form elements -->
+                                                <div class="box box-primary">
+                                                    <div class="box-header with-border">
+                                                        <h3 class="box-title">Create New Group</h3>
+                                                    </div><!-- /.box-header -->
+                                                    <!-- form start -->
+                                                    <form role="form" novalidate ng-submit="createGroup()">
+                                                        <div class="box-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="inputTitle">Name</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="inputTitle" ng-model="group.group_name"
+                                                                               placeholder="Name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group has-feedback">
+                                                                        <label for="inputDescription">Description</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="inputDescription"
+                                                                               ng-model="group.group_description"
+                                                                               placeholder="Description" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group has-feedback">
+                                                                        <label for="groupPhotoPicker">Group
+                                                                            Photo</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="groupPhotoPicker"
+                                                                               ng-model="group.group_photo"
+                                                                               placeholder="Group Photo" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form group has-feedback">
+                                                                        <label>Tags</label>
+                                                                        <input type="text" class="form-control"
+                                                                               placeholder="Tags"
+                                                                               ng-model="group.tags">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <message type="success"
+                                                                             display="successMessage"></message>
+                                                                    <message type="error"
+                                                                             display="errorMessage"></message>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary btn-block btn-flat">
+                                                                        Create
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentEventRoute == eventRoutes.myEvents">
+                                    <section class="content">
+                                        <div class="row" ng-show="myAllEvents.length != 0"
+                                             ng-repeat="myEvent in myAllEvents">
+                                            <div class="col-md-12">
+                                                <!-- Box Comment -->
+                                                <div class="box box-widget">
+                                                    <div class='box-body'>
+                                                        <div class="attachment-block clearfix">
+                                                            <img class="attachment-img" ng-src="{{myEvent.event_photo}}"
+                                                                 alt="attachment image">
+
+                                                            <div class="attachment-pushed">
+                                                                <h4 class="attachment-heading"><a
+                                                                        ng-bind="myEvent.title"></a></h4>
+
+                                                                <div class="attachment-text"
+                                                                     ng-bind="myEvent.event_description">
+                                                                </div><!-- /.attachment-text -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <span class="bg-green label-style"
+                                                                              ng-bind="myEvent.event_date_in_date"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <span class="bg-red label-style"
+                                                                              ng-bind="myEvent.tags"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!-- /.attachment-pushed -->
+                                                        </div><!-- /.attachment-block -->
+
+                                                        <!-- Social sharing buttons -->
+                                                        <button class='btn btn-default btn-xs'><i
+                                                                class='fa fa-share'></i> Detail
+                                                        </button>
+                                                    </div><!-- /.box-body -->
+                                                </div><!-- /.box -->
+
+                                            </div><!-- /.col -->
+
+                                        </div>
+                                        <div ng-show="myAllEvents.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentEventRoute == eventRoutes.allEvents">
+                                    <section class="content" ng-show="allEvents.length != 0">
+                                        <div class="row" ng-repeat="allEvent in allEvents">
+                                            <div class="col-md-12">
+                                                <!-- Box Comment -->
+                                                <div class="box box-widget">
+                                                    <div class='box-body'>
+                                                        <div class="attachment-block clearfix">
+                                                            <img class="attachment-img"
+                                                                 ng-src="{{allEvent.event_photo}}"
+                                                                 alt="attachment image">
+
+                                                            <div class="attachment-pushed">
+                                                                <h4 class="attachment-heading"><a
+                                                                        ng-bind="allEvent.title"></a></h4>
+
+                                                                <div class="attachment-text"
+                                                                     ng-bind="allEvent.event_description">
+                                                                </div><!-- /.attachment-text -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <span class="bg-green label-style"
+                                                                              ng-bind="allEvent.event_date_in_date"></span>
+                                                                        <span class="bg-blue label-style"
+                                                                              ng-bind="allEvent.tags"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- /.attachment-pushed -->
+                                                        </div><!-- /.attachment-block -->
+
+                                                        <!-- Social sharing buttons -->
+                                                        <button class='btn btn-default btn-xs'><i
+                                                                class='fa fa-share'></i> Detail
+                                                        </button>
+                                                    </div><!-- /.box-body -->
+                                                </div><!-- /.box -->
+                                            </div><!-- /.col -->
+
+                                        </div>
+                                        <div ng-show="allEvents.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
