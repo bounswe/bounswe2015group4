@@ -5,9 +5,13 @@
     <div class="content-wrapper" style="min-height: 780px;">
         <div class="row">
             <div ng-show="recommendationsEnabled">
+                <br>
+
                 <section class="content col-md-6">
                     <div>
-                        <span class="bg-red">Recommended Events</span>
+                        <span class="page-header "><b> Recommended Events </b> </span>
+                        <br>
+                       <br>
                         <div ng-repeat="event in recommendations.events">
                             <event-summary data="event"></event-summary>
                         </div>
@@ -16,9 +20,12 @@
                         </div>
                     </div>
                 </section>
+
                 <section class="content col-md-6">
                     <div>
-                        <span class="bg-red">Recommended Groups</span>
+                        <span class="page-header "><b> Recommended Groups </b> </span>
+                        <br>
+                        <br>
                         <div ng-repeat="interestGroup in recommendations.group">
                             <group-summary data="interestGroup"></group-summary>
                         </div>
