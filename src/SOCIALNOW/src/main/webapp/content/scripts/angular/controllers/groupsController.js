@@ -31,8 +31,6 @@ app.controller('groupsController', function ($scope, sessionService, groupServic
 
     $scope.createGroup = function () {
         groupService.createGroup($scope.group, $scope.user.token).then(function (group) {
-            $scope.errorMessage = "";
-            $scope.successMessage = "Group is created successfully"
             $scope.currentGroupRoute = $scope.groupRoutes.allGroups;
 
             getAllGroups();
