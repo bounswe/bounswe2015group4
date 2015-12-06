@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +20,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.socialnow.API.API;
 import com.socialnow.Groups.EditGroupActivity;
 import com.socialnow.Groups.GroupActivity;
+import com.socialnow.Models.Group;
 import com.socialnow.R;
 
+import java.io.InputStream;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -31,6 +40,7 @@ import java.util.List;
 public class GroupFrag extends Fragment {
     private ListView listView;
     private View v;
+    List<Group> groups;
     //List<String> title;
     List<String> privacy;
     List<Bitmap> photo;
@@ -40,6 +50,7 @@ public class GroupFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        groups = new LinkedList<>();
 
         v = inflater.inflate(R.layout.frag_group, container, false);
 
@@ -49,6 +60,7 @@ public class GroupFrag extends Fragment {
         photo = new LinkedList<Bitmap>();
         member = new LinkedList<String>();
         update = new LinkedList<Date>();*/
+        getData();
         writeToList();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,10 +85,37 @@ public class GroupFrag extends Fragment {
 
         return v;
     }
+    void getData() {
 
+        Response.Listener<Group[]> response = new Response.Listener<Group[]>() {
+            @Override
+            public void onResponse(Group[] response) {
+                if(response != null) {
+                    Log.d("Group", response.toString());
+                    for( int i= 0;i<response.length;i++){
+                        groups.add(i,response[i]);
+                    }
+                    writeToList();
+
+                }else{
+                    Log.d("Event", "error");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", error.toString());
+
+            }
+        };
+
+        API.listAllGroups("listAllGroups", response, errorListener);
+    }
     class MyAdapter extends ArrayAdapter {
 
-        public MyAdapter(Context context, int resource, String[] objects) {
+        public MyAdapter(Context context, int resource, List objects) {
             super(context, resource, objects);
         }
 
@@ -84,9 +123,11 @@ public class GroupFrag extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_event,null);
             TextView groupname = (TextView) v.findViewById(R.id.tEname);
-            groupname.setText("Group Name");
+            groupname.setText(groups.get(position).getGroup_name());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
-            img.setImageResource(R.drawable.ic_people);
+            new DownloadImageTask((ImageView) v.findViewById(R.id.ivEvent))
+                    .execute(groups.get(position).getGroup_photo());
+            //img.setImageResource(R.drawable.ic_people);
             ImageView privacy = (ImageView) v.findViewById(R.id.ivEDate);
             privacy.setImageResource(R.drawable.ic_lock);
             TextView mPrivacy = (TextView) v.findViewById(R.id.tEdate);
@@ -97,9 +138,11 @@ public class GroupFrag extends Fragment {
             TextView mMember = (TextView) v.findViewById(R.id.tElocation);
             mMember.setText("XX members");
             TextView update = (TextView) v.findViewById(R.id.tHost);
-            update.setText("Last update on: ");
+            update.setVisibility(View.GONE);
+           // update.setText("Last update on: ");
             TextView mUpdate = (TextView) v.findViewById(R.id.tHostName);
-            mUpdate.setText("Date and Time");
+            mUpdate.setVisibility(View.GONE);
+           // mUpdate.setText("Date and Time");
 
 
             return v;
@@ -108,6 +151,31 @@ public class GroupFrag extends Fragment {
 
     }
     void writeToList(){
-        listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, title));
+        Log.d("Groups: ", groups.toString());
+        listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, groups));
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

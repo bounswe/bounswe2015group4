@@ -3,6 +3,9 @@ package com.socialnow.HomeScreen;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,8 +26,12 @@ import com.socialnow.API.API;
 import com.socialnow.Events.EditEventActivity;
 import com.socialnow.Events.EventActivity;
 import com.socialnow.Models.Event;
+import com.socialnow.Models.User;
 import com.socialnow.R;
 
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -99,13 +106,17 @@ public class EventFrag extends Fragment {
             TextView eventname = (TextView) v.findViewById(R.id.tEname);
             eventname.setText(events.get(position).getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
-            img.setImageBitmap(events.get(position).getEvent_photo());
+            new DownloadImageTask((ImageView) v.findViewById(R.id.ivEvent))
+                    .execute(events.get(position).getEvent_photo());
+            User[] hostUser = events.get(position).getEvent_participant_users();
+            String hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
+
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
             eventdate.setText(ft.format(new Date(events.get(position).getEvent_date())));
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(events.get(position).getEvent_location());
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
-            eventhost.setText(events.get(position).getEvent_host_token());
+            eventhost.setText(hostUserName);
 
 
             return v;
@@ -145,5 +156,30 @@ public class EventFrag extends Fragment {
         Log.d("Event", events.toString());
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, events));
     }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
 }
+
 

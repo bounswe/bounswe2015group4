@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -37,6 +38,9 @@ import com.socialnow.R;
 
 import org.json.JSONArray;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,7 +61,7 @@ public class EventActivity extends AppCompatActivity {
     android.support.design.widget.AppBarLayout img;
     String title;
     String date;
-    Bitmap photo;
+    String photo;
     String descrip;
     String location;
     String hostName;
@@ -115,6 +119,7 @@ public class EventActivity extends AppCompatActivity {
             location = extras.getString("location");
             hostName = extras.getString("hostname");
             descrip = extras.getString("description");
+            photo = extras.getString("photo");
             //participants = extras.getString("participants");
             //data = extras.getByteArray("photo");
         }
@@ -172,12 +177,13 @@ public class EventActivity extends AppCompatActivity {
 
 
       toolBarLayout.setTitle(title);
-      if(photo!=null){
+
+    /*  if(photo!=null){
           Drawable d = new BitmapDrawable(getResources(), photo);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
               img.setBackground(d);
           }
-      }
+      }*/
 
       description.setText(descrip);
       eventdate.setText(date);
@@ -191,4 +197,6 @@ public class EventActivity extends AppCompatActivity {
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
     //  eventhost.setText(hostName);
     }
+
+
 }
