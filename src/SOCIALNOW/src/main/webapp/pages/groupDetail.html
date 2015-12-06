@@ -1,0 +1,164 @@
+<div ng-include src="'pages/partials/mainHeader.html'"></div>
+<div ng-include src="'pages/partials/mainSidebar.html'"></div>
+
+<div class="wrapper">
+    <div class="content-wrapper" style="min-height: 780px;">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li class="active"  ng-click="ROUTE TO USER'S CURRENT GROUPS"><a data-toggle="tab">My Groups</a></li>
+                            <!--<li ng-click="currentEventRoute = eventRoutes.myEvents"><a data-toggle="tab">My Events</a></li>
+                            <li class="active" ng-click="currentEventRoute = eventRoutes.allEvents"><adata-toggle="tab">All Events</a></li>-->
+                            <li class="pull-left header"><i class="fa fa-files-o"></i>All Groups</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div>
+                                <div ng-show="GROUP ROUTE">
+                                    <section class="content">
+                                        <div class="row">
+                                            <!-- left column -->
+                                            <div class="col-md-12">
+                                                <!-- general form elements -->
+                                                <div class="box box-primary">
+                                                    <div class="box-header with-border">
+                                                        <h1 class="box-title">NAME OF GROUP</h1>
+                                                    </div><!-- /.box-header -->
+                                                </div>
+                                                <div>
+                                                    <h5 class="box-header with-border"> tags:</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div>
+                                    <section class="content">
+                                        <img
+                                                class="group-img"
+                                                src="http://www.photohowto.info/files/images/howto/2008/02/group/group-1.png"
+                                                width="500" height="500"
+                                                alt="Group Photo">
+                                    </section>
+                                </div>
+                                    <section class="content">
+                                        <div class="attachment-text">
+                                            Description about the attachment can be placed here.
+                                            Lorem Ipsum is simply dummy text of the printing and
+                                            typesetting industry
+                                            Description is one of four rhetorical modes (also known
+                                            as modes of discourse), along with exposition,
+                                            argumentation, and narration. Each of the rhetorical
+                                            modes is present in a variety of forms and each has its
+                                            own purpose and conventions. The act of description may
+                                            be related to that of definition. Description is also
+                                            the fiction-writing mode for transmitting a mental image
+                                            of the particulars of a story.[citation needed]
+                                            Definition: The pattern of development that presents
+                                            a word picture of a thing, a person, a situation, or a
+                                            series of events.
+                                        </div><!-- /.attachment-text -->
+                                    </section>
+                                <div ng-show="GROUP ROUTE">
+                                    <section class="content">
+                                        <div class="row" ng-show="myAllEvents.length != 0"
+                                             ng-repeat="myEvent in myAllEvents">
+                                            <div class="col-md-12">
+                                                <!-- Box Comment -->
+                                                <div class="box box-widget">
+                                                    <div class='box-body'>
+                                                        <div class="attachment-block clearfix">
+                                                            <div class="attachment-pushed">
+                                                                <h4 class="attachment-heading"><a
+                                                                        ng-bind="myEvent.title"></a></h4>
+
+                                                                <div class="attachment-text"
+                                                                     ng-bind="myEvent.event_description">
+                                                                </div><!-- /.attachment-text -->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <span class="bg-green label-style"
+                                                                              ng-bind="myEvent.event_date_in_date"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <span class="bg-red label-style"
+                                                                              ng-bind="myEvent.tags"></span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!-- /.attachment-pushed -->
+                                                        </div><!-- /.attachment-block -->
+
+
+                                                    </div><!-- /.box-body -->
+                                                </div><!-- /.box -->
+
+                                            </div><!-- /.col -->
+
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class='box-footer box-comments'>
+                                    <div class='box-comment'>
+                                        <!-- User image -->
+                                        <a href = "USER PAGE">
+                                            <img class='img-circle img-sm'
+                                                 src='http://susers.thatsmyface.com/c/clueville/afg_front_JDIWS1nAtD-largeThumb_9b9d4eb1.jpg'
+                                                 height="25" width="25"    alt='user image'>
+                                        </a>
+
+                                                              <span class="username"><a href="#">Commenter User</a>
+
+                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
+                                                              </span><!-- /.username -->
+                                        <div class='comment-text'>
+                                            It is a long established fact that a reader will be
+                                            distracted
+                                            by the readable content of a page when looking at its
+                                            layout.
+                                        </div><!-- /.comment-text -->
+                                    </div><!-- /.box-comment -->
+                                    <div class='box-comment'>
+                                        <!-- User image -->
+                                        <a href = "USER PAGE">
+                                            <img class='img-circle img-sm'
+                                                 src='http://susers.thatsmyface.com/c/clueville/afg_front_JDIWS1nAtD-largeThumb_9b9d4eb1.jpg'
+                                                 height="25" width="25"    alt='user image'>
+                                        </a>
+
+                                                              <span class="username"><a href="#">Commenter User</a>
+
+                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
+                                                              </span><!-- /.username -->
+                                        <div class='comment-text'>
+                                            The point of using Lorem Ipsum is that it has a
+                                            more-or-less
+                                            normal distribution of letters, as opposed to using
+                                            'Content here, content here', making it look like
+                                            readable English.
+                                        </div><!-- /.comment-text -->
+                                    </div><!-- /.box-comment -->
+                                </div><!-- /.box-footer -->
+                                <div class="box-footer">
+                                    <form action="#" method="post">
+                                        <img class="img-responsive img-circle img-sm"
+                                             src="../dist/img/user4-128x128.jpg" alt="alt text">
+                                        <!-- .img-push is used to add margin to elements next to floating images -->
+                                        <div class="img-push">
+                                            <input type="text" class="form-control input-sm"
+                                                   placeholder="Press enter to post comment">
+                                        </div>
+                                    </form>
+                                </div><!-- /.box-footer -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+</div>
+</div>
