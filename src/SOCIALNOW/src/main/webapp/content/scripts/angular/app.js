@@ -40,6 +40,13 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
                 loginRequired: true
             }
         })
+        .when('/eventDetail',
+        {
+            templateUrl: 'pages/eventDetail.html',
+            access: {
+                loginRequired: true
+            }
+        })
         .when('/profile',
         {
             templateUrl: 'pages/profile.html',
