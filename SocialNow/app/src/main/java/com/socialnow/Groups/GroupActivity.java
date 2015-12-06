@@ -81,10 +81,8 @@ public class GroupActivity extends AppCompatActivity {
         //toolBarLayout.setTitle("Group Name");
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
         participants = new ArrayList<ParseObject>();
-        mCreatedate = (TextView) findViewById(R.id.tCreateDate);
         description = (TextView) findViewById(R.id.tDes);
         mPrivacy = (TextView) findViewById(R.id.tPrivacy);
-        mOwner = (TextView) findViewById(R.id.tOwner);
 
         mMember = (TextView) findViewById(R.id.tMember);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,8 +93,8 @@ public class GroupActivity extends AppCompatActivity {
         // toolBarLayout.setTitle("Title");
 
 
-        RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Member);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        RelativeLayout viewMember=(RelativeLayout)findViewById(R.id.Member);
+        viewMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
@@ -106,9 +104,16 @@ public class GroupActivity extends AppCompatActivity {
             }
         });
 
-        listView=(ListView)findViewById(R.id.lvComment);
-        ListAdapter mAdapter = new MyAdapter(this,R.layout.item_comment,tvParti);
-        listView.setAdapter(mAdapter);
+        RelativeLayout viewComment=(RelativeLayout)findViewById(R.id.Comment);
+        viewComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                startActivity(i2);
+            }
+        });
 
 
         /*Bundle extras = getIntent().getExtras();

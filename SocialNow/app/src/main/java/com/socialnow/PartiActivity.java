@@ -56,7 +56,12 @@ public class PartiActivity extends AppCompatActivity {
             case "EditGroupActivity":
                 mAdapter = new EditMemberAdapter(this,R.layout.item_editmember,tvParti);
                 listView.setAdapter(mAdapter);
+                break;
 
+            case "Comment":
+                mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
+                listView.setDividerHeight(10);
+                listView.setAdapter(mAdapter);
                 break;
 
             default:
@@ -136,7 +141,7 @@ public class PartiActivity extends AppCompatActivity {
 
     }
 
-    class EditMemberAdapter extends ArrayAdapter<String> {
+    /*class EditMemberAdapter extends ArrayAdapter<String> {
         public EditMemberAdapter(Context context, int resource, String[] tvParti) {
             super(context, R.layout.item_editmember, tvParti);
         }
@@ -156,6 +161,60 @@ public class PartiActivity extends AppCompatActivity {
 
             return customView;
 
+        }
+
+    }*/
+    class EditMemberAdapter extends ArrayAdapter<String> {
+        public EditMemberAdapter(Context context, int resource, String[] tvParti) {
+            super(context, R.layout.item_editmember, tvParti);
+        }
+
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent){
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_editmember, parent, false);
+            String item = getItem(position);
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvMember);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivMember);
+            CheckBox mCB = (CheckBox) customView.findViewById(R.id.cAddMember);
+            mText.setText(item);
+            mImg.setImageResource(mImgArr[position]);
+
+            mCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    ToggleButton toggle = (ToggleButton) findViewById(R.id.tbModerator);
+                    if (isChecked)
+                        toggle.setVisibility(View.VISIBLE);
+                    else
+                        toggle.setVisibility(View.GONE);
+                }
+            });
+
+            return customView;
+
+        }
+
+    }
+
+    class CommentAdapter extends ArrayAdapter<String> {
+        public CommentAdapter(Context context, int resource, String[] tvParti) {
+            super(context, R.layout.item_comment, tvParti);
+        }
+
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent){
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_comment, parent, false);
+            String item = getItem(position);
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvParti);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
+            TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
+            mText.setText(item);
+            mImg.setImageResource(mImgArr[position]);
+
+            return customView;
         }
 
     }
