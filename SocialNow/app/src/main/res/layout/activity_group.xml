@@ -44,34 +44,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/ivPrivacy"
+                android:layout_width="@dimen/small_icon"
+                android:layout_height="@dimen/small_icon"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_lock"
+                android:layout_marginRight="@dimen/big_margin"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Privacy Setting"
+                android:id="@+id/tPrivacy"
+                android:layout_toRightOf="@id/ivPrivacy"
+                android:layout_toEndOf="@id/ivPrivacy"
+                android:layout_marginBottom="@dimen/small_margin"
+                android:layout_alignParentTop="true"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Des"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:padding="@dimen/et_top_bottom_padding"
-                android:background="@drawable/item_box">
+                android:background="@drawable/item_box"
+                android:layout_below="@id/ivPrivacy">
 
-                <ImageView
-                    android:id="@+id/ivPrivacy"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/ic_lock"
-                    android:layout_marginRight="@dimen/big_margin"
-                    android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_alignParentTop="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Privacy Setting"
-                    android:id="@+id/tPrivacy"
-                    android:layout_toRightOf="@id/ivPrivacy"
-                    android:layout_toEndOf="@id/ivPrivacy"
-                    android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_alignParentTop="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,9 +81,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Description"
                     android:id="@+id/tDesTitle"
-                    android:layout_below="@id/ivPrivacy"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="View members"
+                    android:text="XX members"
                     android:id="@+id/tMember"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"

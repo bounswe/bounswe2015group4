@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <EditText
+        android:id="@+id/etKeyword"
+        android:hint="Enter your keyword"
+        style="@style/dEditText"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/big_margin"
+        android:layout_marginBottom="@dimen/big_margin"/>
+
+    <Button
+        android:text="SEARCH"
+        android:id="@+id/bSearch"
+        android:layout_below="@id/etKeyword"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:background="@drawable/purplebutton"
+        style="@style/dBigButton"/>
+
+    <Button
+        android:text="RESET"
+        android:id="@+id/bReset"
+        android:layout_below="@id/bSearch"
+        android:background="@drawable/cyanbutton"
+        style="@style/dBigButton"/>
+
+
+</RelativeLayout>

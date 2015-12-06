@@ -116,43 +116,12 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Parti"
-                android:layout_below="@id/eventInfo"
-                android:clickable="true"
-                android:layout_marginBottom="@dimen/big_margin"
-                android:background="@drawable/item_box"
-                android:padding="@dimen/et_top_bottom_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="XX people are going"
-                    android:id="@+id/tParti"
-                    android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/small_margin"/>
-
-                <ImageView
-                    android:id="@+id/ivArrow3"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:src="@drawable/rightarrow"
-                    android:layout_toRightOf="@id/tParti"
-                    android:layout_centerVertical="true"/>
-
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Des"
-                android:layout_below="@id/Parti"
+                android:layout_below="@id/eventInfo"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:padding="@dimen/et_top_bottom_padding"
                 android:background="@drawable/item_box">
@@ -179,16 +148,66 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/Parti"
+                android:clickable="true"
+                android:layout_marginBottom="@dimen/big_margin"
+                android:background="@drawable/item_box"
+                android:padding="@dimen/et_top_bottom_padding"
                 android:layout_below="@id/Des">
 
-                <ListView
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lvComment"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
-                </ListView>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="XX people are going"
+                    android:id="@+id/tParti"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/small_margin"/>
+
+                <ImageView
+                    android:id="@+id/ivArrow3"
+                    android:layout_width="@dimen/small_icon"
+                    android:layout_height="@dimen/small_icon"
+                    android:src="@drawable/rightarrow"
+                    android:layout_toRightOf="@id/tParti"
+                    android:layout_centerVertical="true"/>
+
+
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Comment"
+                android:layout_below="@id/Parti"
+                android:clickable="true"
+                android:layout_marginBottom="@dimen/big_margin"
+                android:background="@drawable/item_box"
+                android:padding="@dimen/et_top_bottom_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="View comments"
+                    android:id="@+id/tComment"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/small_margin"/>
+
+                <ImageView
+                    android:id="@+id/ivArrow4"
+                    android:layout_width="@dimen/small_icon"
+                    android:layout_height="@dimen/small_icon"
+                    android:src="@drawable/rightarrow"
+                    android:layout_toRightOf="@id/tComment"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

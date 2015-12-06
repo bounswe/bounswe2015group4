@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -62,6 +64,7 @@ public class PartiActivity extends AppCompatActivity {
                 mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
+                registerForContextMenu(listView); //View menu by long-click on listview
                 break;
 
             default:
@@ -219,6 +222,11 @@ public class PartiActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_comment, menu);
+    }
 }
