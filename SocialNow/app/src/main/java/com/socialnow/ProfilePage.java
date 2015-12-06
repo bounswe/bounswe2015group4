@@ -4,12 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.net.Uri;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
+import com.parse.ParseFile;
 import com.socialnow.Models.User;
 import com.socialnow.Users.LoginActivity;
 
@@ -48,10 +56,6 @@ public class ProfilePage extends AppCompatActivity {
 
         user_name.setText(userName);
         user_email.setText(userEmail);
-
-
-       // Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-       // startActivityForResult(intent,  SELECTED_PICTURE);
     }
 
 
@@ -60,11 +64,17 @@ public class ProfilePage extends AppCompatActivity {
         startActivity(i2);
     }
 
+    public void change_photo()
+    {
+         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+         startActivityForResult(intent,  SELECTED_PICTURE);
+    }
+
     public void onActivityResult(int reqCode, int resCode, Intent data)
     {
         super.onActivityResult(reqCode, resCode, data);
 
-        /* if(resCode == RESULT_OK)
+         if(resCode == RESULT_OK)
         {
             if(reqCode == 1)
             {
@@ -88,11 +98,6 @@ public class ProfilePage extends AppCompatActivity {
                 Bitmap selected_img = BitmapFactory.decodeFile(file_path);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 selected_img.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                ParseFile fileObject = new ParseFile("DocImage.jpg", stream.toByteArray());
-
-                    fileObject.saveInBackground();
-                    current_user.put("profile_picture", fileObject);
-                    current_user.saveInBackground();
 
                 //Drawable d = new BitmapDrawable(your_selected_image);
                 //pp_imageView.setBackground(d);
@@ -100,7 +105,7 @@ public class ProfilePage extends AppCompatActivity {
 
 
             }
-        } */
+        }
     }
 
 

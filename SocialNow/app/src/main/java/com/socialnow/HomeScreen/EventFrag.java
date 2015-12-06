@@ -63,17 +63,22 @@ public class EventFrag extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
                 Object listItem = listView.getItemAtPosition(position);
                 Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
+                User[] hostUser = event.getEvent_participant_users();
+                String hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
                 //i2.putExtra("Event", event);
                 i2.putExtra("title", event.getTitle());
-                i2.putExtra("date", event.getEvent_date());
+                i2.putExtra("date", ft.format(new Date(event.getEvent_date())));
                 i2.putExtra("location", event.getEvent_location());
-                i2.putExtra("hostname", event.getEvent_host_token());
+                i2.putExtra("hostname", hostUserName);
                 i2.putExtra("participants", event.getEvent_participants());
                 i2.putExtra("photo", event.getEvent_photo());
                 i2.putExtra("description", event.getEvent_description());
+                i2.putExtra("event_photo", event.getEvent_photo());
+
                 startActivity(i2);
             }
         });

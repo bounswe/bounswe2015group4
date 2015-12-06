@@ -27,7 +27,15 @@
                 android:layout_width="match_parent"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="@dimen/small_icon"
+                android:layout_height="@dimen/small_icon"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/date"
+                android:layout_marginRight="@dimen/big_margin"
+                android:layout_marginBottom="@dimen/big_margin"
+                 />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
