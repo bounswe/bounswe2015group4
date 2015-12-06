@@ -168,6 +168,7 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
+                            <img ng-src="{{user.photoUrl}}" class="img-circle" alt="User Image">
                             <p  ng-bind-template="{{user.name}} {{user.surname}}"></p>
                             <p ng-bind="user.role"></p>
                         </li>
@@ -193,10 +194,6 @@
                             </div>
                         </li>
                     </ul>
-                </li>
-                <!-- Control Sidebar Toggle Button -->
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
         </div>

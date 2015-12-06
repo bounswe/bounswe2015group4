@@ -1,0 +1,16 @@
+<div class="box box-widget">
+    <div class='box-body'>
+        <div class="attachment-block clearfix">
+            <img class="attachment-img" ng-src="{{interestGroup.group_photo}}" alt="attachment image">
+            <div class="attachment-pushed">
+                <h4 class="attachment-heading" ng-click="getGroupDetails(interestGroup.id)"><a ng-bind="interestGroup.group_name"></a></h4>
+                <div class="attachment-text"
+                     ng-bind="interestGroup.group_description">
+                </div>
+            </div>
+        </div>
+        <button class='btn btn-default btn-xs' ng-click="getGroupDetails(interestGroup.id)"><i
+                class='fa fa-share'></i> Detail
+        </button>
+    </div>
+</div>

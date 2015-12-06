@@ -149,7 +149,7 @@ public class EditEventActivity extends AppCompatActivity{
             event.setTitle(etEventName.getText().toString());
             event.setEvent_description(etEventDes.getText().toString());
             event.setEvent_location(etEventLoca.getText().toString());
-            event.setEvent_date(getEventDate().getTime());
+           // event.setEvent_date(getEventDate().getTime());
 //            event.setEvent_photo(getEventPhoto());
             event.setEvent_host_token(Utils.getCurrentUser().getUser_token());
             //TODO guest member adding should be handled

@@ -1,0 +1,124 @@
+<div ng-include src="'pages/partials/mainHeader.html'"></div>
+<div ng-include src="'pages/partials/mainSidebar.html'"></div>
+
+<div class="wrapper">
+    <div class="content-wrapper" style="min-height: 780px;">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Custom Tabs (Pulled to the right) -->
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs pull-right">
+                            <li ng-click="currentGroupRoute = groupRoutes.addNew"><a data-toggle="tab">New Group</a></li>
+                            <li ng-click="currentGroupRoute = groupRoutes.myGroups"><a data-toggle="tab">My Groups</a></li>
+                            <li class="active" ng-click="currentGroupRoute = groupRoutes.allGroups"><a data-toggle="tab">All Groups</a></li>
+                            <li class="pull-left header"><i class="glyphicon glyphicon-check"></i>Groups</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div>
+                                <div ng-show="currentGroupRoute == groupRoutes.addNew">
+                                    <section class="content">
+                                        <div class="row">
+                                            <!-- left column -->
+                                            <div class="col-md-12">
+                                                <!-- general form elements -->
+                                                <div class="box box-primary">
+                                                    <div class="box-header with-border">
+                                                        <h3 class="box-title">Create New Group</h3>
+                                                    </div><!-- /.box-header -->
+                                                    <!-- form start -->
+                                                    <form role="form" novalidate ng-submit="createGroup()">
+                                                        <div class="box-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="inputTitle">Name</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="inputTitle" ng-model="group.group_name"
+                                                                               placeholder="Name" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group has-feedback">
+                                                                        <label for="inputDescription">Description</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="inputDescription"
+                                                                               ng-model="group.group_description"
+                                                                               placeholder="Description" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group has-feedback">
+                                                                        <label for="groupPhotoPicker">Group
+                                                                            Photo</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="groupPhotoPicker"
+                                                                               ng-model="group.group_photo"
+                                                                               placeholder="Group Photo" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form group has-feedback">
+                                                                        <label>Tags</label>
+                                                                        <input type="text" class="form-control"
+                                                                               placeholder="Tags"
+                                                                               ng-model="group.tags">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <message type="success"
+                                                                             display="successMessage"></message>
+                                                                    <message type="error"
+                                                                             display="errorMessage"></message>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary btn-block btn-flat">
+                                                                        Create
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentGroupRoute == groupRoutes.myGroups">
+                                    <section class="content" ng-show="myGroups.length != 0">
+                                        <div class="row" ng-repeat="myGroup in myGroups">
+                                            <div class="col-md-12">
+                                                <group-summary data="myGroup"></group-summary>
+                                            </div>
+                                        </div>
+                                        <div ng-show="myGroups.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentGroupRoute == groupRoutes.allGroups">
+                                    <section class="content" ng-show="allGroups.length != 0">
+                                        <div class="row" ng-repeat="allGroup in allGroups">
+                                            <div class="col-md-12">
+                                                <group-summary data="allGroup"></group-summary>
+                                            </div>
+                                        </div>
+                                        <div ng-show="allGroups.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

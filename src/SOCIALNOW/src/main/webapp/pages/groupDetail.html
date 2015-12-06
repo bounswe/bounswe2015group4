@@ -1,0 +1,95 @@
+<div ng-include src="'pages/partials/mainHeader.html'"></div>
+<div ng-include src="'pages/partials/mainSidebar.html'"></div>
+
+<div class="wrapper">
+    <div class="content-wrapper" style="min-height: 780px;">
+        <section class="content" ng-show="processCompleted">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-widget">
+                        <div class='box-body'>
+                            <div class="attachment-block clearfix">
+                                <img class="attachment-img" ng-src="{{group.group_photo}}"
+                                     alt="attachment image">
+
+                                <div class="attachment-pushed">
+                                    <h4 class="attachment-heading"><a ng-bind="group.group_name"></a></h4>
+                                    <h6><a ng-click="goUserProfile(group.owner.user_token)" ng-bind-template="(Owner: {{group.owner.name}} {{group.owner.surname}})"></a></h6>
+
+
+                                    <div class="attachment-text"
+                                         ng-bind="group.group_description">
+                                    </div>
+                                    <div class="time-label" style="margin-top: 10px;">
+                                        <span class="bg-aqua label-style" ng-bind="group.tags"></span>
+                                        <button class="btn btn-primary btn-sm" ng-click="addMember()"
+                                                ng-show="!isOwner && notJoined">Join
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" ng-click="removeMember()"
+                                                ng-show="!isOwner && !notJoined">Leave
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <span class='username'>New Post</span>
+                                </div>
+                                <div>
+                                    <form class="form-horizontal">
+                                        <div class="form-group margin-bottom-none">
+                                            <div class="col-sm-9 col-md-9">
+                                                <input class="form-control input-sm" placeholder="Type a content"
+                                                       ng-model="newPost.content">
+                                            </div>
+                                            <div class="col-sm-3 col-md-3">
+                                                <button class="btn btn-danger pull-right btn-block btn-sm"
+                                                        ng-click="createPost()">Send
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <span class='username' ng-bind-template="Members ({{group.group_members.length + 1}})"></span>
+                                </div>
+                                <div>
+                                    <span class="bg-gray-light label-style" ng-click="goUserProfile(member.user_token)"
+                                          ng-bind-template="{{member.name}} {{member.surname}}"
+                                          ng-repeat="member in group.group_members"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget" ng-repeat="post in group.group_posts">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <img class='img-circle img-bordered-sm' ng-src='{{post.owner.user_photo}}'
+                                         alt='user image'>
+                                    <span class='username' ng-click="goUserProfile(post.owner.user_token)">
+                                      <a ng-bind-template="{{post.owner.name}} {{post.owner.surname}}"></a>
+                                    </span>
+                                </div>
+                                <p style="margin-left:10px;" ng-bind="post.content"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

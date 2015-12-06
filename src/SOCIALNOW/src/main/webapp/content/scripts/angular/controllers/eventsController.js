@@ -11,7 +11,6 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     var getAllEvents = function () {
         eventService.getAllEvents().then(function (events) {
             $scope.allEvents = events;
-            console.log($scope.allEvents);
         }, function (error) {
             console.log(error);
         });
@@ -26,31 +25,17 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     }
 
     $scope.createEvent = function () {
-        var eventPhotoPicker = document.getElementById('evenPhotoPicker');
-        var eventPicture = "";
-        if (eventPhotoPicker.files.length) {
-            eventPicture = eventPhotoPicker.files[0];
-        }
+        eventService.createEvent($scope.event, $scope.user.token).then(function (event) {
+            $scope.errorMessage = "";
+            $scope.successMessage = "Event is created successfully"
+            $scope.currentEventRoute = $scope.eventRoutes.myEvents;
 
-        eventService.createEvent($scope.eventTitle, $scope.eventDescription, $scope.eventTime, eventPicture, $scope.eventLocation).then(function (event) {
-            var user = sessionService.getUserInfo();
-            userService.addEvent(event, user.email).then(
-                function (user) {
-                    helperService.reload();
-                },
-                function (error) {
-                    alert(error.message);
-                }
-            );
-
+            getMyEvents();
+            getAllEvents();
         }, function (error) {
             console.log(error);
         });
     }
-
-    $scope.$watch(function() { return $scope.tabContentInit; }, function(newValue, oldValue) {
-        console.log(newValue + " " + oldValue);
-    })
 
     getMyEvents();
     getAllEvents();

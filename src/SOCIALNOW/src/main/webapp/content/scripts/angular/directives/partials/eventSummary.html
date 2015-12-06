@@ -1,0 +1,20 @@
+<div class="box box-widget">
+    <div class='box-body'>
+        <div class="attachment-block clearfix">
+            <img class="attachment-img" ng-src="{{event.event_photo}}"
+                 alt="attachment image">
+
+            <div class="attachment-pushed">
+                <h4 class="attachment-heading" ng-click="getEventDetails(event.id)"><a ng-bind="event.title"></a></h4>
+
+                <div class="attachment-text"
+                     ng-bind="event.event_description">
+                </div><!-- /.attachment-text -->
+                <div class="time-label">
+                    <span class="bg-green label-style" ng-bind="event.event_date_in_date"></span>
+                </div>
+            </div>
+        </div>
+        <button class='btn btn-default btn-xs' ng-click="getEventDetails(event.id)"><i class='fa fa-share'></i>Detail</button>
+    </div>
+</div>

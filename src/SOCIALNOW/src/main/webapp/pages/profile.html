@@ -3,90 +3,242 @@
 
 <div class="wrapper">
     <div class="content-wrapper" style="min-height: 780px;">
-        <div style="padding: 10px 0 0 0; margin: 0px;" class="text-center">
-            <div class="btn-group ">
-                <a style="color:#0097bc;"></a>
-            </div>
-        </div>
-        <section class="content">
+        <section class="content" ng-show="processCompleted">
             <div class="row">
-                <!-- left column -->
-                <div class="col-md-12">
-                    <!-- general form elements -->
+                <div class="col-md-3">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" ng-src="{{currentUser.photoUrl}}"
+                                 alt="User profile picture">
+
+                            <h3 class="profile-username text-center"
+                                ng-bind-template="{{currentUser.name}} {{currentUser.surname}}"></h3>
+
+                            <p class="text-muted text-center" ng-bind="currentUser.role"></p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Followers</b> <a class="pull-right" ng-bind="currentUser.numberOfFollowers"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Following</b> <a class="pull-right" ng-bind="currentUser.numberOfFollowings"></a>
+                                </li>
+                            </ul>
+
+                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && follow" ng-click="followUser()"><b>Follow</b></a>
+                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && !follow" ng-click="unfollowUser()"><b>Unfollow</b></a>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                    <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Edit Profile</h3>
+                            <h3 class="box-title">About Me</h3>
                         </div><!-- /.box-header -->
-                        <!-- form start -->
-                        <form name="profileForm" role="form" novalidate>
-                            <div class="box-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="inputEmail">Email address</label>
-                                            <input type="email" class="form-control" id="inputEmail"
-                                                   ng-value="user.email" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group has-feedback">
-                                            <label for="inputRole">Role</label>
-                                            <input type="text" class="form-control" id="inputRole" ng-value="user.role"
-                                                   readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="inputName">Name</label>
-                                            <input type="text" class="form-control" id="inputName" ng-model="user.name">
+                        <div class="box-body">
 
-                                            <div ng-show="profileForm.name.$error.required && submitted">
-                                                <message type="error" display="'Name field is required'"></message>
+                            <strong><i class="fa fa-pencil margin-r-5"></i> Interest</strong>
+                            <p ng-repeat="tag in currentUser.tagsModified">
+                                <span class="label label-info" ng-bind="tag.tag1"></span>
+                                <span class="label label-info" ng-bind="tag.tag2"></span>
+                                <span class="label label-info" ng-bind="tag.tag3"></span>
+                            </p>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col -->
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li ng-click="currentProfileRoute = profileRoutes.activity" class="active"><a
+                                    data-toggle="tab">Activity</a></li>
+                            <li ng-show="ownProfile" ng-click="currentProfileRoute = profileRoutes.edit"><a data-toggle="tab">Edit</a></li>
+                            <li ng-click="currentProfileRoute = profileRoutes.followers"><a data-toggle="tab">Followers</a></li>
+                            <li ng-click="currentProfileRoute = profileRoutes.followings"><a data-toggle="tab">Followings</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active" id="activity" ng-show="currentProfileRoute == profileRoutes.activity">
+                                <div class="row">
+                                    <section class="content col-md-6">
+                                        <div>
+                                            <span class="bg-red">
+                                                Going Events
+                                            </span>
+                                            <div ng-repeat="event in currentUser.participatingEvents">
+                                                <event-summary data="event"></event-summary>
+                                            </div>
+                                            <div class="box box-widget"
+                                                 ng-show="currentUser.participatingEvents.length == 0">
+                                                <h3 class="page-header">Nothing to show!</h3>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <section class="content col-md-6">
+                                        <div>
+                                            <span class="bg-red">
+                                                Participating Groups
+                                            </span>
+
+                                            <div ng-repeat="interestGroup in currentUser.interestGroups">
+                                                <group-summary data="interestGroup"></group-summary>
+                                            </div>
+                                        </div>
+                                        <div ng-show="currentUser.interestGroups.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div id="edit" ng-show="currentProfileRoute == profileRoutes.edit">
+                                <form name="profileForm" role="form" novalidate>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputEmail">Email address</label>
+                                                    <input type="email" class="form-control" id="inputEmail"
+                                                           ng-value="userEdit.email" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <label for="inputRole">Role</label>
+                                                    <input type="text" class="form-control" id="inputRole"
+                                                           ng-value="userEdit.role"
+                                                           readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="inputName">Name</label>
+                                                    <input type="text" class="form-control" id="inputName"
+                                                           ng-model="userEdit.name">
+
+                                                    <div ng-show="profileForm.name.$error.required && submitted">
+                                                        <message type="error"
+                                                                 display="'Name field is required'"></message>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <label for="inputSurname">Surname</label>
+                                                    <input type="text" class="form-control" id="inputSurname"
+                                                           ng-model="userEdit.surname">
+
+                                                    <div ng-show="profileForm.surname.$error.required && submitted">
+                                                        <message type="error"
+                                                                 display="'Surname field is required'"></message>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group has-feedback">
+                                                    <label for="profilePicker">Profile Picture</label>
+                                                    <input type="text" class="form-control"
+                                                           id="profilePicker"
+                                                           ng-model="userEdit.photoUrl"
+                                                           placeholder="Profile Picture">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <message type="success" display="successMessage"></message>
+                                                <message type="error" display="errorMessage"></message>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="submit" ng-click="editProfile(profileForm.$valid)"
+                                                        class="btn btn-primary btn-block btn-flat">Edit
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group has-feedback">
-                                            <label for="inputSurname">Surname</label>
-                                            <input type="text" class="form-control" id="inputSurname"
-                                                   ng-model="user.surname">
+                                </form>
+                            </div><!-- /.tab-pane -->
 
-                                            <div ng-show="profileForm.surname.$error.required && submitted">
-                                                <message type="error" display="'Surname field is required'"></message>
-                                            </div>
+                            <div id="followers" ng-show="currentProfileRoute == profileRoutes.followers">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div ng-repeat="user in currentUser.followers">
+                                            <!-- Box Comment -->
+                                            <div class="box box-widget">
+                                                <div class='box-body'>
+                                                    <div class="attachment-block clearfix">
+                                                        <img class="attachment-img" ng-src="{{user.user_photo}}"
+                                                             alt="attachment image">
+
+                                                        <div class="attachment-pushed">
+                                                            <h4 class="attachment-heading" ng-click="goUserProfile(user.user_token)"><a
+                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a></h4>
+
+                                                            <div class="attachment-text"
+                                                                 ng-bind-template="{{user.role}} - {{user.email}}">
+                                                            </div><!-- /.attachment-text -->
+                                                            </br>
+                                                        </div><!-- /.attachment-pushed -->
+                                                    </div><!-- /.attachment-block -->
+
+                                                    <!-- Social sharing buttons -->
+                                                    <button class='btn btn-default btn-xs' ng-click="goUserProfile(user.user_token)"><i
+                                                            class='fa fa-share'></i> Profile
+                                                    </button>
+                                                </div><!-- /.box-body -->
+                                            </div><!-- /.box -->
+                                        </div><!-- /.col -->
+                                        <div
+                                             ng-show="!currentUser.followers || currentUser.followers.length == 0">
+                                            <h5>Nothing to show!</h5>
                                         </div>
                                     </div>
+
                                 </div>
+                            </div>
+
+                            <div id="followings" ng-show="currentProfileRoute == profileRoutes.followings">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group has-feedback">
-                                            <label for="profilePicker">Profil Picture</label>
-                                            <input type="text" class="form-control"
-                                                   id="profilePicker"
-                                                   ng-model="currentUser.photo"
-                                                   placeholder="Profil Picture">
+                                    <div class="col-md-12">
+                                        <div ng-repeat="user in currentUser.followings">
+                                            <!-- Box Comment -->
+                                            <div class="box box-widget">
+                                                <div class='box-body'>
+                                                    <div class="attachment-block clearfix">
+                                                        <img class="attachment-img" ng-src="{{user.user_photo}}"
+                                                             alt="attachment image">
+
+                                                        <div class="attachment-pushed">
+                                                            <h4 class="attachment-heading" ng-click="goUserProfile(user.user_token)"><a
+                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a></h4>
+
+                                                            <div class="attachment-text"
+                                                                 ng-bind-template="{{user.role}} - {{user.email}}">
+                                                            </div><!-- /.attachment-text -->
+                                                        </div><!-- /.attachment-pushed -->
+                                                    </div><!-- /.attachment-block -->
+
+                                                    <!-- Social sharing buttons -->
+                                                    <button class='btn btn-default btn-xs' ng-click="goUserProfile(user.user_token)"><i
+                                                            class='fa fa-share'></i> Profile
+                                                    </button>
+                                                </div><!-- /.box-body -->
+                                            </div><!-- /.box -->
+                                        </div><!-- /.col -->
+                                        <div
+                                             ng-show="!currentUser.followings || currentUser.followings.length == 0">
+                                            <h5>Nothing to show!</h5>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <message type="success" display="successMessage"></message>
-                                        <message type="error" display="errorMessage"></message>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="submit" ng-click="editProfile(profileForm.$valid)"
-                                                class="btn btn-primary btn-block btn-flat">Edit
-                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        </div><!-- /.tab-content -->
+                    </div><!-- /.nav-tabs-custom -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </section><!-- /.content -->
     </div>
 </div>
 

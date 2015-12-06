@@ -9,13 +9,13 @@
                     <!-- Custom Tabs (Pulled to the right) -->
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs pull-right">
-                            <li ng-click="currentEventRoute = eventRoutes.addNew"><a data-toggle="tab">
-                                New Event</a></li>
-                            <li ng-click="currentEventRoute = eventRoutes.myEvents"><a data-toggle="tab">My
-                                Events</a></li>
-                            <li class="active" ng-click="currentEventRoute = eventRoutes.allEvents"><a data-toggle="tab">All
-                                Events</a></li>
-                            <li class="pull-left header"><i class="fa fa-files-o"></i> Events</li>
+                            <li ng-click="currentEventRoute = eventRoutes.addNew"><a data-toggle="tab">New Event</a>
+                            </li>
+                            <li ng-click="currentEventRoute = eventRoutes.myEvents"><a data-toggle="tab">My Events</a>
+                            </li>
+                            <li class="active" ng-click="currentEventRoute = eventRoutes.allEvents"><a
+                                    data-toggle="tab">All Events</a></li>
+                            <li class="pull-left header"><i class="glyphicon glyphicon-bell"></i>Events</li>
                         </ul>
                         <div class="tab-content">
                             <div>
@@ -46,7 +46,7 @@
                                                                         <label for="inputDescription">Description</label>
                                                                         <input type="text" class="form-control"
                                                                                id="inputDescription"
-                                                                               ng-model="event.description"
+                                                                               ng-model="event.event_description"
                                                                                placeholder="Description" required>
                                                                     </div>
                                                                 </div>
@@ -57,7 +57,7 @@
                                                                         <label for="inputLocation">Location</label>
                                                                         <input type="text" class="form-control"
                                                                                id="inputLocation"
-                                                                               ng-model="event.location"
+                                                                               ng-model="event.event_location"
                                                                                placeholder="Location" required>
                                                                     </div>
                                                                 </div>
@@ -65,7 +65,8 @@
                                                                     <div class="form-group has-feedback">
                                                                         <label for="inputTime">Event Date</label>
                                                                         <input type="text" class="form-control"
-                                                                               ng-model="event.time" id="inputTime"
+                                                                               ng-model="event.event_date"
+                                                                               id="inputTime"
                                                                                placeholder="Event Date"
                                                                                required>
                                                                     </div>
@@ -74,11 +75,20 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="form-group has-feedback">
-                                                                        <label for="eventPhotoPicker">Event Photo</label>
+                                                                        <label for="eventPhotoPicker">Event
+                                                                            Photo</label>
                                                                         <input type="text" class="form-control"
                                                                                id="eventPhotoPicker"
-                                                                               ng-model="event.photo"
+                                                                               ng-model="event.event_photo"
                                                                                placeholder="Event Photo" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form group has-feedback">
+                                                                        <label>Tags</label>
+                                                                        <input type="text" class="form-control"
+                                                                               placeholder="Tags"
+                                                                               ng-model="event.tags">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -86,12 +96,13 @@
                                                                 <div class="col-md-10">
                                                                     <message type="success"
                                                                              display="successMessage"></message>
-                                                                    <message type="error" display="errorMessage"></message>
+                                                                    <message type="error"
+                                                                             display="errorMessage"></message>
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <button type="submit"
-                                                                            ng-click="editProfile(profileForm.$valid)"
-                                                                            class="btn btn-primary btn-block btn-flat">Edit
+                                                                            class="btn btn-primary btn-block btn-flat">
+                                                                        Create
                                                                     </button>
                                                                 </div>
                                                             </div>
@@ -100,252 +111,33 @@
 
                                                 </div>
                                             </div>
+                                        </div>
                                     </section>
                                 </div>
                                 <div ng-show="currentEventRoute == eventRoutes.myEvents">
                                     <section class="content">
-                                        <div class="row">
+                                        <div class="row" ng-show="myAllEvents.length != 0"
+                                             ng-repeat="myEvent in myAllEvents">
                                             <div class="col-md-12">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget" ng-show="myAllEvents.length != 0">
-                                                    <div class='box-header with-border'>
-                                                        <div class='user-block'>
-                                                            <img class='img-circle' src=''
-                                                                 alt='user image'>
-                                                            <span class='username'><a href="#">Jonathan Burke
-                                                                Jr.</a></span>
-                                                            <span class='description'>Shared publicly - 7:30 PM Today</span>
-                                                        </div><!-- /.user-block -->
-                                                        <div class='box-tools'>
-                                                            <button class='btn btn-box-tool' data-widget='collapse'><i
-                                                                    class='fa fa-minus'></i></button>
-                                                            <button class='btn btn-box-tool' data-widget='remove'><i
-                                                                    class='fa fa-times'></i></button>
-                                                        </div><!-- /.box-tools -->
-                                                    </div><!-- /.box-header -->
-                                                    <div class='box-body'>
-                                                        <!-- post text -->
-                                                        <p>Far far away, behind the word mountains, far from the
-                                                            countries Vokalia and Consonantia, there live the blind
-                                                            texts. Separated they live in Bookmarksgrove right at</p>
+                                                <event-summary data="myEvent"></event-summary>
+                                            </div>
 
-                                                        <p>the coast of the Semantics, a large language ocean.
-                                                            A small river named Duden flows by their place and supplies
-                                                            it with the necessary regelialia. It is a paradisematic
-                                                            country, in which roasted parts of sentences fly into
-                                                            your mouth.</p>
-
-                                                        <!-- Attachment -->
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img" src="../dist/img/photo1.png"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        href="http://www.lipsum.com/">Lorem ipsum text
-                                                                    generator</a></h4>
-
-                                                                <div class="attachment-text">
-                                                                    Description about the attachment can be placed here.
-                                                                    Lorem Ipsum is simply dummy text of the printing and
-                                                                    typesetting industry... <a href="#">more</a>
-                                                                </div><!-- /.attachment-text -->
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Share
-                                                        </button>
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-thumbs-o-up'></i> Like
-                                                        </button>
-                                                        <span class='pull-right text-muted'>45 likes - 2 comments</span>
-                                                    </div><!-- /.box-body -->
-                                                    <div class='box-footer box-comments'>
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <img class='img-circle img-sm'
-                                                                 src='../dist/img/user3-128x128.jpg' alt='user image'>
-
-                                                            <div class='comment-text'>
-                                                              <span class="username">
-                                                                Maria Gonzales
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                                It is a long established fact that a reader will be
-                                                                distracted
-                                                                by the readable content of a page when looking at its
-                                                                layout.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <img class='img-circle img-sm'
-                                                                 src='../dist/img/user5-128x128.jpg' alt='user image'>
-
-                                                            <div class='comment-text'>
-                                                              <span class="username">
-                                                                Nora Havisham
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                                The point of using Lorem Ipsum is that it has a
-                                                                more-or-less
-                                                                normal distribution of letters, as opposed to using
-                                                                'Content here, content here', making it look like
-                                                                readable English.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                    </div><!-- /.box-footer -->
-                                                    <div class="box-footer">
-                                                        <form action="#" method="post">
-                                                            <img class="img-responsive img-circle img-sm"
-                                                                 src="../dist/img/user4-128x128.jpg" alt="alt text">
-                                                            <!-- .img-push is used to add margin to elements next to floating images -->
-                                                            <div class="img-push">
-                                                                <input type="text" class="form-control input-sm"
-                                                                       placeholder="Press enter to post comment">
-                                                            </div>
-                                                        </form>
-                                                    </div><!-- /.box-footer -->
-                                                </div><!-- /.box -->
-                                                <div class="box box-widget" ng-hide="myAllEvents.length != 0">
-                                                    <h2 class="page-header">You do not have any event</h2>
-                                                </div>
-                                            </div><!-- /.col -->
+                                        </div>
+                                        <div ng-show="myAllEvents.length == 0">
+                                            <h5>Nothing to show!</h5>
                                         </div>
                                     </section>
-                                    <!--<section class="content">
-                                        <div class="form-group has-feedback" ng-repeat="event in myAllEvents">>
-                                        <span><img width="100" height="70" class="img-rounded"
-                                                   ng-src="event.event_photo"></span>
-                                            <span class="text-danger"><b ng-bind="event.title"></b></span>
-                                            <span ng-bind="event.event_description"></span>
-                                        <span class="text-aqua"
-                                              ng-bind-template="{{event.event_date}} - {{event.event_location}}"></span>
-                                        </div>
-                                    </section>-->
                                 </div>
                                 <div ng-show="currentEventRoute == eventRoutes.allEvents">
-                                    <section class="content">
-                                        <div class="row">
+                                    <section class="content" ng-show="allEvents.length != 0">
+                                        <div class="row" ng-repeat="allEvent in allEvents">
                                             <div class="col-md-12">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget" ng-show="allEvents.length != 0">
-                                                    <div class='box-header with-border'>
-                                                        <div class='user-block'>
-                                                            <img class='img-circle' src=''
-                                                                 alt='user image'>
-                                                            <span class='username'><a href="#">Jonathan Burke
-                                                                Jr.</a></span>
-                                                            <span class='description'>Shared publicly - 7:30 PM Today</span>
-                                                        </div><!-- /.user-block -->
-                                                        <div class='box-tools'>
-                                                            <button class='btn btn-box-tool' data-widget='collapse'><i
-                                                                    class='fa fa-minus'></i></button>
-                                                            <button class='btn btn-box-tool' data-widget='remove'><i
-                                                                    class='fa fa-times'></i></button>
-                                                        </div><!-- /.box-tools -->
-                                                    </div><!-- /.box-header -->
-                                                    <div class='box-body'>
-                                                        <!-- post text -->
-                                                        <p>Far far away, behind the word mountains, far from the
-                                                            countries Vokalia and Consonantia, there live the blind
-                                                            texts. Separated they live in Bookmarksgrove right at</p>
-
-                                                        <p>the coast of the Semantics, a large language ocean.
-                                                            A small river named Duden flows by their place and supplies
-                                                            it with the necessary regelialia. It is a paradisematic
-                                                            country, in which roasted parts of sentences fly into
-                                                            your mouth.</p>
-
-                                                        <!-- Attachment -->
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img" src="../dist/img/photo1.png"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        href="http://www.lipsum.com/">Lorem ipsum text
-                                                                    generator</a></h4>
-
-                                                                <div class="attachment-text">
-                                                                    Description about the attachment can be placed here.
-                                                                    Lorem Ipsum is simply dummy text of the printing and
-                                                                    typesetting industry... <a href="#">more</a>
-                                                                </div><!-- /.attachment-text -->
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Share
-                                                        </button>
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-thumbs-o-up'></i> Like
-                                                        </button>
-                                                        <span class='pull-right text-muted'>45 likes - 2 comments</span>
-                                                    </div><!-- /.box-body -->
-                                                    <div class='box-footer box-comments'>
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <img class='img-circle img-sm'
-                                                                 src='../dist/img/user3-128x128.jpg' alt='user image'>
-
-                                                            <div class='comment-text'>
-                                                              <span class="username">
-                                                                Maria Gonzales
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                                It is a long established fact that a reader will be
-                                                                distracted
-                                                                by the readable content of a page when looking at its
-                                                                layout.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <img class='img-circle img-sm'
-                                                                 src='../dist/img/user5-128x128.jpg' alt='user image'>
-
-                                                            <div class='comment-text'>
-                                                              <span class="username">
-                                                                Nora Havisham
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                                The point of using Lorem Ipsum is that it has a
-                                                                more-or-less
-                                                                normal distribution of letters, as opposed to using
-                                                                'Content here, content here', making it look like
-                                                                readable English.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                    </div><!-- /.box-footer -->
-                                                    <div class="box-footer">
-                                                        <form action="#" method="post">
-                                                            <img class="img-responsive img-circle img-sm"
-                                                                 src="../dist/img/user4-128x128.jpg" alt="alt text">
-                                                            <!-- .img-push is used to add margin to elements next to floating images -->
-                                                            <div class="img-push">
-                                                                <input type="text" class="form-control input-sm"
-                                                                       placeholder="Press enter to post comment">
-                                                            </div>
-                                                        </form>
-                                                    </div><!-- /.box-footer -->
-                                                </div><!-- /.box -->
-                                                <div class="box box-widget" ng-hide="allEvents.length != 0">
-                                                    <h2 class="page-header">There is nothing to show!</h2>
-                                                </div>
-                                            </div><!-- /.col -->
+                                                <event-summary data="allEvent"></event-summary>
+                                            </div>
                                         </div>
-                                        <!--<div class="form-group has-feedback" ng-repeat="event in allEvents">
-                                        <span><img width="100" height="70" class="img-rounded"
-                                                   ng-src="event.event_photo"></span>
-                                            <span class="text-danger"><b ng-bind="event.title"></b></span>
-                                            <span ng-bind="event.event_description"></span>
-                                        <span class="text-aqua"
-                                              ng-bind-template="{{event.event_date}} - {{event.event_location}}"></span>
-                                        </div>-->
+                                        <div ng-show="allEvents.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
                                     </section>
                                 </div>
                             </div>

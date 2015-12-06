@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         Utils.initialize(this);
 
+
         if(Utils.getCurrentUserMode()){
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             startActivity(i2);

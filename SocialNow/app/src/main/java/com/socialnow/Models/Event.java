@@ -30,7 +30,8 @@ public class Event {
 
     private String type;
 
-    private Bitmap event_photo;
+    private String event_photo;
+    private User[] event_participant_users;
 
 
   /*  public Event(Event_Form e_f) {
@@ -52,7 +53,7 @@ public class Event {
         title = e.toString();
     }*/
 
-    public Event(Long id, String title,String type, Bitmap event_photo, String event_comments,String event_description,Long event_date,String event_participants,String tags,String event_host_token, String event_location){
+    public Event(User[] event_participant_users,Long id, String title,String type, String event_photo, String event_comments,String event_description,Long event_date,String event_participants,String tags,String event_host_token, String event_location){
         this.id = id;
         this.title = title;
         this.event_host_token = event_host_token;
@@ -64,6 +65,7 @@ public class Event {
         this.event_comments = event_comments;
         this.event_photo =event_photo;
         this.type = type;
+        this.event_participant_users = event_participant_users;
     }
 
     public String getTitle() {
@@ -122,11 +124,11 @@ public class Event {
         this.event_comments = event_comments;
     }
 
-    public Bitmap getEvent_photo() {
+    public String getEvent_photo() {
         return event_photo;
     }
 
-    public void setEvent_photo(Bitmap event_photo) {
+    public void setEvent_photo(String event_photo) {
         this.event_photo = event_photo;
     }
 
@@ -154,6 +156,14 @@ public class Event {
 
     public void setEvent_type(String event_type) {
         this.type = event_type;
+    }
+
+    public User[] getEvent_participant_users() {
+        return event_participant_users;
+    }
+
+    public void setEvent_participant_users(User[] event_participant_users) {
+        this.event_participant_users = event_participant_users;
     }
 
 }

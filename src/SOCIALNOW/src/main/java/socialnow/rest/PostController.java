@@ -33,7 +33,6 @@ public class PostController {
         Post_Form form = gson.fromJson(createPostForm, Post_Form.class);
         Post p = new Post(form);
        User u = userDao.getByToken(p.getOwner_token());
-        u.setUser_interest_groups(u.getUser_interest_groups()+","+p.getId());
         postDao.create(p);
 
         userDao.update(u);

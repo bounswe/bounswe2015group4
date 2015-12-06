@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "users")
-public class User  implements SearchReturn {
+public class User {
 
     // ------------------------
     // PRIVATE FIELDS
@@ -263,8 +263,4 @@ public class User  implements SearchReturn {
         return type;
     }
 
-    @Override
-    public void setType(String type) {
-        this.type=type;
-    }
 } // class User

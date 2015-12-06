@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="My Interest Groups"
+        android:text="Interest Groups"
         android:id="@+id/tvGroup"
         android:layout_marginBottom="@dimen/small_margin"/>
 

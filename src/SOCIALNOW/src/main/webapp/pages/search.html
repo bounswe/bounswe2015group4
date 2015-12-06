@@ -1,0 +1,93 @@
+<div ng-include src="'pages/partials/mainHeader.html'"></div>
+<div ng-include src="'pages/partials/mainSidebar.html'"></div>
+
+<div class="wrapper">
+    <div class="content-wrapper" style="min-height: 780px;">
+        <section class="content" ng-show="processCompleted">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom" id="test">
+                        <ul class="nav nav-tabs pull-right">
+                            <li ng-click="currentSearchRoute = searchRoutes.events"><a data-toggle="tab" ng-bind-template="Events ({{searchResponse.events.length}})"></a>
+                            </li>
+                            <li ng-click="currentSearchRoute = searchRoutes.groups"><a data-toggle="tab" ng-bind-template="Groups ({{searchResponse.groups.length}})"></a>
+                            </li>
+                            <li class="active" ng-click="currentSearchRoute = searchRoutes.users"><a data-toggle="tab" ng-bind-template="Users ({{searchResponse.users.length}})">Users</a></li>
+                            <li class="pull-left header">
+                                <i class="fa fa-search"></i><span
+                                    ng-bind-template='You are searching "{{searchTerm}}"'></span>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div>
+                                <div ng-show="currentSearchRoute == searchRoutes.users">
+                                    <section class="content">
+                                        <div class="row" ng-show="searchResponse.users.length != 0"
+                                             ng-repeat="user in searchResponse.users">
+                                            <div class="col-md-12">
+                                                <div class="box box-widget">
+                                                    <div class='box-body'>
+                                                        <div class="attachment-block clearfix">
+                                                            <img class="attachment-img" ng-src="{{user.user_photo}}"
+                                                                 alt="attachment image">
+
+                                                            <div class="attachment-pushed">
+                                                                <h4 class="attachment-heading"
+                                                                    ng-click="goUserProfile(user.user_token)"><a
+                                                                        ng-bind-template="{{user.name}} {{user.surname}}"></a>
+                                                                </h4>
+
+                                                                <div class="attachment-text"
+                                                                     ng-bind-template="{{user.role}} - {{user.email}}">
+                                                                </div><!-- /.attachment-text -->
+                                                                </br>
+                                                            </div><!-- /.attachment-pushed -->
+                                                        </div><!-- /.attachment-block -->
+
+                                                        <!-- Social sharing buttons -->
+                                                        <button class='btn btn-default btn-xs'
+                                                                ng-click="goUserProfile(user.user_token)"><i
+                                                                class='fa fa-share'></i> Profile
+                                                        </button>
+                                                    </div><!-- /.box-body -->
+                                                </div><!-- /.box -->
+                                            </div>
+                                        </div>
+                                        <div ng-show="searchResponse.users.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentSearchRoute == searchRoutes.groups">
+                                    <section class="content">
+                                        <div class="row" ng-show="searchResponse.groups.length != 0"
+                                             ng-repeat="interestGroup in searchResponse.groups">
+                                            <div class="col-md-12">
+                                                <group-summary data="interestGroup"></group-summary>
+                                            </div>
+                                        </div>
+                                        <div ng-show="searchResponse.groups.length == 0">
+                                            <h5>Nothing to show!</h5>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div ng-show="currentSearchRoute == searchRoutes.events">
+                                    <section class="content">
+                                        <div class="row" ng-show="searchResponse.events.length != 0"
+                                             ng-repeat="event in searchResponse.events">
+                                            <div class="col-md-12">
+                                                <event-summary data="event"></event-summary>
+                                            </div>
+                                            <div ng-show="searchResponse.events.length == 0">
+                                                <h5>Nothing to show!</h5>
+                                            </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

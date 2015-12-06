@@ -1,12 +1,5 @@
 package socialnow.Utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import socialnow.dao.EventDao;
-import socialnow.dao.UserDao;
-import socialnow.model.Event;
-import socialnow.model.SearchReturn;
-import socialnow.model.User;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
@@ -113,6 +106,10 @@ public class Util {
 
   public static String[] findMostOccurence(String[] tags){
        String[] result = new String[3];
+      result[0]="";
+      result[1]="";
+      result[2]="";
+
       HashMap<String,Integer> map = new HashMap<>();
         for (int i = 0; i <tags.length ; i++) {
           String  tag = tags[i];
@@ -143,8 +140,8 @@ public class Util {
               result[1]=key;
           }
       }
-      map.remove(result[1]);
       max=0;
+      map.remove(result[1]);
       for (Map.Entry<String, Integer> entry : map.entrySet()) {
           String key = entry.getKey();
           int value = entry.getValue();
@@ -153,6 +150,8 @@ public class Util {
               result[2]=key;
           }
       }
+
+
 
         return result;
     }
