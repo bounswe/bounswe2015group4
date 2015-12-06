@@ -13,10 +13,12 @@ import socialnow.dao.UserDao;
 import socialnow.forms.Interest_Group.Add_Member_Form;
 import socialnow.forms.Interest_Group.Add_Post_Form;
 import socialnow.forms.Interest_Group.Interest_Group_Form;
+import socialnow.forms.User.User_Token_Form;
 import socialnow.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Erdem on 12/4/2015.
@@ -146,12 +148,17 @@ public class Interest_Group_Controller {
         return  detail;
     }
 
+    @RequestMapping( value = "/listAllGroups", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Interest_Group> listAllGroups(@RequestBody String addPostForm) {
+       return groupDao.getAll();
+    }
 
-
-
-
-
-
-
+    @RequestMapping( value = "/listMyGroups", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Interest_Group> ListMyGroups(@RequestBody String addPostForm) {
+        User_Token_Form form = gson.fromJson(addPostForm, User_Token_Form.class);
+        return groupDao.getAllByToken(form.getUser_token());
+    }
 
 }
