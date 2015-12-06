@@ -3,6 +3,33 @@
 
 <div class="wrapper">
     <div class="content-wrapper" style="min-height: 780px;">
+        <div class="row">
+            <div ng-show="recommendationsEnabled">
+                <section class="content col-md-6">
+                    <div>
+                        <span class="bg-red">Recommended Events</span>
+                        <div ng-repeat="event in recommendations.events">
+                            <event-summary data="event"></event-summary>
+                        </div>
+                        <div class="box box-widget"
+                             ng-show="recommendations.events.length == 0">
+                            <h3 class="page-header">Nothing to recommend. You may want to go events page!</h3>
+                        </div>
+                    </div>
+                </section>
+                <section class="content col-md-6">
+                    <div>
+                        <span class="bg-red">Recommended Groups</span>
+                        <div ng-repeat="interestGroup in recommendations.group">
+                            <group-summary data="interestGroup"></group-summary>
+                        </div>
+                    </div>
+                    <div ng-show="recommendations.group == 0">
+                        <h3 class="page-header">Nothing to recommend. You may want to go events page!</h3>
+                    </div>
+                </section>
+            </div>
 
+        </div>
     </div>
 </div>

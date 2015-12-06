@@ -148,7 +148,7 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
         currentUser.role = user.role;
         currentUser.email = user.email;
         currentUser.user_token = user.user_token;
-        currentUser.user_photo = user.user_photo;
+        currentUser.photoUrl = user.user_photo;
 
         currentUser.participatingEvents = utils.manipulateEvents(currentUser.participatingEvents);
 
@@ -160,9 +160,15 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
     }
 
     this.updateProfileDetails = function(token) {
+        var deferred = $q.defer();
+
         this.getProfileDetails(token).then(function(currentUser) {
             sessionService.setUserProfileDetails(currentUser);
+            deferred.resolve(sessionService.getUserInfo());
         }, function(response) {
+            deferred.reject('An error occurred!');
         })
+
+        return deferred.promise;
     }
 })

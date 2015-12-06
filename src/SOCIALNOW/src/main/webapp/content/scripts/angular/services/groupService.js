@@ -1,20 +1,59 @@
 app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
-    /*this.getAllGroups = function () {
+    this.getAllGroups = function () {
         var deferred = $q.defer();
 
         $http({
-            url: baseApiUrl + '/listAllEvents',
-            method: 'POST'
-        }).success(function (events) {
-            events = utils.manipulateEvents(events);
-
-            deferred.resolve(events);
+            url: baseApiUrl + '/listAllGroups',
+            method: 'POST',
+            data: JSON.stringify({})
+        }).success(function (groups) {
+            deferred.resolve(groups);
         }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
-    }*/
+    }
+
+    this.getMyGroups = function (userToken) {
+        var deferred = $q.defer();
+
+        var request = {
+            user_token: userToken
+        }
+
+        $http({
+            url: baseApiUrl + '/listMyGroups',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (groups) {
+            deferred.resolve(groups);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.getGroupDetails = function(groupId) {
+        var deferred = $q.defer();
+
+        var request = {
+            interest_group_id: groupId
+        }
+
+        $http({
+            url: baseApiUrl + '/groups/showGroupDetail',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (groupDetail) {
+            deferred.resolve(groupDetail);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 
     this.createGroup = function (group, userToken) {
         var deferred = $q.defer();
@@ -33,26 +72,46 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
         return deferred.promise;
     }
 
-    /*this.getMyGroups = function (userToken) {
+    this.addMember = function (userToken, groupId) {
         var deferred = $q.defer();
 
         var request = {
-            event_host_token: userToken
+            user_token: userToken,
+            interest_group_id : groupId
         }
 
         $http({
-            url: baseApiUrl + '/listMyEvents',
+            url: baseApiUrl + '/groups/addMember',
             method: 'POST',
             data: JSON.stringify(request)
-        }).success(function (events) {
-            events = utils.manipulateEvents(events);
-
-            deferred.resolve(events);
+        }).success(function (group) {
+            deferred.resolve(group);
         }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
-    }*/
+    }
+
+    this.removeMember = function (userToken, groupId) {
+        var deferred = $q.defer();
+
+        var request = {
+            user_token: userToken,
+            interest_group_id : groupId
+        }
+
+        $http({
+            url: baseApiUrl + '/groups/removeMember',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (group) {
+            deferred.resolve(group);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 })
 

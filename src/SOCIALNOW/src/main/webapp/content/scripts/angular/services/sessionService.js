@@ -87,6 +87,10 @@ app.service('sessionService', function ($cookies, $rootScope) {
         return currentUser;
     }
 
+    this.getParticipatingEvents = function() {
+        return $cookies.getObject("participatingEvents");
+    }
+
     this.getUserToken = function() {
         return $cookies.getObject("userBaseInfo").token;
     }

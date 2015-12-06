@@ -40,9 +40,10 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
                 loginRequired: true
             }
         })
-        .when('/eventDetail',
+        .when('/eventDetail/:id',
         {
             templateUrl: 'pages/eventDetail.html',
+            controller: 'eventDetailController',
             access: {
                 loginRequired: true
             }
@@ -71,6 +72,13 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
                     loginRequired: true
                 }
             })
+        .when('/groupDetail/:id', {
+            templateUrl: 'pages/groupDetail.html',
+            controller: 'groupDetailController',
+            access: {
+                loginRequired: true
+            }
+        })
         .when('/search/:searchTerm', {
             templateUrl: 'pages/search.html',
             controller: 'searchController',
@@ -90,6 +98,10 @@ app.run(function ($rootScope, helperService) {
 
     $rootScope.doSearch = function() {
         helperService.goToPage('/search/' + $rootScope.search.word);
+    }
+
+    $rootScope.goUserProfile = function(token) {
+        helperService.goToPage('/profile/' + token);
     }
 })
 

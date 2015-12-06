@@ -15,7 +15,7 @@
                             </li>
                             <li class="active" ng-click="currentEventRoute = eventRoutes.allEvents"><a
                                     data-toggle="tab">All Events</a></li>
-                            <li class="pull-left header"><i class="fa fa-files-o"></i>Events</li>
+                            <li class="pull-left header"><i class="glyphicon glyphicon-bell"></i>Events</li>
                         </ul>
                         <div class="tab-content">
                             <div>
@@ -119,42 +119,8 @@
                                         <div class="row" ng-show="myAllEvents.length != 0"
                                              ng-repeat="myEvent in myAllEvents">
                                             <div class="col-md-12">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget">
-                                                    <div class='box-body'>
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img" ng-src="{{myEvent.event_photo}}"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        ng-bind="myEvent.title"></a></h4>
-
-                                                                <div class="attachment-text"
-                                                                     ng-bind="myEvent.event_description">
-                                                                </div><!-- /.attachment-text -->
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <span class="bg-green label-style"
-                                                                              ng-bind="myEvent.event_date_in_date"></span>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <span class="bg-red label-style"
-                                                                              ng-bind="myEvent.tags"></span>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Detail
-                                                        </button>
-                                                    </div><!-- /.box-body -->
-                                                </div><!-- /.box -->
-
-                                            </div><!-- /.col -->
+                                                <event-summary data="myEvent"></event-summary>
+                                            </div>
 
                                         </div>
                                         <div ng-show="myAllEvents.length == 0">
@@ -166,40 +132,8 @@
                                     <section class="content" ng-show="allEvents.length != 0">
                                         <div class="row" ng-repeat="allEvent in allEvents">
                                             <div class="col-md-12">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget">
-                                                    <div class='box-body'>
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img"
-                                                                 ng-src="{{allEvent.event_photo}}"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        ng-bind="allEvent.title"></a></h4>
-
-                                                                <div class="attachment-text"
-                                                                     ng-bind="allEvent.event_description">
-                                                                </div><!-- /.attachment-text -->
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <span class="bg-green label-style"
-                                                                              ng-bind="allEvent.event_date_in_date"></span>
-                                                                        <span class="bg-blue label-style"
-                                                                              ng-bind="allEvent.tags"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Detail
-                                                        </button>
-                                                    </div><!-- /.box-body -->
-                                                </div><!-- /.box -->
-                                            </div><!-- /.col -->
-
+                                                <event-summary data="allEvent"></event-summary>
+                                            </div>
                                         </div>
                                         <div ng-show="allEvents.length == 0">
                                             <h5>Nothing to show!</h5>

@@ -6,8 +6,6 @@
         <section class="content" ng-show="processCompleted">
             <div class="row">
                 <div class="col-md-3">
-
-                    <!-- Profile Image -->
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle" ng-src="{{currentUser.photoUrl}}"
@@ -65,36 +63,9 @@
                                             <span class="bg-red">
                                                 Going Events
                                             </span>
-
                                             <div ng-repeat="event in currentUser.participatingEvents">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget">
-                                                    <div class='box-body'>
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img" ng-src="{{event.event_photo}}"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        ng-bind="event.title"></a></h4>
-
-                                                                <div class="attachment-text"
-                                                                     ng-bind="event.event_description">
-                                                                </div><!-- /.attachment-text -->
-                                                                <div class="time-label">
-                                                                    <span class="bg-green label-style"
-                                                                          ng-bind="event.event_date_in_date"></span>
-                                                                </div>
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Detail
-                                                        </button>
-                                                    </div><!-- /.box-body -->
-                                                </div><!-- /.box -->
-                                            </div><!-- /.col -->
+                                                <event-summary data="event"></event-summary>
+                                            </div>
                                             <div class="box box-widget"
                                                  ng-show="currentUser.participatingEvents.length == 0">
                                                 <h3 class="page-header">Nothing to show!</h3>
@@ -108,31 +79,9 @@
                                             </span>
 
                                             <div ng-repeat="interestGroup in currentUser.interestGroups">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget">
-                                                    <div class='box-body'>
-                                                        <div class="attachment-block clearfix">
-                                                            <img class="attachment-img" ng-src="{{interestGroup.group_photo}}"
-                                                                 alt="attachment image">
-
-                                                            <div class="attachment-pushed">
-                                                                <h4 class="attachment-heading"><a
-                                                                        ng-bind="interestGroup.group_name"></a></h4>
-
-                                                                <div class="attachment-text"
-                                                                     ng-bind="interestGroup.group_description">
-                                                                </div>
-                                                            </div><!-- /.attachment-pushed -->
-                                                        </div><!-- /.attachment-block -->
-
-                                                        <!-- Social sharing buttons -->
-                                                        <button class='btn btn-default btn-xs'><i
-                                                                class='fa fa-share'></i> Detail
-                                                        </button>
-                                                    </div><!-- /.box-body -->
-                                                </div><!-- /.box -->
-                                            </div><!-- /.box -->
-                                        </div><!-- /.col -->
+                                                <group-summary data="interestGroup"></group-summary>
+                                            </div>
+                                        </div>
                                         <div ng-show="currentUser.interestGroups.length == 0">
                                             <h5>Nothing to show!</h5>
                                         </div>

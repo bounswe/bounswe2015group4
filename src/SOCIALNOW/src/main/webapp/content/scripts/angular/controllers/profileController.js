@@ -22,18 +22,19 @@ app.controller('profileController', function ($scope, sessionService, userServic
         $scope.processCompleted = false;
 
         if(!userToken || userToken == authenticatedUserToken) {
-            $scope.processCompleted = true;
             $scope.ownProfile = true;
-            $scope.currentUser = sessionService.getUserInfo();
-            $scope.currentUser.tagsModified = getTags($scope.currentUser.tags);
+            userService.updateProfileDetails($scope.userEdit.token).then(function(currentUser) {
+                $scope.currentUser = currentUser;
+                $scope.currentUser.tagsModified = getTags($scope.currentUser.tags);
+                $scope.processCompleted = true;
+            });
         } else {
             $scope.ownProfile = false;
             userService.getProfileDetails(userToken).then(function(currentUser) {
                 $scope.currentUser = userService.setShowingUserProfile(currentUser);
-                $scope.processCompleted = true;
                 $scope.follow = _.where($scope.currentUser.followers, { user_token: authenticatedUserToken }).length == 0;
-
                 $scope.currentUser.tagsModified = getTags($scope.currentUser.tags);
+                $scope.processCompleted = true;
             }, function(error) {
                 helperService.goToPage('/');
             });
@@ -63,10 +64,6 @@ app.controller('profileController', function ($scope, sessionService, userServic
         }, function(error) {
             $scope.errorMessage = error.message;
         })
-    }
-
-    $scope.goUserProfile = function(token) {
-        helperService.goToPage('/profile/' + token);
     }
 
     $scope.followUser = function() {

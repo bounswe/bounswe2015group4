@@ -54,4 +54,66 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
+
+    this.getEventDetails = function(eventId) {
+        var deferred = $q.defer();
+
+        var request = {
+            event_id: eventId
+        }
+
+        $http({
+            url: baseApiUrl + '/events/getEventDetail',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (eventDetail) {
+            deferred.resolve(eventDetail);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.makeGoing = function(userToken, eventId) {
+        var deferred = $q.defer();
+
+        var request = {
+            user_token: userToken,
+            event_id: eventId
+        }
+
+        $http({
+            url: baseApiUrl + '/events/addParticipant',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (event) {
+            deferred.resolve(event);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.makeNotgoing = function(userToken, eventId) {
+        var deferred = $q.defer();
+
+        var request = {
+            user_token: userToken,
+            event_id: eventId
+        }
+
+        $http({
+            url: baseApiUrl + '/events/removeParticipant',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (event) {
+            deferred.resolve(event);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 })

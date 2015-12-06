@@ -3,168 +3,83 @@
 
 <div class="wrapper">
     <div class="content-wrapper" style="min-height: 780px;">
-        <section class="content">
+        <section class="content" ng-show="processCompleted">
             <div class="row">
                 <div class="col-md-12">
-                    <!-- Custom Tabs (Pulled to the right) -->
-                    <div class="nav-tabs-custom">
-                        <ul class="nav nav-tabs pull-right">
-                            <button type="button" style="height:50px; width:100px"
-                                    ng-click="editProfile(profileForm.$valid)"
-                                    class="btn btn-primary btn-block btn-flat">Go Back
-                            </button>
-                        </ul>
-                        <div class="tab-content">
-                            <div>
-                                <div class="row">
-                                            <!-- left column -->
+                    <div class="box box-widget">
+                        <div class='box-body'>
+                            <div class="attachment-block clearfix">
+                                <img class="attachment-img" ng-src="{{event.event_photo}}"
+                                     alt="attachment image">
 
-                                                <!-- general form elements -->
-                                                <div class="box box-primary">
-                                                    <div class="box-header with-border">
-                                                        <h1 class="box-title">Event Name</h1>
-                                                    </div><!-- /.box-header -->
-                                                    <div class="box-header with-border">
-                                                        <h4 class="box-title">Date:</h4>
-                                                    </div><!-- /.box-header -->
-                                                    <div class="box-header with-border">
-                                                        <h4 class="box-title">Time:</h4>
-                                                    </div><!-- /.box-header -->
-                                                    <div class="box-header with-border">
-                                                        <h4 class="box-title">Place:</h4>
-                                                    </div><!-- /.box-header -->
-                                                    <!-- form start -->
-                                                </div>
+                                <div class="attachment-pushed">
+                                    <h4 class="attachment-heading"><a ng-bind-template="{{event.title}} ({{event.event_location}})"></a></h4>
 
-                                </div>
-                                <div ng-show="currentEventRoute == eventRoutes.myEvents">
-
-                                    <!--<section class="content">
-                                        <div class="form-group has-feedback" ng-repeat="event in myAllEvents">>
-                                        <span><img width="100" height="70" class="img-rounded"
-                                                   ng-src="event.event_photo"></span>
-                                            <span class="text-danger"><b ng-bind="event.title"></b></span>
-                                            <span ng-bind="event.event_description"></span>
-                                        <span class="text-aqua"
-                                              ng-bind-template="{{event.event_date}} - {{event.event_location}}"></span>
-                                        </div>
-                                    </section>-->
-                                </div>
-                                <div ng-show="currentEventRoute == eventRoutes.allEvents">
-                                    <section class="content">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <!-- Box Comment -->
-                                                <div class="box box-widget" ng-show="allEvents.length != 0">
-                                                    <div class="attachment-block clearfix">
-                                                        <img class="attachment-img"
-                                                             src="http://www.maxikarizma.com/image/cache/data/urunler/01-meyve-sebze/meyve-sebze/armut-santamaria-1000x1000.jpg"
-                                                             width="500" height="500"
-                                                             alt="Event Photo">
-
-                                                        <div class="attachment-pushed">
-                                                            <h4 class="attachment-heading">
-                                                                tags:
-                                                            </h4>
-
-                                                            <div class="attachment-text">
-                                                                Description about the attachment can be placed here.
-                                                                Lorem Ipsum is simply dummy text of the printing and
-                                                                typesetting industry
-                                                                Description is one of four rhetorical modes (also known
-                                                                as modes of discourse), along with exposition,
-                                                                argumentation, and narration. Each of the rhetorical
-                                                                modes is present in a variety of forms and each has its
-                                                                own purpose and conventions. The act of description may
-                                                                be related to that of definition. Description is also
-                                                                the fiction-writing mode for transmitting a mental image
-                                                                of the particulars of a story.[citation needed]
-                                                                Definition: The pattern of development that presents
-                                                                a word picture of a thing, a person, a situation, or a
-                                                                series of events.
-                                                            </div><!-- /.attachment-text -->
-                                                        </div><!-- /.attachment-pushed -->
-                                                    </div><!-- /.attachment-block -->
-                                                    <div class='box-header with-border'>
-                                                        <div class='user-block'>
-                                                            <a href="USER PAGE WILL COME HERE">
-                                                                <img class='img-circle'
-                                                                     src="https://pbs.twimg.com/profile_images/511643824301801473/VV4z0o00.jpeg"
-                                                                     alt='user image' width="25" height="25">
-                                                            </a>
-                                                            <span class='username'><a href="#">Host User</a></span>
-                                                            <span class='description'>Shared publicly - 7:30 PM Today</span>
-                                                        </div><!-- /.user-block -->
-
-                                                    </div><!-- /.box-header -->
-                                                    <div class='box-footer box-comments'>
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <a href = "USER PAGE">
-                                                                <img class='img-circle img-sm'
-                                                                     src='http://susers.thatsmyface.com/c/clueville/afg_front_JDIWS1nAtD-largeThumb_9b9d4eb1.jpg'
-                                                                     height="25" width="25"    alt='user image'>
-                                                            </a>
-
-                                                              <span class="username"><a href="#">Commenter User</a>
-
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                            <div class='comment-text'>
-                                                                It is a long established fact that a reader will be
-                                                                distracted
-                                                                by the readable content of a page when looking at its
-                                                                layout.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                        <div class='box-comment'>
-                                                            <!-- User image -->
-                                                            <a href = "USER PAGE">
-                                                                <img class='img-circle img-sm'
-                                                                 src='http://susers.thatsmyface.com/c/clueville/afg_front_JDIWS1nAtD-largeThumb_9b9d4eb1.jpg'
-                                                                 height="25" width="25"    alt='user image'>
-                                                            </a>
-
-                                                              <span class="username"><a href="#">Commenter User</a>
-
-                                                                <span class='text-muted pull-right'>8:03 PM Today</span>
-                                                              </span><!-- /.username -->
-                                                            <div class='comment-text'>
-                                                                The point of using Lorem Ipsum is that it has a
-                                                                more-or-less
-                                                                normal distribution of letters, as opposed to using
-                                                                'Content here, content here', making it look like
-                                                                readable English.
-                                                            </div><!-- /.comment-text -->
-                                                        </div><!-- /.box-comment -->
-                                                    </div><!-- /.box-footer -->
-                                                    <div class="box-footer">
-                                                        <form action="#" method="post">
-                                                            <img class="img-responsive img-circle img-sm"
-                                                                 src="../dist/img/user4-128x128.jpg" alt="alt text">
-                                                            <!-- .img-push is used to add margin to elements next to floating images -->
-                                                            <div class="img-push">
-                                                                <input type="text" class="form-control input-sm"
-                                                                       placeholder="Press enter to post comment">
-                                                            </div>
-                                                        </form>
-                                                    </div><!-- /.box-footer -->
-                                                </div><!-- /.box -->
-                                                <div class="box box-widget" ng-hide="allEvents.length != 0">
-                                                </div>
-                                            </div><!-- /.col -->
-                                        </div>
-                                        <!--<div class="form-group has-feedback" ng-repeat="event in allEvents">
-                                        <span><img width="100" height="70" class="img-rounded"
-                                                   ng-src="event.event_photo"></span>
-                                            <span class="text-danger"><b ng-bind="event.title"></b></span>
-                                            <span ng-bind="event.event_description"></span>
-                                        <span class="text-aqua"
-                                              ng-bind-template="{{event.event_date}} - {{event.event_location}}"></span>
-                                        </div>-->
-                                    </section>
+                                    <div class="attachment-text"
+                                         ng-bind="event.event_description">
+                                    </div>
+                                    <div class="time-label" style="margin-top: 10px;">
+                                        <span class="bg-green label-style" ng-bind="event.event_date_in_date"></span>
+                                        <span class="bg-aqua label-style" ng-bind="event.tags"></span>
+                                        <button class="btn btn-primary btn-sm" ng-click="makeGoing()"
+                                                ng-show="notGoing">You are not going
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" ng-click="makeNotgoing()"
+                                                ng-show="!notGoing">You are going
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <span class='username'>New Post</span>
+                                </div>
+                                <div>
+                                    <form class="form-horizontal">
+                                        <div class="form-group margin-bottom-none">
+                                            <div class="col-sm-9 col-md-9">
+                                                <input class="form-control input-sm" placeholder="Type a content" ng-model="newPost.content">
+                                            </div>
+                                            <div class="col-sm-3 col-md-3">
+                                                <button class="btn btn-danger pull-right btn-block btn-sm" ng-click="createPost()">Send</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <span class='username' ng-bind-template="Participants ({{event.event_participants.length}})"></span>
+                                </div>
+                                <div>
+                                    <span class="bg-gray-light label-style" ng-click="goUserProfile(participant.user_token)" ng-bind-template="{{participant.name}} {{participant.surname}}" ng-repeat="participant in event.event_participants"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-widget" ng-repeat="post in event.event_posts">
+                        <div class="box-body">
+                            <div class="post">
+                                <div class='user-block'>
+                                    <img class='img-circle img-bordered-sm' ng-src='{{post.owner.user_photo}}'
+                                         alt='user image'>
+                                    <span class='username' ng-click="goUserProfile(post.owner.user_token)">
+                                      <a ng-bind-template="{{post.owner.name}} {{post.owner.surname}}"></a>
+                                    </span>
+                                </div><!-- /.user-block -->
+                                <p style="margin-left:10px;" ng-bind="post.content"></p>
+                            </div><!-- /.post -->
                         </div>
                     </div>
                 </div>
