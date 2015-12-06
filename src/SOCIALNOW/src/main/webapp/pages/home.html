@@ -7,7 +7,7 @@
             <div ng-show="recommendationsEnabled">
                 <section class="content col-md-6">
                     <div>
-                        <span class="bg-red">Recommended Events</span>
+                        <h4>Recommended Events</h4>
                         <div ng-repeat="event in recommendations.events">
                             <event-summary data="event"></event-summary>
                         </div>
@@ -18,7 +18,7 @@
                 </section>
                 <section class="content col-md-6">
                     <div>
-                        <span class="bg-red">Recommended Groups</span>
+                        <h4>Recommended Groups</h4>
                         <div ng-repeat="interestGroup in recommendations.group">
                             <group-summary data="interestGroup"></group-summary>
                         </div>

@@ -5,7 +5,7 @@
     utils.convertTimestampToDate = function (timestamp) {
         var a = moment(new Date(timestamp));
 
-        return a.format("dddd, MMMM Do YYYY, h:mm:ss a");;
+        return a.format("dddd, MMMM Do YYYY");;
     }
 
     // String manipulation
