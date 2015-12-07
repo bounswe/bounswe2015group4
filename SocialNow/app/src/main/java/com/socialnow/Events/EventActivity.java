@@ -37,6 +37,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
+import com.socialnow.Models.Event_Detail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
@@ -73,7 +74,7 @@ public class EventActivity extends AppCompatActivity {
     String descrip;
     String location;
     String hostName;
-    User[] parti;
+    ArrayList<User> parti;
     int parti_number;
     Long id;
     Event e;
@@ -184,14 +185,15 @@ public class EventActivity extends AppCompatActivity {
 
     void getData() {
 
-        Response.Listener<Event> response = new Response.Listener<Event>() {
+        Response.Listener<Event_Detail> response = new Response.Listener<Event_Detail>() {
             @Override
-            public void onResponse(Event response) {
+            public void onResponse(Event_Detail response) {
                 if(response != null) {
                     Log.d("Event", response.toString());
 
-                    parti = response.getEvent_participant_users();
-                    parti_number = parti.length;
+                    parti = response.getEvent_participants();
+                    Log.d("event participants: " , parti.toString());
+                    parti_number = parti.size();
 
                 }else{
                     Log.d("Event", "error");
@@ -207,7 +209,7 @@ public class EventActivity extends AppCompatActivity {
             }
         };
 
-        API.getEventDetails("events/getEventDetail", id, response, errorListener);
+        API.getEventDetail("getEventDetail", id, response, errorListener);
     }
     Drawable d;
   void writeToList(){

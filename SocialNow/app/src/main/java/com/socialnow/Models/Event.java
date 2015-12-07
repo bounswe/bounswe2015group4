@@ -3,36 +3,38 @@ package com.socialnow.Models;
 import java.io.Serializable;
 import java.util.Date;
 import android.graphics.Bitmap;
+import android.os.Parcelable;
 
 /**
  * Created by mugekurtipek on 24/11/15.
  */
-public class Event implements Serializable{
+public class Event implements Serializable {
     // ------------------------
     // PRIVATE FIELDS
 
     private long id;
 
-    private String title;
+    String title;
 
-    private String event_description;
+    String event_description;
 
-    private Long event_date;
+    Long event_date;
 
-    private String event_location;
+    String event_location;
 
-    private String event_host_token;
+    String event_host_token;
 
-    private String event_participants;
+    String event_participants;
 
-    private String event_comments;
+    String event_comments;
 
-    private String tags;
+    String tags;
 
-    private String type;
+    String type;
 
-    private String event_photo;
-    private User[] event_participant_users;
+    String event_photo;
+
+     User[] event_participant_users;
 
 
   /*  public Event(Event_Form e_f) {

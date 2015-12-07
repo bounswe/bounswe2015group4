@@ -33,9 +33,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
+import com.socialnow.Models.Event_Detail;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
 import com.socialnow.Users.Utils;
+import com.android.volley.Response.Listener;
 
 /**
  * Created by lauamy on 2/11/15.
