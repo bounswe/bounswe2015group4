@@ -18,6 +18,7 @@ import socialnow.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -144,6 +145,7 @@ public class Interest_Group_Controller {
                 }
             }
         }
+        Collections.reverse(posts);
         detail.setGroup_posts(posts);
         return  detail;
     }

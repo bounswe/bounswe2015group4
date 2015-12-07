@@ -16,9 +16,7 @@ import socialnow.forms.Event.Event_Form;
 import socialnow.forms.User.User_Token_Form;
 import socialnow.model.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 
@@ -209,12 +207,13 @@ public class EventController {
         ArrayList<PostDetail> posts = new ArrayList<>();
         for (int i = 0; i <participantId.length ; i++) {
             if (!participantId[i].equals("")) {
-                Post post = postDao.getById(participantId[i]);
+                    Post post = postDao.getById(participantId[i]);
                 PostDetail postDetail = new PostDetail(post);
                 postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
                 posts.add(postDetail);
             }
         }
+        Collections.reverse(posts);
         eventDetail.setEvent_posts(posts);
         String tag = event.getTags();
         if(tag.contains(",")) {
@@ -224,14 +223,6 @@ public class EventController {
 
         return eventDetail;
     }
-
-
-
-
-
-
-
-
 
 
     public  Event fillEvent(Event event){
