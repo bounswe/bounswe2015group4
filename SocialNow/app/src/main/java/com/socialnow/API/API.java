@@ -21,7 +21,8 @@ import com.socialnow.Models.AccessToken;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
-import com.socialnow.Models.Event_Detail;
+import com.socialnow.Models.Post;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +34,7 @@ import java.util.Map;
  * Created by mugekurtipek on 24/11/15.
  */
 public class API {
-    private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend5/";
+    private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend/";
 //    private static String MAIN_URL = "http://10.0.3.2:8080/";//To try local database via genymotion emulator
     private static RequestQueue mQueue;
     private static API instance;
@@ -51,6 +52,22 @@ public class API {
     }
     public static void setUUID(String UUID) {
         instance.UUID = UUID;
+    }
+
+    public static void getEventDetails(String tag, Long id, Response.Listener<Event> successListener,
+                                       Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(id);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void getGroupDetail(String tag, Long e, Response.Listener<Group_Detail> successListener,
+                                      Response.ErrorListener failureListener) {
+        String postBody = "{ interest_group_id = "+e+" }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/showGroupDetail",
+                Group_Detail.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
     public static void cancelRequestByTag(final String tag) {
@@ -80,11 +97,6 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
-    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,Response.ErrorListener failureListener) {
-          mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
-          Event[].class, successListener, failureListener));
-    }
-
     public static void signin(String tag, User user, Response.Listener<User> successListener,
                              Response.ErrorListener failureListener) {
         String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
@@ -103,7 +115,11 @@ public class API {
                 MAIN_URL + "/signUp", User.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
-
+    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
+                                                                          Response.ErrorListener failureListener) {
+                mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
+                        Event[].class, successListener, failureListener));
+          }
 
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,
                                      Response.ErrorListener failureListener) {
@@ -112,30 +128,35 @@ public class API {
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
-    public static void getEventDetail(String tag, Long id, Response.Listener<Event_Detail> successListener,
+    public static void profileInfo(String tag, String token, Response.Listener<Profile> successListener,
                                      Response.ErrorListener failureListener) {
-        String postBody = new Gson().toJson(id);
-        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "events/getEventDetail",
-                Event_Detail.class, successListener, failureListener)
-                .setPostBodyInJSONForm(postBody).setTag(tag));
+        String postBody = "{user_token:"+ token + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/showProfileDetails",
+                Profile.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
     public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,
-                                   Response.ErrorListener failureListener) {
+                                     Response.ErrorListener failureListener) {
         String postBody = new Gson().toJson(e);
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
                 Event.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
-    public static void getGroupDetail(String tag, Long e, Response.Listener<Group_Detail> successListener,
+    public static void createPost(String tag, Post p, Response.Listener<Post> successListener,
                                    Response.ErrorListener failureListener) {
-        String postBody = "{ interest_group_id = "+e+" }";
-        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/showGroupDetail",
-                Group_Detail.class, successListener, failureListener)
+        String postBody = new Gson().toJson(p);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createPost",
+                Post.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
+    public static void addPost(String tag, String body, Response.Listener<Group> successListener,
+                                  Response.ErrorListener failureListener) {
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/addPost",
+                Group.class, successListener, failureListener)
+                .setPostBodyInJSONForm(body).setTag(tag));
+    }
 
     private static class GeneralRequest<T> extends Request<T> {
 
