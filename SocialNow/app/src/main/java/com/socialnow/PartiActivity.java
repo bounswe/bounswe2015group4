@@ -216,7 +216,6 @@ public class PartiActivity extends AppCompatActivity {
             TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
             mText.setText(item);
             mImg.setImageResource(mImgArr[position]);
-
             return customView;
         }
 
