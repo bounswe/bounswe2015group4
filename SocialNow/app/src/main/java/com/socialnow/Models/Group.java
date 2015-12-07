@@ -16,18 +16,18 @@ public class Group {
 
     private long id;
 
-    private String tags = "";
+    //private String tags = "";
 
     String group_description;
 
-    String owner_token;
+    User owner;
 
     String group_name;
 
     public  String group_members ;
 
 
-    public  String group_posts ;
+    //public  String group_posts ;
 
     public String getGroup_photo() {
         return group_photo;
@@ -41,19 +41,19 @@ public class Group {
     public  String group_photo ;
 
 
-    @Override
+   /* @Override
     public String toString() {
         return "Interest_Group{" +
                 "type='" + type + '\'' +
                 ", id=" + id +
                 ", tags='" + tags + '\'' +
                 ", group_description='" + group_description + '\'' +
-                ", owner_token='" + owner_token + '\'' +
+                ", owner_token='" + owner.getName() + '\'' +
                 ", group_name='" + group_name + '\'' +
                 ", group_members='" + group_members + '\'' +
                 ", group_posts='" + group_posts + '\'' +
                 '}';
-    }
+    }*/
 
     public String getGroup_description() {
         return group_description;
@@ -64,12 +64,12 @@ public class Group {
     }
 
 
-    public String getOwner_token() {
-        return owner_token;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setOwner_token(String owner_token) {
-        this.owner_token = owner_token;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public String getGroup_name() {
@@ -111,14 +111,6 @@ public class Group {
         this.id = id;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
     public String getGroup_members() {
         return group_members;
     }
@@ -127,11 +119,21 @@ public class Group {
         this.group_members = group_members;
     }
 
+
+   /* public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+
     public String getGroup_posts() {
         return group_posts;
     }
 
     public void setGroup_posts(String group_posts) {
         this.group_posts = group_posts;
-    }
+    }*/
 }

@@ -20,6 +20,7 @@ import com.socialnow.App;
 import com.socialnow.Models.AccessToken;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
+import com.socialnow.Models.Group_Detail;
 import com.socialnow.Models.User;
 
 import java.io.UnsupportedEncodingException;
@@ -31,7 +32,7 @@ import java.util.Map;
  * Created by mugekurtipek on 24/11/15.
  */
 public class API {
-    private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend/";
+    private static String MAIN_URL = "http://ec2-52-11-176-49.us-west-2.compute.amazonaws.com:8080/social_backend5/";
 //    private static String MAIN_URL = "http://10.0.3.2:8080/";//To try local database via genymotion emulator
     private static RequestQueue mQueue;
     private static API instance;
@@ -125,6 +126,15 @@ public class API {
                 Event.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
+
+    public static void getGroupDetail(String tag, Long e, Response.Listener<Group_Detail> successListener,
+                                   Response.ErrorListener failureListener) {
+        String postBody = "{ interest_group_id = "+e+" }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/showGroupDetail",
+                Group_Detail.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
 
     private static class GeneralRequest<T> extends Request<T> {
 

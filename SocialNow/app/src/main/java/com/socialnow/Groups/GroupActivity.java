@@ -1,5 +1,6 @@
 package com.socialnow.Groups;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,16 +27,28 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.socialnow.API.API;
+import com.socialnow.Models.Event;
+import com.socialnow.Models.Group;
+import com.socialnow.Models.Group_Detail;
+import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,20 +61,18 @@ public class GroupActivity extends AppCompatActivity {
     TextView description;
     TextView mCreatedate;
     TextView mMember;
+    TextView comment;
     TextView mOwner;
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView mPrivacy;
     android.support.design.widget.AppBarLayout img;
-    String title;
-    Date date;
-    Bitmap photo;
-    String descrip;
-    String location;
-    String hostName;
+    Long groupId;
+    Group_Detail myGroup = new Group_Detail();
     JSONArray parti;
     ArrayList<ParseObject> participants;
     ImageView privacy;
+    ArrayList<User> groupMembers;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -79,6 +90,7 @@ public class GroupActivity extends AppCompatActivity {
 
 
         //toolBarLayout.setTitle("Group Name");
+        comment = (TextView) findViewById(R.id.tComment);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
         participants = new ArrayList<ParseObject>();
         description = (TextView) findViewById(R.id.tDes);
@@ -100,6 +112,15 @@ public class GroupActivity extends AppCompatActivity {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 //startActivity(viewParti);
                 Intent i = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "GroupActivity");
+                ArrayList<String> names = new ArrayList<String>();
+                ArrayList<String> photos = new ArrayList<String>();
+                for(int j = 0;j<groupMembers.size();j++){
+                    names.add(groupMembers.get(j).getName()+" "+groupMembers.get(j).getSurname());
+                    photos.add(groupMembers.get(j).getPhoto());
+                }
+                i.putExtra("memberNames",names);
+                i.putExtra("memberPhotos",photos);
+
                 startActivity(i);
             }
         });
@@ -117,16 +138,13 @@ public class GroupActivity extends AppCompatActivity {
 
 
 
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
         if(extras == null) {
-            title= null;
-        } else {
-            title= extras.getString("event_title");
-            date = (Date)extras.get("event_date");
-            location = extras.getString("event_location");
-            hostName = extras.getString("host_name");
 
-        }  */
+        } else {
+            groupId = extras.getLong("id");
+
+        }
 
         //getData();
 
@@ -141,29 +159,10 @@ public class GroupActivity extends AppCompatActivity {
         TextView eventhost = (TextView) findViewById(R.id.tHostName);
         eventhost.setText(hostName);*/
         toolBarLayout.setTitle("Group Name");
+        getData();
 
     }
-    class MyAdapter extends ArrayAdapter<String> {
-        public MyAdapter(Context context, int resource, String[] tvParti) {
-            super(context, R.layout.item_comment, tvParti);
-        }
 
-        @Override
-        public View getView (int position, View convertView, ViewGroup parent){
-            LayoutInflater mInflater = LayoutInflater.from(getContext());
-            View customView = mInflater.inflate(R.layout.item_comment, parent, false);
-
-            TextView mText = (TextView) customView.findViewById(R.id.tvParti);
-            ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
-            TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
-            String item = getItem(position);
-            mText.setText(item);
-            mImg.setImageResource(ivParti[position]);
-            mComment.setText(tvComment[position]);
-            return customView;
-
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,107 +171,53 @@ public class GroupActivity extends AppCompatActivity {
         return true;
     }
 
-    /*void getData() {
+  void getData(){
+      Response.Listener<Group_Detail> response = new Response.Listener<Group_Detail>() {
+          @Override
+          public void onResponse(Group_Detail response) {
+              if(response != null) {
+                  myGroup = response;
+                  groupMembers = myGroup.getGroup_members();
+                  Log.d("Group", response.toString());
+                  writeToList();
+              }else{
+                  Log.d("Group", "error");
+              }
+          }
+      };
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("title", title);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, com.parse.ParseException e) {
-                if (object == null) {
-                    Log.d("score", "The getFirst request failed.");
-                } else {
-                    ParseFile fileObject;
-                    byte[] data;
-                    Log.d("score", "Retrieved the object.");
-                    //title = object.getString("title");
-                    //date = object.getDate("event_date");
-                    //location = object.getString("event_location");
-                    descrip = object.getString("event_description");
-                    parti= object.getJSONArray("event_members");
+      Response.ErrorListener errorListener = new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse(VolleyError error) {
+              Log.d("Failed", error.toString());
 
-                    //hostName = object.getParseObject("event_host").getString("Name") + " " + object.getParseObject("event_host").getString("Surname");
-                    fileObject = (ParseFile) object.getParseFile("event_photo");
-                    if (fileObject != null) {
-                        try {
-                            data = fileObject.getData();
-                            Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            photo = bMap;
+          }
+      };
 
-                            writeToList();
-
-                        } catch (com.parse.ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        Log.d("post", "error retriving posts");
-                    }
-                }
-            }
-
-        });
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereEqualTo("title", event_title);
-        query.findInBackground(new FindCallback() {
-                                   @Override
-                                   public void done(List objects, com.parse.ParseException e) {
-                                   }
-
-                                   @Override
-                                   public void done(Object o, Throwable throwable) {
-                                       List<ParseObject> myObject = (List<ParseObject>) o;
-
-                                       if (throwable == null) {
-                                           int count = 0;
-                                           ParseFile fileObject;
-                                           byte[] data;
-
-                                           title = myObject.get(0).getString("title");
-                                           date = myObject.get(0).getDate("event_date");
-                                           location = myObject.get(0).getString("event_location");
-                                           hostName = myObject.get(0).getParseObject("event_host").getString("Name") + " " + myObject.get(0).getParseObject("event_host").getString("Surname");
-                                           fileObject = (ParseFile) myObject.get(0).getParseFile("event_photo");
-                                           if (fileObject != null) {
-                                               try {
-                                                   data = fileObject.getData();
-                                                   Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                                   photo = bMap;
-
-                                                   //writeToList();
-
-                                               } catch (com.parse.ParseException e1) {
-                                                   e1.printStackTrace();
-                                               }
-                                           }
-
-                                       } else {
-                                           Log.d("post", "error retriving posts");
-                                       }
-                                   }
-                               }
-        );
+      API.getGroupDetail("getGroupDetail", groupId, response, errorListener);
     }
     void writeToList(){
+        description.setText(myGroup.getGroup_description());
+        toolBarLayout.setTitle(myGroup.getGroup_name());
+        Drawable d = new BitmapDrawable(getResources(), getBitmapFromURL(myGroup.getGroup_photo()));
+        img.setBackground(d);
+        int memberNumer = myGroup.getGroup_members().size()+1;
+        mMember.setText(memberNumer +" Members");
+        comment.setText(myGroup.getGroup_posts().size()+  " Posts");
 
-        //   eventname.setText(title);
-        toolBarLayout.setTitle(title);
-        if(photo!=null){
-            Drawable d = new BitmapDrawable(getResources(), photo);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                img.setBackground(d);
-            }
+    }
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
         }
-
-        description.setText(descrip);
-        //eventdate.setText(date.toString());
-        if(parti!=null){
-            participantNumber.setText(parti.length()+" people are going");
-        }
-
-        eventlocation.setText(location);
-        event_host.setText(hostName);
-        //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
-        //  eventhost.setText(hostName);
-    }                                     */
+    }
 }

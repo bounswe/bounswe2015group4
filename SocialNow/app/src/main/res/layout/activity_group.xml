@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/description"
+                    android:text=""
                     android:id="@+id/tDes"
                     android:layout_below="@id/tDesTitle"/>
 
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="xx Members"
+                    android:text=""
                     android:id="@+id/tMember"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="View Comments"
+                    android:text=""
                     android:id="@+id/tComment"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"

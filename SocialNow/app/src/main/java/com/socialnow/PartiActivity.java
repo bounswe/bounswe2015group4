@@ -1,11 +1,13 @@
 package com.socialnow;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -24,6 +26,10 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.socialnow.Groups.EditGroupActivity;
+import com.socialnow.Models.User;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Created by lauamy on 29/10/15.
@@ -31,6 +37,7 @@ import com.socialnow.Groups.EditGroupActivity;
 public class PartiActivity extends AppCompatActivity {
     ListView listView;
     ListAdapter mAdapter;
+
     //RelativeLayout itemLayout;
 
 
@@ -39,7 +46,8 @@ public class PartiActivity extends AppCompatActivity {
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
     String mTitle;
-
+    ArrayList<String> memberNames;
+    ArrayList<String> memberPhotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +61,10 @@ public class PartiActivity extends AppCompatActivity {
         String callingActivity = getIntent().getStringExtra("from");
         switch (callingActivity) {
             case "GroupActivity":
-                mAdapter = new MemberAdapter(this,R.layout.item_member,tvParti);
                 mTitle = "Members";
+                memberNames = getIntent().getStringArrayListExtra("memberNames");
+                memberPhotos = getIntent().getStringArrayListExtra("memberPhotos");
+                mAdapter = new MemberAdapter(this,R.layout.item_member,memberNames);
                 break;
 
             case "EditEventActivity":
@@ -163,7 +173,7 @@ public class PartiActivity extends AppCompatActivity {
     }
 
     class MemberAdapter extends ArrayAdapter<String> {
-        public MemberAdapter(Context context, int resource, String[] tvParti) {
+        public MemberAdapter(Context context, int resource, ArrayList<String> tvParti) {
             super(context, R.layout.item_inviteguest, tvParti);
         }
 
@@ -175,9 +185,14 @@ public class PartiActivity extends AppCompatActivity {
 
             TextView mText = (TextView) customView.findViewById(R.id.tvMember);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivMember);
-            TextView mRole = (TextView) customView.findViewById(R.id.tvRole);
-            mText.setText(item);
-            mImg.setImageResource(mImgArr[position]);
+
+            mText.setText(memberNames.get(position));
+            Picasso.with(((Activity) getContext()))
+                    .load(memberPhotos.get(position))
+                    .resize(30, 30)
+                    .placeholder(R.drawable.profilpic)
+                    .centerCrop()
+                    .into(mImg);
             return customView;
 
         }

@@ -28,13 +28,7 @@
             android:text="Username"
             android:id="@+id/tvMember" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Role"
-            android:id="@+id/tvRole"
-            android:layout_below="@+id/tvMember" />
+
 
     </RelativeLayout>
 
