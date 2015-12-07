@@ -19,6 +19,7 @@ import com.google.gson.JsonSyntaxException;
 import com.socialnow.App;
 import com.socialnow.Models.AccessToken;
 import com.socialnow.Models.Event;
+import com.socialnow.Models.Event_Detail;
 import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
 import com.socialnow.Models.Post;
@@ -133,6 +134,15 @@ public class API {
         String postBody = "{user_token:"+ token + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/showProfileDetails",
                 Profile.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+
+    public static void getEventDetail(String tag, Long id, Response.Listener<Event_Detail> successListener,
+                                      Response.ErrorListener failureListener) {
+        String postBody = "{event_id:"+ id + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "events/getEventDetail",
+                Event_Detail.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+
     }
 
     public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,

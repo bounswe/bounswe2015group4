@@ -194,6 +194,8 @@ public class EventActivity extends AppCompatActivity {
                     parti = response.getEvent_participants();
                     Log.d("event participants: " , parti.toString());
                     parti_number = parti.size();
+                    participantNumber.setText(parti_number+" people are going");
+
 
                 }else{
                     Log.d("Event", "error");
@@ -211,6 +213,7 @@ public class EventActivity extends AppCompatActivity {
 
         API.getEventDetail("getEventDetail", id, response, errorListener);
     }
+
     Drawable d;
   void writeToList(){
 
@@ -226,9 +229,7 @@ public class EventActivity extends AppCompatActivity {
 
       description.setText(descrip);
       eventdate.setText(date);
-
-
-          participantNumber.setText(parti_number+" people are going");
+      participantNumber.setText(parti_number+" people are going");
 
 
       eventlocation.setText(location);
