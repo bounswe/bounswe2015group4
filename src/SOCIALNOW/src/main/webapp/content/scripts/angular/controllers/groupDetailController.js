@@ -2,8 +2,8 @@ app.controller('groupDetailController', function($scope, groupService, $routePar
     var setInitialProperties = function(groupDetail) {
         $scope.group = groupDetail;
 
-        $scope.notJoined = _.where($scope.group.group_members, { user_token: $scope.user.token }).length == 0;
-        $scope.isOwner = $scope.group.owner.user_token == $scope.user.token;
+        $scope.notJoined = _.where($scope.group.group_members, { user_token: $scope.user.user_token }).length == 0;
+        $scope.isOwner = $scope.group.owner.user_token == $scope.user.user_token;
 
         $scope.processCompleted = true;
     }
@@ -27,19 +27,19 @@ app.controller('groupDetailController', function($scope, groupService, $routePar
     }
 
     $scope.addMember = function() {
-        groupService.addMember($scope.user.token, $scope.groupId).then(function(group) {
+        groupService.addMember($scope.user.user_token, $scope.groupId).then(function(group) {
             getGroupDetails($scope.groupId);
         });
     }
 
     $scope.removeMember = function() {
-        groupService.removeMember($scope.user.token, $scope.groupId).then(function(group) {
+        groupService.removeMember($scope.user.user_token, $scope.groupId).then(function(group) {
             getGroupDetails($scope.groupId);
         });
     }
 
     $scope.createPost = function() {
-        postService.createPost($scope.newPost, $scope.user.token).then(function(post) {
+        postService.createPost($scope.newPost, $scope.user.user_token).then(function(post) {
             postService.addPostToGroup(post.id, $scope.groupId).then(function(group) {
                 getGroupDetails($scope.groupId);
             })
