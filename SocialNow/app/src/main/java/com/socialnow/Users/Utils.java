@@ -31,6 +31,8 @@ public class Utils {
         loginStateEditor.putString("current_user_role", u.getRole());
         loginStateEditor.putString("current_user_surname", u.getSurname());
         loginStateEditor.putString("current_user_token", u.getUser_token());
+
+
         loginStateEditor.commit();
     }
 
@@ -43,6 +45,7 @@ public class Utils {
         currentUser.setRole(sharedPref.getString("current_user_role", ""));
         currentUser.setSurname(sharedPref.getString("current_user_surname", ""));
         currentUser.setUser_token(sharedPref.getString("current_user_token", ""));
+        currentUser.setUser_token(sharedPref.getString("current_user_photo", ""));
         return currentUser;
     }
 

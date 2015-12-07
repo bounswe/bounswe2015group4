@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,6 +53,7 @@ import com.socialnow.Models.User;
 import com.socialnow.PagerAdapter;
 import com.socialnow.R;
 
+import java.io.InputStream;
 import java.text.ParseException;
 
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -69,6 +71,7 @@ public class ProfileFrag extends Fragment {
     TextView user_email;
     String userName;
     String userEmail;
+    String userPhoto;
     Bitmap photo;
 
 
@@ -80,6 +83,7 @@ public class ProfileFrag extends Fragment {
 
         View v =  inflater.inflate(R.layout.frag_profile,container,false);
         profile_picture = (ImageView) v.findViewById(R.id.profilepicture);
+
         user_name = (TextView) v.findViewById(R.id.tUserName);
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
         current_user = new User();
@@ -90,7 +94,7 @@ public class ProfileFrag extends Fragment {
         user_id= sharedPref.getLong("current_user_id", 1);
         userName = sharedPref.getString("current_user_name", "asdfg");
         userEmail = sharedPref.getString("current_user_email", "şlkjh");
-
+        userPhoto = sharedPref.getString("curren_user_photo","jhsd");
         user_name.setText(userName);
         user_email.setText(userEmail);
 
@@ -244,5 +248,29 @@ public class ProfileFrag extends Fragment {
     public void changeToolBar()
     {
 
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

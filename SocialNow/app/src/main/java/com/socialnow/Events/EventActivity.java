@@ -1,5 +1,6 @@
 package com.socialnow.Events;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,9 +36,11 @@ import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -83,6 +86,7 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
+
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
        eventlocation = (TextView) findViewById(R.id.tEventlocation);
@@ -201,9 +205,25 @@ public class EventActivity extends AppCompatActivity {
 
       eventlocation.setText(location);
       event_host.setText(hostName);
+      Drawable d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
+      img.setBackground(d);
+
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
     //  eventhost.setText(hostName);
     }
-
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
 
 }

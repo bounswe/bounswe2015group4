@@ -12,6 +12,7 @@ public class User {
     private String surname;
     private String role;
     private String user_token;
+    private String photo;
 
 //  private List<Event> events = new ArrayList<Event>() ;
 
@@ -30,6 +31,14 @@ public class User {
         this.email = email;
         this.name = name;
 
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String value) {
+        this.photo = value;
     }
 
     public long getId() {
