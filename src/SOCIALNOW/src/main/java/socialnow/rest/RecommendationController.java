@@ -78,7 +78,7 @@ public class RecommendationController {
                     }
                 }
             }
-            String[][] array= new String [twoDtags.size()+1][100];
+            String[][] array= new String [twoDtags.size()+1][250];
             for (int i = 0; i <twoDtags.size() ; i++) {
                 for (int j = 0; j < twoDtags.get(i).length; j++) {
                     array[i][j] = twoDtags.get(i)[j];

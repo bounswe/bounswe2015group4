@@ -2,7 +2,7 @@ app.controller('homeController', function ($scope, userService, sessionService, 
     var init = function() {
         $scope.user = sessionService.getUserInfo();
         $scope.recommendationsEnabled = false;
-        recommendationService.getRecommendations($scope.user.token).then(function(recommendations) {
+        recommendationService.getRecommendations($scope.user.user_token).then(function(recommendations) {
             $scope.recommendations = recommendations;
             $scope.recommendations.events = utils.manipulateEvents($scope.recommendations.events);
             $scope.recommendationsEnabled = true;

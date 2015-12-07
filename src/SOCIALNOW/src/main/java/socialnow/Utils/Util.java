@@ -87,23 +87,17 @@ public class Util {
 
     public static String deleteFromArray(String[] arr, String[] elems){
         String result = "";
-        for (int i = 0; i <elems.length; i++) {
-            int count=0;
-            for (int j = 0; j <arr.length ; j++) {
-                if(!arr[j].equals(elems[i]) || count > 0 ){
+        int count = 0 ;
+        for (int i = 0; i <arr.length ; i++) {
+            if(!Arrays.asList(elems).contains(arr[i])|| count >= elems.length  ){
+                if(!arr[i].equals(""))
                     result = result + "," + arr[i];
-                }
-                else{
-                    count++;
-                }
+            }else{
+                count++;
             }
         }
         return result;
     }
-
-
-
-
   public static String[] findMostOccurence(String[] tags){
        String[] result = new String[3];
       result[0]="";

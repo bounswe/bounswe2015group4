@@ -10,20 +10,20 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             url: baseApiUrl + '/login',
             method: 'POST',
             data: JSON.stringify(request)
-        }).success(function(user) {
-            if(user.id != -1) {
+        }).success(function (user) {
+            if (user.id != -1) {
                 deferred.resolve(user);
             } else {
                 deferred.reject('Wrong email or password!');
             }
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
     }
 
-    this.getProfileDetails = function(token) {
+    this.getProfileDetails = function (token) {
         var deferred = $q.defer();
         var request = {
             user_token: token
@@ -33,9 +33,9 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             url: baseApiUrl + '/showProfileDetails',
             method: 'POST',
             data: JSON.stringify(request)
-        }).success(function(user) {
+        }).success(function (user) {
             deferred.resolve(user);
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
@@ -49,14 +49,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             url: baseApiUrl + '/signUp',
             method: 'POST',
             data: JSON.stringify(currentUser)
-        }).success(function(user) {
-            if(user.id != -1) {
+        }).success(function (user) {
+            if (user.id != -1) {
                 deferred.resolve(user);
             } else {
                 deferred.reject('Email exists!');
             }
 
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
@@ -77,23 +77,23 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
         return deferred.promise;
     }
 
-    this.editUser = function(currentUser) {
+    this.editUser = function (currentUser) {
         var deferred = $q.defer();
 
         $http({
             url: baseApiUrl + '/edit_user',
             method: 'POST',
             data: JSON.stringify(currentUser)
-        }).success(function(user) {
+        }).success(function (user) {
             deferred.resolve(user);
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
     }
 
-    this.followUser = function(userToken, followToken) {
+    this.followUser = function (userToken, followToken) {
         var deferred = $q.defer();
         var request = {
             user_token: userToken,
@@ -104,16 +104,16 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             url: baseApiUrl + '/followUser',
             method: 'POST',
             data: JSON.stringify(request)
-        }).success(function(response) {
+        }).success(function (response) {
             deferred.resolve(response);
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
     }
 
-    this.unfollowUser = function(userToken, unfollowToken) {
+    this.unfollowUser = function (userToken, unfollowToken) {
         var deferred = $q.defer();
         var request = {
             user_token: userToken,
@@ -124,31 +124,33 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
             url: baseApiUrl + '/unFollowUser',
             method: 'POST',
             data: JSON.stringify(request)
-        }).success(function(response) {
+        }).success(function (response) {
             deferred.resolve(response);
-        }).error(function(response) {
+        }).error(function (response) {
             deferred.reject('An error occurred!');
         })
 
         return deferred.promise;
     }
 
-    this.setShowingUserProfile = function(user) {
+    this.setShowingUserProfile = function (user) {
         var currentUser = {};
 
+        currentUser.username = user.email;
+        currentUser.email = user.email;
+        currentUser.role = user.role;
+        currentUser.isAuthenticated = true;
+        currentUser.name = user.name;
+        currentUser.surname = user.surname;
+        currentUser.user_token = user.user_token;
+        currentUser.photoUrl = user.user_photo;
         currentUser.followers = user.user_followers;
-        currentUser.followings = user.user_followings;
+        currentUser.followings = user.user_following;
         currentUser.interestGroups = user.user_interest_groups;
         currentUser.participatingEvents = user.user_participating_events;
         currentUser.tags = utils.manipulateTags(user.user_tags);
         currentUser.numberOfFollowers = user.numberOfFollowers;
         currentUser.numberOfFollowings = user.numberOfFollowings;
-        currentUser.name = user.name;
-        currentUser.surname = user.surname;
-        currentUser.role = user.role;
-        currentUser.email = user.email;
-        currentUser.user_token = user.user_token;
-        currentUser.photoUrl = user.user_photo;
 
         currentUser.participatingEvents = utils.manipulateEvents(currentUser.participatingEvents);
 
@@ -156,19 +158,22 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         currentUser.stringTags = currentUser.tags.join();
 
+        currentUser.tagsModified = getTags(currentUser.tags);
+
         return currentUser;
     }
 
-    this.updateProfileDetails = function(token) {
-        var deferred = $q.defer();
+    var getTags = function (tags) {
+        var tagsModified = [];
 
-        this.getProfileDetails(token).then(function(currentUser) {
-            sessionService.setUserProfileDetails(currentUser);
-            deferred.resolve(sessionService.getUserInfo());
-        }, function(response) {
-            deferred.reject('An error occurred!');
-        })
+        for (var i = 0; i < (tags || []).length; i++) {
+            tagsModified.push({
+                tag1: tags[i++],
+                tag2: tags[i++],
+                tag3: tags[i]
+            })
+        }
 
-        return deferred.promise;
+        return tagsModified;
     }
 })

@@ -17,7 +17,7 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     }
 
     var getMyEvents = function () {
-        eventService.getMyEvents($scope.user.token).then(function (events) {
+        eventService.getMyEvents($scope.user.user_token).then(function (events) {
             $scope.myAllEvents = events;
         }, function (error) {
             console.log(error);
@@ -25,7 +25,8 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     }
 
     $scope.createEvent = function () {
-        eventService.createEvent($scope.event, $scope.user.token).then(function (event) {
+        $scope.event.event_date = utils.convertDateToApiDate($scope.event.event_date);
+        eventService.createEvent($scope.event, $scope.user.user_token).then(function (event) {
             $scope.errorMessage = "";
             $scope.successMessage = "Event is created successfully"
             $scope.currentEventRoute = $scope.eventRoutes.myEvents;
