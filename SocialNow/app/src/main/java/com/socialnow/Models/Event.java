@@ -1,12 +1,13 @@
 package com.socialnow.Models;
 
+import java.io.Serializable;
 import java.util.Date;
 import android.graphics.Bitmap;
 
 /**
  * Created by mugekurtipek on 24/11/15.
  */
-public class Event {
+public class Event implements Serializable{
     // ------------------------
     // PRIVATE FIELDS
 

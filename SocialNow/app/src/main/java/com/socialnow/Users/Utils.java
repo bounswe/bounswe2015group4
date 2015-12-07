@@ -58,6 +58,7 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        currentProfile = p;
     }
 
     public static Profile retrieveProfile(){

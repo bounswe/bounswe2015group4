@@ -29,8 +29,8 @@ public class AboutTabFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.tabfrag_about,container,false);
         interests = (TextView) v.findViewById(R.id.tInterests);
-        followers = (TextView) v.findViewById(R.id.tFollowers);
-        followings = (TextView) v.findViewById(R.id.tFollowings);
+        followers = (TextView) v.findViewById(R.id.tFollower);
+        followings = (TextView) v.findViewById(R.id.tFollowing);
 
         Profile p = Utils.getCurrentProfile();
 
@@ -40,10 +40,10 @@ public class AboutTabFrag extends Fragment {
         }
         interests.setText(s);
 
-        followers.setText(p.getNumberOfFollowers());
+        followers.setText("" + p.getNumberOfFollowers());
 
 
-        followings.setText(p.getNumberOfFollowings());
+        followings.setText("" + p.getNumberOfFollowings());
 
 
         return v;

@@ -40,7 +40,7 @@
             android:text="Followers"
             android:id="@+id/tFollowers"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/tInterest"
+            android:layout_below="@id/tInterests"
             android:layout_marginBottom="@dimen/big_margin"
             android:textStyle="bold"/>
 
@@ -51,7 +51,7 @@
             android:id="@+id/tFollower"
             android:text="interest"
             android:layout_toRightOf="@+id/tFollowers"
-            android:layout_below="@+id/tInterest"
+            android:layout_below="@+id/tInterests"
             android:layout_marginBottom="@dimen/small_margin"
             android:layout_marginLeft="@dimen/big_margin"
             />
@@ -62,7 +62,7 @@
             android:text="Following"
             android:id="@+id/tFollowings"
             android:layout_toRightOf="@id/tFollower"
-            android:layout_below="@+id/tInterest"
+            android:layout_below="@+id/tInterests"
             android:layout_marginLeft="@dimen/big_margin"
             android:textStyle="bold"/>
 
@@ -73,7 +73,7 @@
             android:id="@+id/tFollowing"
             android:text="interest"
             android:layout_toRightOf="@+id/tFollowings"
-            android:layout_below="@+id/tInterest"
+            android:layout_below="@+id/tInterests"
             android:layout_marginBottom="@dimen/small_margin"
             android:layout_marginLeft="@dimen/big_margin"
             />

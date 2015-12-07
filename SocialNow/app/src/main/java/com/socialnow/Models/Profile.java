@@ -1,12 +1,13 @@
 package com.socialnow.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by mertcan on 7.12.2015.
  */
 
-public class Profile {
+public class Profile implements Serializable{
 
     ArrayList<Group> user_interest_groups = new ArrayList<>();
     ArrayList<User> user_followers = new ArrayList<>();

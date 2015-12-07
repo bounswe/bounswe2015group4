@@ -20,6 +20,8 @@ import com.socialnow.App;
 import com.socialnow.Models.AccessToken;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
+import com.socialnow.Models.Group_Detail;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 
 import java.io.UnsupportedEncodingException;
@@ -49,6 +51,22 @@ public class API {
     }
     public static void setUUID(String UUID) {
         instance.UUID = UUID;
+    }
+
+    public static void getEventDetails(String tag, Long id, Response.Listener<Event> successListener,
+                                       Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(id);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void getGroupDetail(String tag, Long e, Response.Listener<Group_Detail> successListener,
+                                      Response.ErrorListener failureListener) {
+        String postBody = "{ interest_group_id = "+e+" }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/showGroupDetail",
+                Group_Detail.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
     public static void cancelRequestByTag(final String tag) {
@@ -99,7 +117,7 @@ public class API {
     public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
                                                                           Response.ErrorListener failureListener) {
                 mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
-                              Event[].class, successListener, failureListener));
+                        Event[].class, successListener, failureListener));
           }
 
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,
@@ -107,6 +125,13 @@ public class API {
         String postBody = "{}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllGroups",
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+
+    public static void profileInfo(String tag, String token, Response.Listener<Profile> successListener,
+                                     Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ token + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/showProfileDetails",
+                Profile.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
     public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,

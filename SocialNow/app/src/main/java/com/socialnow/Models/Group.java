@@ -1,9 +1,13 @@
 package com.socialnow.Models;
 
+import java.io.Serializable;
+
+import javax.crypto.SecretKey;
+
 /**
  * Created by mugekurtipek on 06/12/15.
  */
-public class Group {
+public class Group implements Serializable {
 
 
     String type;
