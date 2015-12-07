@@ -61,7 +61,7 @@ app.controller('profileController', function ($scope, sessionService, userServic
             authenticatedUser.user_tags = utils.trimCharacter(authenticatedUser.user_tags, ',');
             $scope.currentUser.followers.push(authenticatedUser);
 
-            userService.getProfileDetails($scope.userEdit.user_token).then(function(currentUser) {
+            userService.getProfileDetails($scope.currentUser.user_token).then(function(currentUser) {
                 $scope.currentUser = userService.setShowingUserProfile(currentUser);
             });
             $scope.userEdit = sessionService.getUserInfo();
@@ -76,7 +76,7 @@ app.controller('profileController', function ($scope, sessionService, userServic
             $scope.currentUser.numberOfFollowers--;
             $scope.currentUser.followers = _.without($scope.currentUser.followers, _.findWhere($scope.currentUser.followers, { user_token: authenticatedUserToken}));
 
-            userService.getProfileDetails($scope.userEdit.user_token).then(function(currentUser) {
+            userService.getProfileDetails($scope.currentUser.user_token).then(function(currentUser) {
                 $scope.currentUser = userService.setShowingUserProfile(currentUser);
             });
             $scope.userEdit = sessionService.getUserInfo();
