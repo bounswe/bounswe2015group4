@@ -28,11 +28,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
@@ -70,7 +73,9 @@ public class EventActivity extends AppCompatActivity {
     String descrip;
     String location;
     String hostName;
-    String parti;
+    User[] parti;
+    int parti_number;
+    Long id;
     Event e;
     byte[] data;
 
@@ -134,13 +139,16 @@ public class EventActivity extends AppCompatActivity {
             hostName = extras.getString("hostname");
             descrip = extras.getString("description");
             photo = extras.getString("photo");
-            parti = extras.getString("participants");
+
+            id = extras.getLong("id");
 
         }
 
        // e = extras.getParcelable("Event");
 
-        //getData();
+        getData();
+
+
 
         writeToList();
 
@@ -176,15 +184,30 @@ public class EventActivity extends AppCompatActivity {
 
     void getData() {
 
+        Response.Listener<Event> response = new Response.Listener<Event>() {
+            @Override
+            public void onResponse(Event response) {
+                if(response != null) {
+                    Log.d("Event", response.toString());
 
-        /* byte[] data;
-        title = e.getTitle();
-        date = e.getEvent_date();
-        location = e.getEvent_location();
-        descrip = e.getEvent_description();
-        parti= e.getEvent_participants();
-        photo = e.getEvent_photo();
-        hostName = e.getEvent_host_token();*/
+                    parti = response.getEvent_participant_users();
+                    parti_number = parti.length;
+
+                }else{
+                    Log.d("Event", "error");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", error.toString());
+
+            }
+        };
+
+        API.getEventDetails("events/getEventDetail", id, response, errorListener);
     }
     Drawable d;
   void writeToList(){
@@ -202,9 +225,9 @@ public class EventActivity extends AppCompatActivity {
       description.setText(descrip);
       eventdate.setText(date);
 
-    if(parti!=null){
-          participantNumber.setText(parti.length()+" people are going");
-      }
+
+          participantNumber.setText(parti_number+" people are going");
+
 
       eventlocation.setText(location);
       event_host.setText(hostName);
@@ -228,7 +251,7 @@ public class EventActivity extends AppCompatActivity {
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
-            Log.d("src",src + "asd");
+            Log.d("src", src + "asd");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();

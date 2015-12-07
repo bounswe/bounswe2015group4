@@ -76,6 +76,7 @@ public class EventFrag extends Fragment {
                 //i2.putExtra("participants", event.getEvent_participants());
                 i2.putExtra("photo", event.getEvent_photo());
                 i2.putExtra("description", event.getEvent_description());
+                i2.putExtra("id", event.getId());
                 startActivity(i2);
             }
         });

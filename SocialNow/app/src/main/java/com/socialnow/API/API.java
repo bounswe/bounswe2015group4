@@ -78,6 +78,11 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
+    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,Response.ErrorListener failureListener) {
+          mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
+          Event[].class, successListener, failureListener));
+    }
+
     public static void signin(String tag, User user, Response.Listener<User> successListener,
                              Response.ErrorListener failureListener) {
         String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
@@ -96,11 +101,7 @@ public class API {
                 MAIN_URL + "/signUp", User.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
-    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
-                                                                          Response.ErrorListener failureListener) {
-                mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
-                              Event[].class, successListener, failureListener));
-          }
+
 
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,
                                      Response.ErrorListener failureListener) {
@@ -109,8 +110,16 @@ public class API {
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
-    public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,
+    public static void getEventDetails(String tag, Long id, Response.Listener<Event> successListener,
                                      Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(id);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void createEvent(String tag, Event e, Response.Listener<Event> successListener,
+                                   Response.ErrorListener failureListener) {
         String postBody = new Gson().toJson(e);
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
                 Event.class, successListener, failureListener)
