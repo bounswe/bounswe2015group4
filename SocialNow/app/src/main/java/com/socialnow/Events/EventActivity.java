@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.FloatingActionButton;
@@ -45,6 +46,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -126,16 +128,17 @@ public class EventActivity extends AppCompatActivity {
             title= null;
         } else {
             title= extras.getString("title");
-            date = extras.getString("date");
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+            date = ft.format(new Date(extras.getLong("date")));
             location = extras.getString("location");
             hostName = extras.getString("hostname");
             descrip = extras.getString("description");
             photo = extras.getString("photo");
-            //participants = extras.getString("participants");
-            //data = extras.getByteArray("photo");
+            parti = extras.getString("participants");
+
         }
 
-        e = extras.getParcelable("Event");
+       // e = extras.getParcelable("Event");
 
         //getData();
 
@@ -183,7 +186,7 @@ public class EventActivity extends AppCompatActivity {
         photo = e.getEvent_photo();
         hostName = e.getEvent_host_token();*/
     }
-
+    Drawable d;
   void writeToList(){
 
 
@@ -192,20 +195,31 @@ public class EventActivity extends AppCompatActivity {
     /*  if(photo!=null){
           Drawable d = new BitmapDrawable(getResources(), photo);
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-              img.setBackground(d);
+              img.setBackground(d);z
           }
       }*/
 
       description.setText(descrip);
       eventdate.setText(date);
 
-     /* if(parti!=null){
+    if(parti!=null){
           participantNumber.setText(parti.length()+" people are going");
-      }*/
+      }
 
       eventlocation.setText(location);
       event_host.setText(hostName);
-      Drawable d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
+
+      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+      StrictMode.setThreadPolicy(policy);
+
+      new Thread(new Runnable() {
+          @Override
+          public void run() {
+              d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
+          }
+      }).start();
+      d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
       img.setBackground(d);
 
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
@@ -214,6 +228,7 @@ public class EventActivity extends AppCompatActivity {
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
+            Log.d("src",src + "asd");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
