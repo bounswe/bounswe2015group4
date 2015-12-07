@@ -1,14 +1,18 @@
 package com.socialnow;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -18,6 +22,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.socialnow.Groups.EditGroupActivity;
 
 /**
  * Created by lauamy on 29/10/15.
@@ -32,6 +38,7 @@ public class PartiActivity extends AppCompatActivity {
     //Dummy Parti list with Profile Pics
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
+    String mTitle;
 
 
     @Override
@@ -39,38 +46,71 @@ public class PartiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parti);
         listView=(ListView)findViewById(R.id.lvParti);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fAddComment);
+        fab.hide();
 
         // Logic to check the calling activity
         String callingActivity = getIntent().getStringExtra("from");
         switch (callingActivity) {
             case "GroupActivity":
                 mAdapter = new MemberAdapter(this,R.layout.item_member,tvParti);
+                mTitle = "Members";
                 break;
 
             case "EditEventActivity":
                 mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,tvParti);
+                mTitle = "Select";
                 break;
 
             case "EventActivity":
                 mAdapter = new PartiAdapter(this,R.layout.item_parti,tvParti);
+                mTitle = "Participants";
                 break;
 
             case "EditGroupActivity":
                 mAdapter = new EditMemberAdapter(this,R.layout.item_editmember,tvParti);
                 listView.setAdapter(mAdapter);
+                mTitle = "Select";
                 break;
 
             case "Comment":
+                fab.show();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addComment");
+                        startActivity(i);
+                    }
+                });
+
                 mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
+                mTitle = "Comments";
                 registerForContextMenu(listView); //View menu by long-click on listview
                 break;
+
+            case "Reply":
+                fab.show();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addReply");
+                        startActivity(i);
+                    }
+                });
+
+                mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
+                listView.setDividerHeight(10);
+                listView.setAdapter(mAdapter);
+                mTitle = "Replies";//View menu by long-click on listview
+
 
             default:
                 break;
         }
         listView.setAdapter(mAdapter);
+        getSupportActionBar().setTitle(mTitle);
 
 
 
@@ -227,5 +267,37 @@ public class PartiActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.menu_comment, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        switch (item.getItemId()){
+            case R.id.action_view:
+                Intent view = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Reply");
+                startActivity(view);
+
+                break;
+
+            case R.id.action_reply:
+                Intent reply = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addReply");
+                startActivity(reply);
+                break;
+
+            case R.id.action_share:
+                break;
+
+            case R.id.action_report:
+                break;
+
+            case R.id.action_edit:
+                Intent edit = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag","Edit");
+                startActivity(edit);
+                break;
+
+
+            default:
+                break;
+        }
+        return true;
     }
 }

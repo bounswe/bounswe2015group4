@@ -105,9 +105,16 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-        listView=(ListView)findViewById(R.id.lvComment);
-        ListAdapter mAdapter = new MyAdapter(this,R.layout.item_comment,tvParti);
-        listView.setAdapter(mAdapter);
+        RelativeLayout viewComment=(RelativeLayout)findViewById(R.id.Comment);
+        viewComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                startActivity(i2);
+            }
+        });
 
 
         Bundle extras = getIntent().getExtras();

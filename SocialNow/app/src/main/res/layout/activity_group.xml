@@ -47,32 +47,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/groupInfo"
-                android:background="@drawable/item_box"
+                android:id="@+id/Des"
+                android:layout_marginBottom="@dimen/big_margin"
                 android:padding="@dimen/et_top_bottom_padding"
-                android:layout_marginBottom="@dimen/big_margin">
-
-                <ImageView
-                    android:id="@+id/ivCreateDate"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/date"
-                    android:layout_marginRight="@dimen/big_margin"
-                    android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_alignParentTop="true" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Created on DD/MM/YYYY"
-                    android:id="@+id/tCreateDate"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/ivCreateDate"
-                    android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_toEndOf="@+id/ivCreateDate" />
+                android:background="@drawable/item_box">
 
                 <ImageView
                     android:id="@+id/ivPrivacy"
@@ -82,7 +60,7 @@
                     android:src="@drawable/ic_lock"
                     android:layout_marginRight="@dimen/big_margin"
                     android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_below="@id/tCreateDate"/>
+                    android:layout_alignParentTop="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,26 +71,24 @@
                     android:layout_toRightOf="@id/ivPrivacy"
                     android:layout_toEndOf="@id/ivPrivacy"
                     android:layout_marginBottom="@dimen/small_margin"
-                    android:layout_below="@id/tCreateDate"/>
-
-                <ImageView
-                    android:id="@+id/ivOwner"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/host"
-                    android:layout_marginRight="@dimen/big_margin"
-                    android:layout_below="@id/tPrivacy"/>
+                    android:layout_alignParentTop="true"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Name of Owner"
-                    android:id="@+id/tOwner"
-                    android:layout_toRightOf="@id/ivOwner"
-                    android:layout_toEndOf="@id/ivOwner"
-                    android:layout_below="@id/tPrivacy"/>
+                    android:text="Description"
+                    android:layout_below="@id/ivPrivacy"
+                    android:id="@+id/tDesTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/description"
+                    android:id="@+id/tDes"
+                    android:layout_below="@id/tDesTitle"/>
 
             </RelativeLayout>
 
@@ -120,17 +96,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Member"
-                android:layout_below="@id/groupInfo"
                 android:clickable="true"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:background="@drawable/item_box"
-                android:padding="@dimen/et_top_bottom_padding">
+                android:padding="@dimen/et_top_bottom_padding"
+                android:layout_below="@id/Des">
+
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="xx members"
+                    android:text="xx Members"
                     android:id="@+id/tMember"
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"
@@ -151,44 +129,34 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Des"
-                android:layout_below="@id/Member"
+                android:id="@+id/Comment"
+                android:clickable="true"
                 android:layout_marginBottom="@dimen/big_margin"
+                android:background="@drawable/item_box"
                 android:padding="@dimen/et_top_bottom_padding"
-                android:background="@drawable/item_box">
+                android:layout_below="@id/Member">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Description"
-                    android:id="@+id/tDesTitle"
+                    android:text="View Comments"
+                    android:id="@+id/tComment"
                     android:textStyle="bold"
-                    android:layout_alignParentTop="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/small_margin"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/description"
-                    android:id="@+id/tDes"
-                    android:layout_below="@id/tDesTitle"/>
+                <ImageView
+                    android:id="@+id/ivArrow4"
+                    android:layout_width="@dimen/small_icon"
+                    android:layout_height="@dimen/small_icon"
+                    android:src="@drawable/rightarrow"
+                    android:layout_toRightOf="@id/tComment"
+                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/Des">
-
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/lvComment"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true">
-                </ListView>
-            </RelativeLayout>
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
