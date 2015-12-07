@@ -2,12 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context="com.socialnow.PartiActivity">
-    <item android:id="@+id/action_share" android:title="View Comments"
+    <item android:id="@+id/action_view" android:title="View Replies"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_invite" android:title="Add Comment"
+    <item android:id="@+id/action_reply" android:title="Reply"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_report" android:title="Share"
+    <item android:id="@+id/action_share" android:title="Share"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_edit" android:title="Report"
+    <item android:id="@+id/action_report" android:title="Report"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_edit" android:title="Edit"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

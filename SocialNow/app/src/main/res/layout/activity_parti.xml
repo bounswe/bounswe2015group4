@@ -13,4 +13,10 @@
         android:layout_centerHorizontal="true">
     </ListView>
 
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fAddComment"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/lvParti"
+        android:layout_alignEnd="@+id/lvParti"/>
 </RelativeLayout>
