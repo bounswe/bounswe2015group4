@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.socialnow.Groups.EditGroupActivity;
+import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.squareup.picasso.Picasso;
 
@@ -46,8 +47,8 @@ public class PartiActivity extends AppCompatActivity {
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
     String mTitle;
-    ArrayList<String> memberNames;
-    ArrayList<String> memberPhotos;
+    public static ArrayList<User> groupMembers;
+    public static ArrayList<PostDetail> groupPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,8 @@ public class PartiActivity extends AppCompatActivity {
         switch (callingActivity) {
             case "GroupActivity":
                 mTitle = "Members";
-                memberNames = getIntent().getStringArrayListExtra("memberNames");
-                memberPhotos = getIntent().getStringArrayListExtra("memberPhotos");
-                mAdapter = new MemberAdapter(this,R.layout.item_member,memberNames);
+                tvParti = new String[groupMembers.size()];
+                mAdapter = new MemberAdapter(this,R.layout.item_member,groupMembers);
                 break;
 
             case "EditEventActivity":
@@ -84,16 +84,19 @@ public class PartiActivity extends AppCompatActivity {
                 break;
 
             case "Comment":
+                final long id = getIntent().getLongExtra("group_id", -1);
+                Log.d("pa", id + "s");
                 fab.show();
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addComment");
+                        i.putExtra("group_id", id);
                         startActivity(i);
                     }
                 });
-
-                mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
+                tvParti = new String[groupPosts.size()];
+                mAdapter = new CommentAdapter(this,R.layout.item_comment,groupPosts);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
                 mTitle = "Comments";
@@ -172,9 +175,11 @@ public class PartiActivity extends AppCompatActivity {
 
     }
 
-    class MemberAdapter extends ArrayAdapter<String> {
-        public MemberAdapter(Context context, int resource, ArrayList<String> tvParti) {
+    public class MemberAdapter extends ArrayAdapter<String> {
+        public ArrayList<User> users;
+        public MemberAdapter(Context context, int resource, ArrayList<User> users) {
             super(context, R.layout.item_inviteguest, tvParti);
+            this.users = users;
         }
 
         @Override
@@ -186,13 +191,15 @@ public class PartiActivity extends AppCompatActivity {
             TextView mText = (TextView) customView.findViewById(R.id.tvMember);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivMember);
 
-            mText.setText(memberNames.get(position));
-            Picasso.with(((Activity) getContext()))
-                    .load(memberPhotos.get(position))
-                    .resize(30, 30)
-                    .placeholder(R.drawable.profilpic)
-                    .centerCrop()
-                    .into(mImg);
+            if(users != null) {
+                mText.setText(users.get(position).getName());
+                Picasso.with(((Activity) getContext()))
+                        .load(users.get(position).getUser_photo())
+                        .resize(30, 30)
+                        .placeholder(R.drawable.profilpic)
+                        .centerCrop()
+                        .into(mImg);
+            }
             return customView;
 
         }
@@ -256,8 +263,14 @@ public class PartiActivity extends AppCompatActivity {
     }
 
     class CommentAdapter extends ArrayAdapter<String> {
-        public CommentAdapter(Context context, int resource, String[] tvParti) {
+        ArrayList<PostDetail> posts;
+        public CommentAdapter(Context context, int resource, ArrayList<PostDetail> posts) {
             super(context, R.layout.item_comment, tvParti);
+            this.posts = posts;
+        }
+        public CommentAdapter(Context context, int resource, String[] tvParti) {
+            super(context, R.layout.item_inviteguest, tvParti);
+
         }
 
         @Override
@@ -269,8 +282,16 @@ public class PartiActivity extends AppCompatActivity {
             TextView mText = (TextView) customView.findViewById(R.id.tvParti);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
             TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
-            mText.setText(item);
-            mImg.setImageResource(mImgArr[position]);
+            if(posts != null) {
+                mText.setText(posts.get(position).getOwner().getName() + " " + posts.get(position).getOwner().getSurname());
+                Picasso.with(((Activity) getContext()))
+                        .load(posts.get(position).getOwner().getUser_photo())
+                        .resize(30, 30)
+                        .placeholder(R.drawable.profilpic)
+                        .centerCrop()
+                        .into(mImg);
+                mComment.setText(posts.get(position).getContent());
+            }
             return customView;
         }
 

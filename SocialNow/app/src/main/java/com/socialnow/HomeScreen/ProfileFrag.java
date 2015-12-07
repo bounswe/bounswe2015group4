@@ -135,8 +135,8 @@ public class ProfileFrag extends Fragment {
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("ABOUT"));
-        tabLayout.addTab(tabLayout.newTab().setText("EDIT PROFILE"));
-        tabLayout.addTab(tabLayout.newTab().setText("FOLLOW"));
+        tabLayout.addTab(tabLayout.newTab().setText("FOLLOWERS"));
+        tabLayout.addTab(tabLayout.newTab().setText("FOLLOWINGS"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);

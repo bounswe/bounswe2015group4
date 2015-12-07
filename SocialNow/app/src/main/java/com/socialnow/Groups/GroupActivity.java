@@ -38,6 +38,8 @@ import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
+import com.socialnow.Models.Post;
+import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
@@ -73,6 +75,7 @@ public class GroupActivity extends AppCompatActivity {
     ArrayList<ParseObject> participants;
     ImageView privacy;
     ArrayList<User> groupMembers;
+    ArrayList<PostDetail> groupPosts;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -112,15 +115,7 @@ public class GroupActivity extends AppCompatActivity {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 //startActivity(viewParti);
                 Intent i = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "GroupActivity");
-                ArrayList<String> names = new ArrayList<String>();
-                ArrayList<String> photos = new ArrayList<String>();
-                for(int j = 0;j<groupMembers.size();j++){
-                    names.add(groupMembers.get(j).getName()+" "+groupMembers.get(j).getSurname());
-                    photos.add(groupMembers.get(j).getPhoto());
-                }
-                i.putExtra("memberNames",names);
-                i.putExtra("memberPhotos",photos);
-
+                PartiActivity.groupMembers = groupMembers;
                 startActivity(i);
             }
         });
@@ -132,6 +127,9 @@ public class GroupActivity extends AppCompatActivity {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 //startActivity(viewParti);
                 Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                i2.putExtra("group_id", myGroup.getId());
+                Log.d("id ga", myGroup.getId() + "s");
+                PartiActivity.groupPosts = groupPosts;
                 startActivity(i2);
             }
         });
@@ -178,6 +176,7 @@ public class GroupActivity extends AppCompatActivity {
               if(response != null) {
                   myGroup = response;
                   groupMembers = myGroup.getGroup_members();
+                  groupPosts = myGroup.getGroup_posts();
                   Log.d("Group", response.toString());
                   writeToList();
               }else{

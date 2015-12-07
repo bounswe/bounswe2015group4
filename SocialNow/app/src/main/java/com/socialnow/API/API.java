@@ -21,6 +21,7 @@ import com.socialnow.Models.AccessToken;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
+import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 
@@ -140,6 +141,21 @@ public class API {
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
                 Event.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void createPost(String tag, Post p, Response.Listener<Post> successListener,
+                                   Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(p);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createPost",
+                Post.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void addPost(String tag, String body, Response.Listener<Group> successListener,
+                                  Response.ErrorListener failureListener) {
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/addPost",
+                Group.class, successListener, failureListener)
+                .setPostBodyInJSONForm(body).setTag(tag));
     }
 
     private static class GeneralRequest<T> extends Request<T> {
