@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Birthday"
-            android:id="@+id/tBday"
+            android:text="Interests"
+            android:id="@+id/tInterest"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -25,57 +25,78 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Hobbies"
-            android:id="@+id/tHobbies"
+            android:id="@+id/tInterests"
+            android:text="interest"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tInterest"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/big_margin"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Followers"
+            android:id="@+id/tFollowers"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/tBday"
+            android:layout_below="@id/tInterest"
             android:layout_marginBottom="@dimen/big_margin"
             android:textStyle="bold"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/info"
-        android:layout_toRightOf="@id/title">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="DD/MM/YYYY"
-            android:id="@+id/tmBday"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="@dimen/small_margin"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Hobby 1, Hobby 2, Hobby 3"
-            android:id="@+id/tmHobbies"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/tmBday"
-            android:layout_marginBottom="@dimen/big_margin"/>
+            android:id="@+id/tFollower"
+            android:text="interest"
+            android:layout_toRightOf="@+id/tFollowers"
+            android:layout_below="@+id/tInterest"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/big_margin"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Following"
+            android:id="@+id/tFollowings"
+            android:layout_toRightOf="@id/tFollower"
+            android:layout_below="@+id/tInterest"
+            android:layout_marginLeft="@dimen/big_margin"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/tFollowing"
+            android:text="interest"
+            android:layout_toRightOf="@+id/tFollowings"
+            android:layout_below="@+id/tInterest"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_marginLeft="@dimen/big_margin"
+            />
+
     </RelativeLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Interest Groups"
-        android:id="@+id/tGroup"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/title"
-        android:layout_marginBottom="@dimen/small_margin"
-        android:textStyle="bold"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="Interest Groups"-->
+        <!--android:id="@+id/tGroup"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_below="@id/title"-->
+        <!--android:layout_marginBottom="@dimen/small_margin"-->
+        <!--android:textStyle="bold"/>-->
 
-    <GridView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/gvGroup"
-        android:layout_below="@+id/tGroup"
-        android:layout_marginBottom="@dimen/big_margin"/>
+    <!--<GridView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:id="@+id/gvGroup"-->
+        <!--android:layout_below="@+id/tGroup"-->
+        <!--android:layout_marginBottom="@dimen/big_margin"/>-->
 
 </RelativeLayout>

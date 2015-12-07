@@ -4,49 +4,72 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.socialnow.App;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
+import com.socialnow.Util.InternalStorage;
+
+import java.io.IOException;
 
 /**
  * Created by mertcan on 2.12.2015.
  */
 public class Utils {
+    private static final String PROFILE = "profile";
     public static SharedPreferences sharedPref;
     public static SharedPreferences.Editor loginStateEditor;
     private static User currentUser;
+    public static String USER = "current_user";
+    private static Profile currentProfile;
 
-    public static void initialize(Context context){
+    public static void initialize(Context context)  {
         if(sharedPref == null || loginStateEditor == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
             loginStateEditor = sharedPref.edit();
         }
         if(getCurrentUserMode())
             retrieveUser();
-    }
 
-    public static void cacheUser(User u){
-        loginStateEditor.putLong("current_user_id", u.getId());
-        loginStateEditor.putString("current_user_name", u.getName());
-        loginStateEditor.putString("current_user_email", u.getEmail());
-        loginStateEditor.putString("current_user_password", u.getPassword());
-        loginStateEditor.putString("current_user_role", u.getRole());
-        loginStateEditor.putString("current_user_surname", u.getSurname());
-        loginStateEditor.putString("current_user_token", u.getUser_token());
-
-
-        loginStateEditor.commit();
     }
 
     public static User retrieveUser(){
-        currentUser = new User();
-        currentUser.setId(sharedPref.getLong("current_user_id", -1));
-        currentUser.setName(sharedPref.getString("current_user_name", ""));
-        currentUser.setEmail(sharedPref.getString("current_user_email", ""));
-        currentUser.setPassword(sharedPref.getString("current_user_password", ""));
-        currentUser.setRole(sharedPref.getString("current_user_role", ""));
-        currentUser.setSurname(sharedPref.getString("current_user_surname", ""));
-        currentUser.setUser_token(sharedPref.getString("current_user_token", ""));
-        currentUser.setUser_token(sharedPref.getString("current_user_photo", ""));
+        try {
+            currentUser = (User) InternalStorage.readObject(App.getInstance(), USER);
+            currentProfile = (Profile) InternalStorage.readObject(App.getInstance(), PROFILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return currentUser;
+    }
+
+    public static void cacheUser(User u)  {
+        try {
+            InternalStorage.writeObject(App.getInstance(), USER, u);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void cacheProfile(Profile p)  {
+        try {
+            InternalStorage.writeObject(App.getInstance(), PROFILE, p);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Profile retrieveProfile(){
+        try {
+            currentProfile = (Profile) InternalStorage.readObject(App.getInstance(), PROFILE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return currentProfile;
     }
 
     public static void setCurrentUser(boolean logged, User currentUser) {
@@ -61,7 +84,12 @@ public class Utils {
     public static User getCurrentUser(){
         return currentUser;
     }
-    public static void logout(){
+
+    public static Profile getCurrentProfile(){
+        return currentProfile;
+    }
+
+    public static void logout() throws IOException {
         cacheUser(new User());
         setCurrentUser(false, null);
     }

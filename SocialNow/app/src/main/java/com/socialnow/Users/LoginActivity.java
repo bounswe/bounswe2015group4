@@ -16,8 +16,11 @@ import com.android.volley.VolleyError;
 
 import com.socialnow.API.API;
 import com.socialnow.HomePage;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 import com.socialnow.R;
+
+import java.io.IOException;
 
 /**
  * Created by lauamy on 23/10/15.
@@ -31,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userName;
     String password;
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     }
-    void isValidUser(){
+
+    void isValidUser() {
 
         User u = new User();
         u.setEmail(etUserName.getText().toString());
@@ -59,20 +64,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Response.Listener<User> response = new Response.Listener<User>() {
             @Override
             public void onResponse(User response) {
-                if(response.getId() != -1) {
+                if (response.getId() != -1) {
                     Log.d("Login", "Login success " + response.getEmail() + " " + response.getName());
 
                     // Writing data to SharedPreferences
-
                     Utils.cacheUser(response);
+
                     Utils.setCurrentUser(true, response);
+
+                    getProfileInfo();
 
                     Intent i2 = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(i2);
-                }else{
+                    finish();
+                } else {
                     Log.d("Login", "Error: " + response.getUser_token());
                     Log.d("Wrong credentials:", "Not valid username and password");
-                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(context);
                     dlgAlert.setMessage("Wrong password or username.");
                     dlgAlert.setTitle("Error Message");
                     dlgAlert.setPositiveButton("OK", null);
@@ -90,14 +98,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
-               Log.d("Failed", "Login Failed");
-               Utils.setCurrentUser(false, null);
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Login Failed");
+                Utils.setCurrentUser(false, null);
 
-           }
+            }
         };
         API.login("login", u, response, errorListener);
+
 
     }
     @Override
@@ -123,5 +132,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    public void getProfileInfo() {
+        Response.Listener<Profile> response = new Response.Listener<Profile>() {
+            @Override
+            public void onResponse(Profile response) {
+                if (response.getName() != null) {
+                    Log.d("Profile", "success " + response.getEmail() + " " + response.getName());
+
+                    // Writing data to SharedPreferences
+                    Utils.cacheProfile(response);
+
+                }else{
+                    Log.d("Login", "Error: " + response.getUser_token());
+                    Log.d("Wrong credentials:", "Not valid username and password");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Login Failed");
+
+            }
+        };
+        API.profileInfo("profile", Utils.getCurrentUser().getUser_token(), response, errorListener);
     }
 }

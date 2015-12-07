@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(Utils.getCurrentUserMode()){
+            Utils.retrieveUser();
+//            (Utils.getCurrentUser().getName() + " " + Utils.getCurrentUser().getPhoto());
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             startActivity(i2);
         }

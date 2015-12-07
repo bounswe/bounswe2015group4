@@ -1,5 +1,6 @@
 package com.socialnow.HomeScreen;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -52,6 +53,8 @@ import com.parse.ParseUser;
 import com.socialnow.Models.User;
 import com.socialnow.PagerAdapter;
 import com.socialnow.R;
+import com.socialnow.Users.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.text.ParseException;
@@ -69,9 +72,11 @@ public class ProfileFrag extends Fragment {
     ImageView profile_picture;
     TextView user_name;
     TextView user_email;
+    TextView user_role;
     String userName;
     String userEmail;
     String userPhoto;
+    String userRole;
     Bitmap photo;
 
 
@@ -86,72 +91,39 @@ public class ProfileFrag extends Fragment {
 
         user_name = (TextView) v.findViewById(R.id.tUserName);
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
-        current_user = new User();
+        user_role = (TextView) v.findViewById(R.id.tRole);
+        current_user = Utils.getCurrentUser();
 
         Context context = this.getActivity();
         SharedPreferences sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
-        user_id= sharedPref.getLong("current_user_id", 1);
-        userName = sharedPref.getString("current_user_name", "asdfg");
-        userEmail = sharedPref.getString("current_user_email", "şlkjh");
-        userPhoto = sharedPref.getString("curren_user_photo","jhsd");
+
+
+
+        user_id= Utils.getCurrentUser().getId();
+        userName = Utils.getCurrentUser().getName();
+        userEmail = Utils.getCurrentUser().getEmail();
+        userPhoto = Utils.getCurrentUser().getUser_photo();
+        userRole = Utils.getCurrentUser().getRole();
+
         user_name.setText(userName);
         user_email.setText(userEmail);
+        user_role.setText(userRole);
 
+
+        Log.d("photo",userPhoto + "asd");
+
+        Picasso.with(getContext())
+                .load(userPhoto)
+                .resize(80, 80)
+                .placeholder(R.drawable.devent)
+                .centerCrop()
+                .into(profile_picture);
 
         current_user.setId(user_id);
 
-        Response.Listener<User> response = new Response.Listener<User>() {
-            @Override
-            public void onResponse(User response) {
-                if(response.getId() != -1) {
-                    Log.d("Login", "Login success" + response.getEmail() + " " + response.getName());
-
-                    // user_name.setText(response.getName());
-                   // user_email.setText(response.getEmail());
-
-                    //TODO CASH USER LOGIN
-                    //TODO OPEN HOMEPAGE
-
-                } else {
-                    Log.d("ProfilePage", "Error: " + response.getUser_token());
-                    Log.d("ProfilePage error:", "error response");
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Failed", "Login Failed");
 
 
-            }
-        };
-
-      /*  fileObject = (ParseFile) current_user.getParseFile("Profile_Picture");
-        byte[] data;
-
-
-
-        if (fileObject != null) {
-            try {
-                data = fileObject.getData();
-                Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                photo = bMap;
-
-                Drawable d = new BitmapDrawable(getResources(), photo);
-
-                profile_picture.setImageBitmap(photo);
-
-                //writeToList();
-
-            } catch (com.parse.ParseException e1) {
-                e1.printStackTrace();
-            }
-        } else {
-            Log.d("post", "error retriving posts");
-        }*/
 
 
 
@@ -163,8 +135,8 @@ public class ProfileFrag extends Fragment {
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("ABOUT"));
-        tabLayout.addTab(tabLayout.newTab().setText("ACTIVITIES"));
-        tabLayout.addTab(tabLayout.newTab().setText("PHOTOS"));
+        tabLayout.addTab(tabLayout.newTab().setText("EDIT PROFILE"));
+        tabLayout.addTab(tabLayout.newTab().setText("FOLLOW"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
@@ -195,82 +167,4 @@ public class ProfileFrag extends Fragment {
         return v;
     }
 
-
-
-   /*void getData() {
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.whereEqualTo("username", userName);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, com.parse.ParseException e) {
-                if (object == null) {
-                    Log.d("score", "The getFirst request failed.");
-                } else {
-                    ParseFile fileObject;
-                    byte[] data;
-                    Log.d("score", "Retrieved the object.");
-
-                    //hostName = object.getParseObject("event_host").getString("Name") + " " + object.getParseObject("event_host").getString("Surname");
-                    fileObject = (ParseFile) object.getParseFile("Profile_Picture");
-
-
-                 if (fileObject != null) {
-                        try {
-                            data = fileObject.getData();
-                            Bitmap bMap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            photo = bMap;
-
-                            Drawable d = new BitmapDrawable(getResources(), photo);
-
-                            profile_picture.setImageBitmap(photo);
-
-
-                            //writeToList();
-
-                        } catch (com.parse.ParseException e1) {
-                            e1.printStackTrace();
-                        }
-                    } else {
-                        Log.d("post", "error retriving posts");
-                    }
-                }
-            }
-
-        });
-
-    }*/
-
-    void writeToList(){
-
-
-    }
-    public void changeToolBar()
-    {
-
-    }
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
 }

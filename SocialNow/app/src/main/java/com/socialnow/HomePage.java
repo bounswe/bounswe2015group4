@@ -37,6 +37,8 @@ import com.socialnow.Users.LoginActivity;
 import com.socialnow.Users.Utils;
 
 
+import java.io.IOException;
+
 import static com.socialnow.R.string.drawer_open;
 
 public class HomePage extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -168,7 +170,11 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (position == 6) {
             if (Utils.getCurrentUserMode()) {
-                Utils.logout();
+                try {
+                    Utils.logout();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i2);
             } else {
