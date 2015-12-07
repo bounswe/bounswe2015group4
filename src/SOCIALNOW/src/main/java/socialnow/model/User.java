@@ -257,6 +257,8 @@ public class User {
            role = u_f.getRole();
         if(u_f.getSurname() != null)
             surname = u_f.getSurname();
+        if(u_f.getUser_photo() != null)
+            user_photo = u_f.getUser_photo();
     }
 
     public String getType() {
