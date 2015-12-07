@@ -27,6 +27,7 @@ import com.socialnow.Groups.EditGroupActivity;
 import com.socialnow.Groups.GroupActivity;
 import com.socialnow.Models.Group;
 import com.socialnow.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -125,8 +126,13 @@ public class GroupFrag extends Fragment {
             TextView groupname = (TextView) v.findViewById(R.id.tEname);
             groupname.setText(groups.get(position).getGroup_name());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
-            new DownloadImageTask((ImageView) v.findViewById(R.id.ivEvent))
-                    .execute(groups.get(position).getGroup_photo());
+
+            Picasso.with(((Activity) getContext()))
+                    .load(groups.get(position).getGroup_photo())
+                    .resize(80, 80)
+                    .placeholder(R.drawable.devent)
+                    .centerCrop()
+                    .into(img);
             //img.setImageResource(R.drawable.ic_people);
             ImageView privacy = (ImageView) v.findViewById(R.id.ivEDate);
             privacy.setImageResource(R.drawable.ic_lock);
@@ -153,29 +159,5 @@ public class GroupFrag extends Fragment {
     void writeToList(){
         Log.d("Groups: ", groups.toString());
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, groups));
-    }
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 }

@@ -103,7 +103,7 @@ public class PartiActivity extends AppCompatActivity {
                 mAdapter = new CommentAdapter(this,R.layout.item_comment,tvParti);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
-                mTitle = "Replies";//View menu by long-click on listview
+                mTitle = "Replies";
 
 
             default:
