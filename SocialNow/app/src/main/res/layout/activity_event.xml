@@ -27,15 +27,7 @@
                 android:layout_width="match_parent"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-            <ImageView
-                android:id="@+id/ivPhoto"
-                android:layout_width="@dimen/small_icon"
-                android:layout_height="@dimen/small_icon"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/date"
-                android:layout_marginRight="@dimen/big_margin"
-                android:layout_marginBottom="@dimen/big_margin"
-                 />
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -124,44 +116,15 @@
 
             </RelativeLayout>
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/Des"
-                android:layout_below="@id/eventInfo"
-                android:layout_marginBottom="@dimen/big_margin"
-                android:padding="@dimen/et_top_bottom_padding"
-                android:background="@drawable/item_box">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Description"
-                    android:id="@+id/tDesTitle"
-                    android:textStyle="bold"
-                    android:layout_alignParentTop="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/description"
-                    android:id="@+id/tDes"
-                    android:layout_below="@id/tDesTitle"/>
-
-            </RelativeLayout>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Parti"
+                android:layout_below="@id/eventInfo"
                 android:clickable="true"
                 android:layout_marginBottom="@dimen/big_margin"
                 android:background="@drawable/item_box"
-                android:padding="@dimen/et_top_bottom_padding"
-                android:layout_below="@id/Des">
+                android:padding="@dimen/et_top_bottom_padding">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,34 +151,44 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Comment"
+                android:id="@+id/Des"
                 android:layout_below="@id/Parti"
-                android:clickable="true"
                 android:layout_marginBottom="@dimen/big_margin"
-                android:background="@drawable/item_box"
-                android:padding="@dimen/et_top_bottom_padding">
+                android:padding="@dimen/et_top_bottom_padding"
+                android:background="@drawable/item_box">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="View comments"
-                    android:id="@+id/tComment"
+                    android:text="Description"
+                    android:id="@+id/tDesTitle"
                     android:textStyle="bold"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/small_margin"/>
+                    android:layout_alignParentTop="true"/>
 
-                <ImageView
-                    android:id="@+id/ivArrow4"
-                    android:layout_width="@dimen/small_icon"
-                    android:layout_height="@dimen/small_icon"
-                    android:src="@drawable/rightarrow"
-                    android:layout_toRightOf="@id/tComment"
-                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/description"
+                    android:id="@+id/tDes"
+                    android:layout_below="@id/tDesTitle"/>
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Des">
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lvComment"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true">
+                </ListView>
+            </RelativeLayout>
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

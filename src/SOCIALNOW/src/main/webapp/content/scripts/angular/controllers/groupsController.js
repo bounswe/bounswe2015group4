@@ -31,8 +31,10 @@ app.controller('groupsController', function ($scope, sessionService, groupServic
 
     $scope.createGroup = function () {
         groupService.createGroup($scope.group, $scope.user.token).then(function (group) {
-            sessionService.addItems("interestGroups", group);
-            helperService.goToPage('/profile');
+            $scope.currentGroupRoute = $scope.groupRoutes.allGroups;
+
+            getAllGroups();
+            getMyGroups();
         }, function (error) {
             $scope.errorMessage = error;
         });

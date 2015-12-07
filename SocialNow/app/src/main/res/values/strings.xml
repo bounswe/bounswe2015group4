@@ -35,7 +35,6 @@
         <item>Events</item>
         <item>Groups</item>
         <item>Notifications</item>
-        <item>Search</item>
         <item>LOG OUT</item>
     </string-array>
     <string name="drawer_open">Open Drawer</string>

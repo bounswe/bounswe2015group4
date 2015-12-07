@@ -25,8 +25,10 @@
                                 </li>
                             </ul>
 
-                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && follow" ng-click="followUser()"><b>Follow</b></a>
-                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && !follow" ng-click="unfollowUser()"><b>Unfollow</b></a>
+                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && follow"
+                               ng-click="followUser()"><b>Follow</b></a>
+                            <a class="btn btn-primary btn-block" ng-show="!ownProfile && !follow"
+                               ng-click="unfollowUser()"><b>Unfollow</b></a>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
 
@@ -38,6 +40,7 @@
                         <div class="box-body">
 
                             <strong><i class="fa fa-pencil margin-r-5"></i> Interest</strong>
+
                             <p ng-repeat="tag in currentUser.tagsModified">
                                 <span class="label label-info" ng-bind="tag.tag1"></span>
                                 <span class="label label-info" ng-bind="tag.tag2"></span>
@@ -51,32 +54,31 @@
                         <ul class="nav nav-tabs">
                             <li ng-click="currentProfileRoute = profileRoutes.activity" class="active"><a
                                     data-toggle="tab">Activity</a></li>
-                            <li ng-show="ownProfile" ng-click="currentProfileRoute = profileRoutes.edit"><a data-toggle="tab">Edit</a></li>
-                            <li ng-click="currentProfileRoute = profileRoutes.followers"><a data-toggle="tab">Followers</a></li>
-                            <li ng-click="currentProfileRoute = profileRoutes.followings"><a data-toggle="tab">Followings</a></li>
+                            <li ng-show="ownProfile" ng-click="currentProfileRoute = profileRoutes.edit"><a
+                                    data-toggle="tab">Edit</a></li>
+                            <li ng-click="currentProfileRoute = profileRoutes.followers"><a
+                                    data-toggle="tab">Followers</a></li>
+                            <li ng-click="currentProfileRoute = profileRoutes.followings"><a data-toggle="tab">Followings</a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="active" id="activity" ng-show="currentProfileRoute == profileRoutes.activity">
                                 <div class="row">
                                     <section class="content col-md-6">
                                         <div>
-                                            <span class="bg-red">
-                                                Going Events
-                                            </span>
+                                            <h4>Going Events</h4>
+
                                             <div ng-repeat="event in currentUser.participatingEvents">
                                                 <event-summary data="event"></event-summary>
                                             </div>
-                                            <div class="box box-widget"
-                                                 ng-show="currentUser.participatingEvents.length == 0">
-                                                <h3 class="page-header">Nothing to show!</h3>
-                                            </div>
+                                        </div>
+                                        <div ng-show="currentUser.participatingEvents.length == 0">
+                                            <h5>Nothing to show!</h5>
                                         </div>
                                     </section>
                                     <section class="content col-md-6">
                                         <div>
-                                            <span class="bg-red">
-                                                Participating Groups
-                                            </span>
+                                            <h4>Participating Groups</h4>
 
                                             <div ng-repeat="interestGroup in currentUser.interestGroups">
                                                 <group-summary data="interestGroup"></group-summary>
@@ -173,8 +175,10 @@
                                                              alt="attachment image">
 
                                                         <div class="attachment-pushed">
-                                                            <h4 class="attachment-heading" ng-click="goUserProfile(user.user_token)"><a
-                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a></h4>
+                                                            <h4 class="attachment-heading"
+                                                                ng-click="goUserProfile(user.user_token)"><a
+                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a>
+                                                            </h4>
 
                                                             <div class="attachment-text"
                                                                  ng-bind-template="{{user.role}} - {{user.email}}">
@@ -184,14 +188,15 @@
                                                     </div><!-- /.attachment-block -->
 
                                                     <!-- Social sharing buttons -->
-                                                    <button class='btn btn-default btn-xs' ng-click="goUserProfile(user.user_token)"><i
+                                                    <button class='btn btn-default btn-xs'
+                                                            ng-click="goUserProfile(user.user_token)"><i
                                                             class='fa fa-share'></i> Profile
                                                     </button>
                                                 </div><!-- /.box-body -->
                                             </div><!-- /.box -->
                                         </div><!-- /.col -->
                                         <div
-                                             ng-show="!currentUser.followers || currentUser.followers.length == 0">
+                                                ng-show="!currentUser.followers || currentUser.followers.length == 0">
                                             <h5>Nothing to show!</h5>
                                         </div>
                                     </div>
@@ -211,8 +216,10 @@
                                                              alt="attachment image">
 
                                                         <div class="attachment-pushed">
-                                                            <h4 class="attachment-heading" ng-click="goUserProfile(user.user_token)"><a
-                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a></h4>
+                                                            <h4 class="attachment-heading"
+                                                                ng-click="goUserProfile(user.user_token)"><a
+                                                                    ng-bind-template="{{user.name}} {{user.surname}}"></a>
+                                                            </h4>
 
                                                             <div class="attachment-text"
                                                                  ng-bind-template="{{user.role}} - {{user.email}}">
@@ -221,14 +228,15 @@
                                                     </div><!-- /.attachment-block -->
 
                                                     <!-- Social sharing buttons -->
-                                                    <button class='btn btn-default btn-xs' ng-click="goUserProfile(user.user_token)"><i
+                                                    <button class='btn btn-default btn-xs'
+                                                            ng-click="goUserProfile(user.user_token)"><i
                                                             class='fa fa-share'></i> Profile
                                                     </button>
                                                 </div><!-- /.box-body -->
                                             </div><!-- /.box -->
                                         </div><!-- /.col -->
                                         <div
-                                             ng-show="!currentUser.followings || currentUser.followings.length == 0">
+                                                ng-show="!currentUser.followings || currentUser.followings.length == 0">
                                             <h5>Nothing to show!</h5>
                                         </div>
                                     </div>

@@ -7,10 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.FloatingActionButton;
@@ -60,7 +58,6 @@ public class EventActivity extends AppCompatActivity {
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView eventlocation;
-    ImageView img1;
     android.support.design.widget.AppBarLayout img;
     String title;
     String date;
@@ -71,7 +68,6 @@ public class EventActivity extends AppCompatActivity {
     String parti;
     Event e;
     byte[] data;
-    Bitmap bphoto;
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -87,7 +83,6 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-        img1 = (ImageView) findViewById(R.id.ivPhoto);
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
        eventlocation = (TextView) findViewById(R.id.tEventlocation);
@@ -110,16 +105,10 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-        RelativeLayout viewComment=(RelativeLayout)findViewById(R.id.Comment);
-        viewComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
-                //startActivity(viewParti);
-                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
-                startActivity(i2);
-            }
-        });
+        listView=(ListView)findViewById(R.id.lvComment);
+        ListAdapter mAdapter = new MyAdapter(this,R.layout.item_comment,tvParti);
+        listView.setAdapter(mAdapter);
+
 
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
@@ -130,8 +119,8 @@ public class EventActivity extends AppCompatActivity {
             location = extras.getString("location");
             hostName = extras.getString("hostname");
             descrip = extras.getString("description");
-            photo = extras.getString("event_photo");
-            parti = extras.getString("participants");
+            photo = extras.getString("photo");
+            //participants = extras.getString("participants");
             //data = extras.getByteArray("photo");
         }
 
@@ -155,10 +144,6 @@ public class EventActivity extends AppCompatActivity {
             TextView mText = (TextView) customView.findViewById(R.id.tvParti);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
             TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
-            img1 = (ImageView) customView.findViewById(R.id.ivPhoto);
-            new DownloadImageTask((ImageView) customView.findViewById(R.id.ivPhoto))
-                    .execute(photo);
-
             String item = getItem(position);
             mText.setText(item);
             mImg.setImageResource(ivParti[position]);
@@ -203,41 +188,15 @@ public class EventActivity extends AppCompatActivity {
       description.setText(descrip);
       eventdate.setText(date);
 
-     if(parti!=null){
+     /* if(parti!=null){
           participantNumber.setText(parti.length()+" people are going");
-      }
+      }*/
 
       eventlocation.setText(location);
       event_host.setText(hostName);
-
     //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
     //  eventhost.setText(hostName);
     }
 
 
-}
-
- class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
-
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
-    }
-
-    protected Bitmap doInBackground(String... urls) {
-        String urldisplay = urls[0];
-        Bitmap mIcon11 = null;
-        try {
-            InputStream in = new java.net.URL(urldisplay).openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return mIcon11;
-    }
-
-    protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-    }
 }

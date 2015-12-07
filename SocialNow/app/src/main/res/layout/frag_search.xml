@@ -13,7 +13,7 @@
         android:layout_marginBottom="@dimen/big_margin"/>
 
     <Button
-        android:text="Search"
+        android:text="SEARCH"
         android:id="@+id/bSearch"
         android:layout_below="@id/etKeyword"
         android:layout_marginBottom="@dimen/small_margin"
@@ -21,10 +21,11 @@
         style="@style/dBigButton"/>
 
     <Button
-        android:text="Reset"
+        android:text="RESET"
         android:id="@+id/bReset"
         android:layout_below="@id/bSearch"
         android:background="@drawable/cyanbutton"
         style="@style/dBigButton"/>
+
 
 </RelativeLayout>
