@@ -68,7 +68,9 @@ public class GroupFrag extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object listItem = listView.getItemAtPosition(position);
+                Group group = groups.get(position);
                 Intent i2 = new Intent(getActivity(), GroupActivity.class);
+                i2.putExtra("id", group.getId());
                 startActivity(i2);
             }
         });
@@ -133,6 +135,7 @@ public class GroupFrag extends Fragment {
                     .placeholder(R.drawable.devent)
                     .centerCrop()
                     .into(img);
+
             //img.setImageResource(R.drawable.ic_people);
             ImageView privacy = (ImageView) v.findViewById(R.id.ivEDate);
             privacy.setImageResource(R.drawable.ic_lock);
@@ -142,7 +145,14 @@ public class GroupFrag extends Fragment {
             ImageView member = (ImageView) v.findViewById(R.id.ivELocation);
             member.setImageResource(R.drawable.groupdrawer);
             TextView mMember = (TextView) v.findViewById(R.id.tElocation);
-            mMember.setText("XX members");
+            String s = groups.get(position).getGroup_members();
+            int counter = 1;
+            for( int i=0; i<s.length(); i++ ) {
+                if( s.charAt(i) == ',' ) {
+                    counter++;
+                }
+            }
+            mMember.setText(counter+" members");
             TextView update = (TextView) v.findViewById(R.id.tHost);
             update.setVisibility(View.GONE);
            // update.setText("Last update on: ");

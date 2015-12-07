@@ -115,18 +115,16 @@
                                     </section>
                                 </div>
                                 <div ng-show="currentEventRoute == eventRoutes.myEvents">
-                                    <section class="content">
-                                        <div class="row" ng-show="myAllEvents.length != 0"
-                                             ng-repeat="myEvent in myAllEvents">
+                                    <section class="content" ng-show="myAllEvents.length != 0">
+                                        <div class="row" ng-repeat="myEvent in myAllEvents">
                                             <div class="col-md-12">
                                                 <event-summary data="myEvent"></event-summary>
                                             </div>
-
-                                        </div>
-                                        <div ng-show="myAllEvents.length == 0">
-                                            <h5>Nothing to show!</h5>
                                         </div>
                                     </section>
+                                    <div ng-show="myAllEvents.length == 0">
+                                        <h5>Nothing to show!</h5>
+                                    </div>
                                 </div>
                                 <div ng-show="currentEventRoute == eventRoutes.allEvents">
                                     <section class="content" ng-show="allEvents.length != 0">

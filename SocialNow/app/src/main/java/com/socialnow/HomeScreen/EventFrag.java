@@ -73,9 +73,10 @@ public class EventFrag extends Fragment {
                 i2.putExtra("date", event.getEvent_date());
                 i2.putExtra("location", event.getEvent_location());
                 i2.putExtra("hostname", hostUserName);
-                i2.putExtra("participants", event.getEvent_participants());
+                //i2.putExtra("participants", event.getEvent_participants());
                 i2.putExtra("photo", event.getEvent_photo());
                 i2.putExtra("description", event.getEvent_description());
+                i2.putExtra("id", event.getId());
                 startActivity(i2);
             }
         });

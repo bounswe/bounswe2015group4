@@ -11,7 +11,6 @@ app.controller('loginController', function ($scope, userService, sessionService,
             token = user.user_token;
             sessionService.setUserCredentials(user);
             userService.getProfileDetails(token).then(function(currentUser) {
-                sessionService.setUserProfileDetails(currentUser);
                 helperService.goToPage('/');
             })
         }, function (error) {

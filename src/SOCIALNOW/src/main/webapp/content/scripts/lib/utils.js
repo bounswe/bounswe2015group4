@@ -8,6 +8,11 @@
         return a.format("dddd, MMMM Do YYYY");;
     }
 
+    utils.convertDateToApiDate = function(date) {
+        var dateArray = date.split('/');
+        return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+    }
+
     // String manipulation
     utils.trimCharacter = function(str, charachter) {
         if(!str)
