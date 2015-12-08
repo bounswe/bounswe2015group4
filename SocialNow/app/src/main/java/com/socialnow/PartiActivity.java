@@ -73,7 +73,8 @@ public class PartiActivity extends AppCompatActivity {
                 break;
 
             case "EventActivity":
-                mAdapter = new PartiAdapter(this,R.layout.item_parti,tvParti);
+                tvParti = new String[groupMembers.size()];
+                mAdapter = new MemberAdapter(this,R.layout.item_parti,groupMembers);
                 mTitle = "Participants";
                 break;
 

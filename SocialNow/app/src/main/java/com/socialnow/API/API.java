@@ -25,6 +25,7 @@ import com.socialnow.Models.Group_Detail;
 import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
+import com.socialnow.Users.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
@@ -166,6 +167,20 @@ public class API {
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/addPost",
                 Group.class, successListener, failureListener)
                 .setPostBodyInJSONForm(body).setTag(tag));
+    }
+
+    public static void joinEvent(String tag, long id, Response.Listener<Event> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",event_id:" + id + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/addParticipant",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void leaveEvent(String tag, long id, Response.Listener<Event> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",event_id:" + id + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/removeParticipant",
+                Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
     private static class GeneralRequest<T> extends Request<T> {

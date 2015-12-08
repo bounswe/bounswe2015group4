@@ -117,7 +117,10 @@ public class EventFrag extends Fragment {
                     .centerCrop()
                     .into(img);
             User[] hostUser = events.get(position).getEvent_participant_users();
-            hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
+            if(hostUser.length > 0)
+                hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
+            else
+                hostUserName = "";
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
             eventdate.setText(ft.format(new Date(events.get(position).getEvent_date())));
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);

@@ -168,8 +168,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 5) {
-            if (Utils.getCurrentUserMode()) {
+        if (position == 6) {
+            if (Utils.getCurrentUserMode() || Utils.getCurrentUser() != null) {
                 try {
                     Utils.logout();
                 } catch (IOException e) {
@@ -177,6 +177,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
                 }
                 Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i2);
+                finish();
             } else {
                 Log.d("error_logout", "logout failed");
             }

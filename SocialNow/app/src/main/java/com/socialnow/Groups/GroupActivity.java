@@ -176,6 +176,7 @@ public class GroupActivity extends AppCompatActivity {
               if(response != null) {
                   myGroup = response;
                   groupMembers = myGroup.getGroup_members();
+                  groupMembers.add(0, myGroup.getOwner());
                   groupPosts = myGroup.getGroup_posts();
                   Log.d("Group", response.toString());
                   writeToList();
@@ -200,7 +201,7 @@ public class GroupActivity extends AppCompatActivity {
         toolBarLayout.setTitle(myGroup.getGroup_name());
         Drawable d = new BitmapDrawable(getResources(), getBitmapFromURL(myGroup.getGroup_photo()));
         img.setBackground(d);
-        int memberNumer = myGroup.getGroup_members().size()+1;
+        int memberNumer = myGroup.getGroup_members().size();
         mMember.setText(memberNumer +" Members");
         comment.setText(myGroup.getGroup_posts().size()+  " Posts");
 

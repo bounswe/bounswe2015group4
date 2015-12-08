@@ -3,7 +3,11 @@ package com.socialnow.Users;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.socialnow.API.API;
 import com.socialnow.App;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
@@ -93,5 +97,32 @@ public class Utils {
     public static void logout() throws IOException {
         cacheUser(new User());
         setCurrentUser(false, null);
+    }
+    public static void  updateProfile() {
+        Response.Listener<Profile> response = new Response.Listener<Profile>() {
+            @Override
+            public void onResponse(Profile response) {
+                if (response.getName() != null) {
+                    Log.d("Profile", "success " + response.getEmail() + " " + response.getName());
+
+                    // Writing data to SharedPreferences
+                    Utils.cacheProfile(response);
+                    currentProfile = response;
+
+                }else{
+                    Log.d("Login", "Error: " + response.getUser_token());
+                    Log.d("Wrong credentials:", "Not valid username and password");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Login Failed");
+
+            }
+        };
+        API.profileInfo("profile", Utils.getCurrentUser().getUser_token(), response, errorListener);
     }
 }

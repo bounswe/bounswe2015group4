@@ -41,6 +41,7 @@ import com.socialnow.Models.Event_Detail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+import com.socialnow.Users.Utils;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -77,7 +78,7 @@ public class EventActivity extends AppCompatActivity {
     ArrayList<User> parti;
     int parti_number;
     Long id;
-    Event e;
+    Event_Detail e;
     byte[] data;
 
     //Dummy Comment List
@@ -106,29 +107,6 @@ public class EventActivity extends AppCompatActivity {
 
          toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
        // toolBarLayout.setTitle("Title");
-
-
-        RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Parti);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "EventActivity");
-                startActivity(viewParti);
-            }
-        });
-
-        RelativeLayout viewComment=(RelativeLayout)findViewById(R.id.Comment);
-        viewComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
-                //startActivity(viewParti);
-                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
-                startActivity(i2);
-            }
-        });
-
-
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             title= null;
@@ -145,6 +123,74 @@ public class EventActivity extends AppCompatActivity {
 
         }
 
+        RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Parti);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "EventActivity");
+                PartiActivity.groupMembers = e.getEvent_participants();
+                startActivity(viewParti);
+            }
+        });
+
+        RelativeLayout viewComment=(RelativeLayout)findViewById(R.id.Comment);
+        viewComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                //Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                //startActivity(i2);
+            }
+        });
+
+        boolean participated = false;
+        if(Utils.getCurrentProfile().getUser_participating_events() != null)
+            for(Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
+                if (ee.getId() == id) {
+                    participated = true;
+                    break;
+                }
+            }
+
+
+        final RelativeLayout viewJoin=(RelativeLayout)findViewById(R.id.Join);
+        if(participated){
+            viewJoin.setBackgroundResource(R.drawable.purplebutton);
+            TextView tv = (TextView) findViewById(R.id.tJoin);
+            tv.setText("LEAVE");
+        }
+
+        viewJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                boolean participated = false;
+                Log.d("asd", (Utils.getCurrentProfile() == null) + "ad");
+                Log.d("asd", "ad" + (Utils.getCurrentProfile().getUser_participating_events() == null));
+                if(Utils.getCurrentProfile().getUser_participating_events() != null)
+                 for(Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
+                     Log.d("asd", "ad" + ee.getId() + "asd " + e.getId());
+                     if (ee.getId() == id) {
+                         participated = true;
+                         break;
+                     }
+                 }
+
+                if(!participated) {
+                    joinToTheGroup();
+                    viewJoin.setBackgroundResource(R.drawable.purplebutton);
+                }else {
+                    leaveTheGroup();
+                    viewJoin.setBackgroundResource(R.drawable.cyanbutton);
+                }
+            }
+        });
+
+
+
+
        // e = extras.getParcelable("Event");
 
         getData();
@@ -154,6 +200,75 @@ public class EventActivity extends AppCompatActivity {
         writeToList();
 
     }
+
+    private void leaveTheGroup() {
+        TextView tv = (TextView) findViewById(R.id.tJoin);
+        tv.setText("JOIN");
+        Response.Listener<Event> response = new Response.Listener<Event>() {
+            @Override
+            public void onResponse(Event response) {
+                if(response.getId() != -1) {
+                    Log.d("Event", "Leave success " + response.getEvent_description());
+
+
+                    parti_number--;
+                    participantNumber.setText(parti_number+" people are going");
+
+
+                    Utils.updateProfile();
+                    getData();
+
+                    ImageView v = (ImageView) findViewById(R.id.ivArrow4);
+                    v.setImageDrawable(getResources().getDrawable(R.drawable.rightarrow));
+                }else{
+                    Log.d("Leave", "Error: Unknown");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Leave Failed");
+
+            }
+        };
+        API.leaveEvent("leaveEvent", e.getId(), response, errorListener);
+    }
+
+    private void joinToTheGroup() {
+        TextView tv = (TextView) findViewById(R.id.tJoin);
+        tv.setText("LEAVE");
+        Response.Listener<Event> response = new Response.Listener<Event>() {
+            @Override
+            public void onResponse(Event response) {
+                if(response.getId() != -1) {
+                    Log.d("Event", "Join success " + response.getEvent_description());
+                    Utils.updateProfile();
+                    getData();
+
+                    parti_number++;
+                    participantNumber.setText(parti_number + " people are going");
+
+
+                    ImageView v = (ImageView) findViewById(R.id.ivArrow4);
+                    v.setImageDrawable(getResources().getDrawable(R.drawable.leftarrow));
+                }else{
+                    Log.d("Join", "Error: Unknown");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Join Failed");
+
+            }
+        };
+        API.joinEvent("joinEvent", e.getId(), response, errorListener);
+    }
+
     class MyAdapter extends ArrayAdapter<String> {
         public MyAdapter(Context context, int resource, String[] tvParti) {
             super(context, R.layout.item_comment, tvParti);
@@ -190,7 +305,7 @@ public class EventActivity extends AppCompatActivity {
             public void onResponse(Event_Detail response) {
                 if(response != null) {
                     Log.d("Event", response.toString());
-
+                    e = response;
                     parti = response.getEvent_participants();
                     Log.d("event participants: " , parti.toString());
                     parti_number = parti.size();
