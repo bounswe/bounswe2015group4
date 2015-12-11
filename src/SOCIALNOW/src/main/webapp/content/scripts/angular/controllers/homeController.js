@@ -8,6 +8,5 @@ app.controller('homeController', function ($scope, userService, sessionService, 
             $scope.recommendationsEnabled = true;
         });
     }
-
     init();
 });

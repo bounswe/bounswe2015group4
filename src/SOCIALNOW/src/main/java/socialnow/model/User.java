@@ -17,8 +17,6 @@ public class User {
     // ------------------------
     // PRIVATE FIELDS
     // ------------------------
-    @Transient
-    String type;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -261,8 +259,5 @@ public class User {
             user_photo = u_f.getUser_photo();
     }
 
-    public String getType() {
-        return type;
-    }
 
 } // class User

@@ -88,13 +88,6 @@ public class Event  {
 
     }
 
-    public String getType() {
-        return type;
-    }
-
-    @Transient
-    String type;
-
 
     public Event(Error_JSON e) {
         id = -1;

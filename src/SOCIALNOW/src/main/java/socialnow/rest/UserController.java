@@ -73,11 +73,6 @@ public class UserController {
     } else {
         return user;
     }
-
-
-
-
-
   }
 
     @RequestMapping( value = "/edit_user", method = RequestMethod.POST)
