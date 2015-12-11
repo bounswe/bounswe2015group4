@@ -47,6 +47,7 @@ public class Interest_Group_Controller {
         Interest_Group ig = new Interest_Group(form);
         User u = userDao.getByToken(form.getOwner_token());
         u.setUser_tags(u.getUser_tags()+ ig.getTags());
+        ig.setGroup_members(ig.getGroup_members()+","+ u.getUser_token());
         groupDao.create(ig);
         u.setUser_interest_groups(u.getUser_interest_groups()+","+ig.getId());
         userDao.update(u);

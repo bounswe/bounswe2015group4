@@ -13,6 +13,14 @@ import javax.validation.constraints.NotNull;
 @Table(name = "notifications")
 public class Notification {
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -27,9 +35,9 @@ public class Notification {
     @NotNull
     long  event;
 
-    public Notification(String fromUser, String toUser, long event) {
-        this.from_user = fromUser;
-        this.to_user = toUser;
+    public Notification(String from_user, String to_user, long event) {
+        this.from_user = from_user;
+        this.to_user = to_user;
         this.event = event;
     }
 
@@ -40,7 +48,6 @@ public class Notification {
         this.event = form.getEvent_id();
 
     }
-
 
     public Notification() {
 
@@ -55,19 +62,19 @@ public class Notification {
         this.event = event;
     }
 
-    public String getToUser() {
+    public String getTo_user() {
         return to_user;
     }
 
-    public void setToUser(String toUser) {
+    public void setTo_user(String toUser) {
         this.to_user = toUser;
     }
 
-    public String getFromUser() {
+    public String getFrom_user() {
         return from_user;
     }
 
-    public void setFromUser(String fromUser) {
+    public void setFrom_user(String fromUser) {
         this.from_user = fromUser;
     }
 

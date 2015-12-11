@@ -4,6 +4,9 @@ package socialnow.forms.Notification;
  * Created by Erdem on 12/11/2015.
  */
 public class Notification_Form {
+
+
+
     public Notification_Form(String from_user_token, String to_user_token, long event_id) {
         this.from_user_token = from_user_token;
         this.to_user_token = to_user_token;
@@ -12,6 +15,13 @@ public class Notification_Form {
 
     public Notification_Form() {
 
+    }
+
+    public Notification_Form(String from_user_token, String to_user_token, long event_id, long group_id) {
+        this.from_user_token = from_user_token;
+        this.to_user_token = to_user_token;
+        this.event_id = event_id;
+        this.group_id = group_id;
     }
 
     public String getFrom_user_token() {
@@ -42,6 +52,16 @@ public class Notification_Form {
     String from_user_token;
     String to_user_token;
     long event_id;
+
+    public long getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(long group_id) {
+        this.group_id = group_id;
+    }
+
+    long group_id;
 
 
 

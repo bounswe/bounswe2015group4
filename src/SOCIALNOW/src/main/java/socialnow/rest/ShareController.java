@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.Utils.Error_JSON;
 import socialnow.Utils.Util;
-import socialnow.dao.EventDao;
-import socialnow.dao.NotificationDao;
-import socialnow.dao.PostDao;
-import socialnow.dao.UserDao;
+import socialnow.dao.*;
 import socialnow.forms.Notification.Notification_Form;
 import socialnow.forms.User.Login_Form;
 import socialnow.forms.User.User_Token_Form;
+import socialnow.model.Interest_Group;
 import socialnow.model.Notification;
 import socialnow.model.Notification_Detail;
 import socialnow.model.User;
@@ -35,7 +33,7 @@ public class ShareController {
     private UserDao userDao;
 
     @Autowired
-    private PostDao postDao;
+    private Interest_GroupDao groupDao;
     @Autowired
     private NotificationDao notificationDao;
 
@@ -52,6 +50,40 @@ public class ShareController {
         return  notf;
     }
 
+    @RequestMapping( value = "/removeNotification", method = RequestMethod.POST)
+    public @ResponseBody
+    User removeNotification(@RequestBody String user_token) {
+        User_Token_Form form = gson.fromJson(user_token, User_Token_Form.class);
+        notificationDao.removeToUser(form.getUser_token());
+        return  userDao.getByToken(form.getUser_token());
+    }
+
+
+
+    @RequestMapping( value = "/groups/shareEvent", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Notification> shareWithGroup(@RequestBody String notification_form_data) {
+        List<Notification> notfs = new ArrayList<>();
+        Notification_Form form = gson.fromJson(notification_form_data, Notification_Form.class);
+        Interest_Group group = groupDao.getById(form.getGroup_id());
+        String members = group.getGroup_members();
+        members = members.substring(1);
+        String[] memberTokens = members.split(",");
+        for (int i = 0; i <memberTokens.length ; i++) {
+            String memberToken = memberTokens[i];
+            Notification notf = new Notification();
+            notf.setEvent(form.getEvent_id());
+            notf.setFrom_user(form.getFrom_user_token());
+            notf.setTo_user(memberToken);
+            notificationDao.create(notf);
+            notfs.add(notf);
+        }
+        return  notfs;
+    }
+
+
+
+
     @RequestMapping( value = "/users/getNotifications", method = RequestMethod.POST)
     public @ResponseBody
     List<Notification_Detail> getNotification(@RequestBody String userToken) {
@@ -61,8 +93,8 @@ public class ShareController {
         for (Notification notf: notfs) {
             Notification_Detail detail = new Notification_Detail();
             detail.setEvent(eventDao.getById(notf.getEvent()));
-            detail.setFrom_user(userDao.getByToken(notf.getFromUser()));
-            detail.setTo_user(userDao.getByToken(notf.getToUser()));
+            detail.setFrom_user(userDao.getByToken(notf.getFrom_user()));
+            detail.setTo_user(userDao.getByToken(notf.getTo_user()));
 
             notfDetailList.add(detail);
         }

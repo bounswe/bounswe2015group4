@@ -69,6 +69,7 @@ public class RecommendationController {
                     String [] postUSers = e.getGroup_members().split(",");
                     for (int i = 0; i <postUSers.length ; i++) {
                         if(!postUSers[i].equals("")){
+                            log.info("");
                             User u= userDao.getByToken(postUSers[i]);
                             String user_tags = u.getUser_tags();
                             if (user_tags.contains(",")){
@@ -100,15 +101,12 @@ public class RecommendationController {
 
                     }
             }
-
-
-
         }else{
 
             return suggests;
         }
 
-return suggests;
+    return suggests;
     }
 
 

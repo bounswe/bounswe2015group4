@@ -4,6 +4,7 @@ import socialnow.model.Event;
 import socialnow.model.Notification;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class NotificationDao {
     }
 
 
+
+
     public void delete(Notification notf) {
         if (entityManager.contains(notf))
             entityManager.remove(notf);
@@ -44,6 +47,12 @@ public class NotificationDao {
 
     public List<Notification> getAllByToken(String token){
         return entityManager.createQuery("from Notification where to_user =:to_user").setParameter("to_user",token).getResultList();
+
+    }
+
+    public void removeToUser(String token){
+        String hql = "delete from Notification  where to_user =:token";
+        entityManager.createQuery(hql).setParameter("token", token).executeUpdate();
 
     }
 
