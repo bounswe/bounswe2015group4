@@ -29,51 +29,51 @@ import java.util.logging.Logger;
 @RestController
 public class UserController {
 
-  // ------------------------
-  // PUBLIC METHODS
-  // ------------------------
+    // ------------------------
+    // PUBLIC METHODS
+    // ------------------------
 
-  final Gson gson = new Gson();
+    final Gson gson = new Gson();
     Logger log = Logger.getLogger("USERCONTROLLER");
 
-  @RequestMapping( value = "/signUp", method = RequestMethod.POST)
-  public @ResponseBody
-  User signUp(@RequestBody String formData) {
+    @RequestMapping( value = "/signUp", method = RequestMethod.POST)
+    public @ResponseBody
+    User signUp(@RequestBody String formData) {
 
-    User_Form user_form = gson.fromJson(formData, User_Form.class);
-    user_form.setUser_token(Util.generate_token());
-    log.info(user_form.toString());
-    User user = new User(user_form);
-      try {
-          userDao.create(user);
-      }
-      catch(Exception e){
-          if(e instanceof org.springframework.dao.DataIntegrityViolationException){
-              Error_JSON errorJSON = new Error_JSON();
-              errorJSON.setCode(8081);
-              errorJSON.setMessage("Email exists: " + e.toString());
-              return new User(errorJSON);
-          }
-      }
-    return user;
-  }
-
-  @RequestMapping( value = "/login", method = RequestMethod.POST)
-  public @ResponseBody
-  User login(@RequestBody String loginFormData) {
-    Login_Form form = gson.fromJson(loginFormData, Login_Form.class);
-
-    User user = userDao.getByEmail(form.getEmail());
-
-    if (!user.getPassword().equals(Util.hash(form.getPassword()))) {
-        Error_JSON errorJSON = new Error_JSON();
-        errorJSON.setCode(8080);
-        errorJSON.setMessage("No user found");
-        return new User(errorJSON);
-    } else {
+        User_Form user_form = gson.fromJson(formData, User_Form.class);
+        user_form.setUser_token(Util.generate_token());
+        log.info(user_form.toString());
+        User user = new User(user_form);
+        try {
+            userDao.create(user);
+        }
+        catch(Exception e){
+            if(e instanceof org.springframework.dao.DataIntegrityViolationException){
+                Error_JSON errorJSON = new Error_JSON();
+                errorJSON.setCode(8081);
+                errorJSON.setMessage("Email exists: " + e.toString());
+                return new User(errorJSON);
+            }
+        }
         return user;
     }
-  }
+
+    @RequestMapping( value = "/login", method = RequestMethod.POST)
+    public @ResponseBody
+    User login(@RequestBody String loginFormData) {
+        Login_Form form = gson.fromJson(loginFormData, Login_Form.class);
+
+        User user = userDao.getByEmail(form.getEmail());
+
+        if (!user.getPassword().equals(Util.hash(form.getPassword()))) {
+            Error_JSON errorJSON = new Error_JSON();
+            errorJSON.setCode(8080);
+            errorJSON.setMessage("No user found");
+            return new User(errorJSON);
+        } else {
+            return user;
+        }
+    }
 
     @RequestMapping( value = "/edit_user", method = RequestMethod.POST)
     public User edit_user(@RequestBody String formData) {
@@ -92,7 +92,7 @@ public class UserController {
     @RequestMapping( value = "/showProfileDetails", method = RequestMethod.POST)
     public Profile showProfileDetails(@RequestBody String userToken) {
 
-       User_Token_Form form = gson.fromJson(userToken, User_Token_Form.class);
+        User_Token_Form form = gson.fromJson(userToken, User_Token_Form.class);
         User u = userDao.getByToken(form.getUser_token());
         log.info(u.toString());
         Profile p = new Profile(u);
@@ -135,7 +135,7 @@ public class UserController {
             }
         }
 
-    p.setUser_following(usersFollowing);
+        p.setUser_following(usersFollowing);
         ArrayList<User> usersFollower= new ArrayList<>();
 
         arr = u.getUser_followers().split(",");
@@ -193,9 +193,9 @@ public class UserController {
 
 
 
-  // Wire the UserDao used inside this controller.
-  @Autowired
-  private UserDao userDao;
+    // Wire the UserDao used inside this controller.
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private EventDao eventDao;
     @Autowired

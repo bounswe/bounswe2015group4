@@ -37,7 +37,7 @@ public class SearchController {
     @RequestMapping( value = "/search", method = RequestMethod.POST)
     public @ResponseBody
     SearchReturn search(@RequestBody String search) throws UnirestException {
-      SearchReturn searchReturn = new SearchReturn();
+        SearchReturn searchReturn = new SearchReturn();
         List<Event> events = eventDao.getAll();
         List<Interest_Group> groups = groupDao.getAll();
         List<User> users = userDao.getAll();
@@ -48,18 +48,18 @@ public class SearchController {
         }
         for (User user : users) {
             if(user.getSurname().equalsIgnoreCase(search)|| user.getName().equalsIgnoreCase(search)  )  {
-             searchReturn.getUsers().add(user);
+                searchReturn.getUsers().add(user);
 
             }
         }
         for (Interest_Group group : groups) {
             if(group.getGroup_description().toLowerCase().contains(search.toLowerCase()) || group.getTags().contains(search)){
-              searchReturn.getGroups().add(group);
+                searchReturn.getGroups().add(group);
             }
         }
 
 
-return searchReturn;
+        return searchReturn;
     }
 
 
