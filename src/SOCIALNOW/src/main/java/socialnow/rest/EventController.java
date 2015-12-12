@@ -19,7 +19,9 @@ import socialnow.model.*;
 import java.util.*;
 import java.util.logging.Logger;
 
-
+/**
+ * Event related requests are here
+ */
 @RestController
 public class EventController {
     @Autowired
@@ -40,6 +42,12 @@ public class EventController {
     Gson gson = new GsonBuilder()
             .setDateFormat("dd/mm/yyyy")
             .create();
+
+    /**
+     * creates an event with the parameters given in request.
+     * @param addEventForm
+     * @return
+     */
     @RequestMapping( value = "/createEvent", method = RequestMethod.POST)
     public @ResponseBody
     Event addEvent(@RequestBody String addEventForm) {
@@ -54,7 +62,11 @@ public class EventController {
         return e;
     }
 
-
+    /**
+     * adds a created post to an event, updates event posts
+     * @param addPostEventForm
+     * @return
+     */
     @RequestMapping( value = "/events/addPost", method = RequestMethod.POST)
     public @ResponseBody
     Event addPost(@RequestBody String addPostEventForm) {
@@ -66,14 +78,23 @@ public class EventController {
         return e;
     }
 
-
+    /**
+     * semantic tagging related, returns exactly what wikidata would return
+     * @param search
+     * @return
+     * @throws UnirestException
+     */
     @RequestMapping( value = "/deneme", method = RequestMethod.POST)
     public @ResponseBody
     SemanticResponse FOOO(@RequestBody String search) throws UnirestException {
         return  RequestSender.searchSemantics(search);
     }
 
-
+    /**
+     * adds a user to an event, updates both event and user.
+     * @param token
+     * @return
+     */
     @RequestMapping(value = "/events/addParticipant", method = RequestMethod.POST)
     public @ResponseBody Event addParticipant(@RequestBody String token){
         User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
@@ -103,7 +124,11 @@ public class EventController {
     }
 
 
-
+    /**
+     * removes a user from an event, updates both event and user
+     * @param token
+     * @return
+     */
     @RequestMapping(value = "/events/removeParticipant", method = RequestMethod.POST)
     public @ResponseBody Event removeParticipant(@RequestBody String token){
         User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
@@ -135,7 +160,10 @@ public class EventController {
     }
 
 
-
+    /**
+     * lists all events in the database with small extension of Event class
+     * @return
+     */
     @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
     public @ResponseBody
     List<Event> listAllEvents(){
@@ -148,6 +176,11 @@ public class EventController {
         return  eventlistFilled;
     }
 
+    /**
+     * lists all events created by a specific user
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/listMyEvents", method = RequestMethod.POST)
     public @ResponseBody
     List<Event> listEventOfUser(@RequestBody String token){
@@ -161,6 +194,11 @@ public class EventController {
         return  eventlistFilled;
     }
 
+    /**
+     * lists all the events that a user attends
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/listAttendingEvents", method = RequestMethod.POST)
     public @ResponseBody
     List<Event> listEventsParticipated(@RequestBody String token){
@@ -185,6 +223,12 @@ public class EventController {
         return eventList;
     }
 
+    /**
+     * returns the extended version of Event,
+     * opens up all other sub objects and gives their details as well
+     * @param eventId
+     * @return
+     */
     @RequestMapping( value = "/events/getEventDetail", method = RequestMethod.POST)
     public @ResponseBody
     EventDetail getEventDetails(@RequestBody String eventId){
@@ -224,7 +268,11 @@ public class EventController {
         return eventDetail;
     }
 
-
+    /**
+     * an util method to open up users of an event
+     * @param event
+     * @return
+     */
     public  Event fillEvent(Event event){
         String [] participantId = event.event_participants.split(",");
         List<User> users = new ArrayList<User>();

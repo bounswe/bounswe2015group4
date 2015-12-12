@@ -2,8 +2,7 @@ package socialnow.model;
 
 import socialnow.forms.Event.Instant_Event_Form;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 
@@ -14,6 +13,9 @@ import java.util.Calendar;
 @Table(name = "instant_events")
 public class Instant_Event {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     @NotNull
     Calendar date;
     @NotNull
@@ -48,6 +50,8 @@ public class Instant_Event {
         duration_in_minutes = form.getDuration_in_minutes();
         title= form.getTitle();
         instant_event_description =form.getInstant_event_description();
+        instant_event_location = form.getInstant_event_location();
+        instant_event_owner = form.getInstant_event_owner();
     }
 
     public Instant_Event(Calendar date, int duration_in_minutes, String instant_event_description, String title) {

@@ -12,13 +12,10 @@ import socialnow.dao.EventDao;
 import socialnow.dao.Interest_GroupDao;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
-import socialnow.forms.User.User_Form;
 import socialnow.forms.User.User_Token_Form;
 import socialnow.model.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -39,6 +36,14 @@ public class RecommendationController {
             .create();
     Logger log = Logger.getLogger("Recommendation Controller");
 
+    /**
+     * finds the most occurrent 3 tags of the user that is sent as a parameter to the request
+     * In events and groups finds the events and groups that contain one of these user_tags
+     * Finds the all users those are in these events or groups and finds the most common 3 tags of them.
+     * Lastly, lists all the groups and events containing these tags
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/recommend", method = RequestMethod.POST)
     public RecommendReturn recommend(@RequestBody String token) {
         User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
@@ -88,7 +93,7 @@ public class RecommendationController {
             }
             array[twoDtags.size()][0] = null;
 
-            String [] recommendedTags = Util.find_common(array,2);
+            String [] recommendedTags = Util.findCommon(array,2);
 
             for (Event e: events) {
                 if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getEvent_participant_users().contains(user.getUser_token()) && !e.getEvent_host_token().contains(user.getUser_token())){

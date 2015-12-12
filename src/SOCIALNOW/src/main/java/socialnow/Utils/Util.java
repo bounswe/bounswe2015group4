@@ -40,9 +40,17 @@ public class Util {
                 return true;
         }
 
+
         return false;
     }
-    public static String[] find_common(String[][] tags,int K) {
+
+    /**
+     * receives a 2D array of tags that belong to users, finds the most occurent one among those
+     * @param tags
+     * @param K
+     * @return
+     */
+    public static String[] findCommon(String[][] tags, int K) {
         // TODO Auto-generated method stub
         Set<String> allTags = new TreeSet<String>();
         int N=0;
@@ -84,7 +92,12 @@ public class Util {
     }
 
 
-
+    /**
+     * deletes all elements of second parameter in the first parameter but only one time
+     * @param arr
+     * @param elems
+     * @return
+     */
     public static String deleteFromArray(String[] arr, String[] elems){
         String result = "";
         int count = 0 ;
@@ -98,6 +111,12 @@ public class Util {
         }
         return result;
     }
+
+    /**
+     * finds the most occurent 3 tags of a user
+     * @param tags
+     * @return
+     */
   public static String[] findMostOccurence(String[] tags){
        String[] result = new String[3];
       result[0]="";
@@ -151,9 +170,12 @@ public class Util {
     }
 
 
-
-
-
+    /**
+     * deletes elem from the first array
+     * @param arr
+     * @param elem
+     * @return
+     */
     public static String deleteFromArray(String[] arr, String elem){
         String result = "";
 
@@ -167,6 +189,10 @@ public class Util {
     return result;
     }
 
+    /**
+     * generates a token for a new user
+     * @return
+     */
     public static String generate_token(){
         return UUID.randomUUID().toString();
     }

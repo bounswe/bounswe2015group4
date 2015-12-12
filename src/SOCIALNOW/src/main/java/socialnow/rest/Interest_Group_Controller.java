@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * Created by Erdem on 12/4/2015.
+ *
+ * Interest group related requests are here
  */
 
 @RestController
@@ -40,6 +42,12 @@ public class Interest_Group_Controller {
     Gson gson = new GsonBuilder()
             .setDateFormat("dd/mm/yyyy")
             .create();
+
+    /**
+     * Creates an interest group object and puts it into database, request sends the parameters
+     * @param addGroupForm
+     * @return
+     */
     @RequestMapping( value = "/createInterestGroup", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group addGroup(@RequestBody String addGroupForm) {
@@ -54,7 +62,11 @@ public class Interest_Group_Controller {
         return  ig;
     }
 
-
+    /**
+     * adds a created post to a group, updates group posts
+     * @param addPostForm
+     * @return
+     */
     @RequestMapping( value = "/groups/addPost", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group addPost(@RequestBody String addPostForm) {
@@ -67,8 +79,11 @@ public class Interest_Group_Controller {
     }
 
 
-
-
+    /**
+     * adds a user to a group, updates both group and user
+     * @param addMemberForm
+     * @return
+     */
     @RequestMapping( value = "/groups/addMember", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group addMember(@RequestBody String addMemberForm) {
@@ -88,6 +103,11 @@ public class Interest_Group_Controller {
         groupDao.update(ig);
         return  ig;
     }
+    /**
+     * removes  a user from a group, updates both group and user
+     * @param addMemberForm
+     * @return
+     */
     @RequestMapping( value = "/groups/removeMember", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group removeMember(@RequestBody String addMemberForm) {
@@ -107,7 +127,12 @@ public class Interest_Group_Controller {
         groupDao.update(ig);
         return  ig;
     }
-
+    /**
+     * returns the extended version of Interest_Group,
+     * opens up all other sub objects and gives their details as well
+     * @param addMemberForm
+     * @return
+     */
     @RequestMapping( value = "/groups/showGroupDetail", method = RequestMethod.POST)
     public @ResponseBody
     Interest_Group_Detail showGroupDetail(@RequestBody String addMemberForm) {

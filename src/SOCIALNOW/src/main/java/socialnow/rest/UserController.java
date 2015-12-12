@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 /**
  * Class UserController
+ *  user related requests are here
  */
 @RestController
 public class UserController {
@@ -36,6 +37,11 @@ public class UserController {
     final Gson gson = new Gson();
     Logger log = Logger.getLogger("USERCONTROLLER");
 
+    /**
+     * adds a new user to database
+     * @param formData
+     * @return
+     */
     @RequestMapping( value = "/signUp", method = RequestMethod.POST)
     public @ResponseBody
     User signUp(@RequestBody String formData) {
@@ -58,6 +64,12 @@ public class UserController {
         return user;
     }
 
+    /**
+     * checks if such a user exits, if so returns the details of the user
+     * otherwise error
+     * @param loginFormData
+     * @return
+     */
     @RequestMapping( value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     User login(@RequestBody String loginFormData) {
@@ -75,6 +87,11 @@ public class UserController {
         }
     }
 
+    /**
+     * edits the information of the user according to the new parameters of the request
+     * @param formData
+     * @return
+     */
     @RequestMapping( value = "/edit_user", method = RequestMethod.POST)
     public User edit_user(@RequestBody String formData) {
 
@@ -88,7 +105,11 @@ public class UserController {
     }
 
 
-
+    /**
+     * Gives all the information related to user, opens up every sub object and returns them
+     * @param userToken
+     * @return
+     */
     @RequestMapping( value = "/showProfileDetails", method = RequestMethod.POST)
     public Profile showProfileDetails(@RequestBody String userToken) {
 
@@ -126,7 +147,6 @@ public class UserController {
         }
         p.setUser_participating_events(events);
         arr = u.getUser_followings().split(",");
-        log.info(u.getUser_followings()+"          asdasdsd");
         ArrayList<User> usersFollowing= new ArrayList<>();
         for (int i = 0; i <arr.length ; i++) {
             if(!arr[i].equals("")){
@@ -150,16 +170,11 @@ public class UserController {
     }
 
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     * adds a follower, updates both users
+     * @param followUSerForm
+     * @return
+     */
     @RequestMapping( value = "/followUser", method = RequestMethod.POST)
     public User followUser(@RequestBody String followUSerForm) {
         Follow_User_Form fuf = gson.fromJson(followUSerForm, Follow_User_Form.class);
@@ -174,6 +189,11 @@ public class UserController {
         return u1;
     }
 
+    /**
+     * adds a following, updates both users
+     * @param followUSerForm
+     * @return
+     */
     @RequestMapping( value = "/unFollowUser", method = RequestMethod.POST)
     public User unFollowUser(@RequestBody String followUSerForm) {
         Follow_User_Form uuf = gson.fromJson(followUSerForm, Follow_User_Form.class);
@@ -187,12 +207,6 @@ public class UserController {
         userDao.update(u2);
         return u1;
     }
-
-
-
-
-
-
     // Wire the UserDao used inside this controller.
     @Autowired
     private UserDao userDao;

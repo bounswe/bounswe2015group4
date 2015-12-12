@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by Erdem on 12/11/2015.
+ * Sharing related requests are here now
  */
 
 @RestController
