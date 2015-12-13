@@ -7,6 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import socialnow.dao.*;
 import socialnow.forms.Event.Instant_Event_Form;
 import socialnow.model.Instant_Event;
+import socialnow.model.Instant_Event_Details;
+import socialnow.model.User;
+import sun.util.resources.cldr.aa.CalendarData_aa_ER;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Erdem on 12/12/2015.
@@ -38,12 +45,44 @@ public class Instant_Event_Controller {
     }
 
 
+    @RequestMapping( value = "/getInstantEvent", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Instant_Event_Details> getInstantEvent(@RequestBody String addEventForm) {
+        List<Instant_Event_Details> result = new ArrayList<>();
+        List<Instant_Event> events =  instant_eventDao.getAll();
+        deleteInstantEvents(events);
+        events =  instant_eventDao.getAll();
+        for (Instant_Event e: events) {
+
+            User u = userDao.getByToken(e.getInstant_event_owner());
+            Instant_Event_Details ie = new Instant_Event_Details(e);
+            result.add(ie);
+        }
+        return result;
+    }
 
 
 
 
 
 
+
+
+
+
+
+public void deleteInstantEvents(List<Instant_Event> events){
+    for (Instant_Event e: events) {
+        e.getDate().add(Calendar.MINUTE, e.getDuration_in_minutes());
+        if(e.getDate().compareTo( Calendar.getInstance()) < 0 ){
+            instant_eventDao.delete(e);
+        }else {
+            e.getDate().add(Calendar.MINUTE, e.getDuration_in_minutes()*-1);
+        }
+    }
+
+
+}
 
 
 }

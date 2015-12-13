@@ -13,12 +13,25 @@ import java.util.Calendar;
 @Table(name = "instant_events")
 public class Instant_Event {
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @NotNull
     Calendar date;
+
+    public Instant_Event() {
+    }
+
     @NotNull
+
     int duration_in_minutes;
     @NotNull
     String instant_event_description;

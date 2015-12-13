@@ -37,7 +37,7 @@ public class Instant_EventDao {
      */
     @SuppressWarnings("unchecked")
     public List<Instant_Event> getAll() {
-        return entityManager.createQuery("from Event").getResultList();
+        return entityManager.createQuery("from Instant_Event").getResultList();
     }
 
     public List<Instant_Event> getAllByToken(String token){
