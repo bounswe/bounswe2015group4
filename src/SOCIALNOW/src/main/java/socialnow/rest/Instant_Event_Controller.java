@@ -61,16 +61,6 @@ public class Instant_Event_Controller {
         return result;
     }
 
-
-
-
-
-
-
-
-
-
-
 public void deleteInstantEvents(List<Instant_Event> events){
     for (Instant_Event e: events) {
         e.getDate().add(Calendar.MINUTE, e.getDuration_in_minutes());

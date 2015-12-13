@@ -34,13 +34,8 @@ public class EventController {
     private PostDao postDao;
     Logger log = Logger.getLogger("EVENTCONTROLLER");
     // Creates the json object which will manage the information received
-    GsonBuilder builder = new GsonBuilder();
-
-// Register an adapter to manage the date types as long values
-
-
     Gson gson = new GsonBuilder()
-            .setDateFormat("dd/mm/yyyy")
+            .setDateFormat("dd/MM/yyyy hh:mm")
             .create();
 
     /**

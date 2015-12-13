@@ -5,9 +5,7 @@ import socialnow.forms.Event.Event_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mertcan on 22.11.2015.
@@ -30,7 +28,7 @@ public class Event  {
     private String event_description;
 
     @NotNull
-    private Date event_date;
+    private Calendar event_date = new GregorianCalendar();
 
     @NotNull
     private String event_location;
@@ -68,7 +66,8 @@ public class Event  {
     public Event(Event_Form e_f) {
         title = e_f.getTitle();
         event_description = e_f.getEvent_description();
-        event_date = e_f.getEvent_date();
+        event_date.setTime(e_f.getEvent_date());
+        event_date.add(Calendar.MONTH,-1);
         event_location = e_f.getEvent_location();
         event_host_token = e_f.getEvent_host_token();
         event_participants = e_f.getEvent_participants();
@@ -147,11 +146,11 @@ public class Event  {
         this.event_description = event_description;
     }
 
-    public Date getEvent_date() {
+    public Calendar getEvent_date() {
         return event_date;
     }
 
-    public void setEvent_date(Date event_date) {
+    public void setEvent_date(Calendar event_date) {
         this.event_date = event_date;
     }
 

@@ -1,6 +1,7 @@
 package socialnow.model;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -26,7 +27,7 @@ public class EventDetail {
     private long id;
     private String title;
     private String event_description;
-    private Date event_date;
+    private Calendar event_date;
     private String event_location;
 
     private String event_comments;
@@ -99,11 +100,11 @@ public class EventDetail {
         this.event_location = event_location;
     }
 
-    public Date getEvent_date() {
+    public Calendar getEvent_date() {
         return event_date;
     }
 
-    public void setEvent_date(Date event_date) {
+    public void setEvent_date(Calendar event_date) {
         this.event_date = event_date;
     }
 
