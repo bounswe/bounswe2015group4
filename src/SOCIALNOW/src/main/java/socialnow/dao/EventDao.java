@@ -2,6 +2,7 @@ package socialnow.dao;
 
 import org.springframework.stereotype.Repository;
 import socialnow.model.Event;
+import socialnow.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -37,6 +38,9 @@ public class EventDao {
     @SuppressWarnings("unchecked")
     public List<Event> getAll() {
         return entityManager.createQuery("from Event").getResultList();
+    }
+    public List<Event> getAllForUser(User u) {
+        return entityManager.createQuery("from Event where visibleTo = :allVisible or INSTR(visibleTo, :role) > 0 ").setParameter("role",u.getRole()).setParameter("allVisible","all").getResultList();
     }
 
     public List<Event> getAllByToken(String token){

@@ -20,6 +20,26 @@ public class Event  {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
+
+    public String getEvent_participants() {
+        return event_participants;
+    }
+
+    public void setEvent_participants(String event_participants) {
+        this.event_participants = event_participants;
+    }
+
+    @Column(columnDefinition = "varchar(255) default 'all'")
+    private String visibleTo;
+
     @NotNull
     private String title;
 
@@ -80,8 +100,7 @@ public class Event  {
         }
         event_participants = "";
         event_posts = "";
-
-
+        visibleTo = e_f.getVisibleTo();
     }
     public  Event(){
 

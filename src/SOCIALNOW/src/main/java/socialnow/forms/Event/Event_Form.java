@@ -12,6 +12,7 @@ import java.util.Date;
 public class Event_Form {
     private String title;
 
+    private String visibleTo = "all";
     private String event_description;
 
     private Date event_date;
@@ -72,6 +73,9 @@ public class Event_Form {
         return event_host_token;
     }
 
+    public Event_Form() {
+    }
+
     public void setEvent_host_token(String event_host_token) {
         this.event_host_token = event_host_token;
     }
@@ -99,4 +103,14 @@ public class Event_Form {
     public void setEvent_photo(String event_photo) {
         this.event_photo = event_photo;
     }
+
+
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
+
 }

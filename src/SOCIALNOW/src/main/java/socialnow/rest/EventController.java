@@ -161,11 +161,12 @@ public class EventController {
      */
     @RequestMapping( value = "/listAllEvents", method = RequestMethod.POST)
     public @ResponseBody
-    List<Event> listAllEvents(){
-        List<Event> eventList  = eventDao.getAll();
-        List<Event>    eventlistFilled = new ArrayList<Event>();
-        for (Event event :
-                eventList) {
+    List<Event> listAllEvents(@RequestBody String usertoken){
+        User_Token_Form form = gson.fromJson(usertoken, User_Token_Form.class);
+        User u = userDao.getByToken(form.getUser_token());
+        List<Event> eventList  = eventDao.getAllForUser(u);
+        List<Event> eventlistFilled = new ArrayList<Event>();
+        for (Event event : eventList) {
             eventlistFilled.add(this.fillEvent(event));
         }
         return  eventlistFilled;

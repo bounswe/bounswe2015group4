@@ -33,6 +33,15 @@ public class EventDetail {
     private String event_comments;
     private String event_photo;
 
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
+
+    private String visibleTo;
 
     public EventDetail() {
     }
@@ -45,6 +54,7 @@ public class EventDetail {
         this.event_location = event.getEvent_location();
         this.event_photo = event.getEvent_photo();
         this.event_comments = event.getEvent_comments();
+        this.setVisibleTo(event.getVisibleTo());
     }
 
 

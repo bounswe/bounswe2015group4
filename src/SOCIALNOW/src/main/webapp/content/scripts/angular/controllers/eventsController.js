@@ -9,7 +9,7 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     $scope.user = sessionService.getUserInfo();
 
     var getAllEvents = function () {
-        eventService.getAllEvents().then(function (events) {
+        eventService.getAllEvents($scope.user.user_token).then(function (events) {
             $scope.allEvents = events;
         }, function (error) {
             console.log(error);

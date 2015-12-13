@@ -94,7 +94,7 @@ public class RecommendationController {
             array[twoDtags.size()][0] = null;
 
             String [] recommendedTags = Util.findCommon(array,2);
-
+            events = (ArrayList<Event>) eventDao.getAllForUser(user);
             for (Event e: events) {
                 if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getEvent_participant_users().contains(user.getUser_token()) && !e.getEvent_host_token().contains(user.getUser_token())){
                     suggests.getEvents().add(e);

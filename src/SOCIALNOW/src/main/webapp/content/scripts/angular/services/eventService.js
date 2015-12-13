@@ -1,9 +1,13 @@
 app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
-    this.getAllEvents = function () {
+    this.getAllEvents = function (userToken) {
         var deferred = $q.defer();
+        var request = {
+            user_token: userToken
+        }
 
         $http({
             url: baseApiUrl + '/listAllEvents',
+            data: JSON.stringify(request) ,
             method: 'POST'
         }).success(function (events) {
             events = utils.manipulateEvents(events);

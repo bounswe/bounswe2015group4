@@ -1,7 +1,11 @@
 package socialnow.Utils;
 
+import socialnow.model.*;
+import socialnow.model.Event;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.awt.*;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -117,15 +121,15 @@ public class Util {
      * @param tags
      * @return
      */
-  public static String[] findMostOccurence(String[] tags){
-       String[] result = new String[3];
-      result[0]="";
-      result[1]="";
-      result[2]="";
+    public static String[] findMostOccurence(String[] tags){
+        String[] result = new String[3];
+        result[0]="";
+        result[1]="";
+        result[2]="";
 
-      HashMap<String,Integer> map = new HashMap<>();
+        HashMap<String,Integer> map = new HashMap<>();
         for (int i = 0; i <tags.length ; i++) {
-          String  tag = tags[i];
+            String  tag = tags[i];
             if(map.containsKey(tag)){
                 map.put(tag,map.get(tag)+1);
             }
@@ -143,26 +147,26 @@ public class Util {
                 result[0]=key;
             }
         }
-      map.remove(result[0]);
-       max=0;
-      for (Map.Entry<String, Integer> entry : map.entrySet()) {
-          String key = entry.getKey();
-          int value = entry.getValue();
-          if(value >= max){
-              max = value;
-              result[1]=key;
-          }
-      }
-      max=0;
-      map.remove(result[1]);
-      for (Map.Entry<String, Integer> entry : map.entrySet()) {
-          String key = entry.getKey();
-          int value = entry.getValue();
-          if(value >= max){
-              max = value;
-              result[2]=key;
-          }
-      }
+        map.remove(result[0]);
+        max=0;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            int value = entry.getValue();
+            if(value >= max){
+                max = value;
+                result[1]=key;
+            }
+        }
+        max=0;
+        map.remove(result[1]);
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            int value = entry.getValue();
+            if(value >= max){
+                max = value;
+                result[2]=key;
+            }
+        }
 
 
 
@@ -186,14 +190,22 @@ public class Util {
 
         }
 
-    return result;
+        return result;
     }
 
 
-
-
-
-
+    /**
+     * to see if the user can see the given event
+     * @param u
+     * @param e
+     * @return
+     */
+    public static boolean canSeeEvent(User u, Event e ){
+        if(e.getVisibleTo().equals("all")){
+            return true;
+        }
+        return e.getVisibleTo().contains(u.getRole());
+    }
 
 
 
