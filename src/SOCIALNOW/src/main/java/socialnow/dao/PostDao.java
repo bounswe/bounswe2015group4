@@ -24,7 +24,10 @@ public class PostDao {
         entityManager.persist(post);
         return;
     }
-
+    public void update(Post post) {
+        entityManager.merge(post);
+        return;
+    }
     public List<Post> getAllByToken(String token){
         return entityManager.createQuery("from Post where owner_token =:token").setParameter("token",token).getResultList();
 

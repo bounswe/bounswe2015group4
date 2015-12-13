@@ -69,9 +69,6 @@ public class Event  {
     private String event_posts = "";
 
 
-    @Column(name = "event_comments")
-    private String event_comments;
-
     @Column(name = "event_photo")
     private String event_photo;
 
@@ -91,7 +88,6 @@ public class Event  {
         event_location = e_f.getEvent_location();
         event_host_token = e_f.getEvent_host_token();
         event_participants = e_f.getEvent_participants();
-        event_comments = e_f.getEvent_comments();
         event_photo = e_f.getEvent_photo();
         if(e_f.getTags().startsWith(",")){
             tags= e_f.getTags();
@@ -142,7 +138,6 @@ public class Event  {
                 ", event_location='" + event_location + '\'' +
                 ", event_host_token='" + event_host_token + '\'' +
                 ", event_participants='" + event_participants + '\'' +
-                ", event_comments='" + event_comments + '\'' +
                 ", event_photo='" + event_photo + '\'' +
                 '}';
     }
@@ -189,13 +184,6 @@ public class Event  {
         this.event_host_token = event_host_token;
     }
 
-    public String getEvent_comments() {
-        return event_comments;
-    }
-
-    public void setEvent_comments(String event_comments) {
-        this.event_comments = event_comments;
-    }
 
     public String getEvent_photo() {
         return event_photo;

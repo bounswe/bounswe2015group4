@@ -9,9 +9,18 @@ public class Interest_Group_Form {
     private String group_name;
     private String owner_token;
     private String group_description;
+    private String visibleTo = "all";
 
     public String getGroup_photo() {
         return group_photo;
+    }
+
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
     }
 
     public void setGroup_photo(String group_photo) {

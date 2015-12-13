@@ -100,6 +100,7 @@ public class RecommendationController {
                     suggests.getEvents().add(e);
                 }
             }
+            groups = (ArrayList<Interest_Group>) groupDao.getAllForUser(user);
             for (Interest_Group e: groups) {
                 if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getGroup_members().contains(user.getUser_token()) && !e.getOwner_token().contains(user.getUser_token())){
                     suggests.getGroup().add(e);

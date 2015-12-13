@@ -3,6 +3,7 @@ package socialnow.dao;
 import org.springframework.stereotype.Repository;
 import socialnow.model.Interest_Group;
 import socialnow.model.Post;
+import socialnow.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,7 +35,9 @@ public class Interest_GroupDao {
         return entityManager.createQuery("from Interest_Group where owner_token =:token").setParameter("token",token).getResultList();
 
     }
-
+    public List<Interest_Group> getAllForUser(User u) {
+        return entityManager.createQuery("from Interest_Group where visibleTo = :allVisible or INSTR(visibleTo, :role) > 0 ").setParameter("role",u.getRole()).setParameter("allVisible","all").getResultList();
+    }
     public List<Interest_Group> getAll() {
         return entityManager.createQuery("from Interest_Group").getResultList();
     }

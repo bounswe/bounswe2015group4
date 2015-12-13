@@ -3,16 +3,16 @@ package socialnow.rest;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import socialnow.dao.CommentDao;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
 import socialnow.forms.Event.Add_Post_Event_Form;
+import socialnow.forms.Post.Add_Comment_Form;
 import socialnow.forms.Post.Post_Form;
 import socialnow.forms.User.User_Token_Form;
-import socialnow.model.Interest_Group;
-import socialnow.model.Post;
-import socialnow.model.PostDetail;
-import socialnow.model.User;
+import socialnow.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +26,10 @@ public class PostController {
     private PostDao postDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private CommentDao  commentDao ;
+
+
     final Gson gson = new Gson();
 
     @RequestMapping( value = "/createPost", method = RequestMethod.POST)
@@ -33,10 +37,7 @@ public class PostController {
     Post createPost(@RequestBody String createPostForm){
         Post_Form form = gson.fromJson(createPostForm, Post_Form.class);
         Post p = new Post(form);
-       User u = userDao.getByToken(p.getOwner_token());
         postDao.create(p);
-
-        userDao.update(u);
         return p;
     }
 
@@ -68,10 +69,32 @@ public class PostController {
         return  postDetail;
     }
 
+    @RequestMapping( value = "/post/addComment", method = RequestMethod.POST)
+    public @ResponseBody
+    PostDetail addComment(@RequestBody String addCommentForm){
+        Add_Comment_Form form = gson.fromJson(addCommentForm, Add_Comment_Form.class);
+        Post post = postDao.getById(form.getPost_id());
+        post.setPost_comments(post.getPost_comments()+"," + form.getComment_id());
+        postDao.update(post);
+        String comments = post.getPost_comments();
+        List<Comment_Details> COMMENT_DETAILS_LIST = new ArrayList<>();
+        if(comments.contains(",")){
+            comments = comments.substring(1);
+            String[] commentArray = comments.split(",");
 
+            for (int j = 0; j <commentArray.length ; j++) {
+                String  commentId = commentArray[j];
+                Comment cm = commentDao.getById(commentId);
+                Comment_Details cm_details = new Comment_Details(cm);
+                cm_details.setOwner(userDao.getByToken(cm.getOwner_token()));
+                COMMENT_DETAILS_LIST.add(cm_details);
+            }
+        }
+        PostDetail postDetail = new PostDetail(post);
+        postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
+        postDetail.setComments(COMMENT_DETAILS_LIST);
 
-
-
-
+        return  postDetail;
+    }
 
 }

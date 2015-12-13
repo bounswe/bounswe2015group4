@@ -30,8 +30,7 @@ public class Post  {
     @NotNull
     private String content;
 
-
-    @Column(name = "post_comments")
+    @Column(columnDefinition = "varchar(5000) default ''")
     private String post_comments;
 
     public long getId() {

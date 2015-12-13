@@ -29,8 +29,6 @@ public class EventDetail {
     private String event_description;
     private Calendar event_date;
     private String event_location;
-
-    private String event_comments;
     private String event_photo;
 
     public String getVisibleTo() {
@@ -53,7 +51,6 @@ public class EventDetail {
         this.event_date = event.getEvent_date();
         this.event_location = event.getEvent_location();
         this.event_photo = event.getEvent_photo();
-        this.event_comments = event.getEvent_comments();
         this.setVisibleTo(event.getVisibleTo());
     }
 
@@ -91,16 +88,6 @@ public class EventDetail {
     public void setEvent_photo(String event_photo) {
         this.event_photo = event_photo;
     }
-
-    public String getEvent_comments() {
-        return event_comments;
-    }
-
-    public void setEvent_comments(String event_comments) {
-        this.event_comments = event_comments;
-    }
-
-
 
     public String getEvent_location() {
         return event_location;

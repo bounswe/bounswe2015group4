@@ -28,6 +28,8 @@ public class Interest_Group {
     @Column(name = "tags", length = 5000)
     private String tags = "";
 
+    @Column(columnDefinition = "varchar(255) default 'all'")
+    private String visibleTo;
 
     @NotNull
     String group_description;
@@ -95,6 +97,13 @@ public class Interest_Group {
         this.group_name = group_name;
     }
 
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
     public Interest_Group() {
     }
 

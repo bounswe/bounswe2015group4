@@ -8,6 +8,7 @@ import socialnow.SemanticTagging.SemanticResponse;
 import socialnow.Utils.Error_JSON;
 import socialnow.Utils.RequestSender;
 import socialnow.Utils.Util;
+import socialnow.dao.CommentDao;
 import socialnow.dao.EventDao;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
@@ -32,6 +33,9 @@ public class EventController {
 
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private CommentDao commentDao;
     Logger log = Logger.getLogger("EVENTCONTROLLER");
     // Creates the json object which will manage the information received
     Gson gson = new GsonBuilder()
@@ -245,11 +249,27 @@ public class EventController {
         participantId= event.getEvent_posts().split(",");
         eventDetail.setEvent_participants(users);
         ArrayList<PostDetail> posts = new ArrayList<>();
+
         for (int i = 0; i <participantId.length ; i++) {
             if (!participantId[i].equals("")) {
-                    Post post = postDao.getById(participantId[i]);
+                Post post = postDao.getById(participantId[i]);
+                String comments = post.getPost_comments();
+                List<Comment_Details> COMMENT_DETAILS_LIST = new ArrayList<>();
+                if(comments.contains(",")){
+                    comments = comments.substring(1);
+                    String[] commentArray = comments.split(",");
+
+                    for (int j = 0; j <commentArray.length ; j++) {
+                        String  commentId = commentArray[j];
+                        Comment cm = commentDao.getById(commentId);
+                        Comment_Details cm_details = new Comment_Details(cm);
+                        cm_details.setOwner(userDao.getByToken(cm.getOwner_token()));
+                        COMMENT_DETAILS_LIST.add(cm_details);
+                    }
+                }
                 PostDetail postDetail = new PostDetail(post);
                 postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
+                postDetail.setComments(COMMENT_DETAILS_LIST);
                 posts.add(postDetail);
             }
         }

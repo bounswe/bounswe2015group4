@@ -24,6 +24,10 @@ public class Interest_Group_Detail {
         this.group_photo = group_photo;
     }
 
+
+    String  visibleTo;
+
+
     private String group_name;
     private String group_description;
     private User owner;
@@ -38,6 +42,7 @@ public class Interest_Group_Detail {
         this.group_description= group.group_description;
         this.group_name= group.group_name;
         this.setGroup_photo(group.getGroup_photo());
+        this.setVisibleTo(group.getVisibleTo());
     }
 
 
@@ -105,7 +110,13 @@ public class Interest_Group_Detail {
     public void setId(long id) {
         this.id = id;
     }
+    public String getVisibleTo() {
+        return visibleTo;
+    }
 
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
     public  ArrayList<Event> group_events = new ArrayList<>() ;
 
 

@@ -178,8 +178,10 @@ public class Interest_Group_Controller {
 
     @RequestMapping( value = "/listAllGroups", method = RequestMethod.POST)
     public @ResponseBody
-    List<Interest_Group> listAllGroups(@RequestBody String addPostForm) {
-       return groupDao.getAll();
+    List<Interest_Group> listAllGroups(@RequestBody String userTokenForm) {
+        User_Token_Form form = gson.fromJson(userTokenForm,User_Token_Form.class);
+        User u = userDao.getByToken(form.getUser_token());
+        return groupDao.getAllForUser(u);
     }
 
     @RequestMapping( value = "/listMyGroups", method = RequestMethod.POST)
