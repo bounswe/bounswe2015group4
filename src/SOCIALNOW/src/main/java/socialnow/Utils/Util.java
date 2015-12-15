@@ -206,6 +206,42 @@ public class Util {
         }
         return e.getVisibleTo().contains(u.getRole());
     }
+
+
+
+    public static int calculateResemblance(String[] arr1 , String [] arr2){
+        HashMap<String,Integer> map1 = new HashMap<>();
+        HashMap<String,Integer> map2 = new HashMap<>();
+        int minSize = arr2.length;
+        if(arr1.length < arr2.length) minSize= arr1.length;
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+        for (int i = 0; i < minSize ; i++) {
+            if(map1.containsKey(arr1[i]))
+                map1.put(arr1[i],map1.get(arr1[i])+1);
+            else
+                map1.put(arr1[i],1);
+            if(map2.containsKey(arr2[i]))
+                map2.put(arr2[i],map2.get(arr2[i])+1);
+            else
+                map2.put(arr2[i],1);
+        }
+
+        int total = 0;
+        for (String x: map1.keySet()) {
+            int value1 = map1.get(x);
+            int value2 =0;
+            if (map2.containsKey(x))
+                value2= map2.get(x);
+
+            if (value1 < value2)
+                total+= value1;
+            else
+                total += value2;
+        }
+        return total;
+    }
+
     public static boolean canSeeGroup(User u, Interest_Group g ){
         if(g.getVisibleTo().equals("all")){
             return true;

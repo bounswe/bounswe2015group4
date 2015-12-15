@@ -41,14 +41,17 @@ public class ShareController {
     final Gson gson = new Gson();
     Logger log = Logger.getLogger("EVENTCONTROLLER");
 
-
     @RequestMapping( value = "/users/shareEvent", method = RequestMethod.POST)
     public @ResponseBody
     Notification shareWithUser(@RequestBody String notification_form_data) {
         Notification_Form form = gson.fromJson(notification_form_data, Notification_Form.class);
-        Notification notf = new Notification(form);
-        notificationDao.create(notf);
-        return  notf;
+        if(Util.canSeeEvent(userDao.getByToken(form.getTo_user_token()), eventDao.getById(form.getEvent_id())))
+        {
+            Notification notf = new Notification(form);
+            notificationDao.create(notf);
+            return  notf;
+        }
+        return new Notification();
     }
 
     @RequestMapping( value = "/removeNotification", method = RequestMethod.POST)
@@ -58,8 +61,6 @@ public class ShareController {
         notificationDao.removeToUser(form.getUser_token());
         return  userDao.getByToken(form.getUser_token());
     }
-
-
 
     @RequestMapping( value = "/groups/shareEvent", method = RequestMethod.POST)
     public @ResponseBody
@@ -72,18 +73,17 @@ public class ShareController {
         String[] memberTokens = members.split(",");
         for (int i = 0; i <memberTokens.length ; i++) {
             String memberToken = memberTokens[i];
-            Notification notf = new Notification();
-            notf.setEvent(form.getEvent_id());
-            notf.setFrom_user(form.getFrom_user_token());
-            notf.setTo_user(memberToken);
-            notificationDao.create(notf);
-            notfs.add(notf);
+            if(!Util.canSeeEvent(userDao.getByToken(memberToken),eventDao.getById(form.getEvent_id()))) {
+                Notification notf = new Notification();
+                notf.setEvent(form.getEvent_id());
+                notf.setFrom_user(form.getFrom_user_token());
+                notf.setTo_user(memberToken);
+                notificationDao.create(notf);
+                notfs.add(notf);
+            }
         }
         return  notfs;
     }
-
-
-
 
     @RequestMapping( value = "/users/getNotifications", method = RequestMethod.POST)
     public @ResponseBody
@@ -101,10 +101,5 @@ public class ShareController {
         }
         return  notfDetailList;
     }
-
-
-
-
-
 
 }

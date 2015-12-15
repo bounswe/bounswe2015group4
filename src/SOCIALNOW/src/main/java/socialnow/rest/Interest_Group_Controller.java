@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import socialnow.Utils.Error_JSON;
 import socialnow.Utils.Util;
-import socialnow.dao.EventDao;
-import socialnow.dao.Interest_GroupDao;
-import socialnow.dao.PostDao;
-import socialnow.dao.UserDao;
+import socialnow.dao.*;
 import socialnow.forms.Interest_Group.Add_Member_Form;
 import socialnow.forms.Interest_Group.Add_Post_Form;
 import socialnow.forms.Interest_Group.Interest_Group_Form;
@@ -39,6 +36,8 @@ public class Interest_Group_Controller {
     private UserDao userDao;
     @Autowired
     private PostDao postDao;
+    @Autowired
+    private CommentDao commentDao;
     Gson gson = new GsonBuilder()
             .setDateFormat("dd/mm/yyyy")
             .create();
@@ -164,9 +163,24 @@ public class Interest_Group_Controller {
             String[] arr= group_posts.split(",");
             for (int i = 0; i <arr.length ; i++) {
                 if(!arr[i].equals("")){
-                    Post p = postDao.getById(arr[i]);
-                    PostDetail postDetail = new PostDetail(p);
-                    postDetail.setOwner(userDao.getByToken(p.getOwner_token()));
+                    Post post = postDao.getById(arr[i]);
+                    String comments = post.getPost_comments();
+                    List<Comment_Details> COMMENT_DETAILS_LIST = new ArrayList<>();
+                    if(comments.contains(",")){
+                        comments = comments.substring(1);
+                        String[] commentArray = comments.split(",");
+
+                        for (int j = 0; j <commentArray.length ; j++) {
+                            String  commentId = commentArray[j];
+                            Comment cm = commentDao.getById(commentId);
+                            Comment_Details cm_details = new Comment_Details(cm);
+                            cm_details.setOwner(userDao.getByToken(cm.getOwner_token()));
+                            COMMENT_DETAILS_LIST.add(cm_details);
+                        }
+                    }
+                    PostDetail postDetail = new PostDetail(post);
+                    postDetail.setOwner(userDao.getByToken(post.getOwner_token()));
+                    postDetail.setComments(COMMENT_DETAILS_LIST);
                     posts.add(postDetail);
                 }
             }

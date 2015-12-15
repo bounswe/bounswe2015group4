@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements  Comparable<User>{
 
     // ------------------------
     // PRIVATE FIELDS
@@ -260,4 +260,8 @@ public class User {
     }
 
 
+    @Override
+    public int compareTo(User otherUser) {
+        return this.numberOfFollowers - otherUser.numberOfFollowers;
+    }
 } // class User

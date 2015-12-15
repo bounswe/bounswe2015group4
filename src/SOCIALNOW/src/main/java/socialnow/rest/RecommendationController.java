@@ -15,9 +15,8 @@ import socialnow.dao.UserDao;
 import socialnow.forms.User.User_Token_Form;
 import socialnow.model.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -132,7 +131,6 @@ public class RecommendationController {
                 e.setVisibleTo("non");
                 eventDao.update(e);
             }
-
         }
         User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
         User u = userDao.getByToken(form.getUser_token());
@@ -143,25 +141,22 @@ public class RecommendationController {
 
 
         if(followings.contains(",")){
-            log.info(followings+ " FOLLOWINGS");
             followings = followings.substring(1);
             String[] followingsTokens = followings.split(",");
             for (int i = 0; i <followingsTokens.length; i++) {
                 User followed = userDao.getByToken(followingsTokens[i]);
-                    String groups = followed.getUser_interest_groups();
-                    log.info(groups+" GROUPS OF "+ i);
-                    if(groups.contains(",")){
-                        String[] groupIDs = groups.substring(1).split(",");
-                        for (int j = 0; j <groupIDs.length ; j++) {
-                            Interest_Group group = groupDao.getById( groupIDs[j]);
-                            if(group.getTs().compareTo(threeDays) > 0 && Util.canSeeGroup(u,group)){
-                                User_Group ug = new User_Group(group,followed);
-                                timeline.getUser_groups().add(ug);
-                            }
+                String groups = followed.getUser_interest_groups();
+                if(groups.contains(",")){
+                    String[] groupIDs = groups.substring(1).split(",");
+                    for (int j = 0; j <groupIDs.length ; j++) {
+                        Interest_Group group = groupDao.getById( groupIDs[j]);
+                        if(group.getTs().compareTo(threeDays) > 0 && Util.canSeeGroup(u,group)){
+                            User_Group ug = new User_Group(group,followed);
+                            timeline.getUser_groups().add(ug);
                         }
                     }
+                }
                 String events  = followed.getUser_participating_events();
-                log.info(events+" EVENTS OF "+ i);
                 if(events.contains(",")){
                     String[] eventId = events.substring(1).split(",");
                     for (int j = 0; j <eventId.length; j++) {
@@ -180,6 +175,45 @@ public class RecommendationController {
         return timeline;
 
     }
+
+    @RequestMapping( value = "/recommendUsers", method = RequestMethod.POST)
+    public ArrayList<User> recommendPeople(@RequestBody String token){
+        HashMap<Integer, User> map = new HashMap<>();
+        ArrayList<User> allUsers = (ArrayList<User>) userDao.getAll();
+        User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
+        User u = userDao.getByToken(form.getUser_token());
+        if(!u.getUser_tags().contains(",")){
+            Collections.sort(allUsers);
+            return (ArrayList<User>) allUsers.subList(0,10);
+        }
+        ArrayList<User> suggestUser = new ArrayList<>();
+        for (User user: allUsers) {
+            if(user.getUser_tags().contains(",")) {
+                int commonality = Util.calculateResemblance(u.getUser_tags().substring(1).split(","),user.getUser_tags().substring(1).split(","));
+                if(map.containsKey(commonality)) {
+                    if (map.get(commonality).numberOfFollowers < user.numberOfFollowings)
+                        map.put(commonality, user);
+                }
+                else {
+                    map.put(commonality, user);
+                }
+
+            }
+        }
+        ArrayList<Integer> keys = new ArrayList<>();
+        keys.addAll(map.keySet());
+        Collections.sort(keys);
+        int maxToSugest = 10;
+        if(keys.size() < maxToSugest)
+            maxToSugest = keys.size();
+        for (int i = 0; i <maxToSugest; i++) {
+            suggestUser.add(map.get(keys.get(i)));
+
+        }
+        return suggestUser;
+    }
+
+
 
 
 }
