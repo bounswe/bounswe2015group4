@@ -5,6 +5,7 @@ import socialnow.forms.Post.Post_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 
 /**
  * Created by Erdem on 11/23/2015.
@@ -71,7 +72,16 @@ public class Post  {
         this.setPost_comments(form.getPost_comments());
 
     }
+    public Calendar getTs() {
+        return ts;
+    }
 
+    public void setTs(Calendar ts) {
+        this.ts = ts;
+    }
+
+    @NotNull
+    private Calendar ts;
     public Post(Error_JSON e) {
         id = -1;
         content = e.toString();

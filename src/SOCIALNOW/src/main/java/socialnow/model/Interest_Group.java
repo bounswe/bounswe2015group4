@@ -5,6 +5,7 @@ import socialnow.forms.Interest_Group.Interest_Group_Form;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 
 /**
  * Created by Erdem on 12/3/2015.
@@ -39,7 +40,16 @@ public class Interest_Group {
     @NotNull
     String group_name;
 
+    public Calendar getTs() {
+        return ts;
+    }
 
+    public void setTs(Calendar ts) {
+        this.ts = ts;
+    }
+
+    @NotNull
+    private Calendar ts;
     @Column(name = "group_members", length = 10000)
     public  String group_members ;
 

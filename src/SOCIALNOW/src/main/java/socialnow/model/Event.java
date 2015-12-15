@@ -56,6 +56,17 @@ public class Event  {
     @NotNull
     private String event_host_token;
 
+    public Calendar getTs() {
+        return ts;
+    }
+
+    public void setTs(Calendar ts) {
+        this.ts = ts;
+    }
+
+    @NotNull
+    private Calendar ts;
+
     @Column(name = "event_participants", length = 2000)
     public  String event_participants ;
 

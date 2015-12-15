@@ -16,6 +16,8 @@ import socialnow.forms.User.User_Token_Form;
 import socialnow.model.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -60,8 +62,8 @@ public class RecommendationController {
                     String [] eventUsers = e.event_participants.split(",");
                     for (int i = 0; i <eventUsers.length ; i++) {
                         if(!eventUsers[i].equals("")){
-                          User u= userDao.getByToken(eventUsers[i]);
-                           String user_tags = u.getUser_tags();
+                            User u= userDao.getByToken(eventUsers[i]);
+                            String user_tags = u.getUser_tags();
                             if (user_tags.contains(",")){
                                 twoDtags.add(user_tags.substring(1).split(","));
                             }
@@ -105,17 +107,79 @@ public class RecommendationController {
                 if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getGroup_members().contains(user.getUser_token()) && !e.getOwner_token().contains(user.getUser_token())){
                     suggests.getGroup().add(e);
 
-                    }
+                }
             }
         }else{
 
             return suggests;
         }
 
-    return suggests;
+        return suggests;
     }
 
+    /**
+     *
+     * recent activities of user followed by logged in user within 3 days
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping( value = "/timeline", method = RequestMethod.POST)
+    public TimelineReturn timeline(@RequestBody String token) { Calendar now = Calendar.getInstance();
+        List<Event> allEvents = eventDao.getAll();
+        for (Event e:allEvents) {
+            if(e.getEvent_date().compareTo(now)< 0){
+                e.setVisibleTo("non");
+                eventDao.update(e);
+            }
 
+        }
+        User_Token_Form form = gson.fromJson(token,User_Token_Form.class);
+        User u = userDao.getByToken(form.getUser_token());
+        String followings = u.getUser_followings();
+        TimelineReturn timeline = new TimelineReturn();
+        Calendar threeDays = Calendar.getInstance();
+        threeDays.add(Calendar.DATE,-3);
+
+
+        if(followings.contains(",")){
+            log.info(followings+ " FOLLOWINGS");
+            followings = followings.substring(1);
+            String[] followingsTokens = followings.split(",");
+            for (int i = 0; i <followingsTokens.length; i++) {
+                User followed = userDao.getByToken(followingsTokens[i]);
+                    String groups = followed.getUser_interest_groups();
+                    log.info(groups+" GROUPS OF "+ i);
+                    if(groups.contains(",")){
+                        String[] groupIDs = groups.substring(1).split(",");
+                        for (int j = 0; j <groupIDs.length ; j++) {
+                            Interest_Group group = groupDao.getById( groupIDs[j]);
+                            if(group.getTs().compareTo(threeDays) > 0 && Util.canSeeGroup(u,group)){
+                                User_Group ug = new User_Group(group,followed);
+                                timeline.getUser_groups().add(ug);
+                            }
+                        }
+                    }
+                String events  = followed.getUser_participating_events();
+                log.info(events+" EVENTS OF "+ i);
+                if(events.contains(",")){
+                    String[] eventId = events.substring(1).split(",");
+                    for (int j = 0; j <eventId.length; j++) {
+                        Event event = eventDao.getById( eventId[j]);
+                        if(event.getTs().compareTo(threeDays) > 0 && Util.canSeeEvent(u,event)){
+                            User_Event ue = new User_Event(followed,event);
+                            timeline.getUser_events().add(ue);
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            return timeline;
+        }
+        return timeline;
+
+    }
 
 
 }

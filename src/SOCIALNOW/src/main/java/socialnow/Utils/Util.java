@@ -206,7 +206,12 @@ public class Util {
         }
         return e.getVisibleTo().contains(u.getRole());
     }
-
+    public static boolean canSeeGroup(User u, Interest_Group g ){
+        if(g.getVisibleTo().equals("all")){
+            return true;
+        }
+        return g.getVisibleTo().contains(u.getRole());
+    }
 
 
     /**
