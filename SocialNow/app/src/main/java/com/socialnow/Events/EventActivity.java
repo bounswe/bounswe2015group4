@@ -1,19 +1,14 @@
 package com.socialnow.Events;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,18 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
@@ -42,29 +31,22 @@ import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
 import com.socialnow.Users.Utils;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class EventActivity extends AppCompatActivity {
-    ListView listView;
+
     TextView description;
     TextView eventdate;
     TextView participantNumber;
     TextView event_host;
-    TextView eventname;
     Toolbar toolbar;
     CollapsingToolbarLayout toolBarLayout;
     TextView eventlocation;
@@ -72,14 +54,14 @@ public class EventActivity extends AppCompatActivity {
     String title;
     String date;
     String photo;
-    String descrip;
+    String event_description;
     String location;
     String hostName;
-    ArrayList<User> parti;
-    int parti_number;
+    ArrayList<User> participants;
+    int number_of_participants;
     Long id;
     Event_Detail e;
-    byte[] data;
+
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
@@ -98,16 +80,16 @@ public class EventActivity extends AppCompatActivity {
 
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
-       eventlocation = (TextView) findViewById(R.id.tEventlocation);
+        eventlocation = (TextView) findViewById(R.id.tEventlocation);
         event_host = (TextView) findViewById(R.id.tEventHost);
 
-      participantNumber = (TextView) findViewById(R.id.tParti);
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        participantNumber = (TextView) findViewById(R.id.tParti);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-       // toolBarLayout.setTitle("Title");
-        Bundle extras = getIntent().getExtras();
+        toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        // toolBarLayout.setTitle("Title");
+       /* Bundle extras = getIntent().getExtras();
         if(extras == null) {
             title= null;
         } else {
@@ -115,13 +97,13 @@ public class EventActivity extends AppCompatActivity {
             SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
             date = ft.format(new Date(extras.getLong("date")));
             location = extras.getString("location");
-            hostName = extras.getString("hostname");
-            descrip = extras.getString("description");
+            //
+            event_description = extras.getString("description");
             photo = extras.getString("photo");
 
             id = extras.getLong("id");
 
-        }
+        }*/
 
         RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Parti);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -170,13 +152,13 @@ public class EventActivity extends AppCompatActivity {
                 Log.d("asd", (Utils.getCurrentProfile() == null) + "ad");
                 Log.d("asd", "ad" + (Utils.getCurrentProfile().getUser_participating_events() == null));
                 if(Utils.getCurrentProfile().getUser_participating_events() != null)
-                 for(Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
-                     Log.d("asd", "ad" + ee.getId() + "asd " + e.getId());
-                     if (ee.getId() == id) {
-                         participated = true;
-                         break;
-                     }
-                 }
+                    for(Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
+                        Log.d("asd", "ad" + ee.getId() + "asd " + e.getId());
+                        if (ee.getId() == id) {
+                            participated = true;
+                            break;
+                        }
+                    }
 
                 if(!participated) {
                     joinToTheGroup();
@@ -191,7 +173,7 @@ public class EventActivity extends AppCompatActivity {
 
 
 
-       // e = extras.getParcelable("Event");
+        // e = extras.getParcelable("Event");
 
         getData();
 
@@ -211,8 +193,8 @@ public class EventActivity extends AppCompatActivity {
                     Log.d("Event", "Leave success " + response.getEvent_description());
 
 
-                    parti_number--;
-                    participantNumber.setText(parti_number+" people are going");
+                    number_of_participants--;
+                    participantNumber.setText(number_of_participants + " people are going");
 
 
                     Utils.updateProfile();
@@ -221,7 +203,7 @@ public class EventActivity extends AppCompatActivity {
                     ImageView v = (ImageView) findViewById(R.id.ivArrow4);
                     v.setImageDrawable(getResources().getDrawable(R.drawable.rightarrow));
                 }else{
-                    Log.d("Leave", "Error: Unknown");
+                    Log.d("Leave", "Error: Event not found.");
                 }
             }
         };
@@ -229,7 +211,7 @@ public class EventActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Failed", "Leave Failed");
+                Log.d("Failed", "Event Leave failed");
 
             }
         };
@@ -247,14 +229,14 @@ public class EventActivity extends AppCompatActivity {
                     Utils.updateProfile();
                     getData();
 
-                    parti_number++;
-                    participantNumber.setText(parti_number + " people are going");
+                    number_of_participants++;
+                    participantNumber.setText(number_of_participants + " people are going");
 
 
                     ImageView v = (ImageView) findViewById(R.id.ivArrow4);
                     v.setImageDrawable(getResources().getDrawable(R.drawable.leftarrow));
                 }else{
-                    Log.d("Join", "Error: Unknown");
+                    Log.d("Join", "Error: Event not found.");
                 }
             }
         };
@@ -262,7 +244,7 @@ public class EventActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Failed", "Join Failed");
+                Log.d("Failed", "Event Join failed");
 
             }
         };
@@ -298,7 +280,7 @@ public class EventActivity extends AppCompatActivity {
         return true;
     }
 
-    void getData() {
+        void getData() {
 
         Response.Listener<Event_Detail> response = new Response.Listener<Event_Detail>() {
             @Override
@@ -306,14 +288,24 @@ public class EventActivity extends AppCompatActivity {
                 if(response != null) {
                     Log.d("Event", response.toString());
                     e = response;
-                    parti = response.getEvent_participants();
-                    Log.d("event participants: " , parti.toString());
-                    parti_number = parti.size();
-                    participantNumber.setText(parti_number+" people are going");
+                    participants = response.getEvent_participants();
+                    Log.d("event participants: " , participants.toString());
+                    number_of_participants = participants.size();
+                    participantNumber.setText(number_of_participants+" people are going");
+                    hostName = response.getOwnerName();
+                    event_host.setText(hostName);
 
+                    title= response.getEvent_title();
+                    Long  date_as_long = response.getDate();
+                    SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+                    date = ft.format(new Date(date_as_long));
+                    location = response.getEvent_location();
+                    event_description =response.getEvent_description();
+                    photo = response.getEvent_photo();
+                    id = response.getId();
 
-                }else{
-                    Log.d("Event", "error");
+                } else {
+                    Log.d("Event", "Cannot obtain event details.");
                 }
             }
         };
@@ -326,14 +318,14 @@ public class EventActivity extends AppCompatActivity {
             }
         };
 
-        API.getEventDetail("getEventDetail", id, response, errorListener);
+            API.getEventDetail("getEventDetail", id, response, errorListener);
     }
 
     Drawable d;
-  void writeToList(){
+    void writeToList() {
 
 
-      toolBarLayout.setTitle(title);
+        toolBarLayout.setTitle(title);
 
     /*  if(photo!=null){
           Drawable d = new BitmapDrawable(getResources(), photo);
@@ -342,29 +334,29 @@ public class EventActivity extends AppCompatActivity {
           }
       }*/
 
-      description.setText(descrip);
-      eventdate.setText(date);
-      participantNumber.setText(parti_number+" people are going");
+        description.setText(event_description);
+        eventdate.setText(date);
+        participantNumber.setText(number_of_participants+" people are going");
 
 
-      eventlocation.setText(location);
-      event_host.setText(hostName);
+        eventlocation.setText(location);
 
-      StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-      StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
-      new Thread(new Runnable() {
-          @Override
-          public void run() {
-              d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
-          }
-      }).start();
-      d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
-      img.setBackground(d);
+        StrictMode.setThreadPolicy(policy);
 
-    //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
-    //  eventhost.setText(hostName);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
+            }
+        }).start();
+        d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
+        img.setBackground(d);
+
+        //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
+        //  eventhost.setText(hostName);
     }
     public static Bitmap getBitmapFromURL(String src) {
         try {

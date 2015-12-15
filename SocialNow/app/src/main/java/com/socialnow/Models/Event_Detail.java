@@ -18,9 +18,11 @@ public class Event_Detail {
     public void setEvent_photo(String event_photo) {
         this.event_photo = event_photo;
     }
-
+    private Long event_date;
     private String event_title;
+    private String event_location;
     private String event_description;
+    private String hostName;
     private User owner;
     private ArrayList<String> tags= new ArrayList<>();
     public  ArrayList<User> event_participants = new ArrayList<>() ;
@@ -30,11 +32,13 @@ public class Event_Detail {
     }
     public Event_Detail(Event event) {
         this.id = event.getId();
-        this.event_description= event.event_description;
-        this.event_title= event.title;
+        this.event_description = event.event_description;
+        this.event_title = event.title;
         this.setEvent_photo(event.getEvent_photo());
+        this.setOwner(event.getEvent_participant_users());
+        this.setDate(event.getEvent_date());
+        this.setEvent_location(event.getEvent_location());
     }
-
 
     /*public ArrayList<Event> getGroup_events() {
 
@@ -68,14 +72,33 @@ public class Event_Detail {
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
-
+    public void setDate(Long date) {
+        this.event_date = date;
+    }
+    public void setEvent_location(String location) {
+        this.event_location = location;
+    }
+    public String getEvent_location() {
+        return this.event_location;
+    }
     public User getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwner(User[] users ) {
+
+        if(users.length > 0) {
+            this.owner = users[0];
+            this.hostName = this.owner.getName() + " " + this.owner.getSurname();
+        }
+
+        else
+            this.hostName = "";
+
     }
+
+    public String getOwnerName() { return this.hostName; }
+    public Long getDate() { return this.event_date; }
 
     public String getEvent_description() {
         return event_description;

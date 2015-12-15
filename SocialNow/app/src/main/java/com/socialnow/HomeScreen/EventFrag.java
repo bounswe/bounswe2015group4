@@ -69,7 +69,7 @@ public class EventFrag extends Fragment {
                 Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
                 //i2.putExtra("Event", event);
-                i2.putExtra("title", event.getTitle());
+              /*  i2.putExtra("title", event.getTitle());
                 i2.putExtra("date", event.getEvent_date());
                 i2.putExtra("location", event.getEvent_location());
                 i2.putExtra("hostname", hostUserName);
@@ -77,7 +77,7 @@ public class EventFrag extends Fragment {
                 i2.putExtra("photo", event.getEvent_photo());
                 i2.putExtra("description", event.getEvent_description());
                 i2.putExtra("id", event.getId());
-                startActivity(i2);
+                startActivity(i2);*/
             }
         });
 
