@@ -4,10 +4,12 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import socialnow.Utils.Util;
 import socialnow.dao.EventDao;
 import socialnow.dao.Interest_GroupDao;
 import socialnow.dao.PostDao;
 import socialnow.dao.UserDao;
+import socialnow.forms.Search_Form;
 import socialnow.model.*;
 
 import java.util.ArrayList;
@@ -38,11 +40,15 @@ public class SearchController {
     public @ResponseBody
     SearchReturn search(@RequestBody String search) throws UnirestException {
         SearchReturn searchReturn = new SearchReturn();
+
+        Search_Form form = gson.fromJson(search,Search_Form.class);
+        User u = userDao.getByToken(form.getUser_token());
+        search = form.getKeyword();
         List<Event> events = eventDao.getAll();
         List<Interest_Group> groups = groupDao.getAll();
         List<User> users = userDao.getAll();
         for (Event event : events) {
-            if(event.getTitle().toLowerCase().contains(search.toLowerCase()) || event.getTags().contains(search) ){
+            if(event.getTitle().toLowerCase().contains(search.toLowerCase()) || event.getTags().contains(search) && Util.canSeeEvent(u,event)){
                 searchReturn.getEvents().add(event);
             }
         }
@@ -53,7 +59,7 @@ public class SearchController {
             }
         }
         for (Interest_Group group : groups) {
-            if(group.getGroup_description().toLowerCase().contains(search.toLowerCase()) || group.getTags().contains(search)){
+            if(group.getGroup_description().toLowerCase().contains(search.toLowerCase()) || group.getTags().contains(search) && Util.canSeeGroup(u,group)){
                 searchReturn.getGroups().add(group);
             }
         }
