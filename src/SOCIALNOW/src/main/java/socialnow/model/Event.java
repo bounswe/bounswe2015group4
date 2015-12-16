@@ -64,8 +64,8 @@ public class Event  {
         this.ts = ts;
     }
 
-    @NotNull
-    private Calendar ts;
+    @Column
+    private Calendar ts = Calendar.getInstance();
 
     @Column(name = "event_participants", length = 2000)
     public  String event_participants ;

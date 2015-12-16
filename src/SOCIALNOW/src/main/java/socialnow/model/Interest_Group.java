@@ -49,7 +49,7 @@ public class Interest_Group {
     }
 
     @NotNull
-    private Calendar ts;
+    private Calendar ts = Calendar.getInstance();
     @Column(name = "group_members", length = 10000)
     public  String group_members ;
 

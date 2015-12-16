@@ -73,7 +73,7 @@ public class ShareController {
         String[] memberTokens = members.split(",");
         for (int i = 0; i <memberTokens.length ; i++) {
             String memberToken = memberTokens[i];
-            if(!Util.canSeeEvent(userDao.getByToken(memberToken),eventDao.getById(form.getEvent_id()))) {
+            if(Util.canSeeEvent(userDao.getByToken(memberToken),eventDao.getById(form.getEvent_id()))) {
                 Notification notf = new Notification();
                 notf.setEvent(form.getEvent_id());
                 notf.setFrom_user(form.getFrom_user_token());
@@ -96,7 +96,7 @@ public class ShareController {
             detail.setEvent(eventDao.getById(notf.getEvent()));
             detail.setFrom_user(userDao.getByToken(notf.getFrom_user()));
             detail.setTo_user(userDao.getByToken(notf.getTo_user()));
-
+            notificationDao.delete(notf);
             notfDetailList.add(detail);
         }
         return  notfDetailList;

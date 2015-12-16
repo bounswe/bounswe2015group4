@@ -81,7 +81,7 @@ public class Post  {
     }
 
     @NotNull
-    private Calendar ts;
+    private Calendar ts  = Calendar.getInstance();
     public Post(Error_JSON e) {
         id = -1;
         content = e.toString();
