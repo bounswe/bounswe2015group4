@@ -2,29 +2,38 @@ package com.socialnow;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TabHost;
+
+import com.socialnow.SearchPagerAdapter;
 
 /**
- * Created by lauamy on 19/11/15.
+ * Created by lauamy on 20/12/15.
  */
-public class ProfileActivity extends AppCompatActivity{
-
-    @Override
+public class SearchResultActivity extends AppCompatActivity {
+    TabLayout tabLayout;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_profile);
 
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("ABOUT"));
-        tabLayout.addTab(tabLayout.newTab().setText("FOLLOWERS"));
-        tabLayout.addTab(tabLayout.newTab().setText("FOLLOWINGS"));
+        setContentView(R.layout.activity_searchresult);
+        getSupportActionBar().setTitle("Search Results");
+
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("USER"));
+        tabLayout.addTab(tabLayout.newTab().setText("EVENT"));
+        tabLayout.addTab(tabLayout.newTab().setText("GROUP"));
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
+        final SearchPagerAdapter adapter = new SearchPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -43,14 +52,5 @@ public class ProfileActivity extends AppCompatActivity{
 
             }
         });
-
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-        return true;
-    }
-
 }

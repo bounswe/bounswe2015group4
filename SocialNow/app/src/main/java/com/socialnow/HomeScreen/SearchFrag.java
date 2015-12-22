@@ -1,5 +1,6 @@
 package com.socialnow.HomeScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.socialnow.R;
+import com.socialnow.SearchResultActivity;
+import com.socialnow.Users.SignupActivity;
 
 /**
  * Created by lauamy on 4/12/15.
@@ -17,6 +20,7 @@ import com.socialnow.R;
 public class SearchFrag extends Fragment {
     private View v;
     Button bReset;
+    Button bSearch;
     EditText etKeyword;
     @Nullable
     @Override
@@ -35,8 +39,20 @@ public class SearchFrag extends Fragment {
 
         });
 
+        bSearch = (Button) v.findViewById(R.id.bSearch);
+        bSearch.setOnClickListener(new Button.OnClickListener() {
 
+            @Override
+
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), SearchResultActivity.class);
+                startActivity(i);
+            }
+
+        });
         return v;
 
     }
+
 }
