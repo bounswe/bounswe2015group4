@@ -16,7 +16,5 @@ app.controller('loginController', function ($scope, userService, sessionService,
         }, function (error) {
             $scope.errorMessage = error;
         });
-
-
     }
 });
