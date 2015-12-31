@@ -1,5 +1,2 @@
-<div class="form-group">
-    <select class="form-control select2" multiple="multiple" data-placeholder="Select roles" style="width: 100%;">
-        <option ng-repeat="role in roles" ng-bind="role"></option>
-    </select>
-</div>
+<select class="form-control select2" multiple="multiple" style="width: 100%;" data-placeholder="Select roles" ng-model="selectedRole"
+            ng-options="role.id as role.name for role in roles"></select>
