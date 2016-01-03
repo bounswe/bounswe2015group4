@@ -56,11 +56,11 @@ public class API {
         instance.UUID = UUID;
     }
 
-    public static void getEventDetails(String tag, Long id, Response.Listener<Event> successListener,
+    public static void getEventDetails(String tag, Long id, Response.Listener<Event_Detail> successListener,
                                        Response.ErrorListener failureListener) {
-        String postBody = new Gson().toJson(id);
-        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createEvent",
-                Event.class, successListener, failureListener)
+        String postBody = "{ event_id = "+id+" }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/getEventDetail",
+                Event_Detail.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
@@ -119,8 +119,9 @@ public class API {
     }
     public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
                                                                           Response.ErrorListener failureListener) {
+        String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
                 mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
-                        Event[].class, successListener, failureListener));
+                        Event[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
           }
 
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,

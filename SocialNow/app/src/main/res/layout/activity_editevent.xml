@@ -28,12 +28,18 @@
         android:layout_below="@id/etEventDes"
         android:layout_marginBottom="@dimen/small_margin"
         style="@style/dEditText" />
+    <EditText
+        android:hint="enter tags"
+        android:id="@+id/tags"
+        android:layout_below="@+id/etEventLoca"
+        android:layout_marginBottom="@dimen/small_margin"
+        style="@style/dEditText" />
 
 
     <LinearLayout android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/ldate"
-        android:layout_below="@id/etEventLoca"
+        android:layout_below="@+id/tags"
         android:layout_marginBottom="@dimen/small_margin">
 
         <EditText android:id="@+id/tvDate"
@@ -145,17 +151,11 @@
 
     </RelativeLayout>
 
-    <CheckBox
-        android:text="Guest(s) can invite friends."
-        android:id="@+id/cGuest"
-        android:layout_below="@+id/Guest"
-        android:layout_alignParentLeft="true"
-        style="@style/dCheckBox" />
 
     <Button
         android:text="Save"
         android:id="@+id/bSave"
-        android:layout_below="@id/cGuest"
+        android:layout_below="@+id/Guest"
         android:layout_marginBottom="@dimen/small_margin"
         android:background="@drawable/purplebutton"
         style="@style/dBigButton"

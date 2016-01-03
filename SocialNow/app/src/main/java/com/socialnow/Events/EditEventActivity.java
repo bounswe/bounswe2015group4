@@ -44,7 +44,7 @@ import com.android.volley.Response.Listener;
  */
 //TODO Event Image Adding option, Invite Guest Option, Privacy Option, Invite problems, End time
 public class EditEventActivity extends AppCompatActivity{
-    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca;
+    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca, tvTags;
     private Button btDate, btSTime,btETime;
     private int mYear, mMonth, mDay, mSHour, mSMinute, mEHour, mEMinute;
     String mTitle="Create Event";
@@ -91,6 +91,7 @@ public class EditEventActivity extends AppCompatActivity{
         etEventDes = (TextView) findViewById(R.id.etEventDes);
         etEventLoca = (TextView) findViewById(R.id.etEventLoca);
 
+        tvTags = (TextView) findViewById(R.id.tags);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
@@ -133,6 +134,7 @@ public class EditEventActivity extends AppCompatActivity{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+
         RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Guest);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +153,12 @@ public class EditEventActivity extends AppCompatActivity{
             event.setTitle(etEventName.getText().toString());
             event.setEvent_description(etEventDes.getText().toString());
             event.setEvent_location(etEventLoca.getText().toString());
+            //TODO privacy setting should be added
+            event.set_visibleTo("all");
+            //TODO add the end date
+            event.setEvent_date(tvDate.getText().toString()+" "+tvSTime.getText().toString());
+            event.setEvent_photo("");
+            event.setEvent_tags(tvTags.getText().toString());
            // event.setEvent_date(getEventDate().getTime());
 //            event.setEvent_photo(getEventPhoto());
             event.setEvent_host_token(Utils.getCurrentUser().getUser_token());
@@ -220,7 +228,7 @@ public class EditEventActivity extends AppCompatActivity{
                         // Check if the date is in the past
 
                         // Show selected date in text field
-                        tvDate.setText(year + "-" + (monthOfYear + 1) + "-"
+                        tvDate.setText(year + "/" + (monthOfYear + 1) + "/"
                                 + dayOfMonth);
 
                     }

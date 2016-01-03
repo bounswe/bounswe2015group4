@@ -68,6 +68,8 @@ public class EventFrag extends Fragment {
                 Object listItem = listView.getItemAtPosition(position);
                 Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
+                i2.putExtra("id", event.getId());
+                startActivity(i2);
                 //i2.putExtra("Event", event);
               /*  i2.putExtra("title", event.getTitle());
                 i2.putExtra("date", event.getEvent_date());
@@ -110,19 +112,25 @@ public class EventFrag extends Fragment {
             eventname.setText(events.get(position).getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
 
-            Picasso.with(((Activity)getContext()))
-                    .load(events.get(position).getEvent_photo())
-                    .resize(80, 80)
-                    .placeholder(R.drawable.devent)
-                    .centerCrop()
-                    .into(img);
+            if(events.get(position).getEvent_photo().equals("")){
+                img.setImageResource(R.drawable.devent);
+            }else{
+                Picasso.with(((Activity)getContext()))
+                        .load(events.get(position).getEvent_photo())
+                        .resize(80, 80)
+                        .placeholder(R.drawable.devent)
+                        .centerCrop()
+                        .into(img);
+            }
+
             User[] hostUser = events.get(position).getEvent_participant_users();
             if(hostUser.length > 0)
                 hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
             else
                 hostUserName = "";
+            //TODO date is not in correct form
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
-            eventdate.setText(ft.format(new Date(events.get(position).getEvent_date())));
+            eventdate.setText(events.get(position).getEvent_date());
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(events.get(position).getEvent_location());
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);

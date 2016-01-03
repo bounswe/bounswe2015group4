@@ -43,7 +43,7 @@ import java.util.Date;
 
 public class EventActivity extends AppCompatActivity {
 
-    TextView description;
+    TextView description,tags;
     TextView eventdate;
     TextView participantNumber;
     TextView event_host;
@@ -56,8 +56,9 @@ public class EventActivity extends AppCompatActivity {
     String photo;
     String event_description;
     String location;
-    String hostName;
+    User host;
     ArrayList<User> participants;
+    private ArrayList<String> tags_event;
     int number_of_participants;
     Long id;
     Event_Detail e;
@@ -77,33 +78,28 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-
+        tags_event = new ArrayList<>();
         eventdate = (TextView) findViewById(R.id.tEventDate);
         description = (TextView) findViewById(R.id.tDes);
         eventlocation = (TextView) findViewById(R.id.tEventlocation);
         event_host = (TextView) findViewById(R.id.tEventHost);
-
+        tags = (TextView) findViewById(R.id.tags);
         participantNumber = (TextView) findViewById(R.id.tParti);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         // toolBarLayout.setTitle("Title");
-       /* Bundle extras = getIntent().getExtras();
+
+
+        Bundle extras = getIntent().getExtras();
         if(extras == null) {
-            title= null;
+
         } else {
-            title= extras.getString("title");
-            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-            date = ft.format(new Date(extras.getLong("date")));
-            location = extras.getString("location");
-            //
-            event_description = extras.getString("description");
-            photo = extras.getString("photo");
 
             id = extras.getLong("id");
 
-        }*/
+        }
 
         RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Parti);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -151,8 +147,8 @@ public class EventActivity extends AppCompatActivity {
                 boolean participated = false;
                 Log.d("asd", (Utils.getCurrentProfile() == null) + "ad");
                 Log.d("asd", "ad" + (Utils.getCurrentProfile().getUser_participating_events() == null));
-                if(Utils.getCurrentProfile().getUser_participating_events() != null)
-                    for(Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
+                if (Utils.getCurrentProfile().getUser_participating_events() != null)
+                    for (Event ee : Utils.getCurrentProfile().getUser_participating_events()) {
                         Log.d("asd", "ad" + ee.getId() + "asd " + e.getId());
                         if (ee.getId() == id) {
                             participated = true;
@@ -160,10 +156,10 @@ public class EventActivity extends AppCompatActivity {
                         }
                     }
 
-                if(!participated) {
+                if (!participated) {
                     joinToTheGroup();
                     viewJoin.setBackgroundResource(R.drawable.purplebutton);
-                }else {
+                } else {
                     leaveTheGroup();
                     viewJoin.setBackgroundResource(R.drawable.cyanbutton);
                 }
@@ -179,7 +175,7 @@ public class EventActivity extends AppCompatActivity {
 
 
 
-        writeToList();
+
 
     }
 
@@ -292,18 +288,22 @@ public class EventActivity extends AppCompatActivity {
                     Log.d("event participants: " , participants.toString());
                     number_of_participants = participants.size();
                     participantNumber.setText(number_of_participants+" people are going");
-                    hostName = response.getOwnerName();
-                    event_host.setText(hostName);
+                    host = response.getEvent_host();
+
 
                     title= response.getEvent_title();
-                    Long  date_as_long = response.getDate();
+                    Long  date_as_long = Long.getLong(response.getDate());
                     SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-                    date = ft.format(new Date(date_as_long));
+
+                   // date = ft.format(new Date(date_as_long));
+                    //TODO fix the date
+                    date = response.getDate();
                     location = response.getEvent_location();
                     event_description =response.getEvent_description();
                     photo = response.getEvent_photo();
                     id = response.getId();
-
+                    tags_event = response.getTags();
+                    writeToList();
                 } else {
                     Log.d("Event", "Cannot obtain event details.");
                 }
@@ -318,7 +318,7 @@ public class EventActivity extends AppCompatActivity {
             }
         };
 
-            API.getEventDetail("getEventDetail", id, response, errorListener);
+            API.getEventDetails("getEventDetail", id, response, errorListener);
     }
 
     Drawable d;
@@ -338,7 +338,7 @@ public class EventActivity extends AppCompatActivity {
         eventdate.setText(date);
         participantNumber.setText(number_of_participants+" people are going");
 
-
+        event_host.setText(host.getName()+ " "+ host.getSurname());
         eventlocation.setText(location);
 
 
@@ -355,6 +355,11 @@ public class EventActivity extends AppCompatActivity {
         d = new BitmapDrawable(getResources(), getBitmapFromURL(photo));
         img.setBackground(d);
 
+        String tagString = "";
+        for(int i= 0; i<tags_event.size();i++){
+            tagString += tags_event.get(i)+" ";
+        }
+        tags.setText(tagString);
         //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
         //  eventhost.setText(hostName);
     }

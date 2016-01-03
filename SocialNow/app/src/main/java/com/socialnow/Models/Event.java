@@ -18,7 +18,9 @@ public class Event implements Serializable {
 
     String event_description;
 
-    Long event_date;
+
+
+    String event_date;
 
     String event_location;
 
@@ -34,7 +36,9 @@ public class Event implements Serializable {
 
     String event_photo;
 
-     User[] event_participant_users;
+    User[] event_participant_users;
+
+    String visibleTo;
 
 
   /*  public Event(Event_Form e_f) {
@@ -56,19 +60,21 @@ public class Event implements Serializable {
         title = e.toString();
     }*/
 
-    public Event(User[] event_participant_users,Long id, String title,String type, String event_photo, String event_comments,String event_description,Long event_date,String event_participants,String tags,String event_host_token, String event_location){
+    public Event(String visibleTo, String event_date,User[] event_participant_users,Long id, String title,String type, String event_photo, String event_comments,String event_description,String event_participants,String tags,String event_host_token, String event_location){
         this.id = id;
         this.title = title;
         this.event_host_token = event_host_token;
         this.event_location = event_location;
         this.event_description = event_description;
-        this.event_date = event_date;
+
         this.event_participants = event_participants;
         this.tags = tags;
         this.event_comments = event_comments;
         this.event_photo =event_photo;
         this.type = type;
         this.event_participant_users = event_participant_users;
+        this.visibleTo = visibleTo;
+        this.event_date = event_date;
     }
 
     public String getTitle() {
@@ -79,6 +85,13 @@ public class Event implements Serializable {
         this.title = title;
     }
 
+    public String get_visibleTo() {
+        return visibleTo;
+    }
+
+    public void set_visibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
     public String getEvent_description() {
         return event_description;
     }
@@ -87,11 +100,12 @@ public class Event implements Serializable {
         this.event_description = event_description;
     }
 
-    public Long getEvent_date() {
+
+    public String getEvent_date() {
         return event_date;
     }
 
-    public void setEvent_date(Long event_date) {
+    public void setEvent_date(String event_date) {
         this.event_date = event_date;
     }
 

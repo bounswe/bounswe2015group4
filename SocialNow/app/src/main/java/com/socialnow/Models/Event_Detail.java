@@ -18,10 +18,11 @@ public class Event_Detail {
     public void setEvent_photo(String event_photo) {
         this.event_photo = event_photo;
     }
-    private Long event_date;
-    private String event_title;
+    private String event_date;
+    private String title;
     private String event_location;
     private String event_description;
+    private User event_host;
     private String hostName;
     private User owner;
     private ArrayList<String> tags= new ArrayList<>();
@@ -33,7 +34,7 @@ public class Event_Detail {
     public Event_Detail(Event event) {
         this.id = event.getId();
         this.event_description = event.event_description;
-        this.event_title = event.title;
+        this.title = event.title;
         this.setEvent_photo(event.getEvent_photo());
         this.setOwner(event.getEvent_participant_users());
         this.setDate(event.getEvent_date());
@@ -57,6 +58,12 @@ public class Event_Detail {
         this.group_posts = group_posts;
     }*/
 
+    public void setEvent_host(User event_host){
+        this.event_host = event_host;
+    }
+    public User getEvent_host(){
+        return  this.event_host;
+    }
     public ArrayList<User> getEvent_participants() {
         return event_participants;
     }
@@ -72,7 +79,7 @@ public class Event_Detail {
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
-    public void setDate(Long date) {
+    public void setDate(String date) {
         this.event_date = date;
     }
     public void setEvent_location(String location) {
@@ -98,7 +105,7 @@ public class Event_Detail {
     }
 
     public String getOwnerName() { return this.hostName; }
-    public Long getDate() { return this.event_date; }
+    public String getDate() { return this.event_date; }
 
     public String getEvent_description() {
         return event_description;
@@ -109,11 +116,11 @@ public class Event_Detail {
     }
 
     public String getEvent_title() {
-        return event_title;
+        return title;
     }
 
     public void setEvent_title(String event_title) {
-        this.event_title = event_title;
+        this.title = event_title;
     }
 
     public long getId() {
