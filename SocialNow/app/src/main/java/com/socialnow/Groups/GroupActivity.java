@@ -77,15 +77,6 @@ public class GroupActivity extends AppCompatActivity {
     ArrayList<User> groupMembers;
     ArrayList<PostDetail> groupPosts;
 
-    //Dummy Comment List
-    int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
-    String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
-
-    String[] tvComment={"Let me comment on this event.",
-            "Let me comment on this event.", "Let me comment on this event.",
-            "Let me comment on this event.","Let me comment on this event.",
-            "Let me comment on this event.","Let me comment on this event."};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
