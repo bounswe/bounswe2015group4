@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -31,9 +33,13 @@ dependencies {
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-    compile 'com.android.support:design:23.0.1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    androidTestCompile 'com.android.support:support-annotations:23.1.0'
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
 
