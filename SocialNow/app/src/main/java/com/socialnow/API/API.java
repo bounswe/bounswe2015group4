@@ -155,6 +155,13 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
+    public static void createGroup(String tag, Group g, Response.Listener<Group> successListener,
+                                   Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(g);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createInterestGroup",
+                Group.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
     public static void createPost(String tag, Post p, Response.Listener<Post> successListener,
                                    Response.ErrorListener failureListener) {
         String postBody = new Gson().toJson(p);

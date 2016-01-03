@@ -12,6 +12,12 @@ public class Group implements Serializable {
 
     String type;
 
+    String group_owner_token;
+
+    String tags;
+
+    String visibleTo;
+
    /* public Interest_Group(Error_JSON e) {
         id = -1;
         group_name = e.toString();
@@ -26,9 +32,27 @@ public class Group implements Serializable {
 
     User owner;
 
+    User[] group_member_users;
+
     String group_name;
 
     public  String group_members ;
+
+    Post[] group_posts;
+
+    public Group(String visibleTo, User[] group_member_users,Long id, String type, String group_photo, String group_comments,String group_description,String group_members,String tags,String group_owner_token, Post[] group_posts){
+        this.id = id;
+        this.group_description = group_description;
+        this.group_owner_token = group_owner_token;
+
+        this.group_members = group_members;
+        this.tags = tags;
+        this.group_posts = group_posts;
+        this.group_photo =group_photo;
+        this.type = type;
+        this.group_member_users =group_member_users;
+        this.visibleTo = visibleTo;
+    }
 
 
     //public  String group_posts ;
@@ -58,6 +82,26 @@ public class Group implements Serializable {
                 ", group_posts='" + group_posts + '\'' +
                 '}';
     }*/
+
+    public String get_visibleTo() {
+        return visibleTo;
+    }
+
+    public void set_visibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
+
+    public String getGroup_tags() {
+        return tags;
+    }
+
+    public void setGroup_tags(String event_tags) {
+        this.tags = event_tags;
+    }
+
+    public void setGroup_owner_token(String group_owner_token) {
+        this.group_owner_token = group_owner_token;
+    }
 
     public String getGroup_description() {
         return group_description;
