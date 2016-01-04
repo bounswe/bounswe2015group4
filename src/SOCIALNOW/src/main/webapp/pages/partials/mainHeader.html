@@ -96,10 +96,10 @@
                     <ul class="dropdown-menu">
                         <li>
                             <ul class="menu">
-                                <li ng-show="instanceEvents.length != 0" ng-click="instantEventDetail(instanceEvent)" ng-repeat="instanceEvent in instanceEvents">
+                                <li ng-show="instanceEvents.length != 0" ng-click="instantEventDetail(instanceEvent)" data-toggle="modal" data-target="#instantEventDetail" ng-repeat="instanceEvent in instanceEvents">
                                     <a>
                                         <span class="pull-left" ng-bind="instanceEvent.title"><i class="fa fa-member"></i></span>
-                                        <span class="pull-right font-light" ng-bind="instanceEvent.duration_in_minutes"></span>
+                                        <span class="pull-right font-light" ng-bind-template="{{instanceEvent.remainingTime}} min"></span>
                                     </a>
                                 </li>
                                 <li ng-show="instanceEvents.length == 0">
@@ -239,6 +239,78 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" ng-click="createInstantEvent(instantEvent)">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="instantEventDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Instant Event Detail</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" novalidate>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="inputTitle">Title</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span ng-bind="currentEventInstance.title"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="inputTitle">Description</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span ng-bind="currentEventInstance.instant_event_description"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="inputTitle">Location</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span ng-bind="currentEventInstance.instant_event_location"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="inputTitle">Duration</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span ng-bind="currentEventInstance.duration_in_minutes"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

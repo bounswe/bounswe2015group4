@@ -13,6 +13,14 @@
         return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
     }
 
+    utils.findDifferenceOfTimestampsInMinutes = function(ts1, ts2) {
+        var dateA = new Date(ts1);
+        var dateB = new Date(ts2);
+
+        var dayRelativeDifference = dateB.getHours()*60 + dateB.getMinutes() - dateA.getHours()*60 - dateA.getMinutes();
+        return (ts2-ts1)/60;
+    }
+
     // String manipulation
     utils.trimCharacter = function(str, charachter) {
         if(!str)
