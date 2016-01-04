@@ -1,3 +1,14 @@
+/*
+*In this file, the authorization of users is checked if they are 
+*eligible to access the page they are asking to go or not. If
+*they are authorized, they are directed to the location where 
+*they try to, otherwise they are directed to the login page.
+*
+*@param authenticated
+*@param result
+*@return result
+*/
+
 app.service('authorizationService', function (sessionService) {
     this.authorize = function () {
         var authenticated = sessionService.isUserAuthenticated();
