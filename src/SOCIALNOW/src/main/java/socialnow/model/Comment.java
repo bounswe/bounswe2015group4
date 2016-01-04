@@ -6,8 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
-*This model defines comment
-*@author Erdem
+ *This model defines comment
+ *
+ * @author Erdem
  *@param id it is the id of comment
  *@param owner_token shows the owner of comment
  *@param comment_text what is written in the comment
