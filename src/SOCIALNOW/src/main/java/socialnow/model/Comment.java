@@ -28,6 +28,7 @@ public class Comment {
     private String comment_text;
 
 /**
+*
 *@return current id
 */
     public long getId() {
