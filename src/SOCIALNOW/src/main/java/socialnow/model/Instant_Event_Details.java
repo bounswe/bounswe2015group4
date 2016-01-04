@@ -31,6 +31,7 @@ public class Instant_Event_Details {
         duration_in_minutes = e.getDuration_in_minutes();
         title=e.getTitle();
         instant_event_description = e.getInstant_event_description();
+        instant_event_location = e.getInstant_event_location();
     }
 
     public long getId() {

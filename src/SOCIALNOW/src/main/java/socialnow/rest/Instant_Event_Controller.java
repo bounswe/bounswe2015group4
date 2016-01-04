@@ -56,6 +56,8 @@ public class Instant_Event_Controller {
 
             User u = userDao.getByToken(e.getInstant_event_owner());
             Instant_Event_Details ie = new Instant_Event_Details(e);
+            ie.setInstant_event_owner(u);
+
             result.add(ie);
         }
         return result;
