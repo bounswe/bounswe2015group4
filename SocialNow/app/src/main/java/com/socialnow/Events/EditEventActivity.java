@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -31,6 +35,8 @@ import android.widget.Toast;
 //import com.parse.ParseUser;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.apradanas.simplelinkabletext.Link;
+import com.apradanas.simplelinkabletext.LinkableEditText;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
@@ -44,7 +50,8 @@ import com.android.volley.Response.Listener;
  */
 //TODO Event Image Adding option, Invite Guest Option, Privacy Option, Invite problems, End time
 public class EditEventActivity extends AppCompatActivity{
-    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca, tvTags;
+    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca;
+    com.apradanas.simplelinkabletext.LinkableEditText tvTags;
     private Button btDate, btSTime,btETime;
     private int mYear, mMonth, mDay, mSHour, mSMinute, mEHour, mEMinute;
     String mTitle="Create Event";
@@ -91,7 +98,7 @@ public class EditEventActivity extends AppCompatActivity{
         etEventDes = (TextView) findViewById(R.id.etEventDes);
         etEventLoca = (TextView) findViewById(R.id.etEventLoca);
 
-        tvTags = (TextView) findViewById(R.id.tags);
+        tvTags = (com.apradanas.simplelinkabletext.LinkableEditText) findViewById(R.id.tags);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
@@ -106,7 +113,6 @@ public class EditEventActivity extends AppCompatActivity{
         }*/
         tvSTime.setText("");
         tvETime.setText("");
-
 
         btDate = (Button) findViewById(R.id.btDate);
         btSTime = (Button) findViewById(R.id.btSTime);
@@ -145,6 +151,19 @@ public class EditEventActivity extends AppCompatActivity{
             }
         });
 
+        Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
+                .setUnderlined(true)
+                .setTextStyle(Link.TextStyle.BOLD)
+                .setClickListener(new Link.OnClickListener() {
+                    @Override
+                    public void onClick(String text) {
+                        Toast.makeText(EditEventActivity.this, text, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        List<Link> links = new ArrayList<>();
+        links.add(linkHashtag);
+
+        tvTags.addLinks(links);
     }
 
     public void create_event(View v){
@@ -156,9 +175,15 @@ public class EditEventActivity extends AppCompatActivity{
             //TODO privacy setting should be added
             event.set_visibleTo("all");
             //TODO add the end date
-            event.setEvent_date(tvDate.getText().toString()+" "+tvSTime.getText().toString());
+            event.setEvent_date(tvDate.getText().toString() + " " + tvSTime.getText().toString());
             event.setEvent_photo("");
-            event.setEvent_tags(tvTags.getText().toString());
+            String event_tags = tvTags.getText().toString();
+            String tagArray[] = event_tags.split("\\s+");
+            String tagForDb = "";
+            for(int i = 0;i<tagArray.length;i++){
+                tagForDb += tagArray[i] + ",";
+            }
+            event.setEvent_tags(tagForDb);
            // event.setEvent_date(getEventDate().getTime());
 //            event.setEvent_photo(getEventPhoto());
             event.setEvent_host_token(Utils.getCurrentUser().getUser_token());

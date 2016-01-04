@@ -21,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.apradanas.simplelinkabletext.Link;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
@@ -39,11 +41,14 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class EventActivity extends AppCompatActivity {
 
-    TextView description,tags;
+    TextView description;
+    com.apradanas.simplelinkabletext.LinkableTextView tags;
     TextView eventdate;
     TextView participantNumber;
     TextView event_host;
@@ -57,6 +62,7 @@ public class EventActivity extends AppCompatActivity {
     String event_description;
     String location;
     User host;
+    List<Link> links;
     ArrayList<User> participants;
     private ArrayList<String> tags_event;
     int number_of_participants;
@@ -83,7 +89,7 @@ public class EventActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.tDes);
         eventlocation = (TextView) findViewById(R.id.tEventlocation);
         event_host = (TextView) findViewById(R.id.tEventHost);
-        tags = (TextView) findViewById(R.id.tags);
+        tags = (com.apradanas.simplelinkabletext.LinkableTextView) findViewById(R.id.tags);
         participantNumber = (TextView) findViewById(R.id.tParti);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -167,14 +173,22 @@ public class EventActivity extends AppCompatActivity {
         });
 
 
+        Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
+                .setUnderlined(true)
+                .setTextStyle(Link.TextStyle.BOLD)
+                .setClickListener(new Link.OnClickListener() {
+                    @Override
+                    public void onClick(String text) {
+                        //TODO navigate to search with tag page
+                        Toast.makeText(EventActivity.this, text, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
+        links = new ArrayList<>();
+        links.add(linkHashtag);
 
-        // e = extras.getParcelable("Event");
 
         getData();
-
-
-
 
 
     }
@@ -187,15 +201,10 @@ public class EventActivity extends AppCompatActivity {
             public void onResponse(Event response) {
                 if(response.getId() != -1) {
                     Log.d("Event", "Leave success " + response.getEvent_description());
-
-
                     number_of_participants--;
                     participantNumber.setText(number_of_participants + " people are going");
-
-
                     Utils.updateProfile();
                     getData();
-
                     ImageView v = (ImageView) findViewById(R.id.ivArrow4);
                     v.setImageDrawable(getResources().getDrawable(R.drawable.rightarrow));
                 }else{
@@ -359,7 +368,7 @@ public class EventActivity extends AppCompatActivity {
         for(int i= 0; i<tags_event.size();i++){
             tagString += tags_event.get(i)+" ";
         }
-        tags.setText(tagString);
+        tags.setText(tagString).addLinks(links).build();
         //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
         //  eventhost.setText(hostName);
     }

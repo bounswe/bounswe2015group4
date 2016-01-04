@@ -28,7 +28,7 @@
         android:layout_below="@id/etEventDes"
         android:layout_marginBottom="@dimen/small_margin"
         style="@style/dEditText" />
-    <EditText
+    <com.apradanas.simplelinkabletext.LinkableEditText
         android:hint="enter tags"
         android:id="@+id/tags"
         android:layout_below="@+id/etEventLoca"
