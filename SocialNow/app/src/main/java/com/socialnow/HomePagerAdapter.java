@@ -1,5 +1,6 @@
 package com.socialnow;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -17,6 +18,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }
+    Bundle bundle = new Bundle();
 
     @Override
     public Fragment getItem(int position) {
@@ -24,10 +26,14 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 //TODO my events fragment
                 EventFrag tab1 = new EventFrag ();
+                bundle.putString("from", "HomePage");
+                tab1.setArguments(bundle);
                 return tab1;
             case 1:
                 //TODO my groups fragment
                 GroupFrag tab2 = new GroupFrag ();
+                bundle.putString("from", "HomePage");
+                tab2.setArguments(bundle);
                 return tab2;
             default:
                 return null;

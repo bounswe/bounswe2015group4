@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.socialnow.HomePagerAdapter;
 import com.socialnow.R;
 import com.socialnow.SearchPagerAdapter;
 
@@ -34,7 +35,7 @@ public class HomeFrag extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("MY EVENTS"));
         tabLayout.addTab(tabLayout.newTab().setText("MY GROUPS"));
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
-        final SearchPagerAdapter adapter = new SearchPagerAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final HomePagerAdapter adapter = new HomePagerAdapter(getFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

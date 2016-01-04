@@ -59,7 +59,19 @@ public class EventFrag extends Fragment {
         listView = (ListView)v.findViewById(R.id.lvEvent);
         events = new LinkedList<>();
         titles = new LinkedList<>();
-        getData();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String bundleValue = bundle.getString("from", "");
+            if(bundleValue.equals("HomePage")){
+                Log.d("check", "from Home Page");
+                getMyData();
+            }else{
+                getData();
+            }
+        }else{
+            getData();
+        }
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -173,6 +185,35 @@ public class EventFrag extends Fragment {
     void writeToList(){
         Log.d("Event", events.toString());
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, events));
+    }
+
+    void getMyData() {
+
+        Response.Listener<Event[]> response = new Response.Listener<Event[]>() {
+            @Override
+            public void onResponse(Event[] response) {
+                if(response != null) {
+                    Log.d("Event", response.toString());
+                    for( int i= 0;i<response.length;i++){
+                        events.add(i,response[i]);
+                    }
+                    writeToList();
+
+                }else{
+                    Log.d("Event", "error");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", error.toString());
+
+            }
+        };
+
+        API.listAttendingEvents("listAttendingEvents", response, errorListener);
     }
 
 }

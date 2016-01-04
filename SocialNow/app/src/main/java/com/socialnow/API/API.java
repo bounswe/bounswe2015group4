@@ -117,16 +117,23 @@ public class API {
                 MAIN_URL + "/signUp", User.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
-    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
+    public static void listAttendingEvents(String tag, Response.Listener<Event[]> successListener,
                                                                           Response.ErrorListener failureListener) {
         String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
-                mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
+                mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAttendingEvents",
                         Event[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
           }
 
+    public static void listAllEvents(String tag, Response.Listener<Event[]> successListener,
+                                     Response.ErrorListener failureListener) {
+        String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllEvents",
+                Event[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,
                                      Response.ErrorListener failureListener) {
-        String postBody = "{}";
+        String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listAllGroups",
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
@@ -155,7 +162,7 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
-    public static void createGroup(String tag, Group g, Response.Listener<Group> successListener,
+    public static void createInterestGroup(String tag, Group g, Response.Listener<Group> successListener,
                                    Response.ErrorListener failureListener) {
         String postBody = new Gson().toJson(g);
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createInterestGroup",

@@ -12,17 +12,11 @@ public class Group implements Serializable {
 
     String type;
 
-    String group_owner_token;
+    String owner_token;
 
     String tags;
 
     String visibleTo;
-
-   /* public Interest_Group(Error_JSON e) {
-        id = -1;
-        group_name = e.toString();
-    }*/
-
 
     private long id;
 
@@ -39,12 +33,15 @@ public class Group implements Serializable {
     public  String group_members ;
 
     Post[] group_posts;
+    public  String group_photo ;
+    public Group(){
 
-    public Group(String visibleTo, User[] group_member_users,Long id, String type, String group_photo, String group_comments,String group_description,String group_members,String tags,String group_owner_token, Post[] group_posts){
+    }
+    public Group(String group_name,String visibleTo, User[] group_member_users,Long id, String type, String group_photo, String group_comments,String group_description,String group_members,String tags,String owner_token, Post[] group_posts){
         this.id = id;
         this.group_description = group_description;
-        this.group_owner_token = group_owner_token;
-
+        this.owner_token = owner_token;
+        this.group_name = group_name;
         this.group_members = group_members;
         this.tags = tags;
         this.group_posts = group_posts;
@@ -66,23 +63,6 @@ public class Group implements Serializable {
     }
 
 
-    public  String group_photo ;
-
-
-   /* @Override
-    public String toString() {
-        return "Interest_Group{" +
-                "type='" + type + '\'' +
-                ", id=" + id +
-                ", tags='" + tags + '\'' +
-                ", group_description='" + group_description + '\'' +
-                ", owner_token='" + owner.getName() + '\'' +
-                ", group_name='" + group_name + '\'' +
-                ", group_members='" + group_members + '\'' +
-                ", group_posts='" + group_posts + '\'' +
-                '}';
-    }*/
-
     public String get_visibleTo() {
         return visibleTo;
     }
@@ -99,8 +79,11 @@ public class Group implements Serializable {
         this.tags = event_tags;
     }
 
-    public void setGroup_owner_token(String group_owner_token) {
-        this.group_owner_token = group_owner_token;
+    public void setOwner_token(String group_owner_token) {
+        this.owner_token = group_owner_token;
+    }
+    public String getOwner_token() {
+        return this.owner_token;
     }
 
     public String getGroup_description() {
@@ -128,8 +111,6 @@ public class Group implements Serializable {
         this.group_name = group_name;
     }
 
-    public Group() {
-    }
 
    /* public Group(Interest_Group_Form form) {
         this.owner_token = form.getOwner_token();

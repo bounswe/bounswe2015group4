@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.apradanas.simplelinkabletext.Link;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
@@ -22,7 +23,10 @@ import com.socialnow.PartiActivity;
 import com.socialnow.R;
 import com.socialnow.Users.Utils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by lauamy on 20/11/15.
@@ -31,21 +35,12 @@ public class EditGroupActivity extends AppCompatActivity{
     String mTitle="Create Group";
     Spinner spinner;
 
-    TextView etGroupName, etGroupDes, tvTags;
+    TextView etGroupName, etGroupDes;
+    com.apradanas.simplelinkabletext.LinkableEditText tvTags;
     ArrayAdapter<CharSequence> adapter;
     String privacy_option = "";
     Context context;
-    String gTitle1 = "Invalid Date";
-    String gTitle2 = "Invalid Time";
-    String gTitle3 = "Invalid Date/Time";
-    String gMsg1 = "Past date is selected";
-    String gMsg2 = "End time is not later than Start Time";
-    String gMsg3 = "Past time/date cannot be inputted";
 
-    final Calendar c = Calendar.getInstance();
-    int mCHour = c.get(Calendar.HOUR_OF_DAY);
-    int mCMinute = c.get(Calendar.MINUTE);
-    int CurrentTime = mCHour*60+mCMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +64,8 @@ public class EditGroupActivity extends AppCompatActivity{
 
         etGroupName = (TextView) findViewById(R.id.etGroupName);
         etGroupDes = (TextView) findViewById(R.id.etGroupDes);
-        tvTags = (TextView) findViewById(R.id.tags);
+        tvTags = (com.apradanas.simplelinkabletext.LinkableEditText) findViewById(R.id.tags);
 
-
-        // etEventName.setText("first");
-        // etEventDes.setText("desc");
-        // etEventLoca.setText("loca");
-        /*if (!editFlag){
-            tvDate.setText("2015-11-3");
-            tvSTime.setText("20:45");
-            tvETime.setText("21:45");
-        }*/
 
         spinner = (Spinner) findViewById(R.id.sPrivacy);
         adapter = ArrayAdapter.createFromResource(this, R.array.group_privacy, android.R.layout.simple_spinner_item);
@@ -96,15 +82,35 @@ public class EditGroupActivity extends AppCompatActivity{
             }
         });
 
+        Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
+                .setUnderlined(true)
+                .setTextStyle(Link.TextStyle.BOLD)
+                .setClickListener(new Link.OnClickListener() {
+                    @Override
+                    public void onClick(String text) {
+                        Toast.makeText(EditGroupActivity.this, text, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        List<Link> links = new ArrayList<>();
+        links.add(linkHashtag);
+
+        tvTags.addLinks(links);
+
 
     }
 
     public void create_group(View v){
         if(inputs_correct()){
             Group group = new Group();
-            group.setGroup_tags(tvTags.getText().toString());
+            String event_tags = tvTags.getText().toString();
+            String tagArray[] = event_tags.split("\\s+");
+            String tagForDb = "";
+            for(int i = 0;i<tagArray.length;i++){
+                tagForDb += tagArray[i] + ",";
+            }
+            group.setGroup_tags(tagForDb);
             group.setGroup_name(etGroupName.getText().toString());
-            group.setGroup_owner_token(Utils.getCurrentUser().getUser_token());
+            group.setOwner_token(Utils.getCurrentUser().getUser_token());
             group.setGroup_description(etGroupDes.getText().toString());
 //            event.setEvent_photo(getEventPhoto());
             group.setGroup_photo("");
@@ -134,7 +140,7 @@ public class EditGroupActivity extends AppCompatActivity{
 
                 }
             };
-            API.createGroup("createInterestGroup", group, response, errorListener);
+            API.createInterestGroup("createInterestGroup", group, response, errorListener);
 
             Toast.makeText(getBaseContext(), "Doing", Toast.LENGTH_LONG).show();
 
