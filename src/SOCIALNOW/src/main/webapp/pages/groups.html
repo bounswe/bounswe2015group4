@@ -69,6 +69,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form group has-feedback">
+                                                                        <label>Roles</label>
+                                                                        <roles selected="group.visibleTo"></roles>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
                                                                 <div class="col-md-10">
                                                                     <message type="success"
                                                                              display="successMessage"></message>
@@ -82,6 +90,7 @@
                                                                     </button>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                     </form>
 
@@ -109,10 +118,10 @@
                                                 <group-summary data="allGroup"></group-summary>
                                             </div>
                                         </div>
-                                        <div ng-show="allGroups.length == 0">
-                                            <h5>Nothing to show!</h5>
-                                        </div>
                                     </section>
+                                    <div ng-show="allGroups.length == 0">
+                                        <h5>Nothing to show!</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>

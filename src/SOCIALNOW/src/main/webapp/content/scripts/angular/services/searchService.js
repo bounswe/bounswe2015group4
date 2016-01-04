@@ -14,4 +14,20 @@ app.service('searchService', function ($q, $http, baseApiUrl) {
 
         return deferred.promise;
     }
+
+    this.semantic = function(searchTerm) {
+        var deferred = $q.defer();
+
+        $http({
+            url: baseApiUrl + '/deneme',
+            method: 'POST',
+            data: searchTerm
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 });

@@ -1,11 +1,15 @@
 app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
-    this.getAllGroups = function () {
+    this.getAllGroups = function (token) {
         var deferred = $q.defer();
+
+        var request = {
+            user_token: token
+        }
 
         $http({
             url: baseApiUrl + '/listAllGroups',
             method: 'POST',
-            data: JSON.stringify({})
+            data: JSON.stringify(request)
         }).success(function (groups) {
             deferred.resolve(groups);
         }).error(function (response) {

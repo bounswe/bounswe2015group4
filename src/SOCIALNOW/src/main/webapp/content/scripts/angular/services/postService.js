@@ -59,4 +59,46 @@ app.service('postService', function($q, $http, baseApiUrl) {
 
         return deferred.promise;
     }
+
+    this.addComment = function(ownerToken, comment) {
+        var deferred = $q.defer();
+
+        var request = {
+            owner_token: ownerToken,
+            comment_text: comment
+        }
+
+        $http({
+            url: baseApiUrl + '/createComment',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function(comment) {
+            deferred.resolve(comment);
+        }).error(function(response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.addCommentToPost = function(postId, commentId) {
+        var deferred = $q.defer();
+
+        var request = {
+            post_id: postId,
+            comment_id: commentId
+        }
+
+        $http({
+            url: baseApiUrl + '/post/addComment ',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function(post) {
+            deferred.resolve(post);
+        }).error(function(response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 })

@@ -120,4 +120,79 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
+
+    this.shareEvent = function(fromToken, toToken, eventId) {
+        var deferred = $q.defer();
+
+        var request = {
+            from_user_token: fromToken,
+            to_user_token: toToken,
+            event_id : eventId
+        }
+
+        $http({
+            url: baseApiUrl + '/users/shareEvent',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (eventShare) {
+            deferred.resolve(eventShare);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.shareEventWithAGroup = function(fromToken, groupId, eventId) {
+        var deferred = $q.defer();
+
+        var request = {
+            from_user_token: fromToken,
+            group_id: groupId,
+            event_id : eventId
+        }
+
+        $http({
+            url: baseApiUrl + '/groups/shareEvent',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (eventShare) {
+            deferred.resolve(eventShare);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.createInstantEvent = function(instantEvent) {
+        var deferred = $q.defer();
+
+        $http({
+            url: baseApiUrl + '/createInstantEvent',
+            method: 'POST',
+            data: JSON.stringify(instantEvent)
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
+    this.getInstantEvents = function() {
+        var deferred = $q.defer();
+
+        $http({
+            url: baseApiUrl + '/getInstantEvent',
+            method: 'POST'
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
 })

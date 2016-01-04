@@ -1,6 +1,6 @@
-app.controller('groupsController', function ($scope, sessionService, groupService, userService, helperService) {
+app.controller('groupsController', function ($scope, sessionService, groupService) {
     var getAllGroups = function () {
-        groupService.getAllGroups().then(function (groups) {
+        groupService.getAllGroups($scope.user.user_token).then(function (groups) {
             $scope.allGroups = groups || [];
         }, function (error) {
             console.log(error);
@@ -30,6 +30,13 @@ app.controller('groupsController', function ($scope, sessionService, groupServic
     }
 
     $scope.createGroup = function () {
+        var roles = sessionService.getRoles();
+        if(_.isEqual($scope.group.visibleTo, roles)) {
+            $scope.group.visibleTo = "All";
+        } else {
+            $scope.group.visibleTo = $scope.group.visibleTo.join();
+        }
+
         groupService.createGroup($scope.group, $scope.user.user_token).then(function (group) {
             $scope.currentGroupRoute = $scope.groupRoutes.allGroups;
 

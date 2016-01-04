@@ -1,4 +1,4 @@
-app.controller('homeController', function ($scope, userService, sessionService, $location, helperService, recommendationService) {
+app.controller('homeController', function ($scope, userService, sessionService, $location, helperService, recommendationService, timelineService) {
     var init = function() {
         $scope.user = sessionService.getUserInfo();
         $scope.recommendationsEnabled = false;
@@ -7,6 +7,11 @@ app.controller('homeController', function ($scope, userService, sessionService, 
             $scope.recommendations.events = utils.manipulateEvents($scope.recommendations.events);
             $scope.recommendationsEnabled = true;
         });
+
+        timelineService.getTimeline($scope.user.user_token).then(function(timeline) {
+           $scope.timeline = timeline;
+        });
     }
+
     init();
 });

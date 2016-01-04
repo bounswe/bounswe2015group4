@@ -1,6 +1,6 @@
 var app = angular.module('socialNowApp', ['ngRoute', 'ngCookies']);
 
-app.constant('baseApiUrl', 'http://52.26.185.114:8080/socialnow_backend2/');
+app.constant('baseApiUrl', 'http://52.26.185.114:8080/socialnow_backend2');
 
 app.constant('signUpUrl', '/signup');
 app.constant('loginUrl', '/login');
