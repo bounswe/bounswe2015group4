@@ -130,6 +130,7 @@ public class Interest_Group {
         this.setGroup_name(form.getGroup_name());
         this.setGroup_posts("");
         this.setGroup_photo(form.getGroup_photo());
+        this.setVisibleTo(form.getVisibleTo());
     }
 
 
