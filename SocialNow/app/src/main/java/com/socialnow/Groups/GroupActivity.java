@@ -26,9 +26,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.apradanas.simplelinkabletext.Link;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseFile;
@@ -56,16 +58,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class GroupActivity extends AppCompatActivity {
     ListView listView;
-    TextView description;
+    TextView description,tPrivacy;
     TextView mCreatedate;
     TextView mMember;
     TextView comment;
     TextView mOwner;
     Toolbar toolbar;
+    com.apradanas.simplelinkabletext.LinkableTextView tags;
     CollapsingToolbarLayout toolBarLayout;
     TextView mPrivacy;
     android.support.design.widget.AppBarLayout img;
@@ -76,13 +80,15 @@ public class GroupActivity extends AppCompatActivity {
     ImageView privacy;
     ArrayList<User> groupMembers;
     ArrayList<PostDetail> groupPosts;
+    List<Link> links;
+    private ArrayList<String> tags_event = new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-
-
+        tPrivacy = (TextView) findViewById(R.id.tPrivacy);
+        tags = (com.apradanas.simplelinkabletext.LinkableTextView) findViewById(R.id.tags);
         //toolBarLayout.setTitle("Group Name");
         comment = (TextView) findViewById(R.id.tComment);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
@@ -117,7 +123,7 @@ public class GroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 //startActivity(viewParti);
-                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Post");
                 i2.putExtra("group_id", myGroup.getId());
                 Log.d("id ga", myGroup.getId() + "s");
                 PartiActivity.groupPosts = groupPosts;
@@ -148,6 +154,21 @@ public class GroupActivity extends AppCompatActivity {
         TextView eventhost = (TextView) findViewById(R.id.tHostName);
         eventhost.setText(hostName);*/
         toolBarLayout.setTitle("Group Name");
+
+        Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
+                .setUnderlined(true)
+                .setTextStyle(Link.TextStyle.BOLD)
+                .setClickListener(new Link.OnClickListener() {
+                    @Override
+                    public void onClick(String text) {
+                        //TODO navigate to search with tag page
+                        Toast.makeText(GroupActivity.this, text, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        links = new ArrayList<>();
+        links.add(linkHashtag);
+
         getData();
 
     }
@@ -169,6 +190,7 @@ public class GroupActivity extends AppCompatActivity {
                   groupMembers = myGroup.getGroup_members();
                   groupMembers.add(0, myGroup.getOwner());
                   groupPosts = myGroup.getGroup_posts();
+                  tags_event = myGroup.getTags();
                   Log.d("Group", response.toString());
                   writeToList();
               }else{
@@ -195,6 +217,12 @@ public class GroupActivity extends AppCompatActivity {
         int memberNumer = myGroup.getGroup_members().size();
         mMember.setText(memberNumer +" Members");
         comment.setText(myGroup.getGroup_posts().size()+  " Posts");
+        String tagString = "";
+        for(int i= 0; i<tags_event.size();i++){
+            tagString += tags_event.get(i)+" ";
+        }
+        tags.setText(tagString).addLinks(links).build();
+        tPrivacy.setText(myGroup.getVisibleTo().toString());
 
     }
     public static Bitmap getBitmapFromURL(String src) {

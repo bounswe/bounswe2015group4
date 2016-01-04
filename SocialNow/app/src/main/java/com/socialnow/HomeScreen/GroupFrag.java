@@ -61,8 +61,20 @@ public class GroupFrag extends Fragment {
         photo = new LinkedList<Bitmap>();
         member = new LinkedList<String>();
         update = new LinkedList<Date>();*/
-        getData();
-        writeToList();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String bundleValue = bundle.getString("from", "");
+            if(bundleValue.equals("HomePage")){
+                Log.d("check", "from Home Page");
+                getMyData();
+            }else{
+                getData();
+            }
+        }else{
+            getData();
+        }
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,6 +128,36 @@ public class GroupFrag extends Fragment {
 
         API.listAllGroups("listAllGroups", response, errorListener);
     }
+    void getMyData() {
+
+        Response.Listener<Group[]> response = new Response.Listener<Group[]>() {
+            @Override
+            public void onResponse(Group[] response) {
+                if(response != null) {
+                    Log.d("Group", response.toString());
+                    for( int i= 0;i<response.length;i++){
+                        groups.add(i,response[i]);
+                    }
+                    writeToList();
+
+                }else{
+                    Log.d("Event", "error");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", error.toString());
+
+            }
+        };
+//TODO API will change as to show the groups that the user is a member of
+        API.listMyGroups("listMyGroups", response, errorListener);
+    }
+
+
     class MyAdapter extends ArrayAdapter {
 
         public MyAdapter(Context context, int resource, List objects) {
@@ -143,7 +185,7 @@ public class GroupFrag extends Fragment {
             ImageView privacy = (ImageView) v.findViewById(R.id.ivEDate);
             privacy.setImageResource(R.drawable.ic_lock);
             TextView mPrivacy = (TextView) v.findViewById(R.id.tEdate);
-            mPrivacy.setText("Privacy");
+            mPrivacy.setText(groups.get(position).get_visibleTo());
             //privacy.setText(date.get(position).toString());
             ImageView member = (ImageView) v.findViewById(R.id.ivELocation);
             member.setImageResource(R.drawable.groupdrawer);

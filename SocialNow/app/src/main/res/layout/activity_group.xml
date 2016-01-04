@@ -91,7 +91,35 @@
                     android:layout_below="@id/tDesTitle"/>
 
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Tags"
+                android:layout_below="@id/Des"
+                android:layout_marginBottom="@dimen/big_margin"
+                android:padding="@dimen/et_top_bottom_padding"
+                android:background="@drawable/item_box">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tags"
+                    android:id="@+id/tagsTitle"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"/>
+
+                <com.apradanas.simplelinkabletext.LinkableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Tags"
+                    android:id="@+id/tags"
+                    android:layout_below="@+id/tagsTitle"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +128,7 @@
                 android:layout_marginBottom="@dimen/big_margin"
                 android:background="@drawable/item_box"
                 android:padding="@dimen/et_top_bottom_padding"
-                android:layout_below="@id/Des">
+                android:layout_below="@id/Tags">
 
 
 

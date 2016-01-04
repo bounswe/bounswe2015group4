@@ -29,6 +29,7 @@ import com.apradanas.simplelinkabletext.Link;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
+import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
@@ -68,11 +69,13 @@ public class EventActivity extends AppCompatActivity {
     int number_of_participants;
     Long id;
     Event_Detail e;
+    ArrayList<PostDetail> eventPosts;
+
 
 
     //Dummy Comment List
     int [] ivParti={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
-    String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
+
 
     String[] tvComment={"Let me comment on this event.",
             "Let me comment on this event.", "Let me comment on this event.",
@@ -121,10 +124,13 @@ public class EventActivity extends AppCompatActivity {
         viewComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
-                //startActivity(viewParti);
-                //Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
-                //startActivity(i2);
+                Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                startActivity(viewParti);
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
+                i2.putExtra("group_id", e.getId());
+
+                PartiActivity.groupPosts = eventPosts;
+                startActivity(i2);
             }
         });
 
@@ -298,7 +304,7 @@ public class EventActivity extends AppCompatActivity {
                     number_of_participants = participants.size();
                     participantNumber.setText(number_of_participants+" people are going");
                     host = response.getEvent_host();
-
+                    eventPosts = e.getEvent_posts();
 
                     title= response.getEvent_title();
                     Long  date_as_long = Long.getLong(response.getDate());

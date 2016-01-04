@@ -50,6 +50,7 @@ public class PartiActivity extends AppCompatActivity {
     public static ArrayList<User> groupMembers;
     public static ArrayList<PostDetail> groupPosts;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +85,7 @@ public class PartiActivity extends AppCompatActivity {
                 mTitle = "Select";
                 break;
 
-            case "Comment":
+            case "Post":
                 final long id = getIntent().getLongExtra("group_id", -1);
                 Log.d("pa", id + "s");
                 fab.show();
@@ -100,8 +101,28 @@ public class PartiActivity extends AppCompatActivity {
                 mAdapter = new CommentAdapter(this,R.layout.item_comment,groupPosts);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
-                mTitle = "Comments";
+                mTitle = "Posts";
                 registerForContextMenu(listView); //View menu by long-click on listview
+                break;
+
+            case "Comment":
+               /* final long id = getIntent().getLongExtra("group_id", -1);
+                Log.d("pa", id + "s");
+                fab.show();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addComment");
+                        i.putExtra("group_id", id);
+                        startActivity(i);
+                    }
+                });
+                tvParti = new String[groupPosts.size()];
+                mAdapter = new CommentAdapter(this,R.layout.item_comment,groupPosts);
+                listView.setDividerHeight(10);
+                listView.setAdapter(mAdapter);
+                mTitle = "Posts";
+                registerForContextMenu(listView); //View menu by long-click on listview*/
                 break;
 
             case "Reply":

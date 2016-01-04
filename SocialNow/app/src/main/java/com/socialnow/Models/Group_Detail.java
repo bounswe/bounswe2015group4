@@ -24,7 +24,7 @@ public class Group_Detail {
     private ArrayList<String> tags= new ArrayList<>();
     public  ArrayList<User> group_members = new ArrayList<>() ;
     public  ArrayList<PostDetail> group_posts = new ArrayList<>();
-
+String visibleTo;
     public Group_Detail() {
     }
     public Group_Detail(Group group) {
@@ -101,6 +101,13 @@ public class Group_Detail {
     }
 
     public  ArrayList<Event> group_events = new ArrayList<>() ;
+    public String getVisibleTo() {
+        return visibleTo;
+    }
+
+    public void setVisibleTo(String visibleTo) {
+        this.visibleTo = visibleTo;
+    }
 
 
 }

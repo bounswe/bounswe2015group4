@@ -27,7 +27,7 @@ public class Event_Detail {
     private User owner;
     private ArrayList<String> tags= new ArrayList<>();
     public  ArrayList<User> event_participants = new ArrayList<>() ;
-   // public  ArrayList<PostDetail> event_posts = new ArrayList<>();
+    public  ArrayList<PostDetail> event_posts = new ArrayList<>();
 
     public Event_Detail() {
     }
@@ -50,13 +50,13 @@ public class Event_Detail {
         this.group_events = group_events;
     }*/
 
-   /* public ArrayList<PostDetail> getGroup_posts() {
+    public ArrayList<PostDetail> getEvent_posts() {
         return event_posts;
-    }*/
+    }
 
-   /* public void setGroup_posts(ArrayList<PostDetail> group_posts) {
-        this.group_posts = group_posts;
-    }*/
+    public void setEvent_posts(ArrayList<PostDetail> event_posts) {
+        this.event_posts = event_posts;
+    }
 
     public void setEvent_host(User event_host){
         this.event_host = event_host;

@@ -131,6 +131,13 @@ public class API {
                 Event[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
+    public static void listMyGroups(String tag, Response.Listener<Group[]> successListener,
+                                     Response.ErrorListener failureListener) {
+        String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listMyGroups",
+                Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+
     public static void listAllGroups(String tag, Response.Listener<Group[]> successListener,
                                      Response.ErrorListener failureListener) {
         String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
