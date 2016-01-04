@@ -129,12 +129,15 @@ public class GroupFrag extends Fragment {
             groupname.setText(groups.get(position).getGroup_name());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
 
-            Picasso.with(((Activity) getContext()))
-                    .load(groups.get(position).getGroup_photo())
-                    .resize(80, 80)
-                    .placeholder(R.drawable.devent)
-                    .centerCrop()
-                    .into(img);
+            if(!groups.get(position).getGroup_photo().equals("")){
+                Picasso.with(((Activity) getContext()))
+                        .load(groups.get(position).getGroup_photo())
+                        .resize(80, 80)
+                        .placeholder(R.drawable.devent)
+                        .centerCrop()
+                        .into(img);
+            }
+
 
             //img.setImageResource(R.drawable.ic_people);
             ImageView privacy = (ImageView) v.findViewById(R.id.ivEDate);

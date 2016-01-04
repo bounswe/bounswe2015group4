@@ -54,6 +54,7 @@ public class CommentActivity extends AppCompatActivity{
             Post p = new Post();
             p.setContent(etComment.getText().toString());
             p.setOwner_token(Utils.getCurrentUser().getUser_token());
+            p.setPost_comments("");
 
 
 

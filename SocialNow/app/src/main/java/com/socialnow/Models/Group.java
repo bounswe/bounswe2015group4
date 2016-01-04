@@ -32,12 +32,12 @@ public class Group implements Serializable {
 
     public  String group_members ;
 
-    Post[] group_posts;
+    String group_posts;
     public  String group_photo ;
     public Group(){
 
     }
-    public Group(String group_name,String visibleTo, User[] group_member_users,Long id, String type, String group_photo, String group_comments,String group_description,String group_members,String tags,String owner_token, Post[] group_posts){
+    public Group(String group_name,String visibleTo, User[] group_member_users,Long id, String type, String group_photo, String group_comments,String group_description,String group_members,String tags,String owner_token, String group_posts){
         this.id = id;
         this.group_description = group_description;
         this.owner_token = owner_token;
@@ -165,4 +165,12 @@ public class Group implements Serializable {
     public void setGroup_posts(String group_posts) {
         this.group_posts = group_posts;
     }*/
+
+    public String getGroup_posts() {
+        return group_posts;
+    }
+
+    public void setGroup_posts(String group_posts) {
+        this.group_posts = group_posts;
+    }
 }
