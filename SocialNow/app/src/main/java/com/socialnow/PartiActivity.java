@@ -25,10 +25,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.socialnow.API.API;
 import com.socialnow.Groups.EditGroupActivity;
+import com.socialnow.Models.Event;
 import com.socialnow.Models.PostDetail;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 import com.squareup.picasso.Picasso;
+import com.socialnow.Users.Utils;
+
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import java.util.ArrayList;
 
@@ -38,6 +47,8 @@ import java.util.ArrayList;
 public class PartiActivity extends AppCompatActivity {
     ListView listView;
     ListAdapter mAdapter;
+    User cUser; //current user
+    String followers;
 
     //RelativeLayout itemLayout;
 
@@ -47,6 +58,7 @@ public class PartiActivity extends AppCompatActivity {
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
     String mTitle;
+    public static ArrayList<String> followersList = new ArrayList<>();
     public static ArrayList<User> groupMembers;
     public static ArrayList<PostDetail> groupPosts;
 
@@ -58,6 +70,29 @@ public class PartiActivity extends AppCompatActivity {
         listView=(ListView)findViewById(R.id.lvParti);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fAddComment);
         fab.hide();
+        cUser = Utils.getCurrentUser();
+
+
+        followers = cUser.getUser_followers();
+        if(followers.isEmpty()) {
+
+            //TODO display members of groups the user attended.
+
+        }else if(followers.length()==1)
+        {
+            String followerList[]= new String[1];
+            followerList[0]= followers;
+            followersList =(ArrayList) Arrays.asList(followerList);
+
+
+        }else
+        {
+            String followerList[] = followers.split(", ");
+            followersList =(ArrayList) Arrays.asList(followerList);
+
+        }
+
+
 
         // Logic to check the calling activity
         String callingActivity = getIntent().getStringExtra("from");
@@ -69,7 +104,7 @@ public class PartiActivity extends AppCompatActivity {
                 break;
 
             case "EditEventActivity":
-                mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,tvParti);
+                mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,followersList);
                 mTitle = "Select";
                 break;
 
@@ -154,6 +189,40 @@ public class PartiActivity extends AppCompatActivity {
 
     }
 
+    protected static void displayFollowers(String follower_token)
+    {
+            getData(follower_token);
+
+    }
+
+    protected  static void getData(String s)
+    {
+
+        Response.Listener<Profile> response = new Response.Listener<Profile>() {
+            @Override
+            public void onResponse(Profile response) {
+
+                if(response.getUser_token().isEmpty()
+                        ) {
+                    Log.d("Profile", "Retrieve user info success " + response);
+
+                }else{
+                    Log.d("Leave", "Error: User not found.");
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "User retrieve failed");
+
+            }
+        };
+        API.profileInfo("showProfileDetails", s, response, errorListener);
+    }
+
     class PartiAdapter extends ArrayAdapter<String> {
         public PartiAdapter(Context context, int resource, String[] tvParti) {
             super(context, R.layout.item_parti, tvParti);
@@ -176,8 +245,8 @@ public class PartiActivity extends AppCompatActivity {
 
     }
     class GuestAdapter extends ArrayAdapter<String> {
-        public GuestAdapter(Context context, int resource, String[] tvParti) {
-            super(context, R.layout.item_inviteguest, tvParti);
+        public GuestAdapter(Context context, int resource, ArrayList<String> tvGuest1) {
+            super(context, R.layout.item_inviteguest, followersList);
         }
 
         @Override
@@ -191,7 +260,9 @@ public class PartiActivity extends AppCompatActivity {
             CheckBox mCB = (CheckBox) customView.findViewById(R.id.cGuestInvite);
             mText.setText(item);
             mImg.setImageResource(mImgArr[position]);
+            displayFollowers(item);
             return customView;
+
 
         }
 
