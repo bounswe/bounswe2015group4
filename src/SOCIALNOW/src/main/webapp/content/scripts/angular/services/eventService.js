@@ -185,7 +185,7 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
         var deferred = $q.defer();
 
         $http({
-            url: baseApiUrl + '/getInstantEvent',
+            url: baseApiUrl + '/getInstantEvents',
             method: 'POST'
         }).success(function (response) {
             deferred.resolve(response);

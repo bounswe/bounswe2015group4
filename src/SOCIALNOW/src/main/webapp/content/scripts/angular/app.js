@@ -1,6 +1,6 @@
 var app = angular.module('socialNowApp', ['ngRoute', 'ngCookies']);
 
-app.constant('baseApiUrl', 'http://52.26.185.114:8080/socialnow_backend2');
+app.constant('baseApiUrl', 'http://ec2-52-26-185-114.us-west-2.compute.amazonaws.com:8080/socialnow_backend2');
 
 app.constant('signUpUrl', '/signup');
 app.constant('loginUrl', '/login');
@@ -89,19 +89,5 @@ app.config(function ($routeProvider, signUpUrl, loginUrl, eventsUrl) {
         .otherwise({
             redirectTo: '/'
         })
-})
-
-app.run(function ($rootScope, helperService) {
-    $rootScope.search = {
-        word: ""
-    };
-
-    $rootScope.doSearch = function() {
-        helperService.goToPage('/search/' + $rootScope.search.word);
-    }
-
-    $rootScope.goUserProfile = function(token) {
-        helperService.goToPage('/profile/' + token);
-    }
 })
 

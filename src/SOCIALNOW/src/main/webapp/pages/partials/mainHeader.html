@@ -88,48 +88,31 @@
                         </li>
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
-                </li>
+                </li>-->
                 <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-users text-gray"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 10 notifications</li>
                         <li>
                             <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                <li ng-show="instanceEvents.length != 0" ng-click="instantEventDetail(instanceEvent)" ng-repeat="instanceEvent in instanceEvents">
+                                    <a>
+                                        <span class="pull-left" ng-bind="instanceEvent.title"><i class="fa fa-member"></i></span>
+                                        <span class="pull-right font-light" ng-bind="instanceEvent.duration_in_minutes"></span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-yellow"></i> Very long description here that
-                                        may not fit into the page and may cause design problems
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-red"></i> 5 new members joined
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-red"></i> You changed your username
+                                <li ng-show="instanceEvents.length == 0">
+                                    <a>
+                                        <span class="pull-left"><i class="fa fa-member"></i>There are not upcoming events</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">View all</a></li>
+                        <li class="footer" data-toggle="modal" data-target="#createInstantEvent"><a>Create Instant Event</a></li>
                     </ul>
                 </li>
-                <li class="dropdown tasks-menu">
+                <!--<li class="dropdown tasks-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-o"></i>
                         <span class="label label-danger">9</span>
@@ -199,3 +182,65 @@
         </div>
     </nav>
 </header>
+
+<!-- Modals start -->
+<div class="modal fade" id="createInstantEvent">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Create Instant Event</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" novalidate>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputTitle">Title</label>
+                                    <input type="text" class="form-control"
+                                           id="inputTitle" ng-model="instantEvent.title"
+                                           placeholder="Title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <label for="inputDescription">Description</label>
+                                    <input type="text" class="form-control"
+                                           id="inputDescription"
+                                           ng-model="instantEvent.instant_event_description"
+                                           placeholder="Description" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="inputLocation">Location</label>
+                                    <input type="text" class="form-control"
+                                           id="inputLocation"
+                                           ng-model="instantEvent.instant_event_location"
+                                           placeholder="Location" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <label for="inputTime">Duration</label>
+                                    <input type="text" class="form-control"
+                                           id="inputTime"
+                                           ng-model="instantEvent.duration_in_minutes"
+                                           placeholder="Duration" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="createInstantEvent(instantEvent)">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modals end -->
