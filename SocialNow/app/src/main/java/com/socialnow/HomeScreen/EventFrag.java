@@ -30,10 +30,13 @@ import com.socialnow.Models.User;
 import com.socialnow.R;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -65,7 +68,14 @@ public class EventFrag extends Fragment {
             if(bundleValue.equals("HomePage")){
                 Log.d("check", "from Home Page");
                 getMyData();
-            }else{
+            }else if(bundleValue.equals("Search")){
+                events = (ArrayList<Event>) bundle.getSerializable("searchEvents");
+                writeToList();
+                TextView tv = (TextView) v.findViewById(R.id.tvUpEvents);
+                tv.setText("Results for: " + bundle.getString("keyword", ""));
+//                Log.d("eventt", events.size() + " ss");
+            }
+            else{
                 getData();
             }
         }else{

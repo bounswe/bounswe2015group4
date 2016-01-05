@@ -110,6 +110,12 @@ public class PartiActivity extends AppCompatActivity {
                 mTitle = "Participants";
                 break;
 
+            case "SearchResultsUser":
+                tvParti = new String[groupMembers.size()];
+                mAdapter = new MemberAdapter(this,R.layout.item_parti,groupMembers);
+                mTitle = "Participants";
+                break;
+
             case "EditGroupActivity":
                 mAdapter = new EditMemberAdapter(this,R.layout.item_editmember,tvParti);
                 listView.setAdapter(mAdapter);

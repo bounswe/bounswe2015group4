@@ -1,4 +1,4 @@
-package com.socialnow;
+package com.socialnow.Search;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.socialnow.Models.*;
+import com.socialnow.R;
+
 import java.util.LinkedList;
 import java.util.List;
 

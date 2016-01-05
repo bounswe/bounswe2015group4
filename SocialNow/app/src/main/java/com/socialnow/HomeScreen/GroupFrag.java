@@ -30,6 +30,7 @@ import com.socialnow.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,6 +69,12 @@ public class GroupFrag extends Fragment {
             if(bundleValue.equals("HomePage")){
                 Log.d("check", "from Home Page");
                 getMyData();
+            }else if(bundleValue.equals("Search")){
+                groups = (ArrayList<Group>) bundle.getSerializable("searchGroups");
+                writeToList();
+                TextView tv = (TextView) v.findViewById(R.id.tvGroup);
+                tv.setText("Results for: " + bundle.getString("keyword", ""));
+//                Log.d("eventt", events.size() + " ss");
             }else{
                 getData();
             }

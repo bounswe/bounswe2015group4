@@ -63,7 +63,7 @@
 
         </activity>
 
-        <activity android:name=".SearchResultActivity">
+        <activity android:name=".Search.SearchResultActivity">
 
         </activity>
     </application>

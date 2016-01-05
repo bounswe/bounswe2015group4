@@ -24,6 +24,7 @@ import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
 import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
+import com.socialnow.Models.SearchResult;
 import com.socialnow.Models.User;
 import com.socialnow.Users.Utils;
 
@@ -209,6 +210,13 @@ public class API {
         String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",event_id:" + id + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/removeParticipant",
                 Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void search(String tag, String keyword, Response.Listener<SearchResult> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",keyword:'" + keyword + "'}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/search",
+                SearchResult.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
