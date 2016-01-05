@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class EditGroupActivity extends AppCompatActivity{
     String mTitle="Create Group";
     Spinner spinner;
 
-    TextView etGroupName, etGroupDes;
+    TextView etGroupName, etGroupDes,etPhoto;
     com.apradanas.simplelinkabletext.LinkableEditText tvTags;
     ArrayAdapter<CharSequence> adapter;
     String privacy_option = "";
@@ -66,7 +67,7 @@ public class EditGroupActivity extends AppCompatActivity{
         etGroupDes = (TextView) findViewById(R.id.etGroupDes);
         tvTags = (com.apradanas.simplelinkabletext.LinkableEditText) findViewById(R.id.tags);
 
-
+        etPhoto = (EditText) findViewById(R.id.etPhoto);
         spinner = (Spinner) findViewById(R.id.sPrivacy);
         adapter = ArrayAdapter.createFromResource(this, R.array.group_privacy, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,14 +113,12 @@ public class EditGroupActivity extends AppCompatActivity{
             group.setGroup_name(etGroupName.getText().toString());
             group.setOwner_token(Utils.getCurrentUser().getUser_token());
             group.setGroup_description(etGroupDes.getText().toString());
-//            event.setEvent_photo(getEventPhoto());
-            group.setGroup_photo("");
+            group.setGroup_photo(etPhoto.getText().toString());
+            //TODO change the visibleTo value when spinner done
             group.set_visibleTo("all");
             //TODO guest member adding should be handled
             //event.put("event_members", )
-            //TODO comment part should also be handled
 
-            //event.put("event_comments", )
 
             Response.Listener<Group> response = new Response.Listener<Group>() {
                 @Override

@@ -154,7 +154,7 @@ public class GroupFrag extends Fragment {
             }
         };
 //TODO API will change as to show the groups that the user is a member of
-        API.listMyGroups("listMyGroups", response, errorListener);
+        API.listParticipatedGroups("listParticipatedGroups", response, errorListener);
     }
 
 

@@ -50,7 +50,7 @@ public class EventActivity extends AppCompatActivity {
 
     TextView description;
     com.apradanas.simplelinkabletext.LinkableTextView tags;
-    TextView eventdate;
+    TextView eventdate, tComment;
     TextView participantNumber;
     TextView event_host;
     Toolbar toolbar;
@@ -96,7 +96,7 @@ public class EventActivity extends AppCompatActivity {
         participantNumber = (TextView) findViewById(R.id.tParti);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        tComment = (TextView) findViewById(R.id.tComment);
         toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         // toolBarLayout.setTitle("Title");
 
@@ -126,10 +126,9 @@ public class EventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 startActivity(viewParti);
-                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Comment");
-                i2.putExtra("group_id", e.getId());
-
-                PartiActivity.groupPosts = eventPosts;
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "PostEvent");
+                i2.putExtra("event_id", e.getId());
+                PartiActivity.eventPosts = eventPosts;
                 startActivity(i2);
             }
         });
@@ -375,6 +374,12 @@ public class EventActivity extends AppCompatActivity {
             tagString += tags_event.get(i)+" ";
         }
         tags.setText(tagString).addLinks(links).build();
+        if(eventPosts.size()<=1){
+            tComment.setText(eventPosts.size()+" Post");
+        }else{
+            tComment.setText(eventPosts.size()+" Posts");
+        }
+
         //  TextView eventhost = (TextView) findViewById(R.id.tHostName);
         //  eventhost.setText(hostName);
     }

@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
-import com.parse.ParseUser;
+
 import com.socialnow.HomeScreen.EventFrag;
 import com.socialnow.HomeScreen.GroupFrag;
 import com.socialnow.HomeScreen.HomeFrag;
@@ -239,16 +239,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
 
 
-    public void log_out(View v){
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            ParseUser.logOut();
-            Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(i2);
-        } else {
-            Log.d("error_logout", "logout failed");
-        }
-    }
+
 
     public static void hideItem(int index)
     {

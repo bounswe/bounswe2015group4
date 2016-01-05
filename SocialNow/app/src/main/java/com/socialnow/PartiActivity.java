@@ -48,20 +48,14 @@ public class PartiActivity extends AppCompatActivity {
     ListView listView;
     ListAdapter mAdapter;
     User cUser; //current user
-    String followers;
 
-    //RelativeLayout itemLayout;
-
-
-    //TODO this activity should list the user's friends and should be able to give results for other activities.
-    //Dummy Parti list with Profile Pics
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
     String mTitle;
     public static ArrayList<String> followersList = new ArrayList<>();
     public static ArrayList<User> groupMembers;
     public static ArrayList<PostDetail> groupPosts;
-
+    public static ArrayList<PostDetail> eventPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +66,7 @@ public class PartiActivity extends AppCompatActivity {
         fab.hide();
         cUser = Utils.getCurrentUser();
 
-
+/*
         followers = cUser.getUser_followers();
         if(followers.isEmpty()) {
 
@@ -91,11 +85,12 @@ public class PartiActivity extends AppCompatActivity {
             followersList =(ArrayList) Arrays.asList(followerList);
 
         }
-
+*/
 
 
         // Logic to check the calling activity
         String callingActivity = getIntent().getStringExtra("from");
+
         switch (callingActivity) {
             case "GroupActivity":
                 mTitle = "Members";
@@ -120,7 +115,7 @@ public class PartiActivity extends AppCompatActivity {
                 mTitle = "Select";
                 break;
 
-            case "Post":
+            case "PostGroup":
                 final long id = getIntent().getLongExtra("group_id", -1);
                 Log.d("pa", id + "s");
                 fab.show();
@@ -140,24 +135,24 @@ public class PartiActivity extends AppCompatActivity {
                 registerForContextMenu(listView); //View menu by long-click on listview
                 break;
 
-            case "Comment":
-               /* final long id = getIntent().getLongExtra("group_id", -1);
-                Log.d("pa", id + "s");
+            case "PostEvent":
+                final long idE = getIntent().getLongExtra("event_id", -1);
+                Log.d("pa", idE + "s");
                 fab.show();
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addComment");
-                        i.putExtra("group_id", id);
+                        i.putExtra("event_id", idE);
                         startActivity(i);
                     }
                 });
-                tvParti = new String[groupPosts.size()];
-                mAdapter = new CommentAdapter(this,R.layout.item_comment,groupPosts);
+                tvParti = new String[eventPosts.size()];
+                mAdapter = new CommentAdapter(this,R.layout.item_comment,eventPosts);
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
                 mTitle = "Posts";
-                registerForContextMenu(listView); //View menu by long-click on listview*/
+                registerForContextMenu(listView); //View menu by long-click on listview
                 break;
 
             case "Reply":
@@ -266,6 +261,11 @@ public class PartiActivity extends AppCompatActivity {
 
         }
 
+    }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        //TODO
     }
 
     public class MemberAdapter extends ArrayAdapter<String> {

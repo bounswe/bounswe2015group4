@@ -31,11 +31,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.apradanas.simplelinkabletext.Link;
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Group;
@@ -76,7 +72,7 @@ public class GroupActivity extends AppCompatActivity {
     Long groupId;
     Group_Detail myGroup = new Group_Detail();
     JSONArray parti;
-    ArrayList<ParseObject> participants;
+
     ImageView privacy;
     ArrayList<User> groupMembers;
     ArrayList<PostDetail> groupPosts;
@@ -92,7 +88,7 @@ public class GroupActivity extends AppCompatActivity {
         //toolBarLayout.setTitle("Group Name");
         comment = (TextView) findViewById(R.id.tComment);
         img = (android.support.design.widget.AppBarLayout) findViewById(R.id.app_bar);
-        participants = new ArrayList<ParseObject>();
+
         description = (TextView) findViewById(R.id.tDes);
         mPrivacy = (TextView) findViewById(R.id.tPrivacy);
 
@@ -123,7 +119,7 @@ public class GroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
                 //startActivity(viewParti);
-                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "Post");
+                Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "PostGroup");
                 i2.putExtra("group_id", myGroup.getId());
                 Log.d("id ga", myGroup.getId() + "s");
                 PartiActivity.groupPosts = groupPosts;

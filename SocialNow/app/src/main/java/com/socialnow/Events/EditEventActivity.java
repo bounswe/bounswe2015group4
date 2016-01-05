@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ import com.android.volley.Response.Listener;
  */
 //TODO Event Image Adding option, Invite Guest Option, Privacy Option, Invite problems, End time
 public class EditEventActivity extends AppCompatActivity{
-    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca;
+    TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca, etPhoto;
     com.apradanas.simplelinkabletext.LinkableEditText tvTags;
     private Button btDate, btSTime,btETime;
     private int mYear, mMonth, mDay, mSHour, mSMinute, mEHour, mEMinute;
@@ -97,7 +98,7 @@ public class EditEventActivity extends AppCompatActivity{
         etEventName = (TextView) findViewById(R.id.etEventName);
         etEventDes = (TextView) findViewById(R.id.etEventDes);
         etEventLoca = (TextView) findViewById(R.id.etEventLoca);
-
+        etPhoto = (EditText) findViewById(R.id.etPhoto);
         tvTags = (com.apradanas.simplelinkabletext.LinkableEditText) findViewById(R.id.tags);
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvSTime = (TextView) findViewById(R.id.tvSTime);
@@ -176,7 +177,7 @@ public class EditEventActivity extends AppCompatActivity{
             event.set_visibleTo("all");
             //TODO add the end date
             event.setEvent_date(tvDate.getText().toString() + " " + tvSTime.getText().toString());
-            event.setEvent_photo("");
+            event.setEvent_photo(etPhoto.getText().toString());
             String event_tags = tvTags.getText().toString();
             String tagArray[] = event_tags.split("\\s+");
             String tagForDb = "";

@@ -11,9 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
+
 import com.socialnow.R;
 
 /**
@@ -39,37 +37,7 @@ public class ForgetPassword extends Activity implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.btnReset:
-                ParseUser.requestPasswordResetInBackground(etEmail.getText().toString(), new RequestPasswordResetCallback() {
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            // An email was successfully sent with reset instructions.
-                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                            dlgAlert.setMessage("Password reset instructions sent to your email.");
-                            dlgAlert.setTitle("Successful!");
-                            dlgAlert.setPositiveButton("OK", null);
-                            dlgAlert.setCancelable(true);
-                            dlgAlert.setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                                            startActivity(i);
-                                        }
-                                    });
-                            dlgAlert.create().show();
-                        } else {
-                            // Something went wrong. Look at the ParseException to see what's up.
-                            Log.d("Error", "Email is not exist");
-                            // An email was successfully sent with reset instructions.
-                            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(context);
-                            dlgAlert.setMessage("Email does not exist.");
-                            dlgAlert.setTitle("Error");
-                            dlgAlert.setPositiveButton("OK", null);
-                            dlgAlert.setCancelable(true);
-                            dlgAlert.setPositiveButton("OK", null);
-                            dlgAlert.create().show();
-                        }
-                    }
-                });
+
                 break;
 
 

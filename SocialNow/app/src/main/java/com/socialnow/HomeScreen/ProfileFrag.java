@@ -44,12 +44,7 @@ import com.socialnow.API.API;
 import com.socialnow.Models.User;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.parse.GetCallback;
-import com.parse.GetDataCallback;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
+
 import com.socialnow.Models.User;
 import com.socialnow.PagerAdapter;
 import com.socialnow.R;

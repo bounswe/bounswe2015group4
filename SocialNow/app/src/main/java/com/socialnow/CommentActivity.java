@@ -21,7 +21,8 @@ import com.socialnow.Users.Utils;
 public class CommentActivity extends AppCompatActivity{
     String mTitle = "Edit Comment";
     EditText etComment;
-    long id;
+    long id,idE;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class CommentActivity extends AppCompatActivity{
             case "addComment":
                 mTitle = "Add Comment";
                 id = getIntent().getLongExtra("group_id", -1);
+                idE = getIntent().getLongExtra("event_id", -1);
                 break;
 
             case "addReply":
@@ -50,55 +52,114 @@ public class CommentActivity extends AppCompatActivity{
 
     public void save(View v){
         if(mTitle.equals("Add Comment")){
-            Log.d("comment","comment");
-            Post p = new Post();
-            p.setContent(etComment.getText().toString());
-            p.setOwner_token(Utils.getCurrentUser().getUser_token());
-            p.setPost_comments("");
+            if(id!=-1){
+                createGroupPost();
+            }
+            else if(idE!=-1){
+                createEventPost();
+            }
 
-
-
-
-            Response.Listener<Post> response = new Response.Listener<Post>() {
-                @Override
-                public void onResponse(Post response) {
-                    if(response.getId() != -1) {
-                        Log.d("Post", "Creating success " + response.getId());
-                        Response.Listener<Group> response2 = new Response.Listener<Group>() {
-                            @Override
-                            public void onResponse(Group response) {
-                                if(response.getId() != -1) {
-                                    Log.d("addpost", "Creating success " + response.getGroup_description());
-
-                                }else{
-                                    Log.d("addpost", "Error: Unknown");
-                                }
-                            }
-                        };
-
-                        Response.ErrorListener errorListener = new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d("Failed", "Add post Failed");
-
-                            }
-                        };
-                        String body = "{interest_group_id:" + id + ", post_id:" + response.getId() + "}";
-                        API.addPost("createEvent", body, response2, errorListener);
-                    }else{
-                        Log.d("Post", "Error: Unknown");
-                    }
-                }
-            };
-
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.d("Failed", "Creation Failed");
-
-                }
-            };
-            API.createPost("createPost", p, response, errorListener);
         }
+    }
+    public void createEventPost(){
+        Post p = new Post();
+        p.setContent(etComment.getText().toString());
+        p.setOwner_token(Utils.getCurrentUser().getUser_token());
+        p.setPost_comments("");
+        Response.Listener<Post> response = new Response.Listener<Post>() {
+            @Override
+            public void onResponse(Post response) {
+                if(response.getId() != -1) {
+                    Log.d("Post", "Creating success " + response.getId());
+
+                    Response.Listener<Event> response2 = new Response.Listener<Event>() {
+                        @Override
+                        public void onResponse(Event response) {
+                            if(response.getId() != -1) {
+                                Log.d("addpost", "Creating success " + response.getEvent_description());
+
+                            }else{
+                                Log.d("addpost", "Error: Unknown");
+                            }
+                        }
+                    };
+                    Response.ErrorListener errorListener = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Failed", "Add post Failed");
+
+                        }
+                    };
+
+                    String body = "{event_id:" + idE + ", post_id:" + response.getId() + "}";
+                    API.addPostEvent("createEvent", body, response2, errorListener);
+                }
+
+                else{
+                    Log.d("Post", "Error: Unknown");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Creation Failed");
+
+            }
+        };
+        API.createPost("createPost", p, response, errorListener);
+        finish();
+    }
+    public void createGroupPost(){
+        Log.d("comment","comment");
+        Post p = new Post();
+        p.setContent(etComment.getText().toString());
+        p.setOwner_token(Utils.getCurrentUser().getUser_token());
+        p.setPost_comments("");
+        Response.Listener<Post> response = new Response.Listener<Post>() {
+            @Override
+            public void onResponse(Post response) {
+                if(response.getId() != -1) {
+                    Log.d("Post", "Creating success " + response.getId());
+
+                    Response.Listener<Group> response2 = new Response.Listener<Group>() {
+                        @Override
+                        public void onResponse(Group response) {
+                            if(response.getId() != -1) {
+                                Log.d("addpost", "Creating success " + response.getGroup_description());
+
+                            }else{
+                                Log.d("addpost", "Error: Unknown");
+                            }
+                        }
+                    };
+                    Response.ErrorListener errorListener = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Failed", "Add post Failed");
+
+                        }
+                    };
+
+                    String body = "{interest_group_id:" + id + ", post_id:" + response.getId() + "}";
+                    API.addPost("createEvent", body, response2, errorListener);
+                }
+
+                else{
+                    Log.d("Post", "Error: Unknown");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Creation Failed");
+
+            }
+        };
+        API.createPost("createPost", p, response, errorListener);
+        finish();
     }
 }

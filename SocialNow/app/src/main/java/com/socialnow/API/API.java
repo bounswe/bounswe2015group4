@@ -131,10 +131,10 @@ public class API {
                 Event[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
-    public static void listMyGroups(String tag, Response.Listener<Group[]> successListener,
+    public static void listParticipatedGroups(String tag, Response.Listener<Group[]> successListener,
                                      Response.ErrorListener failureListener) {
         String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token() + " }";
-        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listMyGroups",
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/listParticipatedGroups",
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
@@ -188,6 +188,13 @@ public class API {
                                   Response.ErrorListener failureListener) {
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/addPost",
                 Group.class, successListener, failureListener)
+                .setPostBodyInJSONForm(body).setTag(tag));
+    }
+
+    public static void addPostEvent(String tag, String body, Response.Listener<Event> successListener,
+                               Response.ErrorListener failureListener) {
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/addPost",
+                Event.class, successListener, failureListener)
                 .setPostBodyInJSONForm(body).setTag(tag));
     }
 
