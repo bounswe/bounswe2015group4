@@ -199,7 +199,7 @@ public class GroupFrag extends Fragment {
             member.setImageResource(R.drawable.groupdrawer);
             TextView mMember = (TextView) v.findViewById(R.id.tElocation);
             String s = groups.get(position).getGroup_members();
-            int counter = 1;
+            int counter = 0;
             for( int i=0; i<s.length(); i++ ) {
                 if( s.charAt(i) == ',' ) {
                     counter++;

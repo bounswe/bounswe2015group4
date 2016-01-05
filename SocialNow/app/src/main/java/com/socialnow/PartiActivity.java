@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -37,6 +38,8 @@ import com.squareup.picasso.Picasso;
 import com.socialnow.Users.Utils;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import java.util.ArrayList;
@@ -48,11 +51,13 @@ public class PartiActivity extends AppCompatActivity {
     ListView listView;
     ListAdapter mAdapter;
     User cUser; //current user
-
+    Profile p;
+    Profile pCurrent;
+    public static ArrayList<User> followerList = new ArrayList<>();
+    public static ArrayList<User> followingList = new ArrayList<>();
     int [] mImgArr={R.drawable.host,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic,R.drawable.profilpic};
     String[] tvParti={"User 1","User 2","User 3","User 4","User 5","User 6","User 7"};
     String mTitle;
-    public static ArrayList<String> followersList = new ArrayList<>();
     public static ArrayList<User> groupMembers;
     public static ArrayList<PostDetail> groupPosts;
     public static ArrayList<PostDetail> eventPosts;
@@ -65,27 +70,28 @@ public class PartiActivity extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fAddComment);
         fab.hide();
         cUser = Utils.getCurrentUser();
+        pCurrent = Utils.getCurrentProfile();
 
-/*
-        followers = cUser.getUser_followers();
-        if(followers.isEmpty()) {
+        ArrayList<String> uTokens = new ArrayList<>();
+        followerList = pCurrent.getUser_followers();
+        followingList = pCurrent.getUser_following();
 
-            //TODO display members of groups the user attended.
-
-        }else if(followers.length()==1)
+        for(User u: followerList)
         {
-            String followerList[]= new String[1];
-            followerList[0]= followers;
-            followersList =(ArrayList) Arrays.asList(followerList);
-
-
-        }else
-        {
-            String followerList[] = followers.split(", ");
-            followersList =(ArrayList) Arrays.asList(followerList);
-
+           uTokens.add(u.getUser_token());
         }
-*/
+
+        for( User u: followingList)
+        {
+            if(!uTokens.contains(u.getUser_token()))
+            {
+                followerList.add(u);
+
+            }
+        }
+
+
+
 
 
         // Logic to check the calling activity
@@ -100,8 +106,29 @@ public class PartiActivity extends AppCompatActivity {
                 break;
 
             case "EditEventActivity":
-                mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,followersList);
-                mTitle = "Select";
+
+
+                //TODO display members of groups the user attended.
+                fab.show();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addReply");
+                        startActivity(i);
+                    }
+                });
+
+                if(followerList.size() !=0)
+                {
+                    mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,followerList);
+                    listView.setDividerHeight(10);
+                    listView.setAdapter(mAdapter);
+                    mTitle = "Select";
+                    registerForContextMenu(listView); //View menu by long-click on listview
+
+
+
+                }
                 break;
 
             case "EventActivity":
@@ -117,10 +144,31 @@ public class PartiActivity extends AppCompatActivity {
                 break;
 
             case "EditGroupActivity":
-                mAdapter = new EditMemberAdapter(this,R.layout.item_editmember,tvParti);
-                listView.setAdapter(mAdapter);
-                mTitle = "Select";
+
+
+                //TODO display members of groups the user attended.
+                fab.show();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addReply");
+                        startActivity(i);
+                    }
+                });
+
+                if(followerList.size() !=0)
+                {
+                    mAdapter = new GuestAdapter(this,R.layout.item_inviteguest,followerList);
+                    listView.setDividerHeight(10);
+                    listView.setAdapter(mAdapter);
+                    mTitle = "Select";
+                    registerForContextMenu(listView); //View menu by long-click on listview
+
+
+
+                }
                 break;
+
 
             case "PostGroup":
                 final long id = getIntent().getLongExtra("group_id", -1);
@@ -191,25 +239,16 @@ public class PartiActivity extends AppCompatActivity {
 
     }
 
-    protected static void displayFollowers(String follower_token)
-    {
-            getData(follower_token);
-
-    }
-
-    protected  static void getData(String s)
+   /* protected void retrieveFollower(String follower_token)
     {
 
         Response.Listener<Profile> response = new Response.Listener<Profile>() {
             @Override
             public void onResponse(Profile response) {
+                if(response != null) {
+                    Log.d("Profile info", response.toString());
+                    p = new Profile(response.getUser_interest_groups(), response.getUser_followers(), response.getUser_following(),response.getUser_tags(), response.getUser_participating_events(), response.getEmail(), response.getName(), response.getNumberOfFollowers(), response.getNumberOfFollowings(), response.getSurname(), response.getRole(), response.getUser_token());
 
-                if(response.getUser_token().isEmpty()
-                        ) {
-                    Log.d("Profile", "Retrieve user info success " + response);
-
-                }else{
-                    Log.d("Leave", "Error: User not found.");
                 }
 
             }
@@ -218,12 +257,18 @@ public class PartiActivity extends AppCompatActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("Failed", "User retrieve failed");
+                Log.d("Profile not retrieved", error.toString());
 
             }
         };
-        API.profileInfo("showProfileDetails", s, response, errorListener);
-    }
+
+
+        API.profileInfo("showProfileDetails", follower_token,response, errorListener);
+
+
+    }*/
+
+
 
     class PartiAdapter extends ArrayAdapter<String> {
         public PartiAdapter(Context context, int resource, String[] tvParti) {
@@ -246,23 +291,42 @@ public class PartiActivity extends AppCompatActivity {
         }
 
     }
-    class GuestAdapter extends ArrayAdapter<String> {
-        public GuestAdapter(Context context, int resource, ArrayList<String> tvGuest1) {
-            super(context, R.layout.item_inviteguest, followersList);
+    class GuestAdapter extends ArrayAdapter<User> {
+
+        public GuestAdapter(Context context, int resource, ArrayList<User> tvGuest1) {
+            super(context, R.layout.item_inviteguest, followerList);
+
         }
 
         @Override
         public View getView (int position, View convertView, ViewGroup parent){
             LayoutInflater mInflater = LayoutInflater.from(getContext());
             View customView = mInflater.inflate(R.layout.item_inviteguest, parent, false);
-            String item = getItem(position);
 
             TextView mText = (TextView) customView.findViewById(R.id.tvGuest);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivGuest);
             CheckBox mCB = (CheckBox) customView.findViewById(R.id.cGuestInvite);
-            mText.setText(item);
-            mImg.setImageResource(mImgArr[position]);
-            displayFollowers(item);
+
+            //TODO send notification to invited users
+
+           /* Button invite = (Button) customView.findViewById(R.id.inviteButton);
+            invite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                     Intent i = new Intent(getApplicationContext(), CommentActivity.class).putExtra("flag", "addReply");
+                     startActivity(i);
+                }
+            });*/
+
+
+                mText.setText(followerList.get(position).getName());
+                Picasso.with(((Activity) getContext()))
+                        .load(followerList.get(position).getUser_photo())
+                        .resize(30, 30)
+                        .placeholder(R.drawable.profilpic)
+                        .centerCrop()
+                        .into(mImg);
+
             return customView;
 
 
