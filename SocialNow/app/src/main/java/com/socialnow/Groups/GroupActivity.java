@@ -184,7 +184,7 @@ public class GroupActivity extends AppCompatActivity {
               if(response != null) {
                   myGroup = response;
                   groupMembers = myGroup.getGroup_members();
-                  groupMembers.add(0, myGroup.getOwner());
+                  //groupMembers.add(0, myGroup.getOwner());
                   groupPosts = myGroup.getGroup_posts();
                   tags_event = myGroup.getTags();
                   Log.d("Group", response.toString());
