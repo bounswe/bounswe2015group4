@@ -40,6 +40,8 @@ public class Utils {
         try {
             currentUser = (User) InternalStorage.readObject(App.getInstance(), USER);
             currentProfile = (Profile) InternalStorage.readObject(App.getInstance(), PROFILE);
+            if(currentProfile == null)
+                updateProfile();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -91,6 +93,10 @@ public class Utils {
     }
 
     public static Profile getCurrentProfile(){
+        if(currentProfile == null){
+            updateProfile();
+            while(currentProfile == null);
+        }
         return currentProfile;
     }
 

@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    public void getProfileInfo() {
+    public static void getProfileInfo() {
         Response.Listener<Profile> response = new Response.Listener<Profile>() {
             @Override
             public void onResponse(Profile response) {

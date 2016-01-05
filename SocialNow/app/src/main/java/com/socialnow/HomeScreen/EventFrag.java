@@ -142,7 +142,7 @@ public class EventFrag extends Fragment {
                 hostUserName = "";
             //TODO date is not in correct form
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
-            eventdate.setText(events.get(position).getEvent_date());
+            eventdate.setText(events.get(position).getEvent_date_as_date());
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(events.get(position).getEvent_location());
             TextView eventhost = (TextView) v.findViewById(R.id.tHostName);

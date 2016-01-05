@@ -41,7 +41,7 @@ public class AboutTabFrag extends Fragment {
         Profile p = Utils.getCurrentProfile();
 
         String s = "";
-        for(String tag: p.getUser_tags()){
+        for(String tag: p.getUser_tagsOnce()){
             s += "#" + tag + " ";
         }
 

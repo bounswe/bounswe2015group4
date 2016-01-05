@@ -1,6 +1,9 @@
 package com.socialnow.Models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import com.socialnow.Models.Event;
 
 /**
@@ -131,5 +134,11 @@ public class Event_Detail {
         this.id = id;
     }
 
+    public String getEvent_date_as_date() {
+        Long  date_as_long = Long.parseLong(getDate());
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+        String date = ft.format(new Date(date_as_long));
+        return date;
+    }
    // public  ArrayList<Event> group_events = new ArrayList<>() ;
 }

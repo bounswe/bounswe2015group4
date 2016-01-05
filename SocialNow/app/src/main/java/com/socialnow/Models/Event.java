@@ -1,9 +1,11 @@
 package com.socialnow.Models;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by mugekurtipek on 24/11/15.
@@ -183,4 +185,10 @@ public class Event implements Serializable {
         this.event_participant_users = event_participant_users;
     }
 
+    public String getEvent_date_as_date() {
+        Long  date_as_long = Long.parseLong(getEvent_date());
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+        String date = ft.format(new Date(date_as_long));
+        return date;
+    }
 }

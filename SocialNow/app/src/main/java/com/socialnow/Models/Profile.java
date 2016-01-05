@@ -88,6 +88,14 @@ public class Profile implements Serializable{
         return user_tags;
     }
 
+    public ArrayList<String> getUser_tagsOnce(){
+        ArrayList<String> tmp = new ArrayList<>();
+        for(String s: user_tags){
+            if(!tmp.contains(s))
+                tmp.add(s);
+        }
+        return tmp;
+    }
     public void setUser_tags(ArrayList<String> user_tags) {
         this.user_tags = user_tags;
     }
@@ -156,4 +164,3 @@ public class Profile implements Serializable{
         this.user_token = user_token;
     }
 }
-

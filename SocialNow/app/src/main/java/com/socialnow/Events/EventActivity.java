@@ -124,8 +124,6 @@ public class EventActivity extends AppCompatActivity {
         viewComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
-                startActivity(viewParti);
                 Intent i2 = new Intent(getApplicationContext(), PartiActivity.class).putExtra("from", "PostEvent");
                 i2.putExtra("event_id", e.getId());
                 PartiActivity.eventPosts = eventPosts;
@@ -306,12 +304,12 @@ public class EventActivity extends AppCompatActivity {
                     eventPosts = e.getEvent_posts();
 
                     title= response.getEvent_title();
-                    Long  date_as_long = Long.getLong(response.getDate());
+                    Long  date_as_long = Long.parseLong(response.getDate());
                     SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-
-                   // date = ft.format(new Date(date_as_long));
+                    Log.d("long",response.getDate() + "  " +  date_as_long + "asd");
+                    date = ft.format(new Date(date_as_long));
                     //TODO fix the date
-                    date = response.getDate();
+//                    date = response.getDate();
                     location = response.getEvent_location();
                     event_description =response.getEvent_description();
                     photo = response.getEvent_photo();

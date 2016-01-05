@@ -91,6 +91,7 @@ public class PartiActivity extends AppCompatActivity {
         // Logic to check the calling activity
         String callingActivity = getIntent().getStringExtra("from");
 
+
         switch (callingActivity) {
             case "GroupActivity":
                 mTitle = "Members";

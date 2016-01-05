@@ -94,9 +94,13 @@ public class SignupActivity extends AppCompatActivity {
                 break;
             }
         }
+        uname = user_name.getText().toString();
+        usurname = surname.getText().toString();
+        uemail = email.getText().toString();
+        upassword = password.getText().toString();
 
         User u = new User();
-        u.setEmail(uname);
+        u.setEmail(uemail);
         u.setPassword(upassword);
         u.setRole(faculty_position);
         u.setName(uname);
@@ -108,12 +112,44 @@ public class SignupActivity extends AppCompatActivity {
                 if(response.getId() != -1) {
                     Log.d("signUp", "Sign in success" + response.getEmail() + " " + response.getName());
 
-                    // Writing data to SharedPreferences
+                    User u2 = new User();
+                    u2.setEmail(uemail);
+                    u2.setPassword(upassword);
 
-                    //TODO CASH USER LOGIN
-                    //TODO OPEN HOMEPAGE
-                    Intent i2 = new Intent(getApplicationContext(), HomePage.class);
-                    startActivity(i2);
+                    Response.Listener<User> response2 = new Response.Listener<User>() {
+                        @Override
+                        public void onResponse(User response) {
+                            if (response.getId() != -1) {
+                                Log.d("Login", "Login success " + response.getEmail() + " " + response.getName());
+
+                                // Writing data to SharedPreferences
+                                Utils.cacheUser(response);
+
+                                Utils.setCurrentUser(true, response);
+
+                                LoginActivity.getProfileInfo();
+
+                                Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+                                startActivity(i2);
+                                finish();
+                            } else {
+                                Log.d("Login", "Error: " + response.getUser_token());
+                                Log.d("Wrong credentials:", "Not valid username and password");
+                            }
+
+                        }
+                    };
+
+                    Response.ErrorListener errorListener2 = new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Failed", "Login Failed");
+                            Utils.setCurrentUser(false, null);
+
+                        }
+                    };
+                    API.login("login", u2, response2, errorListener2);
+
                 }else{
                     Log.d("signUp", "Error: " + response.getUser_token());
                     Log.d("Wrong credentials:", "Not valid username and password");

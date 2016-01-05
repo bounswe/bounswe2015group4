@@ -104,9 +104,9 @@ public class EditEventActivity extends AppCompatActivity{
         tvSTime = (TextView) findViewById(R.id.tvSTime);
         tvETime = (TextView) findViewById(R.id.tvETime);
 
-       // etEventName.setText("first");
-       // etEventDes.setText("desc");
-       // etEventLoca.setText("loca");
+        // etEventName.setText("first");
+        // etEventDes.setText("desc");
+        // etEventLoca.setText("loca");
         /*if (!editFlag){
             tvDate.setText("2015-11-3");
             tvSTime.setText("20:45");
@@ -185,7 +185,7 @@ public class EditEventActivity extends AppCompatActivity{
                 tagForDb += tagArray[i] + ",";
             }
             event.setEvent_tags(tagForDb);
-           // event.setEvent_date(getEventDate().getTime());
+            // event.setEvent_date(getEventDate().getTime());
 //            event.setEvent_photo(getEventPhoto());
             event.setEvent_host_token(Utils.getCurrentUser().getUser_token());
             //TODO guest member adding should be handled
@@ -229,7 +229,7 @@ public class EditEventActivity extends AppCompatActivity{
 
     private boolean inputs_correct() {
         if(etEventName.getText().toString() != "" && etEventDes.getText().toString() != "" && etEventLoca.getText().toString() != "" &&
-        tvDate.getText().toString() != "" && etEventName.getText().toString() != "" && etEventName.getText().toString() != "")
+                tvDate.getText().toString() != "" && etEventName.getText().toString() != "" && etEventName.getText().toString() != "")
         {
             if (PastTimeInput()){
                 return false;

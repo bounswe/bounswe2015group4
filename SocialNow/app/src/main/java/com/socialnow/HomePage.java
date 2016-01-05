@@ -193,6 +193,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
                     break;
 
                 case 1:
+                    Utils.updateProfile();
                     fragment = new ProfileFrag();
                     //changeToolBar();
                     break;
