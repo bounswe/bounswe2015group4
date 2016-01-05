@@ -3,6 +3,7 @@ package com.socialnow.Events;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -41,6 +42,7 @@ import com.apradanas.simplelinkabletext.LinkableEditText;
 import com.socialnow.API.API;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
+import com.socialnow.MultiSelectSpinner;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
 import com.socialnow.Users.Utils;
@@ -136,11 +138,19 @@ public class EditEventActivity extends AppCompatActivity{
             }
         });
 
-        spinner = (Spinner) findViewById(R.id.sPrivacy);
-        adapter = ArrayAdapter.createFromResource(this, R.array.event_privacy, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        //spinner = (Spinner) findViewById(R.id.sPrivacy);
+        //adapter = ArrayAdapter.createFromResource(this, R.array.event_privacy, android.R.layout.simple_spinner_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner.setAdapter(adapter);
+        Resources res = getResources();
+        String[] privacy = res.getStringArray(R.array.privacy);
 
+        MultiSelectSpinner mySpin = (MultiSelectSpinner)findViewById(R.id.sPrivacy);
+        mySpin.setTitle("Who can see this event?");
+        mySpin.setItems(privacy);
+
+        // get the selected items
+        List<String> selected = mySpin.getSelectedStrings();
 
         RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Guest);
         relativeLayout.setOnClickListener(new View.OnClickListener() {

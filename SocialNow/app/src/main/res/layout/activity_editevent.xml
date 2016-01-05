@@ -125,7 +125,7 @@
         </Button>
 
     </LinearLayout>
-    <Spinner
+    <com.socialnow.MultiSelectSpinner
         android:id="@+id/sPrivacy"
         android:layout_below="@id/lEtime"
         android:layout_marginBottom="@dimen/small_margin"

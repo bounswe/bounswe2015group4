@@ -35,7 +35,7 @@
         android:layout_marginBottom="@dimen/small_margin"
         style="@style/dEditText" />
 
-    <Spinner
+    <com.socialnow.MultiSelectSpinner
         android:id="@+id/sPrivacy"
         android:layout_below="@id/tags"
         android:layout_marginBottom="@dimen/small_margin"

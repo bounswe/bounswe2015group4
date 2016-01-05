@@ -20,7 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-
         </activity>
         <activity android:name=".Users.LoginActivity" >
         </activity>
@@ -38,6 +37,7 @@
         <activity
             android:name=".Events.EventActivity"
             android:theme="@style/AppTheme.NoActionBar" >
+
 
         </activity>
         <activity

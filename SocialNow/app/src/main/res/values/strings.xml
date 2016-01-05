@@ -17,23 +17,12 @@
         <item>Assistant</item>
         <item>Alumni</item>
     </string-array>
-    <string-array name="event_privacy">
-        <item>Who can see this event?</item>
+    <string-array name="privacy">
         <item>Undergraduate</item>
         <item>Graduate</item>
         <item>Instructor</item>
         <item>Assistant</item>
         <item>Alumni</item>
-        <item>Any SocialNow user</item>
-    </string-array>
-    <string-array name="group_privacy">
-        <item>Who can see this group?</item>
-        <item>Undergraduate</item>
-        <item>Graduate</item>
-        <item>Instructor</item>
-        <item>Assistant</item>
-        <item>Alumni</item>
-        <item>Any SocialNow user</item>
     </string-array>
     <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>
     <string name="title_activity_home_page">Home Page</string>
