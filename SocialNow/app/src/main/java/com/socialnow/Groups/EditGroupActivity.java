@@ -125,7 +125,7 @@ public class EditGroupActivity extends AppCompatActivity{
                 public void onResponse(Group response) {
                     if(response.getId() != -1) {
                         Log.d("Group", "Creating success " + response.getGroup_description());
-
+                        finish();
                     }else{
                         Log.d("Creation", "Error: Unknown");
                     }

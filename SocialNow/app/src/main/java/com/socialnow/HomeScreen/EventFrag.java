@@ -48,7 +48,7 @@ public class EventFrag extends Fragment {
     int maxCount = 0;
     List<Event> events;
     List<String> titles;
-
+    String bundleValue = "";
 
     @Nullable
     @Override
@@ -61,7 +61,7 @@ public class EventFrag extends Fragment {
         titles = new LinkedList<>();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String bundleValue = bundle.getString("from", "");
+            bundleValue = bundle.getString("from", "");
             if(bundleValue.equals("HomePage")){
                 Log.d("check", "from Home Page");
                 getMyData();
@@ -215,6 +215,7 @@ public class EventFrag extends Fragment {
 
         API.listAttendingEvents("listAttendingEvents", response, errorListener);
     }
+
 
 }
 

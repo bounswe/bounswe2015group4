@@ -77,7 +77,7 @@ public class CommentActivity extends AppCompatActivity{
                         public void onResponse(Event response) {
                             if(response.getId() != -1) {
                                 Log.d("addpost", "Creating success " + response.getEvent_description());
-
+                                finish();
                             }else{
                                 Log.d("addpost", "Error: Unknown");
                             }
@@ -109,7 +109,7 @@ public class CommentActivity extends AppCompatActivity{
             }
         };
         API.createPost("createPost", p, response, errorListener);
-        finish();
+
     }
     public void createGroupPost(){
         Log.d("comment","comment");
@@ -128,7 +128,7 @@ public class CommentActivity extends AppCompatActivity{
                         public void onResponse(Group response) {
                             if(response.getId() != -1) {
                                 Log.d("addpost", "Creating success " + response.getGroup_description());
-
+                                finish();
                             }else{
                                 Log.d("addpost", "Error: Unknown");
                             }
@@ -160,6 +160,6 @@ public class CommentActivity extends AppCompatActivity{
             }
         };
         API.createPost("createPost", p, response, errorListener);
-        finish();
+
     }
 }

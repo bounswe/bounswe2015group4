@@ -396,5 +396,10 @@ public class EventActivity extends AppCompatActivity {
             return null;
         }
     }
+    public void onRestart() {
+        super.onRestart();
+        getData();
+
+    }
 
 }

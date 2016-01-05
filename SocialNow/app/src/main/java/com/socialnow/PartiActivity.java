@@ -267,6 +267,7 @@ public class PartiActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         //TODO
+        finish();
     }
 
     public class MemberAdapter extends ArrayAdapter<String> {

@@ -235,4 +235,11 @@ public class GroupActivity extends AppCompatActivity {
             return null;
         }
     }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        getData();
+        Log.d("Dene","Haydi");
+    }
+
 }

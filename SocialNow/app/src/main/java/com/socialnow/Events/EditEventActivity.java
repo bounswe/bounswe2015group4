@@ -198,7 +198,7 @@ public class EditEventActivity extends AppCompatActivity{
                 public void onResponse(Event response) {
                     if(response.getId() != -1) {
                         Log.d("Event", "Creating success " + response.getEvent_description());
-
+                        finish();
                     }else{
                         Log.d("Creation", "Error: Unknown");
                     }

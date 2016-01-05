@@ -48,6 +48,7 @@ public class GroupFrag extends Fragment {
     List<String> member;
     List<Date> update;
     String [] title = {""};
+    String bundleValue;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -63,7 +64,7 @@ public class GroupFrag extends Fragment {
         update = new LinkedList<Date>();*/
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            String bundleValue = bundle.getString("from", "");
+            bundleValue = bundle.getString("from", "");
             if(bundleValue.equals("HomePage")){
                 Log.d("check", "from Home Page");
                 getMyData();
@@ -215,4 +216,5 @@ public class GroupFrag extends Fragment {
         Log.d("Groups: ", groups.toString());
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, groups));
     }
+
 }
