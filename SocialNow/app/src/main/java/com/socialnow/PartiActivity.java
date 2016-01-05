@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -29,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.socialnow.API.API;
 import com.socialnow.Groups.EditGroupActivity;
+import com.socialnow.HomeScreen.ProfileFrag;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.Profile;
@@ -37,6 +41,7 @@ import com.squareup.picasso.Picasso;
 import com.socialnow.Users.Utils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import java.util.ArrayList;
@@ -96,7 +101,7 @@ public class PartiActivity extends AppCompatActivity {
             case "GroupActivity":
                 mTitle = "Members";
                 tvParti = new String[groupMembers.size()];
-                mAdapter = new MemberAdapter(this,R.layout.item_member,groupMembers);
+                mAdapter = new UserAdapter(this,R.layout.item_member,groupMembers);
                 break;
 
             case "EditEventActivity":
@@ -106,15 +111,10 @@ public class PartiActivity extends AppCompatActivity {
 
             case "EventActivity":
                 tvParti = new String[groupMembers.size()];
-                mAdapter = new MemberAdapter(this,R.layout.item_parti,groupMembers);
+                mAdapter = new UserAdapter(this,R.layout.item_parti,groupMembers);
                 mTitle = "Participants";
                 break;
 
-            case "SearchResultsUser":
-                tvParti = new String[groupMembers.size()];
-                mAdapter = new MemberAdapter(this,R.layout.item_parti,groupMembers);
-                mTitle = "Participants";
-                break;
 
             case "EditGroupActivity":
                 mAdapter = new EditMemberAdapter(this,R.layout.item_editmember,tvParti);
@@ -182,6 +182,8 @@ public class PartiActivity extends AppCompatActivity {
                 break;
         }
         listView.setAdapter(mAdapter);
+        if(callingActivity.equals("GroupActivity") || callingActivity.equals("EventActivity"))
+            setListViewForProfileClick(groupMembers);
         getSupportActionBar().setTitle(mTitle);
 
 
@@ -195,6 +197,60 @@ public class PartiActivity extends AppCompatActivity {
     {
             getData(follower_token);
 
+    }
+
+    public void setListViewForProfileClick(final ArrayList<User> users){
+        final FragmentManager fg = getSupportFragmentManager();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object listItem = listView.getItemAtPosition(position);
+                User user = users.get(position);
+
+                Response.Listener<Profile> response = new Response.Listener<Profile>() {
+                    @Override
+                    public void onResponse(Profile response) {
+                        if (response.getName() != null) {
+                            Log.d("Profile", "success " + response.getEmail() + " " + response.getName());
+                            ProfileFrag p = new ProfileFrag();
+                            Bundle b = new Bundle();
+                            b.putSerializable("profile", response);
+                            p.setArguments(b);
+                            fg.beginTransaction()
+                                    .replace(R.id.parti, p, "fragment")
+                                    .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                                    .addToBackStack("search")
+                                    .commit();
+                            getSupportActionBar().hide();
+                            listView.setVisibility(View.INVISIBLE);
+                        } else {
+                            Log.d("Login", "Error: " + response.getUser_token());
+                            Log.d("Wrong credentials:", "Not valid username and password");
+                        }
+                    }
+                };
+
+                Response.ErrorListener errorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Failed", "Login Failed");
+
+                    }
+                };
+                API.profileInfo("profile", user.getUser_token(), response, errorListener);
+
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(!getSupportActionBar().isShowing())
+            getSupportActionBar().show();
+        if(listView.getVisibility() != View.VISIBLE)
+            listView.setVisibility(View.VISIBLE);
     }
 
     protected  static void getData(String s)
@@ -274,6 +330,35 @@ public class PartiActivity extends AppCompatActivity {
         super.onRestart();
         //TODO
         finish();
+    }
+
+    public class UserAdapter extends ArrayAdapter {
+        ArrayList<User> users;
+        public UserAdapter(Context context, int resource, List objects) {
+            super(context, resource, objects);
+            this.users = (ArrayList<User>)objects;
+
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_member, parent, false);
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvMember);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivMember);
+
+            if(users != null) {
+                mText.setText(users.get(position).getName());
+                Picasso.with(((Activity) getContext()))
+                        .load(users.get(position).getUser_photo())
+                        .resize(30, 30)
+                        .placeholder(R.drawable.profilpic)
+                        .centerCrop()
+                        .into(mImg);
+            }
+            return customView;
+        }
     }
 
     public class MemberAdapter extends ArrayAdapter<String> {

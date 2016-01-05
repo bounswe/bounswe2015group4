@@ -29,6 +29,7 @@ public class AboutTabFrag extends Fragment {
     TextView followers;
     TextView followings;
     List<Link> links;
+    public Profile p;
 
     @Nullable
     @Override
@@ -38,7 +39,7 @@ public class AboutTabFrag extends Fragment {
         followers = (TextView) v.findViewById(R.id.tFollower);
         followings = (TextView) v.findViewById(R.id.tFollowing);
 
-        Profile p = Utils.getCurrentProfile();
+        //Profile p = Utils.getCurrentProfile();
 
         String s = "";
         for(String tag: p.getUser_tagsOnce()){

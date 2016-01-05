@@ -30,6 +30,7 @@ public class PhotoTabFrag extends Fragment {
     ListView listView;
     ListAdapter mAdapter;
     String[] tvParti;
+    public Profile p;
 
 
     @Nullable
@@ -38,7 +39,7 @@ public class PhotoTabFrag extends Fragment {
         View v = inflater.inflate(R.layout.tabfrag_activity, container, false);
 
         listView=(ListView)v.findViewById(R.id.lvParti);
-        Profile p = Utils.getCurrentProfile();
+        //Profile p = Utils.getCurrentProfile();
         ArrayList<String> names = new ArrayList<>();
 
         tvParti = new String[p.getNumberOfFollowings()];
