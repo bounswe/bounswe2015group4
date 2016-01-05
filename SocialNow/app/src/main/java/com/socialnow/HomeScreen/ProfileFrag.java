@@ -41,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.socialnow.App;
 
 import com.socialnow.API.API;
+import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -60,7 +61,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class ProfileFrag extends Fragment {
 
     private static final int SELECTED_PICTURE = 1;
-
+    Profile profileToShow;
     Button logout;
     User current_user;
     Long user_id;
@@ -92,13 +93,18 @@ public class ProfileFrag extends Fragment {
         SharedPreferences sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            profileToShow = (Profile)bundle.getSerializable("profile");
+        }else{
+            profileToShow = Utils.getCurrentProfile();
+        }
 
-
-        user_id= Utils.getCurrentUser().getId();
-        userName = Utils.getCurrentUser().getName();
-        userEmail = Utils.getCurrentUser().getEmail();
-        userPhoto = Utils.getCurrentUser().getUser_photo();
-        userRole = Utils.getCurrentUser().getRole();
+//        user_id= Utils.getCurrentUser().getId();
+        userName = profileToShow.getName();
+        userEmail = profileToShow.getEmail();
+        userPhoto = profileToShow.getUser_photo();
+        userRole = profileToShow.getRole();
 
         user_name.setText(userName);
         user_email.setText(userEmail);
@@ -114,7 +120,7 @@ public class ProfileFrag extends Fragment {
                 .centerCrop()
                 .into(profile_picture);
 
-        current_user.setId(user_id);
+//        current_user.setId(user_id);
 
 
 
@@ -135,7 +141,7 @@ public class ProfileFrag extends Fragment {
 
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
-                (getChildFragmentManager(), tabLayout.getTabCount());
+                (getChildFragmentManager(), tabLayout.getTabCount(), profileToShow);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
