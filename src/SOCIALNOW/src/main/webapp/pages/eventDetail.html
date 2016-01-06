@@ -14,7 +14,7 @@
 
                                 <div class="attachment-pushed">
                                     <h4 class="attachment-heading"><a ng-bind-template="{{event.title}} ({{event.event_location}})"></a></h4>
-                                    <h6><a ng-click="goUserProfile(event.host.user_token)" ng-bind-template="(Host: {{event.host.name}} {{event.host.surname}})"></a></h6>
+                                    <h6><a ng-click="goUserProfile(event.host.user_token)" ng-bind-template="(Host: {{event.event_host.name}} {{event.event_host.surname}})"></a></h6>
                                     <span ng-bind-template="{{event.event_start_date}} - {{event.event_end_date}}"></span>
 
                                     <div class="attachment-text"
@@ -86,7 +86,7 @@
                                     <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
                                 </ul>
 
-                                <div class="box-body" style="margin-left:10px;">
+                                <div class="box-body" style="margin-left:10px; background-color: aqua;">
                                     <div class="post">
                                         <div class='user-block'>
                                             <p>Test</p>
@@ -100,7 +100,7 @@
                                     <div class="form-group margin-bottom-none">
                                         <div class="col-sm-9 col-md-9">
                                             <input class="form-control input-sm" placeholder="Type a comment"
-                                                   ng-model="newComment">
+                                                   ng-model="newComment.content">
                                         </div>
                                         <div class="col-sm-3 col-md-3">
                                             <button class="btn btn-danger pull-right btn-block btn-sm"

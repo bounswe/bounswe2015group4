@@ -5,7 +5,7 @@
 */
 
 app.service('roleService', ['$q', function($q) {
-    var roles = [ { id: 1, name: 'Teaching Assistant' }, { id: 2, name: 'Undergraduate' }, { id: 3, name: 'Instructor' },
+    var roles = [ { id: 1, name: 'Teaching Assistant' }, { id: 2, name: 'Undergraduate' }, { id: 3, name: 'Faculty' },
         { id: 4, name: 'Alumni' }];
 
     this.getRoles = function() {

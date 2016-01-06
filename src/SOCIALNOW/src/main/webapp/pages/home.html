@@ -13,10 +13,10 @@
                         <br>
                         <br>
                         <div ng-repeat="users in recommendations.users">
-                            <users-summary data="users"></users-summary>
+                            <user-summary data="users"></user-summary>
                         </div>
                         <div class="box box-widget" ng-show="recommendations.users.length == 0">
-                            <h3 class="page-header">Nothing to recommend. You may want to go events page!</h3>
+                            <h3 class="page-header">Nothing to recommend.</h3>
                         </div>
                     </div>
                 </section>
@@ -40,11 +40,11 @@
                         <span class="page-header "><b> Recommended Groups </b> </span>
                         <br>
                         <br>
-                        <div ng-repeat="interestGroup in recommendations.group">
+                        <div ng-repeat="interestGroup in recommendations.groups">
                             <group-summary data="interestGroup"></group-summary>
                         </div>
                     </div>
-                    <div class="box box-widget" ng-show="recommendations.group == 0">
+                    <div class="box box-widget" ng-show="recommendations.groups.length == 0">
                         <h3 class="page-header">Nothing to recommend. You may want to go groups page!</h3>
                     </div>
                 </section>

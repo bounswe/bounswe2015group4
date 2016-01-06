@@ -1,5 +1,6 @@
-app.controller('searchController', function ($scope, $routeParams, helperService, searchService, $rootScope) {
+app.controller('searchController', function ($scope, $routeParams, helperService, searchService, sessionService) {
     $scope.processCompleted = false;
+    $scope.user = sessionService.getUserInfo();
 
     $scope.searchRoutes = {
         users: 1,
@@ -14,7 +15,7 @@ app.controller('searchController', function ($scope, $routeParams, helperService
     if(!$scope.searchTerm) {
         helperService.goToPage('/');
     } else {
-        searchService.search($scope.searchTerm).then(function (response) {
+        searchService.search($scope.searchTerm, $scope.user.user_token).then(function (response) {
             $scope.searchResponse = response;
             $scope.searchResponse.events = utils.manipulateEvents($scope.searchResponse.events);
             $scope.processCompleted = true;

@@ -45,13 +45,14 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
         postService.createPost($scope.newPost, $scope.user.user_token).then(function(post) {
             postService.addPostToEvent(post.id, $scope.eventId).then(function(event) {
                 getEventDetails($scope.eventId);
+                $scope.newPost = {};
             })
         })
     }
 
-    $scope.createComment = function(postId) {
-        postService.addComment($scope.user.user_token, newComment). then(function(comment) {
-            postService.addCommentToPost(postId, comment.id).then(function(post) {
+    $scope.createComment = function(post) {
+        postService.addComment($scope.user.user_token, post.comment). then(function(comment) {
+            postService.addCommentToPost(post.id, comment.id).then(function(post) {
                 getGroupDetails($scope.eventId);
             })
         })

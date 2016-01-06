@@ -3,12 +3,16 @@ app.service('postService', function($q, $http, baseApiUrl) {
     this.createPost = function(post, token) {
         var deferred = $q.defer();
 
-        post.owner_token = token;
+        var request = {
+            content: post.content,
+            owner_token: token,
+            post_comments: ''
+        }
 
         $http({
             url: baseApiUrl + '/createPost',
             method: 'POST',
-            data: JSON.stringify(post)
+            data: JSON.stringify(request)
         }).success(function(post) {
             deferred.resolve(post);
         }).error(function(response) {

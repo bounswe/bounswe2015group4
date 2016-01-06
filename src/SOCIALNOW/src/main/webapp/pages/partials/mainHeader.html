@@ -229,7 +229,7 @@
                                     <input type="text" class="form-control"
                                            id="inputTime"
                                            ng-model="instantEvent.duration_in_minutes"
-                                           placeholder="Duration" required>
+                                           placeholder="Duration in minutes" required>
                                 </div>
                             </div>
                         </div>
@@ -279,8 +279,18 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group has-feedback">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="inputTitle">Owner</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span ng-bind-template="{{currentEventInstance.instant_event_owner.name}} {{currentEventInstance.instant_event_owner.surname}}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <div class="row">
@@ -312,7 +322,7 @@
                                             <label for="inputTitle">Duration</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <span ng-bind="currentEventInstance.duration_in_minutes"></span>
+                                            <span ng-bind-template="{{currentEventInstance.duration_in_minutes}} min"></span>
                                         </div>
                                     </div>
                                 </div>

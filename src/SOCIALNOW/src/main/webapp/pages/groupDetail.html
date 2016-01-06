@@ -86,15 +86,21 @@
                                 </div>
                                 <p style="margin-left:10px;" ng-bind="post.content"></p>
                                 <ul class="list-inline">
-                                    <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments (5)</a></li>
+                                    <li class="pull-right"><a class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments ({{post.comments ? post.comments.length : 0}})</a></li>
                                 </ul>
 
                                 <div class="box-body" style="margin-left:10px;">
                                     <div class="post">
                                         <div class='user-block'>
-                                            <p>Test</p>
-                                            <p>Test</p>
-                                            <p>Test</p>
+                                            <div ng-repeat="comment in post.comments">
+                                                <div class='user-block'>
+                                                    <img class='img-circle img-bordered-sm' ng-src='{{comment.owner.user_photo}}' alt='user image'>
+                                                    <span class='username' ng-click="goUserProfile(comment.owner.user_token)">
+                                                        <a ng-bind-template="{{comment.owner.name}} {{comment.owner.surname}}"></a>
+                                                    </span>
+                                                    <span style="margin-left: 10px;" ng-bind="comment.comment_text"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -103,11 +109,11 @@
                                     <div class="form-group margin-bottom-none">
                                         <div class="col-sm-9 col-md-9">
                                             <input class="form-control input-sm" placeholder="Type a comment"
-                                                   ng-model="newComment">
+                                                   ng-model="post.comment">
                                         </div>
                                         <div class="col-sm-3 col-md-3">
                                             <button class="btn btn-danger pull-right btn-block btn-sm"
-                                                    ng-click="createComment(post.id)">Send
+                                                    ng-click="createComment(post)">Send
                                             </button>
                                         </div>
                                     </div>

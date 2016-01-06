@@ -1,0 +1,14 @@
+<div class="box box-widget">
+    <div class='box-body'>
+        <div class="attachment-block clearfix">
+            <img class="attachment-img" ng-src="{{user.user_photo}}"
+                 alt="attachment image">
+
+            <div class="attachment-pushed">
+                <h4 class="attachment-heading" ng-click="getUserDetails(user.user_token)"><a ng-bind-template="{{user.name}} {{user.surname}}"></a></h4>
+                <span ng-bind="user.role"></span>
+            </div>
+        </div>
+        <button class='btn btn-default btn-xs' ng-click="getUserDetails(user.user_token)"><i class='fa fa-share'></i>Detail</button>
+    </div>
+</div>

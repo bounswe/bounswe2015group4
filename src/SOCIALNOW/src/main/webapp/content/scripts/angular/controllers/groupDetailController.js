@@ -1,5 +1,7 @@
 app.controller('groupDetailController', function($scope, groupService, $routeParams, helperService, sessionService, postService) {
     var setInitialProperties = function(groupDetail) {
+        $scope.newComment = {};
+
         $scope.group = groupDetail;
 
         $scope.notJoined = _.where($scope.group.group_members, { user_token: $scope.user.user_token }).length == 0;
@@ -42,13 +44,14 @@ app.controller('groupDetailController', function($scope, groupService, $routePar
         postService.createPost($scope.newPost, $scope.user.user_token).then(function(post) {
             postService.addPostToGroup(post.id, $scope.groupId).then(function(group) {
                 getGroupDetails($scope.groupId);
+                $scope.newPost = {};
             })
         })
     }
 
-    $scope.createComment = function(postId) {
-        postService.addComment($scope.user.user_token, newComment). then(function(comment) {
-            postService.addCommentToPost(postId, comment.id).then(function(post) {
+    $scope.createComment = function(post) {
+        postService.addComment($scope.user.user_token, post.comment). then(function(comment) {
+            postService.addCommentToPost(post.id, comment.id).then(function(post) {
                 getGroupDetails($scope.groupId);
             })
         })

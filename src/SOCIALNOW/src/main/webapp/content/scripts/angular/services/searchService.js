@@ -1,11 +1,16 @@
 app.service('searchService', function ($q, $http, baseApiUrl) {
-    this.search = function (searchTerm) {
+    this.search = function (searchTerm, userToken) {
         var deferred = $q.defer();
+
+        var request = {
+            user_token: userToken,
+            keyword: searchTerm
+        };
 
         $http({
             url: baseApiUrl + '/search',
             method: 'POST',
-            data: searchTerm
+            data: JSON.stringify(request)
         }).success(function (response) {
             deferred.resolve(response);
         }).error(function (response) {
