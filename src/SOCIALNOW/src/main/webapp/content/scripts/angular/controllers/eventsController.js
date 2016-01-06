@@ -26,8 +26,8 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
 
     $scope.createEvent = function () {
         $scope.event.visibleTo = roleService.getRoleNamesAccordingToIds($scope.event.visibleTo);
-        $scope.event.event_start_date = utils.convertDateToApiDate($scope.event.event_start_date);
-        $scope.event.event_end_date = utils.convertDateToApiDate($scope.event.event_end_date);
+        $scope.event.event_start_date = utils.convertDateToApiDate($scope.event.event_start);
+        $scope.event.event_end_date = utils.convertDateToApiDate($scope.event.event_end);
         eventService.createEvent($scope.event, $scope.user.user_token).then(function (event) {
             $scope.errorMessage = "";
             $scope.successMessage = "Event is created successfully"

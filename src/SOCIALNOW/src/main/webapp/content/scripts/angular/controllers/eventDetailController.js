@@ -53,7 +53,7 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
     $scope.createComment = function(post) {
         postService.addComment($scope.user.user_token, post.comment). then(function(comment) {
             postService.addCommentToPost(post.id, comment.id).then(function(post) {
-                getGroupDetails($scope.eventId);
+                getEventDetails($scope.eventId);
             })
         })
     }

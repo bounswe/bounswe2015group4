@@ -43,6 +43,7 @@ app.controller('profileController', function ($scope, sessionService, userServic
         userService.editUser($scope.userEdit).then(function() {
             userService.getProfileDetails($scope.userEdit.user_token).then(function(currentUser) {
                 $scope.currentUser = userService.setShowingUserProfile(currentUser);
+                sessionService.setUserCredentials($scope.userEdit);
             });
             $scope.successMessage = 'Your profile is edited successfully';
         }, function(error) {
