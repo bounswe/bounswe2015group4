@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".EditEventActivity"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:hint="Instant event name"
+            android:id="@+id/etEventName"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:layout_alignParentTop="true"
+            style="@style/dEditText" />
+
+        <EditText
+            android:hint="@string/eventdes"
+            android:id="@+id/etEventDes"
+            android:layout_height="@dimen/etbox_height"
+            android:layout_below="@id/etEventName"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:singleLine="false"
+            style="@style/dEditText"
+            android:gravity="top" />
+
+        <EditText
+            android:hint="@string/location"
+            android:id="@+id/etEventLoca"
+            android:layout_below="@id/etEventDes"
+            android:layout_marginBottom="@dimen/small_margin"
+            style="@style/dEditText" />
+
+
+        <EditText
+            android:hint="Duration of the event in minutes"
+            android:id="@+id/etDuration"
+            android:layout_below="@id/etEventLoca"
+            android:layout_marginBottom="@dimen/small_margin"
+            style="@style/dEditText" />
+
+
+
+
+
+
+
+        <Button
+            android:text="Save"
+            android:id="@+id/bSave"
+            android:layout_below="@+id/etDuration"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:background="@drawable/purplebutton"
+            style="@style/dBigButton"
+            android:onClick="create_event"/>
+
+
+    </RelativeLayout>
+</ScrollView>

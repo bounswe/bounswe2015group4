@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageView
+        android:id="@+id/ivEvent"
+        android:layout_width="@dimen/mid_icon"
+        android:layout_height="@dimen/mid_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        android:src="@drawable/devent"
+        android:layout_marginRight="@dimen/big_margin"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id ="@+id/rEvent"
+        android:layout_toRightOf="@id/ivEvent"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Event Name"
+            android:id="@+id/tEname"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/small_margin"/>
+
+        <ImageView
+            android:id="@+id/ivEDate"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/date"
+            android:layout_marginRight="@dimen/micro_margin"
+            android:layout_below="@id/tEname"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event Date"
+            android:id="@+id/tEdate"
+            android:layout_below="@+id/tEname"
+            android:layout_toRightOf="@+id/ivEDate"
+            android:layout_toEndOf="@+id/ivEDate" />
+
+        <ImageView
+            android:id="@+id/ivELocation"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/location"
+            android:layout_marginRight="@dimen/micro_margin"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tEdate"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event Location"
+            android:id="@+id/tElocation"
+            android:layout_toRightOf="@+id/ivELocation"
+            android:layout_toEndOf="@+id/ivELocation"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tEdate"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event Description"
+            android:id="@+id/tDescription"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tElocation"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Host by: "
+            android:id="@+id/tHost"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tDescription"
+            android:textColor="@color/etBound"/>
+
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

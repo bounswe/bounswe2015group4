@@ -52,6 +52,9 @@
         <activity android:name=".Events.EditEventActivity">
 
         </activity>
+        <activity android:name=".Util.EditInstantEvent">
+
+        </activity>
         <activity android:name=".Groups.EditGroupActivity">
 
         </activity>

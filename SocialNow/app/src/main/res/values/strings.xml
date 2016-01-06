@@ -32,6 +32,7 @@
     <string-array name="panel">
         <item>Home</item>
         <item>Profile</item>
+        <item>Instant Events</item>
         <item>Events</item>
         <item>Groups</item>
         <item>Recommendations</item>

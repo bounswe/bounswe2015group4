@@ -22,6 +22,8 @@ import com.socialnow.Models.Event;
 import com.socialnow.Models.Event_Detail;
 import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
+import com.socialnow.Models.Instant_Event;
+import com.socialnow.Models.Instant_Event_Details;
 import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.SearchResult;
@@ -231,6 +233,19 @@ public class API {
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
+    public static void getInstantEvent(String tag, String temp,Response.Listener<Instant_Event_Details[]> successListener, Response.ErrorListener failureListener) {
+
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/getInstantEvent",
+                Instant_Event_Details[].class, successListener, failureListener).setPostBodyInJSONForm(temp).setTag(tag));
+    }
+
+    public static void createInstantEvent(String tag, Instant_Event e, Response.Listener<Instant_Event> successListener,
+                                   Response.ErrorListener failureListener) {
+        String postBody = new Gson().toJson(e);
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/createInstantEvent",
+                Instant_Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
     private static class GeneralRequest<T> extends Request<T> {
 
         private static final String PROTOCOL_CHARSET = "utf-8";
