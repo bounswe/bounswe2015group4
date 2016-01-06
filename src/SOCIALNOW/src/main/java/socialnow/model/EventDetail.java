@@ -2,7 +2,6 @@ package socialnow.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Erdem on 12/4/2015.
@@ -27,7 +26,16 @@ public class EventDetail {
     private long id;
     private String title;
     private String event_description;
-    private Calendar event_date;
+    private Calendar event_start_date;
+    public Calendar getEvent_end_date() {
+        return event_end_date;
+    }
+
+    public void setEvent_end_date(Calendar event_end_date) {
+        this.event_end_date = event_end_date;
+    }
+
+    private Calendar event_end_date;
     private String event_location;
     private String event_photo;
 
@@ -48,7 +56,8 @@ public class EventDetail {
         this.id= event.getId();
         this.title=event.getTitle();
         this.event_description = event.getEvent_description();
-        this.event_date = event.getEvent_date();
+        this.event_start_date = event.getEvent_start_date();
+        this.event_end_date = event.getEvent_end_date();
         this.event_location = event.getEvent_location();
         this.event_photo = event.getEvent_photo();
         this.setVisibleTo(event.getVisibleTo());
@@ -97,12 +106,12 @@ public class EventDetail {
         this.event_location = event_location;
     }
 
-    public Calendar getEvent_date() {
-        return event_date;
+    public Calendar getEvent_start_date() {
+        return event_start_date;
     }
 
-    public void setEvent_date(Calendar event_date) {
-        this.event_date = event_date;
+    public void setEvent_start_date(Calendar event_start_date) {
+        this.event_start_date = event_start_date;
     }
 
     public String getEvent_description() {

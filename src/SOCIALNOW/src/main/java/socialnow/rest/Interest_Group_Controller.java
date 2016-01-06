@@ -155,8 +155,6 @@ public class Interest_Group_Controller {
             }
         }
         detail.setGroup_members(group_member_users);
-
-
         String group_posts = group.getGroup_posts();
         ArrayList<PostDetail> posts = new ArrayList<>();
         if(group_posts.contains(",")) {          // post list is ready to go
@@ -203,6 +201,19 @@ public class Interest_Group_Controller {
     List<Interest_Group> ListMyGroups(@RequestBody String addPostForm) {
         User_Token_Form form = gson.fromJson(addPostForm, User_Token_Form.class);
         return groupDao.getAllByToken(form.getUser_token());
+    }
+
+    @RequestMapping( value = "/listParticipatedGroups", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Interest_Group> ListParticipatedGroups(@RequestBody String addPostForm) {
+        User_Token_Form form = gson.fromJson(addPostForm, User_Token_Form.class);
+        List<Interest_Group> participatedGroups = new ArrayList<>();
+        List<Interest_Group> allgroups =  groupDao.getAll();
+        for (Interest_Group g: allgroups) {
+                if (g.getGroup_members().contains(form.getUser_token()))
+                    participatedGroups.add(g);
+        }
+        return participatedGroups;
     }
 
 }
