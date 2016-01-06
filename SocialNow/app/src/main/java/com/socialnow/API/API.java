@@ -27,6 +27,7 @@ import com.socialnow.Models.Instant_Event_Details;
 import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.SearchResult;
+import com.socialnow.Models.TimelineReturn;
 import com.socialnow.Models.User;
 import com.socialnow.Users.Utils;
 
@@ -230,6 +231,13 @@ public class API {
         String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/recommend",
                 SearchResult.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void getTimeLine(String tag, Response.Listener<TimelineReturn> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/timeline",
+                TimelineReturn.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 

@@ -28,6 +28,7 @@ public class HomeFrag extends Fragment {
         v = inflater.inflate(R.layout.frag_home, container, false);
         tabLayout = (TabLayout) v.findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("MY TIMELINE"));
         tabLayout.addTab(tabLayout.newTab().setText("MY EVENTS"));
         tabLayout.addTab(tabLayout.newTab().setText("MY GROUPS"));
         final ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
