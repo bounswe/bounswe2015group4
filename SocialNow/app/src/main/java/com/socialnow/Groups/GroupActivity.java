@@ -232,7 +232,7 @@ public class GroupActivity extends AppCompatActivity {
                 if(response.getId() != -1) {
                     Log.d("Event", "Leave success " + response.getGroup_description());
                     number_of_participants--;
-                    mMember.setText(number_of_participants + " people are going");
+                    mMember.setText(number_of_participants + " members");
                     Utils.updateProfile();
                     getData();
                     ImageView v = (ImageView) findViewById(R.id.ivArrow4);
@@ -265,7 +265,7 @@ public class GroupActivity extends AppCompatActivity {
                     getData();
 
                     number_of_participants++;
-                    mMember.setText(number_of_participants + " people are going");
+                    mMember.setText(number_of_participants + " members");
 
 
                     ImageView v = (ImageView) findViewById(R.id.ivArrow4);
