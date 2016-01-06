@@ -1,5 +1,6 @@
 package com.socialnow.Events;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +34,7 @@ import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+import com.socialnow.Search.SearchUtil;
 import com.socialnow.Users.Utils;
 
 import java.io.IOException;
@@ -176,7 +178,7 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
-
+        final Activity a = this;
         Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
                 .setUnderlined(true)
                 .setTextStyle(Link.TextStyle.BOLD)
@@ -184,6 +186,7 @@ public class EventActivity extends AppCompatActivity {
                     @Override
                     public void onClick(String text) {
                         //TODO navigate to search with tag page
+                        SearchUtil.searchAnOpenActivity(text, a);
                         Toast.makeText(EventActivity.this, text, Toast.LENGTH_SHORT).show();
                     }
                 });

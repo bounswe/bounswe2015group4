@@ -41,6 +41,7 @@ import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+import com.socialnow.Search.SearchUtil;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -151,6 +152,7 @@ public class GroupActivity extends AppCompatActivity {
         eventhost.setText(hostName);*/
         toolBarLayout.setTitle("Group Name");
 
+        final Activity a = this;
         Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
                 .setUnderlined(true)
                 .setTextStyle(Link.TextStyle.BOLD)
@@ -158,6 +160,7 @@ public class GroupActivity extends AppCompatActivity {
                     @Override
                     public void onClick(String text) {
                         //TODO navigate to search with tag page
+                        SearchUtil.searchAnOpenActivity(text, a);
                         Toast.makeText(GroupActivity.this, text, Toast.LENGTH_SHORT).show();
                     }
                 });
