@@ -85,7 +85,7 @@ public class EventController {
      */
     @RequestMapping( value = "/deneme", method = RequestMethod.POST)
     public @ResponseBody
-    SemanticResponse FOOO(@RequestBody String search) throws UnirestException {
+    String FOOO(@RequestBody String search) throws UnirestException {
         return  RequestSender.searchSemantics(search);
     }
 

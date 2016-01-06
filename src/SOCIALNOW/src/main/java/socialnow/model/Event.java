@@ -47,8 +47,20 @@ public class Event  {
     @Column(length = 2000)
     private String event_description;
 
+    public Calendar getEvent_start_date() {
+        return event_start_date;
+    }
+
+    public void setEvent_start_date(Calendar event_start_date) {
+        this.event_start_date = event_start_date;
+    }
+
     @NotNull
-    private Calendar event_date = new GregorianCalendar();
+    private Calendar event_start_date = new GregorianCalendar();
+
+    @NotNull
+    private Calendar event_end_date = new GregorianCalendar();
+
 
     @NotNull
     private String event_location;
@@ -94,8 +106,10 @@ public class Event  {
     public Event(Event_Form e_f) {
         title = e_f.getTitle();
         event_description = e_f.getEvent_description();
-        event_date.setTime(e_f.getEvent_date());
-        event_date.add(Calendar.MONTH,-1);
+        event_start_date.setTime(e_f.getEvent_start_date());
+        event_start_date.add(Calendar.MONTH,-1);
+        event_end_date.setTime(e_f.getEvent_end_date());
+        event_end_date.add(Calendar.MONTH,-1);
         event_location = e_f.getEvent_location();
         event_host_token = e_f.getEvent_host_token();
         event_participants = e_f.getEvent_participants();
@@ -145,7 +159,6 @@ public class Event  {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", event_description='" + event_description + '\'' +
-                ", event_date=" + event_date +
                 ", event_location='" + event_location + '\'' +
                 ", event_host_token='" + event_host_token + '\'' +
                 ", event_participants='" + event_participants + '\'' +
@@ -169,14 +182,6 @@ public class Event  {
 
     public void setEvent_description(String event_description) {
         this.event_description = event_description;
-    }
-
-    public Calendar getEvent_date() {
-        return event_date;
-    }
-
-    public void setEvent_date(Calendar event_date) {
-        this.event_date = event_date;
     }
 
     public String getEvent_location() {
@@ -214,4 +219,11 @@ public class Event  {
         this.id = id;
     }
 
+    public Calendar getEvent_end_date() {
+        return event_end_date;
+    }
+
+    public void setEvent_end_date(Calendar event_end_date) {
+        this.event_end_date = event_end_date;
+    }
 }

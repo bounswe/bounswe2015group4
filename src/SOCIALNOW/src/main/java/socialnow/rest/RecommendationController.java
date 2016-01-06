@@ -127,7 +127,7 @@ public class RecommendationController {
     public TimelineReturn timeline(@RequestBody String token) { Calendar now = Calendar.getInstance();
         List<Event> allEvents = eventDao.getAll();
         for (Event e:allEvents) {
-            if(e.getEvent_date().compareTo(now)< 0){
+            if(e.getEvent_end_date().compareTo(now)< 0){
                 e.setVisibleTo("non");
                 eventDao.update(e);
             }

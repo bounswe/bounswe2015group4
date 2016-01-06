@@ -15,7 +15,9 @@ public class Event_Form {
     private String visibleTo = "all";
     private String event_description;
 
-    private Date event_date;
+    private Date event_start_date;
+
+    private Date event_end_date;
 
     private String event_location;
 
@@ -24,6 +26,22 @@ public class Event_Form {
     private String event_participants;
 
     private String event_comments;
+
+    public Date getEvent_start_date() {
+        return event_start_date;
+    }
+
+    public void setEvent_start_date(Date event_start_date) {
+        this.event_start_date = event_start_date;
+    }
+
+    public Date getEvent_end_date() {
+        return event_end_date;
+    }
+
+    public void setEvent_end_date(Date event_end_date) {
+        this.event_end_date = event_end_date;
+    }
 
     private String event_photo;
 
@@ -53,13 +71,7 @@ public class Event_Form {
         this.event_description = event_description;
     }
 
-    public Date getEvent_date() {
-        return event_date;
-    }
 
-    public void setEvent_date(Date event_date) {
-        this.event_date = event_date;
-    }
 
     public String getEvent_location() {
         return event_location;
