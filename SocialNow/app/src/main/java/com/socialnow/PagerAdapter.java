@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.socialnow.Models.Profile;
 import com.socialnow.Util.AboutTabFrag;
-import com.socialnow.Util.ActivityTabFrag;
-import com.socialnow.Util.PhotoTabFrag;
+import com.socialnow.Util.FollowersTabFrag;
+import com.socialnow.Util.FollowingsTabFrag;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
@@ -31,11 +31,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 tab1.p = profile;
                 return tab1;
             case 1:
-                ActivityTabFrag tab2 = new ActivityTabFrag();
+                FollowersTabFrag tab2 = new FollowersTabFrag();
                 tab2.p = profile;
                 return tab2;
             case 2:
-                PhotoTabFrag tab3 = new PhotoTabFrag();
+                FollowingsTabFrag tab3 = new FollowingsTabFrag();
                 tab3.p = profile;
                 return tab3;
             default:

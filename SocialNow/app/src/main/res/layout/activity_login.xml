@@ -49,7 +49,7 @@
             android:id="@+id/et_Username"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/usernameIcon"
-            android:hint="@string/username"
+            android:hint="@string/b_email"
             style="@style/dEditText"/>
     </RelativeLayout>
 

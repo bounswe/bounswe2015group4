@@ -43,15 +43,8 @@
         style="@style/dEditText"/>
 
     <EditText
-        android:hint="@string/username"
-        android:layout_below="@id/etbMail"
-        android:id="@+id/etUsername"
-        android:layout_marginBottom="@dimen/small_margin"
-        style="@style/dEditText"/>
-
-    <EditText
         android:hint="@string/password"
-        android:layout_below="@id/etUsername"
+        android:layout_below="@id/etbMail"
         android:id="@+id/etPW"
         android:inputType="textPassword"
         android:layout_marginBottom="@dimen/small_margin"

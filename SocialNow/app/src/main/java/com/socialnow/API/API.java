@@ -83,17 +83,7 @@ public class API {
     }
     public static void login(String tag, User user, Response.Listener<User> successListener,
                              Response.ErrorListener failureListener) {
-        String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
-            @Override
-            public boolean shouldSkipField(FieldAttributes f) {
-                return !(f.getName().equals("email") || f.getName().equals("password"));
-            }
-
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
-            }
-        }).create().toJson(user, User.class);
+        String postBody = new GsonBuilder().setExclusionStrategies().create().toJson(user, User.class);
         System.out.println(postBody);
         mQueue.add(new GeneralRequest<>(Request.Method.POST,
                 MAIN_URL + "/login", User.class, successListener, failureListener)
@@ -102,18 +92,8 @@ public class API {
 
     public static void signin(String tag, User user, Response.Listener<User> successListener,
                              Response.ErrorListener failureListener) {
-        String postBody = new GsonBuilder().setExclusionStrategies(new ExclusionStrategy() {
-            @Override
-            public boolean shouldSkipField(FieldAttributes f) {
-                return !(f.getName().equals("email") || f.getName().equals("password"));
-            }
-
-            @Override
-            public boolean shouldSkipClass(Class<?> clazz) {
-                return false;
-            }
-        }).create().toJson(user, User.class);
-        System.out.println(postBody);
+        String postBody = new GsonBuilder().setExclusionStrategies().create().toJson(user, User.class);
+        System.out.println("asd" + postBody);
         mQueue.add(new GeneralRequest<>(Request.Method.POST,
                 MAIN_URL + "/signUp", User.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));

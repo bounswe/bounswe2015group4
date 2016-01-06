@@ -44,6 +44,7 @@ import java.util.List;
 /**
  * Created by lauamy on 27/10/15.
  */
+
 public class EventFrag extends Fragment {
     private ListView listView;
     private View v;
@@ -70,6 +71,8 @@ public class EventFrag extends Fragment {
                 getMyData();
             }else if(bundleValue.equals("Search")){
                 events = (ArrayList<Event>) bundle.getSerializable("searchEvents");
+//                Log.d("events", events.get(0).getEvent_photo() + " " + events.get(0).getEvent_description() + " " + events.get(0).getEvent_participant_users().length);
+
                 writeToList();
                 TextView tv = (TextView) v.findViewById(R.id.tvUpEvents);
                 String keyword = bundle.getString("keyword", "");
@@ -93,6 +96,7 @@ public class EventFrag extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object listItem = listView.getItemAtPosition(position);
                 Event event = events.get(position);
+
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
                 i2.putExtra("id", event.getId());
                 i2.putExtra("event", event);
@@ -138,6 +142,7 @@ public class EventFrag extends Fragment {
             TextView eventname = (TextView) v.findViewById(R.id.tEname);
             eventname.setText(events.get(position).getTitle());
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
+//            Log.d("events", events.get(position).getEvent_photo() + " " + events.get(position).getEvent_description() + " " + events.get(position).getEvent_participant_users().length);
 
             if(events.get(position).getEvent_photo().equals("")){
                 img.setImageResource(R.drawable.devent);
@@ -151,17 +156,21 @@ public class EventFrag extends Fragment {
             }
 
             User[] hostUser = events.get(position).getEvent_participant_users();
-            if(hostUser.length > 0)
-                hostUserName = hostUser[0].getName()+" "+hostUser[0].getSurname();
-            else
+            TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
+            if(hostUser.length > 0) {
+                hostUserName = hostUser[0].getName() + " " + hostUser[0].getSurname();
+                eventhost.setText(hostUserName);
+            }else {
                 hostUserName = "";
+                eventhost.setVisibility(View.INVISIBLE);
+                TextView eventhostt = (TextView) v.findViewById(R.id.tHost);
+                eventhostt.setVisibility(View.INVISIBLE);
+            }
             //TODO date is not in correct form
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
             eventdate.setText(events.get(position).getEvent_date_as_date());
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(events.get(position).getEvent_location());
-            TextView eventhost = (TextView) v.findViewById(R.id.tHostName);
-            eventhost.setText(hostUserName);
 
 
             return v;

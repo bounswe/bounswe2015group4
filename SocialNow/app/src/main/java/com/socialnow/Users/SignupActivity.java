@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,8 +31,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText name;
     EditText surname;
     EditText email;
-    EditText user_name;
     EditText password;
+    Button send;
     CheckBox terms_and_services;
     String faculty_position = "";
     Context context;
@@ -53,11 +54,10 @@ public class SignupActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.etName);
         surname = (EditText) findViewById(R.id.etSurname);
         email = (EditText) findViewById(R.id.etbMail);
-        user_name = (EditText) findViewById(R.id.etUsername);
         password = (EditText) findViewById(R.id.etPW);
         terms_and_services = (CheckBox) findViewById(R.id.cbAccept);
 
-        uname = user_name.getText().toString();
+        uname = name.getText().toString();
         usurname = surname.getText().toString();
         uemail = email.getText().toString();
         upassword = password.getText().toString();
@@ -74,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     faculty_position = (String) parent.getItemAtPosition(position);
-                    Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getBaseContext(), parent.getItemAtPosition(position) + " selected", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -83,10 +83,18 @@ public class SignupActivity extends AppCompatActivity {
                 faculty_position = "";
             }
         });
+
+//        send.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                send_to_approval(view);
+//            }
+//        });
     }
 
     public void send_to_approval(View v) {
-        boolean[] input_check = new boolean[]{checkName(name.getText()), checkName(surname.getText()), checkMail(email.getText()), checkName(user_name.getText()), checkPassword(password.getText()), terms_and_services.isChecked(), faculty_position != ""};
+        Log.d("ali","ali");
+        boolean[] input_check = new boolean[]{checkName(name.getText()), checkName(surname.getText()), checkMail(email.getText()), checkPassword(password.getText()), terms_and_services.isChecked(), faculty_position != ""};
         boolean is_inputs_right = true;
         for (int i = 0; i < input_check.length; i++) {
             if (!input_check[i]) {
@@ -94,7 +102,7 @@ public class SignupActivity extends AppCompatActivity {
                 break;
             }
         }
-        uname = user_name.getText().toString();
+        uname = name.getText().toString();
         usurname = surname.getText().toString();
         uemail = email.getText().toString();
         upassword = password.getText().toString();
@@ -161,7 +169,6 @@ public class SignupActivity extends AppCompatActivity {
                     dlgAlert.setPositiveButton("OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    user_name.setText("");
                                     password.setText("");
                                 }
                             });

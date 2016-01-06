@@ -25,7 +25,6 @@ import com.socialnow.HomeScreen.ProfileFrag;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 import com.socialnow.R;
-import com.socialnow.Users.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,8 +33,8 @@ import java.util.ArrayList;
 /**
  * Created by lauamy on 27/10/15.
  */
-public class PhotoTabFrag extends Fragment {
-    ListView listView;
+public class FollowersTabFrag extends Fragment {
+    public ListView listView;
     ListAdapter mAdapter;
     String[] tvParti;
     public Profile p;
@@ -50,17 +49,17 @@ public class PhotoTabFrag extends Fragment {
         //Profile p = Utils.getCurrentProfile();
         ArrayList<String> names = new ArrayList<>();
 
-        tvParti = new String[p.getNumberOfFollowings()];
-        mAdapter = new MemberAdapter(getContext(),R.layout.item_member,p.getUser_following());
+        tvParti = new String[p.getNumberOfFollowers()];
+        mAdapter = new MemberAdapter(getContext(),R.layout.item_member,p.getUser_followers());
         listView.setDividerHeight(10);
         listView.setAdapter(mAdapter);
-        setListViewForProfileClick(p.getUser_following());
+        setListViewForProfileClick(p.getUser_followers());
         return v;
     }
 
     public void setListViewForProfileClick(final ArrayList<User> users){
         final FragmentManager fg = getActivity().getSupportFragmentManager();
-        final PhotoTabFrag f = this;
+        final FollowersTabFrag a = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -78,7 +77,7 @@ public class PhotoTabFrag extends Fragment {
                             p.setArguments(b);
                             fg.beginTransaction()
                                     .replace(R.id.fragprofile, p, "fragment")
-                                    .hide(f)
+                                    .hide(a)
                                     .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                                     .addToBackStack("profileFollower")
                                     .commit();
@@ -134,4 +133,3 @@ public class PhotoTabFrag extends Fragment {
 
     }
 }
-
