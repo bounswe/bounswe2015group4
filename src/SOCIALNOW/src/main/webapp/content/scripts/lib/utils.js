@@ -44,7 +44,8 @@
     // Events manipulation
     utils.manipulateEvents = function(events) {
         _.each(events, function(event) {
-            event.event_date_in_date = utils.convertTimestampToDate(event.event_date);
+            event.event_start_date = utils.convertTimestampToDate(event.event_start_date);
+            event.event_end_date = utils.convertTimestampToDate(event.event_end_date);
             event.tags = utils.trimCharacter(event.tags, ',');
         })
 

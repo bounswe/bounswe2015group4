@@ -14,13 +14,12 @@
 
                                 <div class="attachment-pushed">
                                     <h4 class="attachment-heading"><a ng-bind-template="{{event.title}} ({{event.event_location}})"></a></h4>
-                                    <span>19/01/2016 18:00 - 20/01/2016 18:00</span>
+                                    <span ng-bind-template="{{event.event_start_date}} - {{event.event_end_date}}"></span>
 
                                     <div class="attachment-text"
                                          ng-bind="event.event_description">
                                     </div>
                                     <div class="time-label" style="margin-top: 10px;">
-                                        <span class="bg-green label-style" ng-bind="event.event_date_in_date"></span>
                                         <span class="bg-aqua label-style" ng-bind="event.tags"></span>
                                         <button class="btn btn-primary btn-sm" ng-click="makeGoing()"
                                                 ng-show="notGoing">You are not going
