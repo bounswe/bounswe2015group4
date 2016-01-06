@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -207,6 +208,17 @@ public class UserController {
         userDao.update(u2);
         return u1;
     }
+
+    @RequestMapping( value = "/getAllUsers", method = RequestMethod.POST)
+    public List<User> getAllUsers(@RequestBody String followUSerForm) {
+        return userDao.getAll();
+
+    }
+
+
+
+
+
     // Wire the UserDao used inside this controller.
     @Autowired
     private UserDao userDao;

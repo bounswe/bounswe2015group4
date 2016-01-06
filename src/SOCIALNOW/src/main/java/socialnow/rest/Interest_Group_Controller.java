@@ -216,4 +216,15 @@ public class Interest_Group_Controller {
         return participatedGroups;
     }
 
+
+    @RequestMapping( value = "/getAllGroups", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Interest_Group> getAllGroups(@RequestBody String formIn) {
+        User_Token_Form form = gson.fromJson(formIn, User_Token_Form.class);
+       return groupDao.getAllForUser(userDao.getByToken(form.getUser_token()));
+    }
+
+
+
+
 }
