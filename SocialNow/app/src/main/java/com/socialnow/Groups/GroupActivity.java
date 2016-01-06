@@ -41,7 +41,11 @@ import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.User;
 import com.socialnow.PartiActivity;
 import com.socialnow.R;
+
 import com.socialnow.Search.SearchUtil;
+
+import com.socialnow.Users.Utils;
+
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -64,6 +68,7 @@ public class GroupActivity extends AppCompatActivity {
     TextView mCreatedate;
     TextView mMember;
     TextView comment;
+    int number_of_participants;
     TextView mOwner;
     Toolbar toolbar;
     com.apradanas.simplelinkabletext.LinkableTextView tags;
@@ -152,7 +157,54 @@ public class GroupActivity extends AppCompatActivity {
         eventhost.setText(hostName);*/
         toolBarLayout.setTitle("Group Name");
 
+
         final Activity a = this;
+
+        boolean participated = false;
+        if(Utils.getCurrentProfile().getUser_interest_groups() != null)
+            for(Group gg : Utils.getCurrentProfile().getUser_interest_groups()) {
+                if (gg.getId() == groupId) {
+                    participated = true;
+                    break;
+                }
+            }
+
+
+        final RelativeLayout viewJoin=(RelativeLayout)findViewById(R.id.Join);
+        if(participated){
+            viewJoin.setBackgroundResource(R.drawable.purplebutton);
+            TextView tv = (TextView) findViewById(R.id.tJoin);
+            tv.setText("LEAVE");
+        }
+
+        viewJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent viewParti = new Intent(getApplicationContext(), PartiActivity.class);
+                //startActivity(viewParti);
+                boolean participated = false;
+                Log.d("asd", (Utils.getCurrentProfile() == null) + "ad");
+                Log.d("asd", "ad" + (Utils.getCurrentProfile().getUser_interest_groups() == null));
+                if (Utils.getCurrentProfile().getUser_interest_groups() != null)
+                    for (Group gg : Utils.getCurrentProfile().getUser_interest_groups()) {
+
+                        if (gg.getId() == groupId) {
+                            participated = true;
+                            break;
+                        }
+                    }
+
+                if (!participated) {
+                    joinToTheGroup();
+                    viewJoin.setBackgroundResource(R.drawable.purplebutton);
+                } else {
+                    leaveTheGroup();
+                    viewJoin.setBackgroundResource(R.drawable.cyanbutton);
+                }
+            }
+        });
+
+
         Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
                 .setUnderlined(true)
                 .setTextStyle(Link.TextStyle.BOLD)
@@ -171,7 +223,68 @@ public class GroupActivity extends AppCompatActivity {
         getData();
 
     }
+    private void leaveTheGroup() {
+        TextView tv = (TextView) findViewById(R.id.tJoin);
+        tv.setText("JOIN");
+        Response.Listener<Group> response = new Response.Listener<Group>() {
+            @Override
+            public void onResponse(Group response) {
+                if(response.getId() != -1) {
+                    Log.d("Event", "Leave success " + response.getGroup_description());
+                    number_of_participants--;
+                    mMember.setText(number_of_participants + " people are going");
+                    Utils.updateProfile();
+                    getData();
+                    ImageView v = (ImageView) findViewById(R.id.ivArrow4);
+                    v.setImageDrawable(getResources().getDrawable(R.drawable.rightarrow));
+                }else{
+                    Log.d("Leave", "Error: Event not found.");
+                }
+            }
+        };
 
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Event Leave failed");
+
+            }
+        };
+        API.leaveGroup("leaveEvent", myGroup.getId(), response, errorListener);
+    }
+
+    private void joinToTheGroup() {
+        TextView tv = (TextView) findViewById(R.id.tJoin);
+        tv.setText("LEAVE");
+        Response.Listener<Group> response = new Response.Listener<Group>() {
+            @Override
+            public void onResponse(Group response) {
+                if(response.getId() != -1) {
+                    Log.d("Event", "Join success " + response.getGroup_description());
+                    Utils.updateProfile();
+                    getData();
+
+                    number_of_participants++;
+                    mMember.setText(number_of_participants + " people are going");
+
+
+                    ImageView v = (ImageView) findViewById(R.id.ivArrow4);
+                    v.setImageDrawable(getResources().getDrawable(R.drawable.leftarrow));
+                }else{
+                    Log.d("Join", "Error: Event not found.");
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Failed", "Event Join failed");
+
+            }
+        };
+        API.joinGroup("joinEvent", myGroup.getId(), response, errorListener);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,6 +303,7 @@ public class GroupActivity extends AppCompatActivity {
                   //groupMembers.add(0, myGroup.getOwner());
                   groupPosts = myGroup.getGroup_posts();
                   tags_event = myGroup.getTags();
+                  number_of_participants = myGroup.getGroup_members().size();
                   Log.d("Group", response.toString());
                   writeToList();
               }else{
@@ -242,7 +356,7 @@ public class GroupActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         getData();
-        Log.d("Dene","Haydi");
+
     }
 
 }

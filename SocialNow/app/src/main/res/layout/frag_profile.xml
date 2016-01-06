@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text=""
+                android:text="User name"
                 android:id="@+id/tUserName"
                 android:textColor="@color/textDarkButton" />
 
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text=""
+                android:text="User role"
                 android:id="@+id/tRole"
                 android:textColor="@color/textDarkButton"
                 android:layout_below="@id/tUserName"/>
@@ -59,11 +59,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text=""
+                android:text="User email"
                 android:id="@+id/tUserEmail"
                 android:textColor="@color/textDarkButton"
                 android:layout_below="@id/tRole"/>
+            <Button
 
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Follow"
+                android:id="@+id/bFollow"
+                android:background="@color/textColorLink"
+                android:textColor="@color/textDarkButton"
+                android:layout_below="@id/tUserEmail"
+                style="@style/dBigButton"
+                android:layout_marginTop="@dimen/small_margin"
+                />
 
 
         </RelativeLayout>

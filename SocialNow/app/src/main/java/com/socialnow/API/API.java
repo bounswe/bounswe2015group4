@@ -146,8 +146,20 @@ public class API {
                 Group[].class, successListener, failureListener).setPostBodyInJSONForm(postBody));
     }
 
-    public static void profileInfo(String tag, String token, Response.Listener<Profile> successListener,
+    public static void followUser(String tag, String postBody, Response.Listener<User> successListener,
                                      Response.ErrorListener failureListener) {
+
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/followUser",
+                User.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+    public static void unFollowUser(String tag, String postBody, Response.Listener<User> successListener,
+                                  Response.ErrorListener failureListener) {
+
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/unFollowUser",
+                User.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
+    }
+    public static void profileInfo(String tag, String token, Response.Listener<Profile> successListener,
+                                   Response.ErrorListener failureListener) {
         String postBody = "{user_token:"+ token + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/showProfileDetails",
                 Profile.class, successListener, failureListener).setPostBodyInJSONForm(postBody));
@@ -210,6 +222,18 @@ public class API {
         String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",event_id:" + id + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/events/removeParticipant",
                 Event.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+    public static void joinGroup(String tag, long id, Response.Listener<Group> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",interest_group_id:" + id + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/addMember",
+                Group.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+    public static void leaveGroup(String tag, long id, Response.Listener<Group> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",interest_group_id:" + id + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/groups/removeMember",
+                Group.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
