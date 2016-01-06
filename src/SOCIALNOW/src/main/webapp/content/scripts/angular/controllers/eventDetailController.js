@@ -1,7 +1,6 @@
 app.controller('eventDetailController', function($scope, eventService, $routeParams, helperService, sessionService, postService) {
     var setInitialProperties = function(eventDetail) {
         $scope.event = eventDetail;
-        $scope.event.event_date_in_date = utils.convertTimestampToDate($scope.event.event_date);
 
         $scope.notGoing = _.where($scope.event.event_participants, { user_token: $scope.user.user_token }).length == 0;
 

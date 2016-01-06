@@ -8,9 +8,18 @@
         return a.format("dddd, MMMM Do YYYY");;
     }
 
-    utils.convertDateToApiDate = function(date) {
-        var dateArray = date.split('/');
-        return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+    utils.convertDateToApiDate = function(datetime) {
+        // 01/13/2016 6:00 PM
+        var dateParts = datetime.split(' ');
+        var time = dateParts[1];
+
+        if(dateParts[2] == 'PM') {
+            var timeParts = time.split(':');
+            time = (parseInt(timeParts[0]) + 12) + ":" + timeParts[1];
+        }
+
+        var dateArray = dateParts[0].split('/');
+        return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2] + " " + time + " " + dateParts[2];
     }
 
     utils.findDifferenceOfTimestampsInMinutes = function(ts1, ts2) {

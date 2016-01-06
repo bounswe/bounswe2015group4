@@ -1,4 +1,4 @@
-app.controller('eventsController', function ($scope, $http, sessionService, userService, $location, helperService, eventService, $interval) {
+app.controller('eventsController', function ($scope, $http, sessionService, userService, $location, helperService, eventService, roleService) {
     $scope.eventRoutes = {
         addNew: 1,
         myEvents: 2,
@@ -25,7 +25,9 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     }
 
     $scope.createEvent = function () {
-        $scope.event.event_date = utils.convertDateToApiDate($scope.event.event_date);
+        $scope.event.visibleTo = roleService.getRoleNamesAccordingToIds($scope.event.visibleTo);
+        $scope.event.event_start_date = utils.convertDateToApiDate($scope.event.event_start_date);
+        $scope.event.event_end_date = utils.convertDateToApiDate($scope.event.event_end_date);
         eventService.createEvent($scope.event, $scope.user.user_token).then(function (event) {
             $scope.errorMessage = "";
             $scope.successMessage = "Event is created successfully"
@@ -41,9 +43,25 @@ app.controller('eventsController', function ($scope, $http, sessionService, user
     getMyEvents();
     getAllEvents();
 
-    var datePickerElement = angular.element(document.getElementById('inputTime'));
-    datePickerElement.daterangepicker({
+    var datePickerElementStart = angular.element(document.getElementById('inputStartTime'));
+    datePickerElementStart.daterangepicker({
         singleDatePicker: true,
-        showDropdowns: true
+        timePicker: true,
+        timePicker24Hour: true,
+        autoApply: true,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
+    });
+
+    var datePickerElementEnd = angular.element(document.getElementById('inputEndTime'));
+    datePickerElementEnd.daterangepicker({
+        singleDatePicker: true,
+        timePicker: true,
+        timePicker24Hour: true,
+        autoApply: true,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
     });
 });
