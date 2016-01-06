@@ -45,7 +45,6 @@ public class SearchController {
     @RequestMapping( value = "/synonym", method = RequestMethod.POST)
     public @ResponseBody
     Synonym synonym(@RequestBody String search) throws UnirestException {
-
         Synonym s = RequestSender.findSynonyms(search);
         s.fillLists();
        return s;
@@ -57,16 +56,21 @@ public class SearchController {
     public @ResponseBody
     SearchReturn search(@RequestBody String searchBasic) throws UnirestException {
         SearchReturn searchReturn = new SearchReturn();
-
         Search_Form form = gson.fromJson(searchBasic,Search_Form.class);
-        User u = userDao.getByToken(form.getUser_token());
         searchBasic = form.getKeyword();
-         searchBasic = searchBasic.toLowerCase();
+        searchBasic = searchBasic.toLowerCase();
         Synonym s = RequestSender.findSynonyms(searchBasic);
+
+        User u = userDao.getByToken(form.getUser_token());
+
         s.fillLists();
         List<Event> events = eventDao.getAll();
         List<Interest_Group> groups = groupDao.getAll();
         List<User> users = userDao.getAll();
+
+
+
+
 
         for (ObjectJson o: s.getResponse()) {
             socialnow.Synoym.List l = o.getList();
@@ -98,6 +102,23 @@ public class SearchController {
 
         }
 
+
+        for (Event event : events) {
+            if(!searchReturn.getEvents().contains(event) && event.getEvent_description().contains(searchBasic.toLowerCase())  || event.getTitle().toLowerCase().contains(searchBasic.toLowerCase()) || event.getTags().contains(searchBasic) && Util.canSeeEvent(u,event)){
+                searchReturn.getEvents().add(event);
+            }
+        }
+        for (User user : users) {
+            if(!searchReturn.getUsers().contains(user) &&user.getSurname().equalsIgnoreCase(searchBasic)|| user.getName().equalsIgnoreCase(searchBasic) || (user.getName()+" "+user.getSurname()).toLowerCase().contains(searchBasic) ) {
+                searchReturn.getUsers().add(user);
+
+            }
+        }
+        for (Interest_Group group : groups) {
+            if( !searchReturn.getGroups().contains(group)&& group.getGroup_description().toLowerCase().contains(searchBasic.toLowerCase()) || group.getTags().contains(searchBasic) && Util.canSeeGroup(u,group)){
+                searchReturn.getGroups().add(group);
+            }
+        }
 
 
 

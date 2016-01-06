@@ -104,7 +104,7 @@ public class RecommendationController {
             groups = (ArrayList<Interest_Group>) groupDao.getAllForUser(user);
             for (Interest_Group e: groups) {
                 if((e.getTags().contains(recommendedTags[1])|| e.getTags().contains(recommendedTags[0])) && !e.getGroup_members().contains(user.getUser_token()) && !e.getOwner_token().contains(user.getUser_token())){
-                    suggests.getGroup().add(e);
+                    suggests.getGroups().add(e);
 
                 }
             }
@@ -112,6 +112,45 @@ public class RecommendationController {
 
             return suggests;
         }
+
+        HashMap<Integer, User> map = new HashMap<>();
+        User u = userDao.getByToken(form.getUser_token());
+        ArrayList<User> allUsers = (ArrayList<User>) userDao.getAll();
+        if(!u.getUser_tags().contains(",")){
+            Collections.sort(allUsers);
+          suggests.setUsers ((ArrayList<User>) allUsers.subList(0,10)) ;
+        }else {
+
+            ArrayList<User> suggestUser = new ArrayList<>();
+            for (User ux: allUsers) {
+                if(ux.getUser_tags().contains(",")) {
+                    int commonality = Util.calculateResemblance(u.getUser_tags().substring(1).split(","),ux.getUser_tags().substring(1).split(","));
+                    if(map.containsKey(commonality)) {
+                        if (map.get(commonality).numberOfFollowers < ux.numberOfFollowings)
+                            map.put(commonality, ux);
+                    }
+                    else {
+                        map.put(commonality, ux);
+                    }
+
+                }
+            }
+            ArrayList<Integer> keys = new ArrayList<>();
+            keys.addAll(map.keySet());
+            Collections.sort(keys);
+            int maxToSugest = 10;
+            if(keys.size() < maxToSugest)
+                maxToSugest = keys.size();
+            for (int i = 0; i <maxToSugest; i++) {
+                suggestUser.add(map.get(keys.get(i)));
+
+            }
+            suggests.setUsers(suggestUser);
+
+        }
+
+
+
 
         return suggests;
     }

@@ -8,11 +8,29 @@ import java.util.ArrayList;
 public class RecommendReturn {
 
     ArrayList<Event> events = new ArrayList<>();
-    ArrayList<Interest_Group> group = new ArrayList<>();
+    ArrayList<Interest_Group> groups = new ArrayList<>();
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    public ArrayList<Interest_Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(ArrayList<Interest_Group> groups) {
+        this.groups = groups;
+    }
+
+    ArrayList<User> users = new ArrayList<>();
 
     public RecommendReturn(ArrayList<Event> events, ArrayList<Interest_Group> group) {
         this.events = events;
-        this.group = group;
+        this.groups = group;
     }
 
     public ArrayList<Event> getEvents() {
@@ -27,11 +45,5 @@ public class RecommendReturn {
         this.events = events;
     }
 
-    public ArrayList<Interest_Group> getGroup() {
-        return group;
-    }
 
-    public void setGroup(ArrayList<Interest_Group> group) {
-        this.group = group;
-    }
 }
