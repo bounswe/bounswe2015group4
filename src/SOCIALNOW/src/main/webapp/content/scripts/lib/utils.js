@@ -5,7 +5,7 @@
     utils.convertTimestampToDate = function (timestamp) {
         var a = moment(new Date(timestamp));
 
-        return a.format("dddd, MMMM Do YYYY");;
+        return a.format("LLLL");;
     }
 
     utils.convertDateToApiDate = function(datetime) {
@@ -18,8 +18,11 @@
             time = (parseInt(timeParts[0]) + 12) + ":" + timeParts[1];
         }
 
+        var timeArr = time.split(':');
+        time = (parseInt(timeArr[0]) - 2) + ":" + timeArr[1];
+
         var dateArray = dateParts[0].split('/');
-        return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2] + " " + time + " " + dateParts[2];
+        return dateArray[1] + "/" + (parseInt(dateArray[0]) + 1) + "/" + dateArray[2] + " " + time;
     }
 
     utils.findDifferenceOfTimestampsInMinutes = function(ts1, ts2) {
