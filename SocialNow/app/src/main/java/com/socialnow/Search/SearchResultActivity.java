@@ -1,10 +1,13 @@
 package com.socialnow.Search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.socialnow.HomePage;
 import com.socialnow.Models.SearchResult;
 import com.socialnow.R;
 
@@ -14,15 +17,20 @@ import com.socialnow.R;
 public class SearchResultActivity extends AppCompatActivity {
     TabLayout tabLayout;
     SearchResult searchResult;
-    String keyword;
+    String keyword = "";
+    String from = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         searchResult = (SearchResult)getIntent().getSerializableExtra("searchResult");
         keyword = getIntent().getStringExtra("keyword");
+        from = getIntent().getStringExtra("from");
+
 
         setContentView(R.layout.activity_searchresult);
-        getSupportActionBar().setTitle("Search Results");
-
+        if(from.equals("search"))
+            getSupportActionBar().setTitle("Search Results");
+        else
+            getSupportActionBar().setTitle("Recommendation Results");
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.addTab(tabLayout.newTab().setText("USER (" + searchResult.getUsers().size() + ")"));
@@ -49,5 +57,17 @@ public class SearchResultActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(from.equals("recommend")){
+            Log.d("back", "back");
+            Intent i2 = new Intent(getApplicationContext(), HomePage.class);
+            startActivity(i2);
+            this.finish();
+        }else {
+            super.onBackPressed();
+        }
     }
 }

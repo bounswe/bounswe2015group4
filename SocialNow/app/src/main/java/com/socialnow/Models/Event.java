@@ -20,9 +20,9 @@ public class Event implements Serializable {
 
     String event_description;
 
+    String event_start_date;
 
-
-    String event_date;
+    String event_end_date;
 
     String event_location;
 
@@ -62,22 +62,22 @@ public class Event implements Serializable {
         title = e.toString();
     }*/
 
-    public Event(String visibleTo, String event_date,User[] event_participant_users,Long id, String title,String type, String event_photo, String event_comments,String event_description,String event_participants,String tags,String event_host_token, String event_location){
-        this.id = id;
-        this.title = title;
-        this.event_host_token = event_host_token;
-        this.event_location = event_location;
-        this.event_description = event_description;
-
-        this.event_participants = event_participants;
-        this.tags = tags;
-        this.event_comments = event_comments;
-        this.event_photo =event_photo;
-        this.type = type;
-        this.event_participant_users = event_participant_users;
-        this.visibleTo = visibleTo;
-        this.event_date = event_date;
-    }
+//    public Event(String visibleTo, String event_date,User[] event_participant_users,Long id, String title,String type, String event_photo, String event_comments,String event_description,String event_participants,String tags,String event_host_token, String event_location){
+//        this.id = id;
+//        this.title = title;
+//        this.event_host_token = event_host_token;
+//        this.event_location = event_location;
+//        this.event_description = event_description;
+//
+//        this.event_participants = event_participants;
+//        this.tags = tags;
+//        this.event_comments = event_comments;
+//        this.event_photo =event_photo;
+//        this.type = type;
+//        this.event_participant_users = event_participant_users;
+//        this.visibleTo = visibleTo;
+//        this.event_start_date = event_date;
+//    }
 
     public String getTitle() {
         return title;
@@ -103,12 +103,20 @@ public class Event implements Serializable {
     }
 
 
-    public String getEvent_date() {
-        return event_date;
+    public String getEvent_start_date() {
+        return event_start_date;
     }
 
     public void setEvent_date(String event_date) {
-        this.event_date = event_date;
+        this.event_start_date = event_date;
+    }
+
+    public String getEvent_end_date() {
+        return event_end_date;
+    }
+
+    public void setEvent_end_date(String event_date) {
+        this.event_end_date = event_date;
     }
 
     public String getEvent_location() {
@@ -186,9 +194,11 @@ public class Event implements Serializable {
     }
 
     public String getEvent_date_as_date() {
-        Long  date_as_long = Long.parseLong(getEvent_date());
+        Long  date_as_long = Long.parseLong(getEvent_start_date());
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
         String date = ft.format(new Date(date_as_long));
+        date_as_long = Long.parseLong(getEvent_end_date());
+        date += " - " + ft.format(new Date(date_as_long));
         return date;
     }
 }

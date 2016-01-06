@@ -69,6 +69,7 @@ public class EventActivity extends AppCompatActivity {
     int number_of_participants;
     Long id;
     Event_Detail e;
+    Event event;
     ArrayList<PostDetail> eventPosts;
 
 
@@ -105,7 +106,7 @@ public class EventActivity extends AppCompatActivity {
         if(extras == null) {
 
         } else {
-
+            event = (Event) extras.getSerializable("event");
             id = extras.getLong("id");
 
         }
@@ -303,11 +304,12 @@ public class EventActivity extends AppCompatActivity {
                     host = response.getEvent_host();
                     eventPosts = e.getEvent_posts();
 
-                    title= response.getEvent_title();
-                    Long  date_as_long = Long.parseLong(response.getDate());
-                    SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-                    Log.d("long",response.getDate() + "  " +  date_as_long + "asd");
-                    date = ft.format(new Date(date_as_long));
+                    title= event.getTitle();
+                    date = event.getEvent_date_as_date();
+//                    Long  date_as_long = Long.parseLong(response.getDate());
+//                    SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
+//                    Log.d("long",response.getDate() + "  " +  date_as_long + "asd");
+//                    date = ft.format(new Date(date_as_long));
                     //TODO fix the date
 //                    date = response.getDate();
                     location = response.getEvent_location();

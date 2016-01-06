@@ -32,6 +32,7 @@ import com.socialnow.HomeScreen.GroupFrag;
 import com.socialnow.HomeScreen.HomeFrag;
 import com.socialnow.HomeScreen.NotiFrag;
 import com.socialnow.HomeScreen.ProfileFrag;
+import com.socialnow.HomeScreen.RecommendationFrag;
 import com.socialnow.HomeScreen.SearchFrag;
 import com.socialnow.Users.LoginActivity;
 import com.socialnow.Users.Utils;
@@ -48,7 +49,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     private String[] panel;
     //Will be changed later depending the menu items we would like to include
 //
-    int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.notidrawer,R.drawable.searchdrawer,R.drawable.exit};
+    int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.groupdrawer,R.drawable.notidrawer,R.drawable.searchdrawer,R.drawable.exit};
     private ActionBarDrawerToggle drawerListener;
     Fragment fragment;
     static Menu menu;
@@ -126,7 +127,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivDrawer);
             String item = getItem(position);
             mText.setText(item);
-            if (position == 6){
+            if (position == 7){
                 mText.setTextColor(Color.RED);
             }
             mImg.setImageResource(img[position]);
@@ -169,7 +170,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position == 6) {
+        if (position == 7) {
             if (Utils.getCurrentUserMode() || Utils.getCurrentUser() != null) {
                 try {
                     Utils.logout();
@@ -208,10 +209,14 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
                     break;
 
                 case 4:
+                    fragment = new RecommendationFrag();
+                    break;
+
+                case 5:
                     fragment = new NotiFrag();
                     break;
 
-               case 5:
+               case 6:
                     fragment = new SearchFrag();
                     break;
 

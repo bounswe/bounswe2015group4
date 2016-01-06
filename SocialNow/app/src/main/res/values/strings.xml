@@ -34,6 +34,7 @@
         <item>Profile</item>
         <item>Events</item>
         <item>Groups</item>
+        <item>Recommendations</item>
         <item>Notifications</item>
         <item>Search</item>
         <item>LOG OUT</item>
@@ -56,4 +57,7 @@
     <string name="stime">Start Time</string>
     <string name="etime">End Time</string>
     <string name="groupname">Group Name</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

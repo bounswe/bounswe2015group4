@@ -34,15 +34,15 @@ public class Event_Detail {
 
     public Event_Detail() {
     }
-    public Event_Detail(Event event) {
-        this.id = event.getId();
-        this.event_description = event.event_description;
-        this.title = event.title;
-        this.setEvent_photo(event.getEvent_photo());
-        this.setOwner(event.getEvent_participant_users());
-        this.setDate(event.getEvent_date());
-        this.setEvent_location(event.getEvent_location());
-    }
+//    public Event_Detail(Event event) {
+//        this.id = event.getId();
+//        this.event_description = event.event_description;
+//        this.title = event.title;
+//        this.setEvent_photo(event.getEvent_photo());
+//        this.setOwner(event.getEvent_participant_users());
+//        this.setDate(event.getEvent_start_date());
+//        this.setEvent_location(event.getEvent_location());
+//    }
 
     /*public ArrayList<Event> getGroup_events() {
 

@@ -69,6 +69,7 @@ public class SearchFrag extends Fragment {
                                 Intent i = new Intent(getActivity(), SearchResultActivity.class);
                                 i.putExtra("searchResult", response);
                                 i.putExtra("keyword", etKeyword.getText().toString());
+                                i.putExtra("from", "search");
                                 startActivity(i);
                                 //getActivity().finish();
                             } else {

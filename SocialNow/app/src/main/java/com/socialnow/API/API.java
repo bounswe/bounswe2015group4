@@ -37,7 +37,7 @@ import java.util.Map;
  * Created by mugekurtipek on 24/11/15.
  */
 public class API {
-    private static String MAIN_URL = "http://ec2-52-26-185-114.us-west-2.compute.amazonaws.com:8080/social_backend5";
+    private static String MAIN_URL = "http://ec2-52-26-185-114.us-west-2.compute.amazonaws.com:8080/socialnowrocks";
 //    private static String MAIN_URL = "http://10.0.3.2:8080/";//To try local database via genymotion emulator
     private static RequestQueue mQueue;
     private static API instance;
@@ -216,6 +216,13 @@ public class API {
     public static void search(String tag, String keyword, Response.Listener<SearchResult> successListener, Response.ErrorListener failureListener) {
         String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + ",keyword:'" + keyword + "'}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/search",
+                SearchResult.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void recommend(String tag, Response.Listener<SearchResult> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/recommend",
                 SearchResult.class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }

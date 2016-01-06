@@ -72,7 +72,11 @@ public class EventFrag extends Fragment {
                 events = (ArrayList<Event>) bundle.getSerializable("searchEvents");
                 writeToList();
                 TextView tv = (TextView) v.findViewById(R.id.tvUpEvents);
-                tv.setText("Results for: " + bundle.getString("keyword", ""));
+                String keyword = bundle.getString("keyword", "");
+                if(keyword =="")
+                    tv.setVisibility(View.INVISIBLE);
+                else
+                    tv.setText("Results for: " + bundle.getString("keyword", ""));
 //                Log.d("eventt", events.size() + " ss");
             }
             else{
@@ -91,6 +95,7 @@ public class EventFrag extends Fragment {
                 Event event = events.get(position);
                 Intent i2 = new Intent(getActivity(), EventActivity.class);
                 i2.putExtra("id", event.getId());
+                i2.putExtra("event", event);
                 startActivity(i2);
                 //i2.putExtra("Event", event);
               /*  i2.putExtra("title", event.getTitle());

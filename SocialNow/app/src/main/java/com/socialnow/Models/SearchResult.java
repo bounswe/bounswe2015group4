@@ -9,10 +9,14 @@ import java.util.ArrayList;
 public class SearchResult implements Serializable {
     ArrayList<Event> events;
     ArrayList<Group> groups;
+    ArrayList<Group> group;
     ArrayList<User> users;
 
     public ArrayList<Group> getGroups() {
-        return groups;
+        if(group == null)
+            return groups;
+        else
+            return group;
     }
 
     public void setGroups(ArrayList<Group> groups) {
@@ -20,7 +24,10 @@ public class SearchResult implements Serializable {
     }
 
     public ArrayList<User> getUsers() {
-        return users;
+        if(users == null)
+            return new ArrayList<User>();
+        else
+            return users;
     }
 
     public void setUsers(ArrayList<User> users) {
