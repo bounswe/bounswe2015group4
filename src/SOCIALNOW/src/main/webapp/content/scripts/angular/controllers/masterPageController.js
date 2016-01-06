@@ -29,21 +29,12 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
     var getInstantEvents = function() {
         eventService.getInstantEvents().then(function(instanceEvents) {
             $rootScope.instanceEvents = instanceEvents;
-            setRemainingTimes();
-            $interval(setRemainingTimes, 60000);
-        })
-    }
-
-    var setRemainingTimes = function() {
-        var now = Math.floor(Date.now() / 1000);
-
-        angular.forEach($rootScope.instanceEvents, function(instanceEvent) {
-            instanceEvent.remainingTime = instanceEvent.duration_in_minutes - utils.findDifferenceOfTimestampsInMinutes(instanceEvent.date, now);
         })
     }
 
     var init = function () {
         getInstantEvents();
+        $interval(getInstantEvents, 600000);
     }
 
     init();

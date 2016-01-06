@@ -91,7 +91,9 @@
                 </li>-->
                 <li class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-users text-gray"></i>
+                        <i class="fa fa-users text-gray">
+                            <span class="label label-warning" ng-bind="instanceEvents.length"></span>
+                        </i>
                     </a>
                     <ul class="dropdown-menu">
                         <li>
@@ -99,7 +101,7 @@
                                 <li ng-show="instanceEvents.length != 0" ng-click="instantEventDetail(instanceEvent)" data-toggle="modal" data-target="#instantEventDetail" ng-repeat="instanceEvent in instanceEvents">
                                     <a>
                                         <span class="pull-left" ng-bind="instanceEvent.title"><i class="fa fa-member"></i></span>
-                                        <span class="pull-right font-light" ng-bind-template="{{instanceEvent.remainingTime}} min"></span>
+                                        <span class="pull-right font-light" ng-bind-template="{{instanceEvent.time_remaining}} min(s)"></span>
                                     </a>
                                 </li>
                                 <li ng-show="instanceEvents.length == 0">
@@ -322,7 +324,7 @@
                                             <label for="inputTitle">Duration</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <span ng-bind-template="{{currentEventInstance.duration_in_minutes}} min"></span>
+                                            <span ng-bind-template="{{currentEventInstance.duration_in_minutes}} min(s)"></span>
                                         </div>
                                     </div>
                                 </div>

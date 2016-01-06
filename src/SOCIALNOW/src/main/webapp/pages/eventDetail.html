@@ -124,12 +124,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="instantEventDetail">
+<div class="modal fade" id="shareEventModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Event Share</h4>
+                <h4 class="modal-title">Share Event with Groups</h4>
             </div>
             <div class="modal-body">
                 <form role="form" novalidate>
@@ -143,66 +143,6 @@
                                         </div>
                                         <div class="col-md-6">
                                             <span ng-bind="currentEventInstance.title"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Description</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind="currentEventInstance.instant_event_description"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Owner</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind-template="{{currentEvent.host.name}} {{currentEvent.host.surname}}"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Location</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind="currentEvent.event_location"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Start Date:</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind="currentEvent.event_start_date"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group has-feedback">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Due Date:</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind-template="{{currentEvent.event_end_date}} min"></span>
                                         </div>
                                     </div>
                                 </div>

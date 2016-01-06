@@ -193,10 +193,11 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
             data: JSON.stringify({})
         }).success(function (response) {
             angular.forEach(response, function(event) {
+                event.timestampDate = event.date;
                 event.date = utils.convertTimestampToDate(event.date);
             })
 
-            deferred.resolve(response);
+            deferred.resolve(response || []);
         }).error(function (response) {
             deferred.reject('An error occurred!');
         })
