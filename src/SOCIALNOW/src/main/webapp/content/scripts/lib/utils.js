@@ -5,12 +5,24 @@
     utils.convertTimestampToDate = function (timestamp) {
         var a = moment(new Date(timestamp));
 
-        return a.format("dddd, MMMM Do YYYY");;
+        return a.format("LLLL");;
     }
 
-    utils.convertDateToApiDate = function(date) {
-        var dateArray = date.split('/');
-        return dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+    utils.convertDateToApiDate = function(datetime) {
+        // 01/13/2016 6:00 PM
+        var dateParts = datetime.split(' ');
+        var time = dateParts[1];
+
+        if(dateParts[2] == 'PM') {
+            var timeParts = time.split(':');
+            time = (parseInt(timeParts[0]) + 12) + ":" + timeParts[1];
+        }
+
+        var timeArr = time.split(':');
+        time = (parseInt(timeArr[0]) - 2) + ":" + timeArr[1];
+
+        var dateArray = dateParts[0].split('/');
+        return dateArray[1] + "/" + (parseInt(dateArray[0]) + 1) + "/" + dateArray[2] + " " + time;
     }
 
     utils.findDifferenceOfTimestampsInMinutes = function(ts1, ts2) {
@@ -35,7 +47,8 @@
     // Events manipulation
     utils.manipulateEvents = function(events) {
         _.each(events, function(event) {
-            event.event_date_in_date = utils.convertTimestampToDate(event.event_date);
+            event.event_start_date = utils.convertTimestampToDate(event.event_start_date);
+            event.event_end_date = utils.convertTimestampToDate(event.event_end_date);
             event.tags = utils.trimCharacter(event.tags, ',');
         })
 

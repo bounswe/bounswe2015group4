@@ -71,6 +71,9 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
             method: 'POST',
             data: JSON.stringify(request)
         }).success(function (eventDetail) {
+            eventDetail.event_start_date = utils.convertTimestampToDate(eventDetail.event_start_date);
+            eventDetail.event_end_date = utils.convertTimestampToDate(eventDetail.event_end_date);
+
             deferred.resolve(eventDetail);
         }).error(function (response) {
             deferred.reject('An error occurred!');

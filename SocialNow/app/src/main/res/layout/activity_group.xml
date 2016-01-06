@@ -184,6 +184,30 @@
                     android:layout_centerVertical="true"/>
 
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Join"
+                android:layout_below="@id/Comment"
+                android:clickable="true"
+                android:layout_marginBottom="@dimen/big_margin"
+                android:background="@drawable/cyanbutton"
+                android:padding="@dimen/et_top_bottom_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="JOIN"
+                    android:id="@+id/tJoin"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/small_margin"/>
+
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

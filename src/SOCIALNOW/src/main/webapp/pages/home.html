@@ -6,7 +6,22 @@
         <div class="row">
             <div ng-show="recommendationsEnabled">
                 <br>
-                <section class="content col-md-6">
+
+                <section class="content col-md-4">
+                    <div>
+                        <span class="page-header "><b> Recommended People </b> </span>
+                        <br>
+                        <br>
+                        <div ng-repeat="users in recommendations.users">
+                            <users-summary data="users"></users-summary>
+                        </div>
+                        <div class="box box-widget" ng-show="recommendations.users.length == 0">
+                            <h3 class="page-header">Nothing to recommend. You may want to go events page!</h3>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content col-md-4">
                     <div>
                         <span class="page-header "><b> Recommended Events </b> </span>
                         <br>
@@ -20,7 +35,7 @@
                     </div>
                 </section>
 
-                <section class="content col-md-6">
+                <section class="content col-md-4">
                     <div>
                         <span class="page-header "><b> Recommended Groups </b> </span>
                         <br>

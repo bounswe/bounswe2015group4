@@ -33,10 +33,6 @@ app.service('sessionService', function ($cookies, $rootScope) {
         return currentUser;*/
     }
 
-    this.getRoles = function() {
-        return ['Teaching Assistant', 'Student', 'Instructor', 'Alumni'];
-    }
-
     this.removeAll = function() {
         var cookies = $cookies.getAll();
         angular.forEach(cookies, function (v, k) {

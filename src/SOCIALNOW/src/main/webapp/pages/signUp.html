@@ -68,7 +68,7 @@
 
             <div class="form-group has-feedback">
                 <select class="form-control" ng-model="currentUser.role"
-                        ng-options="role for role in roles"></select>
+                        ng-options="role.name as role.name for role in roles"></select>
             </div>
             <div class="row">
                 <div class="col-md-4">

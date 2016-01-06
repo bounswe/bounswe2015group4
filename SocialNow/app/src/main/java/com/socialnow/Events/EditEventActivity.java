@@ -54,6 +54,7 @@ import com.android.volley.Response.Listener;
 //TODO Event Image Adding option, Invite Guest Option, Privacy Option, Invite problems, End time
 public class EditEventActivity extends AppCompatActivity{
     TextView tvDate, tvSTime, tvETime, etEventName, etEventDes, etEventLoca, etPhoto;
+    MultiSelectSpinner mySpin;
     com.apradanas.simplelinkabletext.LinkableEditText tvTags;
     private Button btDate, btSTime,btETime;
     private int mYear, mMonth, mDay, mSHour, mSMinute, mEHour, mEMinute;
@@ -68,6 +69,7 @@ public class EditEventActivity extends AppCompatActivity{
     String eMsg1 = "Past date is selected";
     String eMsg2 = "End time is not later than Start Time";
     String eMsg3 = "Past time/date cannot be inputted";
+    String[] privacy;
 
     final Calendar c = Calendar.getInstance();
     int mCHour = c.get(Calendar.HOUR_OF_DAY);
@@ -143,14 +145,13 @@ public class EditEventActivity extends AppCompatActivity{
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //spinner.setAdapter(adapter);
         Resources res = getResources();
-        String[] privacy = res.getStringArray(R.array.privacy);
+        privacy = res.getStringArray(R.array.privacy);
 
-        MultiSelectSpinner mySpin = (MultiSelectSpinner)findViewById(R.id.sPrivacy);
+        mySpin = (MultiSelectSpinner)findViewById(R.id.sPrivacy);
         mySpin.setTitle("Who can see this event?");
         mySpin.setItems(privacy);
 
-        // get the selected items
-        List<String> selected = mySpin.getSelectedStrings();
+
 
         RelativeLayout relativeLayout=(RelativeLayout)findViewById(R.id.Guest);
         relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +178,22 @@ public class EditEventActivity extends AppCompatActivity{
         tvTags.addLinks(links);
     }
 
+    public String getSelectedPrivacy(){
+        // get the selected items
+        String privacy_ = "";
+        List<String> selected = mySpin.getSelectedStrings();
+        Log.d("selected", selected.size() + "a");
+        if(selected.size() == privacy.length)
+            privacy_ = "all";
+        else {
+            for (String s : selected)
+                privacy_ += s + ",";
+            privacy_ = privacy_.substring(0, privacy_.length() - 1);
+        }
+        Log.d("privacy", privacy_);
+        return privacy_;
+    }
+
     public void create_event(View v){
         if(inputs_correct()){
             Event event = new Event();
@@ -184,7 +201,7 @@ public class EditEventActivity extends AppCompatActivity{
             event.setEvent_description(etEventDes.getText().toString());
             event.setEvent_location(etEventLoca.getText().toString());
             //TODO privacy setting should be added
-            event.set_visibleTo("all");
+            event.set_visibleTo(getSelectedPrivacy());
             //TODO add the end date
             event.setEvent_date(tvDate.getText().toString() + " " + tvSTime.getText().toString());
             event.setEvent_photo(etPhoto.getText().toString());

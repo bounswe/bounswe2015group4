@@ -6,13 +6,10 @@
 
             <div class="attachment-pushed">
                 <h4 class="attachment-heading" ng-click="getEventDetails(event.id)"><a ng-bind="event.title"></a></h4>
-
+                <span ng-bind-template="{{event.event_start_date}} - {{event.event_end_date}}"></span>
                 <div class="attachment-text"
                      ng-bind="event.event_description">
                 </div><!-- /.attachment-text -->
-                <div class="time-label">
-                    <span class="bg-green label-style" ng-bind="event.event_date_in_date"></span>
-                </div>
             </div>
         </div>
         <button class='btn btn-default btn-xs' ng-click="getEventDetails(event.id)"><i class='fa fa-share'></i>Detail</button>

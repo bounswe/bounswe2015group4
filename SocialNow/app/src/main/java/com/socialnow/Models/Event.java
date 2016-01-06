@@ -195,10 +195,10 @@ public class Event implements Serializable {
 
     public String getEvent_date_as_date() {
         Long  date_as_long = Long.parseLong(getEvent_start_date());
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm:ss");
-        String date = ft.format(new Date(date_as_long));
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+        String date = "Start: "  + ft.format(new Date(date_as_long));
         date_as_long = Long.parseLong(getEvent_end_date());
-        date += " - " + ft.format(new Date(date_as_long));
+        date += "\nEnd  : " + ft.format(new Date(date_as_long));
         return date;
     }
 }

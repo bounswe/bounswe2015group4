@@ -3,7 +3,7 @@ app.controller('signUpController', function ($scope, userService, roleService, h
 
     var getRoles = function () {
         $scope.roles = roleService.getRoles();
-        $scope.currentUser.role = $scope.roles[0];
+        $scope.currentUser.role = $scope.roles[0].name;
     }
 
     $scope.signUp = function (isValid) {

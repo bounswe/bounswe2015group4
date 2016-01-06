@@ -1,4 +1,4 @@
-app.directive('roles', function() {
+app.directive('roles', function(roleService) {
     return {
         restrict: 'E',
         scope: {
@@ -6,8 +6,9 @@ app.directive('roles', function() {
         },
         templateUrl: './content/scripts/angular/directives/partials/roles.html',
         link: function(scope, element, attrs, ctrl) {
-            scope.roles = [ { id: 1, name: 'Teaching Assistant' }, { id: 2, name: 'Student' }, { id: 3, name: 'Instructor' },
-                { id: 4, name: 'Alumni' }];
+            scope.selectedRoles = [];
+
+            scope.roles = roleService.getRoles();
             
             angular.element(document.getElementsByClassName("select2")).select2();
         }

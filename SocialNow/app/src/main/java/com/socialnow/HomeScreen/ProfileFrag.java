@@ -54,6 +54,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import android.support.v4.app.FragmentStatePagerAdapter;
 
@@ -62,7 +63,7 @@ public class ProfileFrag extends Fragment {
 
     private static final int SELECTED_PICTURE = 1;
     Profile profileToShow;
-    Button logout;
+    Button bFollow;
     User current_user;
     Long user_id;
     ImageView profile_picture;
@@ -88,7 +89,13 @@ public class ProfileFrag extends Fragment {
         user_email = (TextView) v.findViewById(R.id.tUserEmail);
         user_role = (TextView) v.findViewById(R.id.tRole);
         current_user = Utils.getCurrentUser();
-
+        bFollow = (Button) v.findViewById(R.id.bFollow);
+        bFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followUnfollow();
+            }
+        });
         Context context = this.getActivity();
         SharedPreferences sharedPref =   PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -96,8 +103,16 @@ public class ProfileFrag extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             profileToShow = (Profile)bundle.getSerializable("profile");
+            if(!profileToShow.getUser_token().equals(Utils.getCurrentProfile().getUser_token())){
+                if(isFolllowing()){
+                    bFollow.setText("Unfollow");
+                }
+            }else{
+                bFollow.setVisibility(View.GONE);
+            }
         }else{
             profileToShow = Utils.getCurrentProfile();
+            bFollow.setVisibility(View.GONE);
         }
 
 //        user_id= Utils.getCurrentUser().getId();
@@ -166,5 +181,62 @@ public class ProfileFrag extends Fragment {
 
         return v;
     }
+    public void followUnfollow(){
+        String postBody = "{user_token: "+ Utils.getCurrentUser().getUser_token()+" , user_token_follow: " + profileToShow.getUser_token()+" }";
+        if(bFollow.getText().equals("Follow")){
+            Response.Listener<User> response = new Response.Listener<User>() {
+                @Override
+                public void onResponse(User response) {
+                    if(response.getId() != -1) {
+                        Log.d("Follow", "Following success " + response.getName());
+                        bFollow.setText("Unfollow");
+                    }else{
+                        Log.d("Follow", "Error: Unknown");
+                    }
+                }
+            };
 
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Failed", "Creation Failed");
+
+                }
+            };
+            API.followUser("followUser", postBody, response, errorListener);
+
+        }else{
+            Response.Listener<User> response = new Response.Listener<User>() {
+                @Override
+                public void onResponse(User response) {
+                    if(response.getId() != -1) {
+                        Log.d("Unfollow", "Unfollowing success " + response.getName());
+                        bFollow.setText("Follow");
+                    }else{
+                        Log.d("UnFollow", "Error: Unknown");
+                    }
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("Failed", "Creation Failed");
+
+                }
+            };
+            API.unFollowUser("unFollowUser", postBody, response, errorListener);
+        }
+    }
+    public Boolean isFolllowing(){
+
+        Boolean check = false;
+        for(User u:profileToShow.getUser_followers()){
+            if(u.getUser_token().equals(Utils.getCurrentProfile().getUser_token())){
+                check =true;
+
+            }
+        }
+        return check;
+    }
 }

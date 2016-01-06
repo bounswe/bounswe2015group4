@@ -1,5 +1,6 @@
 package com.socialnow.Util;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.apradanas.simplelinkabletext.LinkableTextView;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.User;
 import com.socialnow.R;
+import com.socialnow.Search.SearchUtil;
 import com.socialnow.Users.Utils;
 
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class AboutTabFrag extends Fragment {
 
         followings.setText("" + p.getNumberOfFollowings());
 
+        final Activity a = getActivity();
         Link linkHashtag = new Link(Pattern.compile("(\\w+)"))
                 .setUnderlined(true)
                 .setTextStyle(Link.TextStyle.BOLD)
@@ -59,7 +62,8 @@ public class AboutTabFrag extends Fragment {
                     @Override
                     public void onClick(String text) {
                         //TODO navigate to search with tag page
-                       // Toast.makeText(GroupActivity.this, text, Toast.LENGTH_SHORT).show();
+                        SearchUtil.searchAnOpenActivity(text, a);
+                        Toast.makeText(a, text, Toast.LENGTH_SHORT).show();
                     }
                 });
 

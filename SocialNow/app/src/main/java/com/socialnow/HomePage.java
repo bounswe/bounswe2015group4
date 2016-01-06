@@ -36,6 +36,7 @@ import com.socialnow.HomeScreen.RecommendationFrag;
 import com.socialnow.HomeScreen.SearchFrag;
 import com.socialnow.Users.LoginActivity;
 import com.socialnow.Users.Utils;
+import com.socialnow.Util.ActivityTabFrag;
 
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
     private String[] panel;
     //Will be changed later depending the menu items we would like to include
 //
-    int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.groupdrawer,R.drawable.notidrawer,R.drawable.searchdrawer,R.drawable.exit};
+    int [] img ={R.drawable.homedrawer,R.drawable.profilpic,R.drawable.eventdrawer,R.drawable.groupdrawer,R.drawable.recommenddraw2,R.drawable.notidrawer,R.drawable.searchdrawer,R.drawable.exit};
     private ActionBarDrawerToggle drawerListener;
     Fragment fragment;
     static Menu menu;
@@ -230,6 +231,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
             selectItem(position);
         }
     }
+
+
     public void selectItem(int position)
     {
         listview.setItemChecked(position, true);
