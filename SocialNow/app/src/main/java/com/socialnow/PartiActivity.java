@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -241,6 +242,7 @@ public class PartiActivity extends AppCompatActivity {
 
     public void setListViewForProfileClick(final ArrayList<User> users){
         final FragmentManager fg = getSupportFragmentManager();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -287,10 +289,15 @@ public class PartiActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(!getSupportActionBar().isShowing())
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if(count == 0)
             getSupportActionBar().show();
-        if(listView.getVisibility() != View.VISIBLE)
+        if(count == 0)
             listView.setVisibility(View.VISIBLE);
+//        if(!getSupportActionBar().isShowing())
+//            getSupportActionBar().show();
+//        if(listView.getVisibility() != View.VISIBLE)
+//            listView.setVisibility(View.VISIBLE);
     }
 
     protected  static void getData(String s)

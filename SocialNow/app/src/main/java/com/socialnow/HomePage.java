@@ -36,6 +36,7 @@ import com.socialnow.HomeScreen.RecommendationFrag;
 import com.socialnow.HomeScreen.SearchFrag;
 import com.socialnow.Users.LoginActivity;
 import com.socialnow.Users.Utils;
+import com.socialnow.Util.ActivityTabFrag;
 
 
 import java.io.IOException;
@@ -230,6 +231,8 @@ public class HomePage extends AppCompatActivity implements AdapterView.OnItemCli
             selectItem(position);
         }
     }
+
+
     public void selectItem(int position)
     {
         listview.setItemChecked(position, true);
