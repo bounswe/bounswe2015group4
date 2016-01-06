@@ -14,6 +14,7 @@
 
                                 <div class="attachment-pushed">
                                     <h4 class="attachment-heading"><a ng-bind-template="{{event.title}} ({{event.event_location}})"></a></h4>
+                                    <h6><a ng-click="goUserProfile(event.host.user_token)" ng-bind-template="(Host: {{event.host.name}} {{event.host.surname}})"></a></h6>
                                     <span ng-bind-template="{{event.event_start_date}} - {{event.event_end_date}}"></span>
 
                                     <div class="attachment-text"
