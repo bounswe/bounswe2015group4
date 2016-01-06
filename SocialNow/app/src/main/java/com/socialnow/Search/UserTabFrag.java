@@ -55,6 +55,7 @@ public class UserTabFrag extends Fragment {
         }else{
             Log.d("error", "error in usertabfrag bundle empty");
         }
+        final Fragment f = this;
         listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_event, users));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,6 +75,7 @@ public class UserTabFrag extends Fragment {
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.searchresult, p, "fragment")
+                                    .hide(f)
                                     .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                                     .addToBackStack("search")
                                     .commit();

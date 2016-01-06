@@ -144,7 +144,7 @@ public class EventFrag extends Fragment {
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
 //            Log.d("events", events.get(position).getEvent_photo() + " " + events.get(position).getEvent_description() + " " + events.get(position).getEvent_participant_users().length);
 
-            if(events.get(position).getEvent_photo().equals("")){
+            if(events.get(position).getEvent_photo() == null){
                 img.setImageResource(R.drawable.devent);
             }else{
                 Picasso.with(((Activity)getContext()))

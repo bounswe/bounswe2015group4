@@ -61,7 +61,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(from.equals("recommend")){
+        if(from.equals("recommend") && getSupportFragmentManager().getBackStackEntryCount() <= 1){
             Log.d("back", "back");
             Intent i2 = new Intent(getApplicationContext(), HomePage.class);
             startActivity(i2);
