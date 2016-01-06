@@ -43,7 +43,8 @@ public class EditGroupActivity extends AppCompatActivity{
     ArrayAdapter<CharSequence> adapter;
     String privacy_option = "";
     Context context;
-
+    MultiSelectSpinner mySpin;
+    String[] privacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,9 @@ public class EditGroupActivity extends AppCompatActivity{
         //spinner.setAdapter(adapter);
 
         Resources res = getResources();
-        String[] privacy = res.getStringArray(R.array.privacy);
+        privacy = res.getStringArray(R.array.privacy);
 
-        MultiSelectSpinner mySpin = (MultiSelectSpinner)findViewById(R.id.sPrivacy);
+        mySpin = (MultiSelectSpinner)findViewById(R.id.sPrivacy);
         mySpin.setTitle("Who can see this group?");
         mySpin.setItems(privacy);
 
@@ -109,6 +110,22 @@ public class EditGroupActivity extends AppCompatActivity{
 
     }
 
+    public String getSelectedPrivacy(){
+        // get the selected items
+        String privacy_ = "";
+        List<String> selected = mySpin.getSelectedStrings();
+        Log.d("selected", selected.size() + "a");
+        if(selected.size() == privacy.length)
+            privacy_ = "all";
+        else {
+            for (String s : selected)
+                privacy_ += s + ",";
+            privacy_ = privacy_.substring(0, privacy_.length() - 1);
+        }
+        Log.d("privacy", privacy_);
+        return privacy_;
+    }
+
     public void create_group(View v){
         if(inputs_correct()){
             Group group = new Group();
@@ -124,7 +141,7 @@ public class EditGroupActivity extends AppCompatActivity{
             group.setGroup_description(etGroupDes.getText().toString());
             group.setGroup_photo(etPhoto.getText().toString());
             //TODO change the visibleTo value when spinner done
-            group.set_visibleTo("all");
+            group.set_visibleTo(getSelectedPrivacy());
             //TODO guest member adding should be handled
             //event.put("event_members", )
 
