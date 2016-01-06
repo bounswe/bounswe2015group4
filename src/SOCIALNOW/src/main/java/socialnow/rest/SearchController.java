@@ -73,7 +73,7 @@ public class SearchController {
             for (String search:l.getSynonymList()) {
 
                 for (Event event : events) {
-                    if(!searchReturn.getEvents().contains(event) &&   event.getTitle().toLowerCase().contains(search.toLowerCase()) || event.getTags().contains(search) && Util.canSeeEvent(u,event)){
+                    if(!searchReturn.getEvents().contains(event) && event.getEvent_description().contains(search.toLowerCase())  || event.getTitle().toLowerCase().contains(search.toLowerCase()) || event.getTags().contains(search) && Util.canSeeEvent(u,event)){
                         searchReturn.getEvents().add(event);
                     }
                 }
