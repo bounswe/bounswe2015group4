@@ -37,6 +37,10 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
         });
     }
 
+    $scope.shareEvent = function()  {
+
+    }
+
     $scope.createPost = function() {
         postService.createPost($scope.newPost, $scope.user.user_token).then(function(post) {
             postService.addPostToEvent(post.id, $scope.eventId).then(function(event) {
