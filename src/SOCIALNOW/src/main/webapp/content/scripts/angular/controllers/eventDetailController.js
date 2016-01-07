@@ -79,19 +79,34 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
     }
 
     $scope.shareWithGroups = function()  {
-        angular.forEach($scope.selectedGroups, function(group) {
-            eventService.shareEventWithAGroup($scope.user.user_token, group, $scope.eventId).then(function() {});
-        })
+        try {
+            angular.forEach($scope.selectedGroups, function(group) {
+                eventService.shareEventWithAGroup($scope.user.user_token, group, $scope.eventId).then(function() {});
+            })
 
-        alert("Successfully");
+            angular.element(document.getElementById("shareGroupModal")).modal('hide');
+            alert("Successfully shared");
+        } catch(e) {
+            console.log(e);
+            angular.element(document.getElementById("shareGroupModal")).modal('hide');
+            alert("An error occurred while sharing!");
+        }
     }
 
     $scope.shareWithUsers = function()  {
-        angular.forEach($scope.selectedUsers, function(user) {
-            eventService.shareEvent($scope.user.user_token, user, $scope.eventId).then(function() {});
-        })
+        try {
+            angular.forEach($scope.selectedUsers, function(user) {
+                eventService.shareEvent($scope.user.user_token, user, $scope.eventId).then(function() {});
+            })
 
-        alert("Successfully");
+            angular.element(document.getElementById("shareUserModal")).modal('hide');
+            alert("Successfully shared");
+        } catch(e) {
+            console.log(e);
+            angular.element(document.getElementById("shareUserModal")).modal('hide');
+            alert("An error occurred while sharing!");
+        }
+
     }
 
     $scope.createPost = function() {
