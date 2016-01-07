@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+//asd
         thread.start();
 
         if(Utils.getCurrentUserMode()){
