@@ -16,6 +16,8 @@ String ownerToken;
 
     String title;
 
+    int time_remaining;
+
     String instant_event_location;
 
     User instant_event_owner;
@@ -50,6 +52,13 @@ String ownerToken;
         this.duration_in_minutes = duration_in_minutes;
     }
 
+    public int getTime_remaining() {
+        return time_remaining;
+    }
+
+    public void setTime_remaining(int time_remaining) {
+        this.time_remaining = time_remaining;
+    }
     public String getInstant_event_description() {
         return instant_event_description;
     }

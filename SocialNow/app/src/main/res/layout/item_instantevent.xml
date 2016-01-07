@@ -31,7 +31,14 @@
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/small_margin"/>
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Event Description"
+            android:id="@+id/tDescription"
+            android:layout_marginBottom="@dimen/micro_margin"
+            android:layout_below="@id/tEname"/>
         <ImageView
             android:id="@+id/ivEDate"
             android:layout_width="@dimen/small_icon"
@@ -39,7 +46,7 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/date"
             android:layout_marginRight="@dimen/micro_margin"
-            android:layout_below="@id/tEname"/>
+            android:layout_below="@id/tDescription"/>
 
 
         <TextView
@@ -48,7 +55,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Event Date"
             android:id="@+id/tEdate"
-            android:layout_below="@+id/tEname"
+            android:layout_below="@+id/tDescription"
             android:layout_toRightOf="@+id/ivEDate"
             android:layout_toEndOf="@+id/ivEDate" />
 
@@ -73,12 +80,14 @@
             android:layout_marginBottom="@dimen/micro_margin"
             android:layout_below="@id/tEdate"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Event Description"
-            android:id="@+id/tDescription"
+
+        <ImageView
+            android:id="@+id/ivHost"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_people"
+            android:layout_marginRight="@dimen/micro_margin"
             android:layout_marginBottom="@dimen/micro_margin"
             android:layout_below="@id/tElocation"/>
         <TextView
@@ -87,8 +96,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Host by: "
             android:id="@+id/tHost"
+            android:layout_toRightOf="@+id/ivHost"
+            android:layout_toEndOf="@+id/ivHost"
             android:layout_marginBottom="@dimen/micro_margin"
-            android:layout_below="@id/tDescription"
+            android:layout_below="@id/tElocation"
             android:textColor="@color/etBound"/>
 
 

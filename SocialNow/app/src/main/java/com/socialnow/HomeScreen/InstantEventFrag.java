@@ -101,7 +101,7 @@ public class InstantEventFrag extends Fragment {
 
 
             TextView eventdate = (TextView) v.findViewById(R.id.tEdate);
-            eventdate.setText(instantEvents.get(position).getDuration_in_minutes() + " minutes");
+            eventdate.setText(instantEvents.get(position).getTime_remaining() + " minutes");
             TextView eventlocation = (TextView) v.findViewById(R.id.tElocation);
             eventlocation.setText(instantEvents.get(position).getInstant_event_location());
             TextView tDescription = (TextView) v.findViewById(R.id.tDescription);

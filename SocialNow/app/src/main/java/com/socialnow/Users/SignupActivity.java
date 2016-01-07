@@ -28,7 +28,7 @@ import com.socialnow.R;
 public class SignupActivity extends AppCompatActivity {
 
     Spinner spinner;
-    EditText name;
+    EditText name,photo;
     EditText surname;
     EditText email;
     EditText password;
@@ -50,7 +50,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         context = this;
-
+        photo = (EditText) findViewById(R.id.photo);
         name = (EditText) findViewById(R.id.etName);
         surname = (EditText) findViewById(R.id.etSurname);
         email = (EditText) findViewById(R.id.etbMail);
@@ -113,6 +113,7 @@ public class SignupActivity extends AppCompatActivity {
         u.setRole(faculty_position);
         u.setName(uname);
         u.setSurname(usurname);
+        u.setUser_photo(photo.getText().toString());
 
         Response.Listener<User> response = new Response.Listener<User>() {
             @Override
