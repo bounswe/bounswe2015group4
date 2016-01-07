@@ -21,6 +21,10 @@ app.service('searchService', function ($q, $http, baseApiUrl) {
             method: 'POST',
             data: JSON.stringify(request)
         }).success(function (response) {
+            response.groups = _.uniq(response.groups, 'id');
+            response.users = _.uniq(response.users, 'user_token');
+            response.events = _.uniq(response.events, 'id');
+
             deferred.resolve(response);
         }).error(function (response) {
             deferred.reject('An error occurred!');

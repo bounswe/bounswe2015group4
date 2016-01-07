@@ -47,20 +47,22 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
     var getNotifications = function() {
         user = sessionService.getUserInfo();
 
-        notificationService.getNotifications(user.user_token).then(function(notifications) {
-            $rootScope.newNotificationCount = notifications.length;
-            $rootScope.allNotifications = $rootScope.allNotifications.concat(notifications);
-        });
+        if(user && user.user_token) {
+            notificationService.getNotifications(user.user_token).then(function(notifications) {
+                $rootScope.allNotifications = $rootScope.allNotifications.concat(notifications);
+                if(notifications) {
+                    $rootScope.newNotificationCount = notifications.length;
+                }
+            });
+        }
     }
 
     var init = function () {
         getInstantEvents();
-        $interval(getInstantEvents, 600000);
+        $interval(getInstantEvents, 10000);
 
-        if(user && user.user_token) {
-            getNotifications();
-            $interval(getNotifications, 6000);
-        }
+        getNotifications();
+        $interval(getNotifications, 3000);
     }
 
     init();

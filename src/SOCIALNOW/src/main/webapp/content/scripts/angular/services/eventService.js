@@ -270,6 +270,8 @@ app.service('eventService', function ($q, $http, sessionService, baseApiUrl) {
                 event.date = utils.convertTimestampToDate(event.date);
             })
 
+            response = _.sortBy(response, 'time_remaining');
+
             deferred.resolve(response || []);
         }).error(function (response) {
             deferred.reject('An error occurred!');

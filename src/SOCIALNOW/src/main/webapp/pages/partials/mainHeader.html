@@ -11,7 +11,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="dropdown notifications-menu">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
+                    <a ng-click="newNotificationCount = 0" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-alert"></i>
                         <span class="label label-danger" ng-show="newNotificationCount != 0" ng-bind="newNotificationCount"></span>
                     </a>
@@ -36,7 +36,7 @@
                         <i class="fa fa-users text-gray"></i>
                         <span class="label label-warning" ng-bind="instanceEvents.length"></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="width: 400px;">
                         <li class="header">You have {{instanceEvents.length}} instant event(s)</li>
                         <li>
                             <ul class="menu">
