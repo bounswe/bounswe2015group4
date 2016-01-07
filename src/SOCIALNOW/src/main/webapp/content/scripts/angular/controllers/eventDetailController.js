@@ -54,9 +54,9 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
                             name: group.group_name
                         });
                     });
-
-                    angular.element(document.getElementById("shareGroupModal")).modal('show');
                 });
+
+                angular.element(document.getElementById("shareGroupModal")).modal('show');
             }
         } else if(type == 2) {
             if($scope.users.length == 0) {
@@ -71,9 +71,9 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
                             name: user.name + " " + user.surname
                         });
                     });
-
-                    angular.element(document.getElementById("shareUserModal")).modal('show');
                 });
+
+                angular.element(document.getElementById("shareUserModal")).modal('show');
             }
         }
     }
@@ -106,7 +106,6 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
             angular.element(document.getElementById("shareUserModal")).modal('hide');
             alert("An error occurred while sharing!");
         }
-
     }
 
     $scope.createPost = function() {

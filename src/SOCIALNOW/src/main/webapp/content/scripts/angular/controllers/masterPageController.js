@@ -50,7 +50,7 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
         getInstantEvents();
         $interval(getInstantEvents, 600000);
 
-        if(user.user_token) {
+        if(user && user.user_token) {
             getNotifications();
             $interval(getNotifications, 6000);
         }
