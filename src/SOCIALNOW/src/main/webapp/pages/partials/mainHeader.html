@@ -17,15 +17,9 @@
                     </a>
                     <ul class="dropdown-menu" style="width: 400px;">
                         <li class="header">You have {{newNotificationCount}} notification(s)</li>
-                        <li ng-show="allNotifications.length != 0">
-                            <a>
-                                <i class="glyphicon glyphicon-bell text-aqua"></i> Events
-                            </a>
-                        </li>
                         <li>
                             <ul class="menu">
                                 <li style="margin-left: 4px;" ng-repeat="notification in allNotifications">
-                                    <i class="glyphicon glyphicon-chevron-right"></i>
                                     <span style="font-size: small;" ng-bind-template="{{notification.from_user.name}} {{notification.from_user.surname}}" ng-click="goUserProfile(notification.from_user.user_token)"></span>
                                     <span style="font-size: small;"> shared </span>
                                     <span style="font-size: small;" ng-bind="notification.event.title" ng-click="goEventDetail(notification.event.id)"></span>

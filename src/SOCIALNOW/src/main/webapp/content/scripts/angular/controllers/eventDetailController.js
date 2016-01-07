@@ -55,9 +55,9 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
                         });
                     });
                 });
-
-                angular.element(document.getElementById("shareGroupModal")).modal('show');
             }
+
+            angular.element(document.getElementById("shareGroupModal")).modal('show');
         } else if(type == 2) {
             if($scope.users.length == 0) {
                 userService.getAllUsers($scope.user.user_token).then(function(users) {
@@ -72,9 +72,9 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
                         });
                     });
                 });
-
-                angular.element(document.getElementById("shareUserModal")).modal('show');
             }
+
+            angular.element(document.getElementById("shareUserModal")).modal('show');
         }
     }
 
