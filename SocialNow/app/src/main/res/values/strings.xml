@@ -11,17 +11,14 @@
     <string-array name="user_type">
         <item>Please select......</item>
         <item>Undergraduate</item>
-        <item>Graduate</item>
-        <item>Phd</item>
-        <item>Instructor</item>
-        <item>Assistant</item>
+        <item>Faculty</item>
+        <item>Teaching Assistant</item>
         <item>Alumni</item>
     </string-array>
     <string-array name="privacy">
         <item>Undergraduate</item>
-        <item>Graduate</item>
-        <item>Instructor</item>
-        <item>Assistant</item>
+        <item>Faculty</item>
+        <item>Teaching Assistant</item>
         <item>Alumni</item>
     </string-array>
     <string name="cf_mail">A confirmation email will be sent to you after you are appoved. Please follow the instructions in the mail to activate your account. </string>

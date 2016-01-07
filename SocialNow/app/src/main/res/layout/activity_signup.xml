@@ -50,9 +50,16 @@
         android:layout_marginBottom="@dimen/small_margin"
         style="@style/dEditText"/>
 
+    <EditText
+        android:hint="Profile Photo URL"
+        android:layout_below="@id/etPW"
+        android:id="@+id/photo"
+        android:layout_marginBottom="@dimen/small_margin"
+        style="@style/dEditText"/>
+
     <Spinner
         android:id="@+id/sUserType"
-        android:layout_below="@id/etPW"
+        android:layout_below="@id/photo"
         android:layout_marginBottom="@dimen/big_margin"
         style="@style/dEditText"/>
 
