@@ -10,92 +10,36 @@
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <!--<li class="dropdown messages-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">4</span>
+                <li class="dropdown notifications-menu">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-alert"></i>
+                        <span class="label label-danger" ng-show="notifications.length != 0" ng-bind="notifications.length"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header">You have {{notifications.length}} notification(s)</li>
+                        <li ng-show="notifications.length != 0">
+                            <a>
+                                <i class="glyphicon glyphicon-bell text-aqua"></i> Events
+                            </a>
+                        </li>
                         <li>
                             <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="dist/img/user2-160x160.jpg" class="img-circle"
-                                                 alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Support Team
-                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="dist/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="User Image">
-                                        </div>
-                                        <h4>
-                                            AdminLTE Design Team
-                                            <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="dist/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Developers
-                                            <small><i class="fa fa-clock-o"></i> Today</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="dist/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Sales Department
-                                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="dist/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="User Image">
-                                        </div>
-                                        <h4>
-                                            Reviewers
-                                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
+                                <li ng-repeat="notification in notifications">
+                                    <span ng-bind-template="{{notification.from_user.name}} {{notification.from_user.surname}}" ng-click="goUserProfile(notification.from_user.user_token)"></span>
+                                    <span> shared </span>
+                                    <span ng-bind="notification.event.title" ng-click="goEventDetail(notification.event.id)"></span>
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
-                </li>-->
+                </li>
                 <li class="dropdown notifications-menu">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-users text-gray">
-                            <span class="label label-warning" ng-bind="instanceEvents.length"></span>
-                        </i>
+                        <i class="fa fa-users text-gray"></i>
+                        <span class="label label-warning" ng-bind="instanceEvents.length"></span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li class="header">You have {{instanceEvents.length}} instant event(s)</li>
                         <li>
                             <ul class="menu">
                                 <li ng-show="instanceEvents.length != 0" ng-click="instantEventDetail(instanceEvent)" data-toggle="modal" data-target="#instantEventDetail" ng-repeat="instanceEvent in instanceEvents">

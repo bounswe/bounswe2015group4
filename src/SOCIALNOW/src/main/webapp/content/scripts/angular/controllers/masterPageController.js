@@ -1,4 +1,4 @@
-app.run(function ($rootScope, helperService, eventService, sessionService, $interval) {
+app.run(function ($rootScope, helperService, eventService, sessionService, $interval, notificationService) {
     var user = sessionService.getUserInfo();
 
     $rootScope.search = {
@@ -11,6 +11,10 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
 
     $rootScope.goUserProfile = function(token) {
         helperService.goToPage('/profile/' + token);
+    }
+
+    $rootScope.goEventDetail = function(eventId) {
+        helperService.goToPage('/eventDetail/' + eventId);
     }
 
     $rootScope.createInstantEvent = function(instantEvent) {
@@ -32,9 +36,20 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
         })
     }
 
+    var getNotifications = function() {
+        notificationService.getNotifications(user.user_token).then(function(notifications) {
+            console.log(notifications);
+            $rootScope.notifications = notifications;
+
+        });
+    }
+
     var init = function () {
         getInstantEvents();
         $interval(getInstantEvents, 600000);
+
+        getNotifications();
+        $interval(getNotifications, 6000);
     }
 
     init();

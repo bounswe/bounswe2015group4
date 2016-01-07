@@ -16,7 +16,6 @@
                                     <h4 class="attachment-heading"><a ng-bind="group.group_name"></a></h4>
                                     <h6><a ng-click="goUserProfile(group.owner.user_token)" ng-bind-template="(Owner: {{group.owner.name}} {{group.owner.surname}})"></a></h6>
 
-
                                     <div class="attachment-text"
                                          ng-bind="group.group_description">
                                     </div>
@@ -63,7 +62,7 @@
                         <div class="box-body">
                             <div class="post">
                                 <div class='user-block'>
-                                    <span class='username' ng-bind-template="Members ({{group.group_members.length + 1}})"></span>
+                                    <span class='username' ng-bind-template="Members ({{group.group_members.length}})"></span>
                                 </div>
                                 <div>
                                     <span class="bg-gray-light label-style" ng-click="goUserProfile(member.user_token)"

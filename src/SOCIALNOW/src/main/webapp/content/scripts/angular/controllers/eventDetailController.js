@@ -1,4 +1,11 @@
-app.controller('eventDetailController', function($scope, eventService, $routeParams, helperService, sessionService, postService) {
+app.controller('eventDetailController', function($scope, eventService, $routeParams, helperService, sessionService, postService, groupService, userService) {
+    $scope.users = [];
+    $scope.groups = [];
+
+    $scope.goUserProfile = function(token) {
+        helperService.goToPage('/profile/' + token);
+    }
+
     var setInitialProperties = function(eventDetail) {
         $scope.event = eventDetail;
 
@@ -37,8 +44,54 @@ app.controller('eventDetailController', function($scope, eventService, $routePar
         });
     }
 
-    $scope.shareEvent = function()  {
+    $scope.shareEvent = function(type) {
+        if(type == 1) {
+            if($scope.groups.length == 0) {
+                groupService.getAllGroups($scope.user.user_token).then(function(groups) {
+                    angular.forEach(groups, function(group) {
+                        $scope.groups.push({
+                            id: group.id,
+                            name: group.group_name
+                        });
+                    });
 
+                    angular.element(document.getElementById("shareGroupModal")).modal('show');
+                });
+            }
+        } else if(type == 2) {
+            if($scope.users.length == 0) {
+                userService.getAllUsers($scope.user.user_token).then(function(users) {
+                    users = _.reject(users, function(user) {
+                        return user.user_token == $scope.user.user_token;
+                    });
+
+                    angular.forEach(users, function(user) {
+                        $scope.users.push({
+                            id: user.user_token,
+                            name: user.name + " " + user.surname
+                        });
+                    });
+
+                    angular.element(document.getElementById("shareUserModal")).modal('show');
+                });
+            }
+        }
+    }
+
+    $scope.shareWithGroups = function()  {
+        angular.forEach($scope.selectedGroups, function(group) {
+            eventService.shareEventWithAGroup($scope.user.user_token, group, $scope.eventId).then(function() {});
+        })
+
+        alert("Successfully");
+    }
+
+    $scope.shareWithUsers = function()  {
+        angular.forEach($scope.selectedUsers, function(user) {
+            eventService.shareEvent($scope.user.user_token, user, $scope.eventId).then(function() {});
+        })
+
+        alert("Successfully");
     }
 
     $scope.createPost = function() {

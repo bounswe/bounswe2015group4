@@ -163,6 +163,26 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
         return currentUser;
     }
 
+    this.getAllUsers = function(token) {
+        var deferred = $q.defer();
+
+        var request = {
+            user_token: token
+        }
+
+        $http({
+            url: baseApiUrl + '/getAllUsers',
+            method: 'POST',
+            data: JSON.stringify(request)
+        }).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (response) {
+            deferred.reject('An error occurred!');
+        })
+
+        return deferred.promise;
+    }
+
     var getTags = function (tags) {
         var tagsModified = [];
 

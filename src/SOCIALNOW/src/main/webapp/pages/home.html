@@ -4,50 +4,119 @@
 <div class="wrapper">
     <div class="content-wrapper" style="min-height: 780px;">
         <div class="row">
-            <div ng-show="recommendationsEnabled">
-                <br>
+            <div class="col-md-7" style="margin: 10px;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <a>
+                                    <i class="glyphicon glyphicon-bell text-aqua"></i> Events
+                                </a>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-md-12">
+                                        <!-- The time line -->
+                                        <ul class="timeline">
+                                            <li ng-repeat="userEvent in timeline.user_events">
+                                                <div class="timeline-item">
+                                                    <!--<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>-->
+                                                    <h3 class="timeline-header"><a ng-click="goPage('/profile/', userEvent.user.user_token)" ng-bind-template="{{userEvent.user.name}} {{userEvent.user.surname}}"></a>
+                                                        {{userEvent.phrase}} <a ng-click="goPage('/eventDetail/', userEvent.event.id)" ng-bind="userEvent.event.title"></a></h3>
+                                                    <div class="timeline-body" ng-bind="userEvent.event.event_description"></div>
+                                                    <!--<div class="timeline-footer">
+                                                        <a class="btn btn-primary btn-xs">Read more</a>
+                                                        <a class="btn btn-danger btn-xs">Delete</a>
+                                                    </div>-->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <a>
+                                    <i class="glyphicon glyphicon-check text-aqua"></i> Groups
+                                </a>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-md-12">
+                                        <!-- The time line -->
+                                        <ul class="timeline">
+                                            <li ng-repeat="userGroup in timeline.user_groups">
+                                                <div class="timeline-item">
+                                                    <!--<span class="time"><i class="fa fa-clock-o"></i> 12:05</span>-->
+                                                    <h3 class="timeline-header"><a ng-click="goPage('/profile/', userGroup.user.user_token)" ng-bind-template="{{userGroup.user.name}} {{userGroup.user.surname}}"></a>
+                                                        {{userGroup.phrase}} <a ng-click="goPage('/groupDetail/', userGroup.group.id)" ng-bind="userGroup.group.group_name"></a></h3>
+                                                    <div class="timeline-body" ng-bind="userGroup.group.group_description"></div>
+                                                    <!--<div class="timeline-footer">
+                                                        <a class="btn btn-primary btn-xs">Read more</a>
+                                                        <a class="btn btn-danger btn-xs">Delete</a>
+                                                    </div>-->
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right" style="margin: 10px;">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs pull-right">
+                        <li class="active" ng-click="currentRecommendationRoute = recommendationRoutes.events"><a data-toggle="tab">Events</a></li>
+                        <li ng-click="currentRecommendationRoute = recommendationRoutes.groups"><a data-toggle="tab">Groups</a></li>
+                        <li ng-click="currentRecommendationRoute = recommendationRoutes.users"><a data-toggle="tab">Users</a></li>
+                    </ul>
+                    <div class="tab-content" style="height:800px;">
+                            <div ng-show="currentRecommendationRoute == recommendationRoutes.events">
+                                <div class="row">
+                                    <section class="content col-md-12">
+                                        <div>
+                                            <div ng-repeat="event in recommendations.events">
+                                                <event-summary data="event"></event-summary>
+                                            </div>
+                                            <div class="box box-widget" ng-show="recommendations.events.length == 0">
+                                                <h4>Nothing to recommend. You may want to go events page!</h4>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div ng-show="currentRecommendationRoute == recommendationRoutes.groups">
+                                <div class="row">
+                                    <section class="content col-md-12">
+                                        <div>
+                                            <div ng-repeat="interestGroup in recommendations.groups">
+                                                <group-summary data="interestGroup"></group-summary>
+                                            </div>
+                                        </div>
+                                        <div class="box box-widget" ng-show="recommendations.groups.length == 0">
+                                            <h4>Nothing to recommend. You may want to go groups page!</h4>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                            <div ng-show="currentRecommendationRoute == recommendationRoutes.users">
+                                <div class="row">
+                                    <section class="content col-md-12">
+                                        <div>
+                                            <div ng-repeat="users in recommendations.users">
+                                                <user-summary data="users"></user-summary>
+                                            </div>
+                                            <div class="box box-widget" ng-show="recommendations.users.length == 0">
+                                                <h4>Nothing to recommend.</h4>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
 
-                <section class="content col-md-4">
-                    <div>
-                        <span class="page-header "><b> Recommended People </b> </span>
-                        <br>
-                        <br>
-                        <div ng-repeat="users in recommendations.users">
-                            <user-summary data="users"></user-summary>
-                        </div>
-                        <div class="box box-widget" ng-show="recommendations.users.length == 0">
-                            <h3 class="page-header">Nothing to recommend.</h3>
-                        </div>
+                            </div>
                     </div>
-                </section>
-
-                <section class="content col-md-4">
-                    <div>
-                        <span class="page-header "><b> Recommended Events </b> </span>
-                        <br>
-                       <br>
-                        <div ng-repeat="event in recommendations.events">
-                            <event-summary data="event"></event-summary>
-                        </div>
-                        <div class="box box-widget" ng-show="recommendations.events.length == 0">
-                            <h3 class="page-header">Nothing to recommend. You may want to go events page!</h3>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="content col-md-4">
-                    <div>
-                        <span class="page-header "><b> Recommended Groups </b> </span>
-                        <br>
-                        <br>
-                        <div ng-repeat="interestGroup in recommendations.groups">
-                            <group-summary data="interestGroup"></group-summary>
-                        </div>
-                    </div>
-                    <div class="box box-widget" ng-show="recommendations.groups.length == 0">
-                        <h3 class="page-header">Nothing to recommend. You may want to go groups page!</h3>
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>

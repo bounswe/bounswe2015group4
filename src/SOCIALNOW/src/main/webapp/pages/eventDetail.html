@@ -14,7 +14,7 @@
 
                                 <div class="attachment-pushed">
                                     <h4 class="attachment-heading"><a ng-bind-template="{{event.title}} ({{event.event_location}})"></a></h4>
-                                    <h6><a ng-click="goUserProfile(event.host.user_token)" ng-bind-template="(Host: {{event.event_host.name}} {{event.event_host.surname}})"></a></h6>
+                                    <h6><a ng-click="goUserProfile(event.event_host.user_token)" ng-bind-template="(Host: {{event.event_host.name}} {{event.event_host.surname}})"></a></h6>
                                     <span ng-bind-template="{{event.event_start_date}} - {{event.event_end_date}}"></span>
 
                                     <div class="attachment-text"
@@ -28,7 +28,9 @@
                                         <button class="btn btn-primary btn-sm" ng-click="makeNotgoing()"
                                                 ng-show="!notGoing">You are going
                                         </button>
-                                        <button class="btn btn-primary btn-sm" ng-click="shareEvent()">Share
+                                        <button class="btn btn-primary btn-sm" ng-click="shareEvent(1)">Share with Groups
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" ng-click="shareEvent(2)">Share with Users
                                         </button>
                                     </div>
                                 </div>
@@ -124,7 +126,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="shareEventModal">
+<div class="modal fade" id="shareGroupModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -136,15 +138,9 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="inputTitle">Title</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span ng-bind="currentEventInstance.title"></span>
-                                        </div>
-                                    </div>
+                                <div class="form group has-feedback">
+                                    <label>Groups</label>
+                                    <multiselect selected="selectedGroups" items="groups"></multiselect>
                                 </div>
                             </div>
                         </div>
@@ -153,6 +149,36 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" ng-click="shareWithGroups()">Share</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="shareUserModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Share Event with Users</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" novalidate>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form group has-feedback">
+                                    <label>Users</label>
+                                    <multiselect selected="selectedUsers" items="users"></multiselect>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" style="margin-left: 10px;">Close</button>
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" ng-click="shareWithUsers()">Share</button>
             </div>
         </div>
     </div>
