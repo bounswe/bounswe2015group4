@@ -16,13 +16,16 @@
                         <span class="label label-danger" ng-show="newNotificationCount != 0" ng-bind="newNotificationCount"></span>
                     </a>
                     <ul class="dropdown-menu" style="width: 400px;">
-                        <li class="header">You have {{newNotificationCount}} notification(s)</li>
+                        <li class="header">You have {{newNotificationCount}} new notification(s)</li>
                         <li>
                             <ul class="menu">
                                 <li style="margin-left: 4px;" ng-repeat="notification in allNotifications">
-                                    <span style="font-size: small;" ng-bind-template="{{notification.from_user.name}} {{notification.from_user.surname}}" ng-click="goUserProfile(notification.from_user.user_token)"></span>
-                                    <span style="font-size: small;"> shared </span>
-                                    <span style="font-size: small;" ng-bind="notification.event.title" ng-click="goEventDetail(notification.event.id)"></span>
+                                    <a>
+                                        <span style="text-decoration: underline;" ng-bind-template="{{notification.from_user.name}} {{notification.from_user.surname}}" ng-click="goUserProfile(notification.from_user.user_token)"></span>
+                                        <span> shared </span>
+                                        <span style="text-decoration: underline;" ng-bind="notification.event.title" ng-click="goEventDetail(notification.event.id)"></span>
+                                        <span> with you </span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
