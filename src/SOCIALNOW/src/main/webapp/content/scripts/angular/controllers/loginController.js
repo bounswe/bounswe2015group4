@@ -9,6 +9,7 @@ app.controller('loginController', function ($scope, userService, sessionService,
 
         userService.logIn($scope.currentUser.Email, $scope.currentUser.Password).then(function (user) {
             token = user.user_token;
+            console.log(token);
             sessionService.setUserCredentials(user);
             userService.getProfileDetails(token).then(function(currentUser) {
                 helperService.goToPage('/');

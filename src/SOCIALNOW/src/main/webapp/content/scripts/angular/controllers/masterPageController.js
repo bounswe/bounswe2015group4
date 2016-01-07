@@ -1,5 +1,6 @@
 app.run(function ($rootScope, helperService, eventService, sessionService, $interval, notificationService) {
     var user = sessionService.getUserInfo();
+    $rootScope.allNotifications = [];
 
     $rootScope.search = {
         word: ""
@@ -37,10 +38,11 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
     }
 
     var getNotifications = function() {
-        notificationService.getNotifications(user.user_token).then(function(notifications) {
-            console.log(notifications);
-            $rootScope.notifications = notifications;
+        user = sessionService.getUserInfo();
 
+        notificationService.getNotifications(user.user_token).then(function(notifications) {
+            $rootScope.newNotificationCount = notifications.length;
+            $rootScope.allNotifications = $rootScope.allNotifications.concat(notifications);
         });
     }
 
@@ -48,8 +50,10 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
         getInstantEvents();
         $interval(getInstantEvents, 600000);
 
-        getNotifications();
-        $interval(getNotifications, 6000);
+        if(user.user_token) {
+            getNotifications();
+            $interval(getNotifications, 6000);
+        }
     }
 
     init();
