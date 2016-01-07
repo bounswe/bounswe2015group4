@@ -14,6 +14,7 @@ import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Erdem on 12/12/2015.
@@ -35,6 +36,8 @@ public class Instant_Event_Controller {
             .setDateFormat("dd/mm/yyyy")
             .create();
 
+    Logger log = Logger.getLogger("USERCONTROLLER");
+
     @RequestMapping( value = "/createInstantEvent", method = RequestMethod.POST)
     public @ResponseBody
     Instant_Event addEvent(@RequestBody String addEventForm) {
@@ -53,10 +56,13 @@ public class Instant_Event_Controller {
         deleteInstantEvents(events);
         events =  instant_eventDao.getAll();
         for (Instant_Event e: events) {
-
+           long diff = Calendar.getInstance().getTimeInMillis() - e.getDate().getTimeInMillis();
+            log.info(diff+" AAAAAAAAAAAAAAAAAAAAAAAAAa");
+            int diff_in_mins = e.getDuration_in_minutes()- (int) ( diff / (60 * 1000));
             User u = userDao.getByToken(e.getInstant_event_owner());
             Instant_Event_Details ie = new Instant_Event_Details(e);
             ie.setInstant_event_owner(u);
+            ie.setTime_remaining( diff_in_mins);
 
             result.add(ie);
         }
