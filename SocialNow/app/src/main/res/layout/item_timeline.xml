@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
+            android:textSize="15dp"
             android:id="@+id/tInfoOwner"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
@@ -38,6 +39,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_toRightOf="@+id/tInfoOwner"
             android:text="created"
+            android:textSize="15dp"
             android:id="@+id/tInfocreated"
             android:layout_marginBottom="@dimen/small_margin"/>
 
@@ -48,6 +50,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
             android:id="@+id/tInfoName"
+            android:textSize="15dp"
             android:layout_below="@+id/tInfoOwner"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"

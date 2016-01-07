@@ -127,7 +127,8 @@ public class ProfileFrag extends Fragment {
 
 
         Log.d("photo",userPhoto + "asd");
-
+        if(userPhoto == null)
+            userPhoto = "asd";
         Picasso.with(getContext())
                 .load(userPhoto)
                 .resize(80, 80)
