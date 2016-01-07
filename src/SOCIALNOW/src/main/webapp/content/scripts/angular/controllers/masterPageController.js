@@ -19,12 +19,19 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
     }
 
     $rootScope.createInstantEvent = function(instantEvent) {
-        instantEvent.instant_event_owner = user.user_token;
+        user = sessionService.getUserInfo();
 
-        eventService.createInstantEvent(instantEvent).then(function(instanceEvent) {
-            getInstantEvents();
+        if(user && user.user_token) {
+            instantEvent.instant_event_owner = user.user_token;
+
+            eventService.createInstantEvent(instantEvent).then(function(instanceEvent) {
+                getInstantEvents();
+                angular.element(document.getElementById("createInstantEvent")).modal('hide');
+            })
+        } else {
             angular.element(document.getElementById("createInstantEvent")).modal('hide');
-        })
+            alert("Unexpected error, clear cache!");
+        }
     }
 
     $rootScope.instantEventDetail = function(instanceEvent) {
@@ -58,5 +65,3 @@ app.run(function ($rootScope, helperService, eventService, sessionService, $inte
 
     init();
 })
-
-
