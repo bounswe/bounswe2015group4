@@ -1,4 +1,11 @@
 app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
+    /**
+    *In this function, the token is taken as variable of the function
+    *and in a case the function is successful, all groups are listed.
+    *
+    *@param token
+    *@return allGroups
+    */
     this.getAllGroups = function (token) {
         var deferred = $q.defer();
 
@@ -18,7 +25,13 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
-
+    /**
+    *In the function getMyGroups, the userToken is taken as variable into the function
+    *and in a case the function is successful, the function lets users to see all his/her groups.
+    *
+    *@param userToken
+    *@return userGroups
+    */
     this.getMyGroups = function (userToken) {
         var deferred = $q.defer();
 
@@ -38,7 +51,14 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
-
+    /**
+    *In the function getGroupDetails, the groupId is taken as variable into the function
+    *and by checking groupId, function reaches which group has been mentioned and returns 
+    *the details of that group
+    *
+    *@param groupId
+    *@return groupDetail
+    */
     this.getGroupDetails = function(groupId) {
         var deferred = $q.defer();
 
@@ -58,7 +78,14 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
-
+    /**
+    *In the function createGroup, the userToken and group object are taken as variable of the function
+    *and in a case the function is successful, the function lets users to create a new interest group.
+    *
+    *@param userToken
+    *@param group
+    *@return createdGroup
+    */
     this.createGroup = function (group, userToken) {
         var deferred = $q.defer();
 
@@ -75,7 +102,14 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
-
+    /**
+    *In the function addMember, the userToken and groupId are taken as variable of the function
+    *and in a case the function is successful, the function lets users to join and interest group.
+    *
+    *@param userToken
+    *@param groupId
+    *@return joinedGroup
+    */
     this.addMember = function (userToken, groupId) {
         var deferred = $q.defer();
 
@@ -96,7 +130,14 @@ app.service('groupService', function ($q, $http, sessionService, baseApiUrl) {
 
         return deferred.promise;
     }
-
+    /**
+    *In the function removeMember, the userToken and groupId are taken as variable of the function
+    *and in a case the function is successful, the function lets users to leave an interest group.
+    *
+    *@param userToken
+    *@param groupId
+    *@return removedGroup
+    */
     this.removeMember = function (userToken, groupId) {
         var deferred = $q.defer();
 
