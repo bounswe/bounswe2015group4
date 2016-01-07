@@ -1,4 +1,13 @@
 app.service('userService', function ($q, $http, sessionService, roleService, baseApiUrl) {
+    /**
+    *In the function logIn, email and password are taken as variable into the function
+    *and in a case the function is successful, by using the taken information, logging in
+    *process has provided.
+    *
+    *@param email
+    *@param password
+    *@return loggedIn
+    */
     this.logIn = function (email, password) {
         var deferred = $q.defer();
         var request = {
@@ -22,7 +31,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function getProfileDetails, token is taken as variable into the function
+    *and in a case the function is successful, the profile details of user is shown
+    *on the screen.
+    *
+    *@param token
+    *@return profileInfo
+    */
     this.getProfileDetails = function (token) {
         var deferred = $q.defer();
         var request = {
@@ -41,7 +57,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function signup, currentUser is taken as variable into the function
+    *and in a case the function is successful, signup process is completed, otherwise
+    *error message is shown on console.
+    *
+    *@param currentUser
+    *@return signedUpProfile
+    */
     this.signup = function (currentUser) {
         var deferred = $q.defer();
 
@@ -62,7 +85,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function passwordReset, email is taken as variable into the function
+    *and in a case the function is successful, the password of the user is cleared.
+    *And resend to user's email address.
+    *
+    *@param email
+    *@return newPassword
+    */
     this.passwordReset = function (email) {
         var deferred = $q.defer();
         Parse.User.requestPasswordReset(email, {
@@ -76,7 +106,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function editUser, currentUser is taken as variable into the function
+    *and in a case the function is successful, the user updates its' profile by changing
+    *his/her personal information.
+    *
+    *@param currentUser
+    *@return updatedProfile
+    */
     this.editUser = function (currentUser) {
         var deferred = $q.defer();
 
@@ -92,7 +129,15 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function followUser, userToken and followToken are taken as variable into the function.
+    *In this example, userToken represents the current user, and followToken does represent the user,
+    *who is going to be followed. The function does the following issue.
+    *
+    *@param userToken
+    *@param followToken
+    *@return followedUser
+    */
     this.followUser = function (userToken, followToken) {
         var deferred = $q.defer();
         var request = {
@@ -112,7 +157,15 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function unfollowUser, userToken and unfollowToken are taken as variable into the function.
+    *In this example, userToken represents the current user, and unfollowToken does represent the user,
+    *who is going to be unfollowed. The function handles the unfollowing process.
+    *
+    *@param userToken
+    *@param unfollowToken
+    *@return unfollowedUser
+    */
     this.unfollowUser = function (userToken, unfollowToken) {
         var deferred = $q.defer();
         var request = {
@@ -132,7 +185,14 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function setShowingUserProfile, user is taken into the function as variable.
+    *The function takesa user and after modifications, shows the modified information on
+    *console.
+    *
+    *@param user
+    *@return modifiedUser
+    */
     this.setShowingUserProfile = function (user) {
         var currentUser = {};
 
@@ -162,7 +222,13 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return currentUser;
     }
-
+    /**
+    *In the function getAllUsers, token is taken into the function as variable.
+    *The function returns all the users registered in the database.
+    *
+    *@param token
+    *@return allUsers
+    */
     this.getAllUsers = function(token) {
         var deferred = $q.defer();
 
@@ -182,7 +248,13 @@ app.service('userService', function ($q, $http, sessionService, roleService, bas
 
         return deferred.promise;
     }
-
+    /**
+    *In the function getTags, tags are taken into the function as variable.
+    *The function returns all the tags saved in the database.
+    *
+    *@param tags
+    *@return allTags
+    */
     var getTags = function (tags) {
         var tagsModified = [];
 
