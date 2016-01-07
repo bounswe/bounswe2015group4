@@ -24,6 +24,7 @@ import com.socialnow.Models.Group;
 import com.socialnow.Models.Group_Detail;
 import com.socialnow.Models.Instant_Event;
 import com.socialnow.Models.Instant_Event_Details;
+import com.socialnow.Models.NotificationRetrieve;
 import com.socialnow.Models.Post;
 import com.socialnow.Models.Profile;
 import com.socialnow.Models.SearchResult;
@@ -238,6 +239,13 @@ public class API {
         String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + "}";
         mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/timeline",
                 TimelineReturn.class, successListener, failureListener)
+                .setPostBodyInJSONForm(postBody).setTag(tag));
+    }
+
+    public static void getNotification(String tag, Response.Listener<NotificationRetrieve[]> successListener, Response.ErrorListener failureListener) {
+        String postBody = "{user_token:"+ Utils.getCurrentUser().getUser_token() + "}";
+        mQueue.add(new GeneralRequest<>(Request.Method.POST, MAIN_URL + "/users/getNotifications",
+                NotificationRetrieve[].class, successListener, failureListener)
                 .setPostBodyInJSONForm(postBody).setTag(tag));
     }
 
