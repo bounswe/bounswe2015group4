@@ -27,30 +27,51 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text=""
-            android:id="@+id/tInfo"
+            android:id="@+id/tInfoOwner"
             android:layout_alignParentLeft="true"
             android:textStyle="bold"
             android:layout_marginBottom="@dimen/small_margin"/>
 
-        <ImageView
-            android:id="@+id/ivEDate"
-            android:layout_width="@dimen/small_icon"
-            android:layout_height="@dimen/small_icon"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/date"
-            android:layout_marginRight="@dimen/micro_margin"
-            android:layout_below="@id/tEname"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_toRightOf="@+id/tInfoOwner"
+            android:text="created"
+            android:id="@+id/tInfocreated"
+            android:layout_marginBottom="@dimen/small_margin"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Event Date"
-            android:id="@+id/tEdate"
-            android:layout_below="@+id/tEname"
-            android:layout_toRightOf="@+id/ivEDate"
-            android:layout_toEndOf="@+id/ivEDate" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/tInfoName"
+            android:layout_below="@+id/tInfoOwner"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/small_margin"/>
+
+        <!--<ImageView-->
+            <!--android:id="@+id/ivEDate"-->
+            <!--android:layout_width="@dimen/small_icon"-->
+            <!--android:layout_height="@dimen/small_icon"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:src="@drawable/date"-->
+            <!--android:layout_marginRight="@dimen/micro_margin"-->
+            <!--android:layout_below="@id/tEname"/>-->
+
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text="Event Date"-->
+            <!--android:id="@+id/tEdate"-->
+            <!--android:layout_below="@+id/tEname"-->
+            <!--android:layout_toRightOf="@+id/ivEDate"-->
+            <!--android:layout_toEndOf="@+id/ivEDate" />-->
 
 
     </RelativeLayout>
