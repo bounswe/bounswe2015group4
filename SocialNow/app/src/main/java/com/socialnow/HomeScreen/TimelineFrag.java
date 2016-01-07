@@ -25,6 +25,7 @@ import com.socialnow.Models.User;
 import com.socialnow.Models.User_Event;
 import com.socialnow.Models.User_Group;
 import com.socialnow.R;
+import com.socialnow.Users.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +52,7 @@ public class TimelineFrag extends Fragment {
             @Override
             public void onResponse(TimelineReturn response) {
                 if(response != null) {
-                    Log.d("Timeline", "success" + response.getUser_events().size() + " " + response.getUser_groups().size());
+                    Log.d("Timeline", Utils.getCurrentUser().getUser_token() + " success" + response.getUser_events().size() + " " + response.getUser_groups().size());
                     timeLine = response;
                     handleTimeline();
                     listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_timeline, results));
@@ -93,9 +94,12 @@ public class TimelineFrag extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_event,null);
-            TextView info = (TextView) v.findViewById(R.id.tInfo);
-            info.setText(results.get(position).owner + " created " + results.get(position).name);
+            View v=((Activity)getContext()).getLayoutInflater().inflate(R.layout.item_timeline,null);
+            TextView info = (TextView) v.findViewById(R.id.tInfoOwner);
+            info.setText(results.get(position).owner + " ");
+            TextView info2 = (TextView) v.findViewById(R.id.tInfoName);
+            info2.setText(results.get(position).name);
+
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
 //            Log.d("events", events.get(position).getEvent_photo() + " " + events.get(position).getEvent_description() + " " + events.get(position).getEvent_participant_users().length);
 
