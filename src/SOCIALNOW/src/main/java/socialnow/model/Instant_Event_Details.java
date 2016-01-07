@@ -11,6 +11,15 @@ public class Instant_Event_Details {
 
     Calendar date;
 
+    int time_remaining;
+
+    public int getTime_remaining() {
+        return time_remaining;
+    }
+
+    public void setTime_remaining(int time_remaning) {
+        this.time_remaining = time_remaning;
+    }
 
     int duration_in_minutes;
 
