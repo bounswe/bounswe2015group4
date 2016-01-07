@@ -78,11 +78,11 @@ public class TimelineFrag extends Fragment {
         List<User_Group> ug = timeLine.getUser_groups();
         for(int i = 0; i < ue.size(); i++){
             User_Event t = ue.get(i);
-            results.add(new Basicgroup_event(t.getUser().getUser_photo(), t.getUser().getName() + " " + t.getUser().getSurname(), t.getEvent().getTitle()));
+            results.add(new Basicgroup_event(t.getUser().getUser_photo(), t.getUser().getName() + " " + t.getUser().getSurname(), t.getEvent().getTitle(), t.getUser().getUser_token().equals(t.getEvent().getEvent_host_token())));
         }
         for(int i = 0; i < ug.size(); i++){
             User_Group t = ug.get(i);
-            results.add(new Basicgroup_event(t.getUser().getUser_photo(), t.getUser().getName() + " " + t.getUser().getSurname(), t.getGroup().getGroup_name()));
+            results.add(new Basicgroup_event(t.getUser().getUser_photo(), t.getUser().getName() + " " + t.getUser().getSurname(), t.getGroup().getGroup_name(), t.getUser().getUser_token().equals(t.getGroup().getOwner_token())));
         }
     }
 
@@ -99,6 +99,13 @@ public class TimelineFrag extends Fragment {
             info.setText(results.get(position).owner + " ");
             TextView info2 = (TextView) v.findViewById(R.id.tInfoName);
             info2.setText(results.get(position).name);
+
+            String create_join = "joined";
+            if(!results.get(position).create_join){
+                TextView info3 = (TextView) v.findViewById(R.id.tInfocreated);
+                info3.setText(create_join);
+            }
+
 
             ImageView img = (ImageView) v.findViewById(R.id.ivEvent);
 //            Log.d("events", events.get(position).getEvent_photo() + " " + events.get(position).getEvent_description() + " " + events.get(position).getEvent_participant_users().length);
