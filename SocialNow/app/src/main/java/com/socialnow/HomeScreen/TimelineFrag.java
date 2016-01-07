@@ -52,7 +52,7 @@ public class TimelineFrag extends Fragment {
             @Override
             public void onResponse(TimelineReturn response) {
                 if(response != null) {
-                    Log.d("Timeline", Utils.getCurrentUser().getUser_token() + " success" + response.getUser_events().size() + " " + response.getUser_groups().size());
+//                    Log.d("Timeline", Utils.getCurrentUser().getUser_token() + " success" + response.getUser_events().size() + " " + response.getUser_groups().size());
                     timeLine = response;
                     handleTimeline();
                     listView.setAdapter(new MyAdapter(getActivity(), R.layout.item_timeline, results));

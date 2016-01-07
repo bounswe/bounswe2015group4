@@ -127,15 +127,16 @@ public class ProfileFrag extends Fragment {
 
 
         Log.d("photo",userPhoto + "asd");
-        if(userPhoto == null)
-            userPhoto = "asd";
-        Picasso.with(getContext())
-                .load(userPhoto)
-                .resize(80, 80)
-                .placeholder(R.drawable.devent)
-                .centerCrop()
-                .into(profile_picture);
-
+        if(userPhoto == null || userPhoto.equals(""))
+            profile_picture.setImageResource(R.drawable.devent);
+        else {
+            Picasso.with(getContext())
+                    .load(userPhoto)
+                    .resize(80, 80)
+                    .placeholder(R.drawable.devent)
+                    .centerCrop()
+                    .into(profile_picture);
+        }
 //        current_user.setId(user_id);
 
 
