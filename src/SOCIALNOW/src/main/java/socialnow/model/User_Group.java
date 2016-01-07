@@ -3,8 +3,6 @@ package socialnow.model;
 /**
  *This model defines the user groups
  *@author Erdem
- * @param group shows the interest groups
- * @param user defines the user belong to a group
  */
 public class User_Group {
 

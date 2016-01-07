@@ -32,6 +32,13 @@ public class PostController {
 
     final Gson gson = new Gson();
 
+    /**
+     * Creates a post in database
+     *
+     *
+     * @param createPostForm
+     * @return
+     */
     @RequestMapping( value = "/createPost", method = RequestMethod.POST)
     public @ResponseBody
     Post createPost(@RequestBody String createPostForm){
@@ -41,7 +48,12 @@ public class PostController {
         return p;
     }
 
-
+    /**
+     * my posts as a user
+     *
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/listPostsOfUser", method = RequestMethod.POST)
     public @ResponseBody
     List<Post> listPostsOfUser(@RequestBody String token){
@@ -49,7 +61,12 @@ public class PostController {
       return postDao.getAllByToken(form.getUser_token());
     }
 
-
+    /**
+     * all the posts within a group
+     *
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/listPostsOfGroup", method = RequestMethod.POST)
     public @ResponseBody
     List<Post> listPostsOfGroup(@RequestBody String token){
@@ -58,7 +75,12 @@ public class PostController {
         return postDao.getAllByToken(form.getUser_token());
     }
 
-
+    /**
+     * Details of a post including the owner and comments
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping( value = "/getPostDetail", method = RequestMethod.POST)
     public @ResponseBody
     PostDetail getPostDetail(@RequestBody String id){
@@ -69,6 +91,13 @@ public class PostController {
         return  postDetail;
     }
 
+
+    /**
+     * adds a comment to  a post with the necessary keys
+     *
+     * @param addCommentForm
+     * @return
+     */
     @RequestMapping( value = "/post/addComment", method = RequestMethod.POST)
     public @ResponseBody
     PostDetail addComment(@RequestBody String addCommentForm){

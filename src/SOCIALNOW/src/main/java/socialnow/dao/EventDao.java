@@ -21,8 +21,10 @@ public class EventDao {
         return;
     }
 
-    /**
+    /**\
      * Delete the event from the database.
+     *
+     * @param event event in database
      */
     public void delete(Event event) {
         if (entityManager.contains(event))
@@ -33,7 +35,8 @@ public class EventDao {
     }
 
     /**
-     * Return all the events stored in the database.
+     *  * Return all the events stored in the database.
+     * @return all the events stored in the database
      */
     @SuppressWarnings("unchecked")
     public List<Event> getAll() {
@@ -50,7 +53,9 @@ public class EventDao {
 
 
     /**
-     * Return the event having the passed id.
+     *
+     * @param id id of event in database
+     * @return the event in the database
      */
     public Event getById(long id) {
         return entityManager.find(Event.class, id);
@@ -59,8 +64,10 @@ public class EventDao {
     public Event getById(String id) {
         return entityManager.find(Event.class,Long.parseLong(id));
     }
+
     /**
-     * Update the passed event in the database.
+     *  Update the passed event in the database.
+     * @param event vent in database
      */
     public void update(Event event) {
         entityManager.merge(event);

@@ -9,9 +9,6 @@ import javax.validation.constraints.NotNull;
  *This model defines comment
  *
  * @author Erdem
- *@param id it is the id of comment
- *@param owner_token shows the owner of comment
- *@param comment_text what is written in the comment
  */
 @Entity
 @Table(name = "comments")
@@ -43,7 +40,9 @@ public class Comment {
         this.id = id;
     }
 /**
- * 
+ *
+ *
+ *
  * Empty constructor
  */
     public Comment() {
@@ -51,6 +50,7 @@ public class Comment {
 
 /**
 *@return current owner of the comment
+ *
 */
 
     public String getOwner_token() {
@@ -78,11 +78,12 @@ public class Comment {
     public void setComment_text(String comment_text) {
         this.comment_text = comment_text;
     }
-/**
- * Getting the info from HTML form and creates new objects
- * @param setComment_text creates new comment
- * @param setOwner_token assigns new owner
- */
+
+    /**
+     *  * Getting the info from HTML form and creates new objects
+     * @param form for send by client
+     */
+
 
     public Comment(Create_Comment_Form form){
         this.setComment_text(form.getComment_text());

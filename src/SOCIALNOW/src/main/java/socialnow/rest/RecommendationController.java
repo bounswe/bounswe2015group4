@@ -215,6 +215,13 @@ public class RecommendationController {
 
     }
 
+    /**
+     *
+     * Just for users
+     *
+     * @param token
+     * @return
+     */
     @RequestMapping( value = "/recommendUsers", method = RequestMethod.POST)
     public ArrayList<User> recommendPeople(@RequestBody String token){
         HashMap<Integer, User> map = new HashMap<>();

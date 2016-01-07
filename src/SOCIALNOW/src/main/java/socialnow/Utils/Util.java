@@ -50,9 +50,9 @@ public class Util {
 
     /**
      * receives a 2D array of tags that belong to users, finds the most occurent one among those
-     * @param tags
-     * @param K
-     * @return
+     * @param tags array of tags
+     * @param K size of return array
+     * @return the result array described
      */
     public static String[] findCommon(String[][] tags, int K) {
         // TODO Auto-generated method stub
@@ -98,9 +98,9 @@ public class Util {
 
     /**
      * deletes all elements of second parameter in the first parameter but only one time
-     * @param arr
-     * @param elems
-     * @return
+     * @param arr an array
+     * @param elems elements to be deleted
+     * @return result array described
      */
     public static String deleteFromArray(String[] arr, String[] elems){
         String result = "";
@@ -118,8 +118,8 @@ public class Util {
 
     /**
      * finds the most occurent 3 tags of a user
-     * @param tags
-     * @return
+     * @param tags array of tags
+     * @return result array described
      */
     public static String[] findMostOccurence(String[] tags){
         String[] result = new String[3];
@@ -176,9 +176,9 @@ public class Util {
 
     /**
      * deletes elem from the first array
-     * @param arr
-     * @param elem
-     * @return
+     * @param arr array of tags
+     * @param elem element to be deleted
+     * @return result string described
      */
     public static String deleteFromArray(String[] arr, String elem){
         String result = "";
@@ -196,9 +196,9 @@ public class Util {
 
     /**
      * to see if the user can see the given event
-     * @param u
-     * @param e
-     * @return
+     * @param u a user
+     * @param e and an event to check if user can see
+     * @return if the user can see the given event
      */
     public static boolean canSeeEvent(User u, Event e ){
         if(e.getVisibleTo().equals("all")){
@@ -252,7 +252,7 @@ public class Util {
 
     /**
      * generates a token for a new user
-     * @return
+     * @return a token
      */
     public static String generate_token(){
         return UUID.randomUUID().toString();

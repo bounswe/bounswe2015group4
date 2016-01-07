@@ -51,7 +51,16 @@ public class SearchController {
 
     }
 
-
+    /**
+     *
+     * Semantic search applied.
+     * the keyword is scanned in the big database of another server by sending a request them.
+     *All the new keywords are treated as a new search keyword.
+     *
+     * @param searchBasic
+     * @return
+     * @throws UnirestException
+     */
     @RequestMapping( value = "/search", method = RequestMethod.POST)
     public @ResponseBody
     SearchReturn search(@RequestBody String searchBasic) throws UnirestException {

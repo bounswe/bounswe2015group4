@@ -209,6 +209,13 @@ public class UserController {
         return u1;
     }
 
+    /**
+     *
+     * returns all the users in the system.
+     * It is used for sharing
+     * @param followUSerForm
+     * @return
+     */
     @RequestMapping( value = "/getAllUsers", method = RequestMethod.POST)
     public List<User> getAllUsers(@RequestBody String followUSerForm) {
         return userDao.getAll();

@@ -27,9 +27,10 @@ public class DatabaseConfig {
   // ------------------------
 
   /**
-   * DataSource definition for database connection. Settings are read from
+   *    * DataSource definition for database connection. Settings are read from
    * the application.properties file (using the env object).
-   */
+   * @return nothing important
+     */
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -43,6 +44,7 @@ public class DatabaseConfig {
 
   /**
    * Declare the JPA entity manager factory.
+   * @return nothing important
    */
   @Bean
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -77,6 +79,7 @@ public class DatabaseConfig {
 
   /**
    * Declare the transaction manager.
+   * @return nothing important
    */
   @Bean
   public JpaTransactionManager transactionManager() {
@@ -93,6 +96,8 @@ public class DatabaseConfig {
    * platform-specific exceptions are caught and then rethrown as one
    * Spring's unchecked data access exceptions (i.e. a subclass of 
    * DataAccessException).
+   *
+   * @return nothing important
    */
   @Bean
   public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {

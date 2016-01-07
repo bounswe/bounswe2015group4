@@ -188,6 +188,12 @@ public class Interest_Group_Controller {
         return  detail;
     }
 
+    /**
+     *
+     * lists all groups that user is allowed to see
+     * @param userTokenForm
+     * @return
+     */
     @RequestMapping( value = "/listAllGroups", method = RequestMethod.POST)
     public @ResponseBody
     List<Interest_Group> listAllGroups(@RequestBody String userTokenForm) {
@@ -196,6 +202,13 @@ public class Interest_Group_Controller {
         return groupDao.getAllForUser(u);
     }
 
+    /**
+     * all groups user created us returned
+     *
+     *
+     * @param addPostForm
+     * @return
+     */
     @RequestMapping( value = "/listMyGroups", method = RequestMethod.POST)
     public @ResponseBody
     List<Interest_Group> ListMyGroups(@RequestBody String addPostForm) {
@@ -203,6 +216,12 @@ public class Interest_Group_Controller {
         return groupDao.getAllByToken(form.getUser_token());
     }
 
+    /**
+     *
+     * all groups that the user is a member of
+     * @param addPostForm
+     * @return
+     */
     @RequestMapping( value = "/listParticipatedGroups", method = RequestMethod.POST)
     public @ResponseBody
     List<Interest_Group> ListParticipatedGroups(@RequestBody String addPostForm) {
@@ -216,7 +235,13 @@ public class Interest_Group_Controller {
         return participatedGroups;
     }
 
-
+    /**
+     *
+     *
+     * Returns all groups user is allowed to see
+     * @param formIn
+     * @return
+     */
     @RequestMapping( value = "/getAllGroups", method = RequestMethod.POST)
     public @ResponseBody
     List<Interest_Group> getAllGroups(@RequestBody String formIn) {
