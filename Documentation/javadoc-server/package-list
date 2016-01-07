@@ -1,0 +1,15 @@
+socialnow
+socialnow.SemanticTagging
+socialnow.Synoym
+socialnow.Utils
+socialnow.dao
+socialnow.dbconfig
+socialnow.forms
+socialnow.forms.Comment
+socialnow.forms.Event
+socialnow.forms.Interest_Group
+socialnow.forms.Notification
+socialnow.forms.Post
+socialnow.forms.User
+socialnow.model
+socialnow.rest
