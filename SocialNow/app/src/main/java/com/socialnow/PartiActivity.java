@@ -34,6 +34,8 @@ import com.android.volley.VolleyError;
 import com.socialnow.API.API;
 import com.socialnow.Groups.EditGroupActivity;
 import com.socialnow.HomeScreen.ProfileFrag;
+import com.socialnow.Models.Comment;
+import com.socialnow.Models.Comment_Details;
 import com.socialnow.Models.Event;
 import com.socialnow.Models.PostDetail;
 import com.socialnow.Models.Profile;
@@ -66,7 +68,7 @@ public class PartiActivity extends AppCompatActivity {
     public static ArrayList<User> groupMembers;
     public static ArrayList<PostDetail> groupPosts;
     public static ArrayList<PostDetail> eventPosts;
-
+    public static List<Comment_Details> comments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,7 +182,7 @@ public class PartiActivity extends AppCompatActivity {
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
                 mTitle = "Posts";
-                registerForContextMenu(listView); //View menu by long-click on listview
+                //registerForContextMenu(listView); //View menu by long-click on listview
                 break;
 
             case "PostEvent":
@@ -200,7 +202,7 @@ public class PartiActivity extends AppCompatActivity {
                 listView.setDividerHeight(10);
                 listView.setAdapter(mAdapter);
                 mTitle = "Posts";
-                registerForContextMenu(listView); //View menu by long-click on listview
+               // registerForContextMenu(listView); //View menu by long-click on listview
                 break;
 
             case "Reply":
@@ -534,6 +536,8 @@ public class PartiActivity extends AppCompatActivity {
             TextView mText = (TextView) customView.findViewById(R.id.tvParti);
             ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
             TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
+            TextView tvCommentNumber = (TextView) customView.findViewById(R.id.tvCommentNumber);
+            ListView commentList = (ListView) customView.findViewById(R.id.list_comment);
             if(posts != null) {
                 mText.setText(posts.get(position).getOwner().getName() + " " + posts.get(position).getOwner().getSurname());
                 Picasso.with(((Activity) getContext()))
@@ -543,6 +547,48 @@ public class PartiActivity extends AppCompatActivity {
                         .centerCrop()
                         .into(mImg);
                 mComment.setText(posts.get(position).getContent());
+                Log.d("Comment", posts.get(position).getComments().size() + " ");
+                tvCommentNumber.setText(posts.get(position).getComments().size() + " comments");
+                commentList.setAdapter(new CommentAdapter2(getContext(),R.layout.item_commentonpost,posts.get(position).getComments()));
+                if(posts.get(position).getComments().size()>0){
+                    commentList.setVisibility(View.VISIBLE);
+                }
+            }
+            return customView;
+        }
+
+    }
+
+    public class CommentAdapter2 extends ArrayAdapter {
+        ArrayList<Comment_Details> comments;
+        public CommentAdapter2(Context context, int resource, List objects) {
+            super(context, resource, objects);
+            this.comments = (ArrayList<Comment_Details>)objects;
+
+        }
+
+        @Override
+        public View getView (int position, View convertView, ViewGroup parent){
+            LayoutInflater mInflater = LayoutInflater.from(getContext());
+            View customView = mInflater.inflate(R.layout.item_commentonpost, parent, false);
+
+
+            TextView mText = (TextView) customView.findViewById(R.id.tvParti);
+            ImageView mImg = (ImageView) customView.findViewById(R.id.ivAuthor);
+            TextView mComment = (TextView) customView.findViewById(R.id.tvComment);
+
+
+            if(comments != null) {
+                mText.setText(comments.get(position).getOwner().getName() + " " + comments.get(position).getOwner().getSurname());
+                Picasso.with(((Activity) getContext()))
+                        .load(comments.get(position).getOwner().getUser_photo())
+                        .resize(30, 30)
+                        .placeholder(R.drawable.profilpic)
+                        .centerCrop()
+                        .into(mImg);
+                mComment.setText(comments.get(position).getComment_text());
+
+
             }
             return customView;
         }

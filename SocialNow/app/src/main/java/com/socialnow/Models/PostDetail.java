@@ -1,5 +1,7 @@
 package com.socialnow.Models;
 
+import java.util.List;
+
 /**
  * Created by mugekurtipek on 07/12/15.
  */
@@ -7,6 +9,7 @@ public class PostDetail {
     private long id;
     private User owner;
     private String content;
+    private List<Comment_Details> comments;
 
     public PostDetail() {
     }
@@ -47,5 +50,11 @@ public class PostDetail {
     public void setContent(String content) {
         this.content = content;
     }
+    public List<Comment_Details> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment_Details> comments) {
+        this.comments = comments;
+    }
 }
